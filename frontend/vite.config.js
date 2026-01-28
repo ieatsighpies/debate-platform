@@ -9,6 +9,14 @@ export default ({ mode }) => {
     plugins: [react()],
     define: {
       'import.meta.env.VITE_APP_NAME': JSON.stringify(process.env.VITE_APP_NAME)
-    }
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:5555' || "https://debate-platform-backend.onrender.com",  // Your backend port (check server.js or run npm start)
+          changeOrigin: true
+        }
+      }
+  },
   });
 };
