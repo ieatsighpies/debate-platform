@@ -14,9 +14,9 @@ export default ({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': 'http://localhost:5555',
+        '/api': import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
         '/socket.io': {
-          target: 'http://localhost:5555',
+          target: import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
           ws: true
         }
       }
@@ -40,7 +40,7 @@ export default ({ mode }) => {
       port: 4173,
       proxy: {
         '/api': {
-          target: env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+          target: import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
           changeOrigin: true
         }
       }
