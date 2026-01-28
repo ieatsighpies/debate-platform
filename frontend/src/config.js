@@ -7,7 +7,9 @@ const config = {
 if (typeof process !== 'undefined' && process.env) {
   if (process.env.VITE_API_URL) {
     config.apiUrl = process.env.VITE_API_URL;
+    console.log(`[Config] Overriding API URL with: ${config.apiUrl}`);
     config.socketUrl = process.env.VITE_API_URL;
+    console.log(`[Config] Overriding Socket URL with: ${config.socketUrl}`);
   }
 }
 

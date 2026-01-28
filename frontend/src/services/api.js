@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5555';
-
+console.log(`[API Service] Using API URL: ${API_URL}`);
 // Create instance with interceptor
 const api = axios.create({
   baseURL: API_URL
