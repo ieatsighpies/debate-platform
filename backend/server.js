@@ -33,6 +33,11 @@ const debateRoutes = require('./routes/debates');
 const app = express();
 const server = http.createServer(app);
 
+app.get('/', function (req, res) {
+    res.send('hello');
+})
+
+
 // ============================================
 // CORS Configuration
 // ============================================
