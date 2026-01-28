@@ -5,8 +5,8 @@ import path from 'path';
 export default ({ mode }) => {
   // Load .env based on mode
   const env = loadEnv(mode, process.cwd(), '');
-  const apiKey = env.VITE_API_KEY
   const apiUrl = env.VITE_API_URL
+  console.log(`[Vite Config] Mode: ${mode}, API URL: ${apiUrl}`);
 
   return defineConfig({
     plugins: [react()],
