@@ -13,7 +13,7 @@ export default ({ mode }) => {
     server: {
       port: 5555,
       proxy: {
-        '/api': {
+        '/': {
           target: 'http://localhost:5555',
           changeOrigin: true
         }
