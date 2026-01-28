@@ -5,6 +5,8 @@ import path from 'path';
 export default ({ mode }) => {
   // Load .env based on mode
   const env = loadEnv(mode, process.cwd(), '');
+  const apiKey = env.VITE_API_KEY
+  const apiUrl = env.VITE_API_URL
 
   return defineConfig({
     plugins: [react()],
@@ -14,9 +16,9 @@ export default ({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+        '/api': apiUrl || 'http://localhost:5555',  // Use env or fallback
         '/socket.io': {
-          target: import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+          target: apiUrl || 'http://localhost:5555',  // Use env or fallback
           ws: true
         }
       }
@@ -40,7 +42,7 @@ export default ({ mode }) => {
       port: 4173,
       proxy: {
         '/api': {
-          target: import.meta.env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+          target: apiUrl || 'http://localhost:5555',  // Use env or fallback
           changeOrigin: true
         }
       }
