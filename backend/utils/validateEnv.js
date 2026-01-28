@@ -1,3 +1,5 @@
+require('dotenv').config({ path: './.env.development' });
+require('dotenv').config({ path: './.env.production' });
 function validateEnv() {
   console.log('\n[Env] Validating environment variables...');
 
@@ -39,7 +41,8 @@ function validateEnv() {
       console.warn('⚠️  Development MONGODB_URI looks suspicious - not localhost or Atlas');
       console.log('   Current:', process.env.MONGODB_URI?.substring(0, 30) + '...');
     } else {
-      console.log('✅ Development MongoDB URI: OK');
+      console.log('✅ Development MongoDB URI: OK')
+      console.log("MongoDB connection:", process.env.MONGODB_URI);
     }
   }
 
