@@ -10,14 +10,5 @@ export default ({ mode }) => {
     define: {
       'import.meta.env.VITE_APP_NAME': JSON.stringify(process.env.VITE_APP_NAME)
     },
-    server: {
-      port: 5555,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:5555',
-          changeOrigin: true
-        }
-      }
-  },
   });
 };

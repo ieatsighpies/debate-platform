@@ -122,13 +122,6 @@ const Login = () => {
             )}
           </button>
         </form>
-
-        {/* Debug info - remove in production */}
-        <div className="mt-6 text-xs text-gray-500 text-center">
-          <p>Demo credentials:</p>
-          <p className="font-mono">admin / password (Admin)</p>
-          <p className="font-mono">participant1 / password (Participant)</p>
-        </div>
       </div>
     </div>
   );
