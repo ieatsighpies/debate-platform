@@ -26,7 +26,6 @@ console.log('[Env] MONGODB_URI:', process.env.MONGODB_URI ? 'Set ✓' : 'Missing
 const validateEnv = require('./utils/validateEnv');
 validateEnv();
 
-
 const authRoutes = require('./routes/auth');
 const debateRoutes = require('./routes/debates');
 
@@ -133,7 +132,7 @@ mongoose.connect(MONGODB_URI)
 // ============================================
 const PORT = process.env.PORT || 5555;
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log('\n=================================');
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📡 Socket.IO ready`);
