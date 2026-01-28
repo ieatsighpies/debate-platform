@@ -24,15 +24,15 @@ export default ({ mode }) => {
     // ✅ Production build optimizations
     build: {
       outDir: 'dist',
-      sourcemap: false,  // Disable for prod (smaller bundle)
-      minify: 'terser',
+      sourcemap: mode !== 'development',  // ✅ Only dev
       rollupOptions: {
         output: {
           manualChunks: {
             vendor: ['react', 'react-dom']  // Split vendors
           }
         }
-      }
+      },
+      chunkSizeWarningLimit: 1000  // ✅ Bigger chunks OK for prod
     },
 
     // ✅ Preview uses prod-like proxy (test before deploy)
