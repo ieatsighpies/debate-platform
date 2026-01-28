@@ -14,9 +14,9 @@ export default ({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+        '/api': 'http://localhost:5555',
         '/socket.io': {
-          target: env.VITE_API_URL || 'http://localhost:5555',  // Use env or fallback
+          target: 'http://localhost:5555',
           ws: true
         }
       }
