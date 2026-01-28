@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { debateAPI } from '../../services/api';
 import { useSocket } from '../../context/socketContext';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/AuthContext';
 import { Loader2, Clock, Users, X, CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 

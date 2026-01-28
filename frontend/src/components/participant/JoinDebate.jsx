@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { debateAPI } from '../../services/api';
-import { useAuth } from '../../context/authContext';
+import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 import { Loader2, AlertCircle, X } from 'lucide-react';
 
