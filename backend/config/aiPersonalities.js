@@ -5,7 +5,7 @@ const aiPersonalities = {
     displayName: 'Opponent',
     difficulty: 'easy',
     responseDelay: { min: 8, max: 12 },
-    argumentLength: { min: 80, max: 150 },
+    argumentLength: { min: 80, max: 500 },
     model: 'gpt-4o-mini', // Cheapest capable model at $0.15/1M input, $0.60/1M output
     defaultPrompt: `You are participating in a structured debate. You must follow these rules:
 
@@ -21,12 +21,12 @@ DEBATE STYLE:
 - Make 1-2 main points per argument
 - Avoid complex vocabulary
 - Be respectful and constructive
-- Keep arguments under 150 characters
+- Keep arguments under 500 characters. Don't cut off mid-sentence.
 
 OPPONENT'S PREVIOUS ARGUMENT:
 {OPPONENT_ARGUMENT}
 
-Generate your counter-argument now (80-150 characters):`,
+Generate your counter-argument now (80-500 characters):`,
     templates: {
       opening: [
         "I believe {STANCE_PHRASE} because it's important for practical reasons.",
@@ -52,7 +52,7 @@ Generate your counter-argument now (80-150 characters):`,
     displayName: 'Opponent',
     difficulty: 'medium',
     responseDelay: { min: 10, max: 15 },
-    argumentLength: { min: 150, max: 200 },
+    argumentLength: { min: 150, max: 500 },
     model: 'gpt-4o-mini', // Best performance-to-cost ratio
     defaultPrompt: `You are an experienced debater in a formal debate competition. Follow these rules:
 
@@ -69,7 +69,7 @@ DEBATE STYLE:
 - Address opponent's arguments directly
 - Use transitional phrases
 - Maintain professional tone
-- Keep arguments between 150-500 characters
+- Keep arguments between 150-500 characters, Don't cut off mid-sentence.
 
 PREVIOUS ARGUMENTS:
 {DEBATE_HISTORY}
@@ -121,7 +121,7 @@ DEBATE STYLE:
 - Reference logical principles and real-world examples
 - Use sophisticated vocabulary appropriately
 - Employ strategic concessions when beneficial
-- Keep arguments between 150-200 characters
+- Keep arguments between 150-200 characters, Don't cut off mid-sentence.
 
 FULL DEBATE HISTORY:
 {DEBATE_HISTORY}
@@ -175,7 +175,7 @@ STYLE REQUIREMENTS:
 - Address your opponent's arguments directly and thoroughly
 - Employ rhetorical techniques (ethos, pathos, logos)
 - Maintain a professional, persuasive tone
-- Keep arguments between 150-500 characters
+- Keep arguments between 150-500 characters, Don't cut off mid-sentence.
 
 DEBATE HISTORY:
 {DEBATE_HISTORY}
@@ -189,7 +189,7 @@ Generate a compelling counter-argument now (150-500 characters):`,
 
   // If you need ultra-cheap option for high-volume testing
   'gpt-3.5-turbo': {
-    name: 'GPT-3.5 Turbo Budget',
+    name: 'GPT-3.5 Turbo',
     displayName: 'Opponent',
     difficulty: 'medium',
     responseDelay: { min: 6, max: 10 },
@@ -201,7 +201,7 @@ DEBATE CONSTRAINTS:
 - Topic: {TOPIC}
 - Your Stance: {STANCE}
 - Round: {CURRENT_ROUND} of {MAX_ROUNDS}
-- Character Limit: 500 characters
+- Character Limit: 500 characters. Don't cut off mid-sentence.
 
 Generate a clear argument supporting your stance (150-500 characters):
 
