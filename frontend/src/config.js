@@ -1,16 +1,10 @@
 const config = {
-  apiUrl: 'http://localhost:5555',
-  socketUrl: 'http://localhost:5555'
+  apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:5555',
+  socketUrl: import.meta.env.VITE_SOCKET_URL || 'http://localhost:5555'
 };
 
-// Override with environment variables if available
-if (typeof process !== 'undefined' && process.env) {
-  if (process.env.VITE_API_URL) {
-    config.apiUrl = process.env.VITE_API_URL;
-    console.log(`[Config] Overriding API URL with: ${config.apiUrl}`);
-    config.socketUrl = process.env.VITE_SOCKET_URL;
-    console.log(`[Config] Overriding Socket URL with: ${config.socketUrl}`);
-  }
-}
+console.log('[Config] API URL:', config.apiUrl);
+console.log('[Config] Socket URL:', config.socketUrl);
+console.log('[Config] Mode:', import.meta.env.MODE);
 
 export default config;
