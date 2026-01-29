@@ -42,7 +42,7 @@ const MatchmakingDashboard = () => {
 
     const interval = setInterval(() => {
       checkAndAutoAssign();
-    }, 10000); // Check every 10 seconds
+    }, 5000); // Check every 5 seconds
 
     return () => clearInterval(interval);
   }, [waitingDebates, autoAssignEnabled, selectedAI, isAdmin]);
