@@ -4,9 +4,8 @@ import { io } from 'socket.io-client';
 import { debateAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 import { Send, AlertCircle, Wifi, WifiOff, ArrowLeft } from 'lucide-react';
-import config from '../../config'; // Import config
 
-const SOCKET_SERVER_URL = config.socketUrl || 'http://localhost:5555';
+const SOCKET_SERVER_URL = import.meta.env.VITE_SOCKET_URL;
 
 const DebateInterface = () => {
   const { debateId } = useParams();

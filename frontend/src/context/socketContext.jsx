@@ -37,7 +37,7 @@ export const SocketProvider = ({ children }) => {
     }
 
     // Create new socket connection
-    const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5555';
+    const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
     console.log('[Socket] Creating new connection to:', SOCKET_URL);
     console.log('[Socket] User:', user.username, 'Role:', user.role);
