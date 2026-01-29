@@ -13,7 +13,7 @@ DEBATE CONSTRAINTS:
 - Topic: {TOPIC}
 - Your Stance: {STANCE}
 - Current Round: {CURRENT_ROUND} of {MAX_ROUNDS}
-- Character Limit: 500 characters per argument
+- Character Limit: 500 characters per argument. Don't cut off mid-sentence.
 - You must stay on topic and argue your assigned stance
 
 DEBATE STYLE:
@@ -21,7 +21,7 @@ DEBATE STYLE:
 - Make 1-2 main points per argument
 - Avoid complex vocabulary
 - Be respectful and constructive
-- Keep arguments under 500 characters. Don't cut off mid-sentence.
+- Keep arguments under 500 characters.
 
 OPPONENT'S PREVIOUS ARGUMENT:
 {OPPONENT_ARGUMENT}
@@ -60,7 +60,7 @@ DEBATE CONSTRAINTS:
 - Topic: {TOPIC}
 - Your Stance: {STANCE}
 - Current Round: {CURRENT_ROUND} of {MAX_ROUNDS}
-- Character Limit: 500 characters per argument
+- Character Limit: 500 characters per argument. Don't cut off mid-sentence.
 - You must provide logical arguments supporting your stance
 
 DEBATE STYLE:
@@ -69,7 +69,7 @@ DEBATE STYLE:
 - Address opponent's arguments directly
 - Use transitional phrases
 - Maintain professional tone
-- Keep arguments between 150-500 characters, Don't cut off mid-sentence.
+- Keep arguments between 150-500 characters
 
 PREVIOUS ARGUMENTS:
 {DEBATE_HISTORY}
@@ -111,7 +111,7 @@ DEBATE CONSTRAINTS:
 - Topic: {TOPIC}
 - Your Stance: {STANCE}
 - Current Round: {CURRENT_ROUND} of {MAX_ROUNDS}
-- Character Limit: 500 characters per argument
+- Character Limit: 500 characters per argument. Don't cut off mid-sentence.
 - You must construct sophisticated, multi-layered arguments
 
 DEBATE STYLE:
@@ -121,7 +121,7 @@ DEBATE STYLE:
 - Reference logical principles and real-world examples
 - Use sophisticated vocabulary appropriately
 - Employ strategic concessions when beneficial
-- Keep arguments between 150-200 characters, Don't cut off mid-sentence.
+- Keep arguments between 150-200 characters
 
 FULL DEBATE HISTORY:
 {DEBATE_HISTORY}
@@ -166,7 +166,7 @@ DEBATE CONSTRAINTS:
 - Topic: {TOPIC}
 - Your Stance: {STANCE}
 - Current Round: {CURRENT_ROUND} of {MAX_ROUNDS}
-- Character Limit: 500 characters per argument
+- Character Limit: 500 characters per argument. Don't cut off mid-sentence.
 - You must provide compelling, well-reasoned arguments
 
 STYLE REQUIREMENTS:
@@ -175,7 +175,7 @@ STYLE REQUIREMENTS:
 - Address your opponent's arguments directly and thoroughly
 - Employ rhetorical techniques (ethos, pathos, logos)
 - Maintain a professional, persuasive tone
-- Keep arguments between 150-500 characters, Don't cut off mid-sentence.
+- Keep arguments between 150-500 characters
 
 DEBATE HISTORY:
 {DEBATE_HISTORY}

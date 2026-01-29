@@ -170,13 +170,13 @@ const ParticipantDashboard = () => {
               <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                 2
               </span>
-              <p>Choose your stance (For or Against) and game mode (Human vs Human or Human vs AI)</p>
+              <p>Choose your stance (For or Against)</p>
             </div>
             <div className="flex items-start">
               <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                 3
               </span>
-              <p>Wait for an opponent to join or for an admin to match you with AI</p>
+              <p>Wait for an opponent to join</p>
             </div>
             <div className="flex items-start">
               <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
