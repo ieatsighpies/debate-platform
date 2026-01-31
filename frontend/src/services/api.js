@@ -43,6 +43,10 @@ export const debateAPI = {
   voteEarlyEnd: (debateId) => api.post(`/api/debates/${debateId}/vote-end`),
   revokeEarlyEndVote: (debateId) => api.post(`/api/debates/${debateId}/revoke-vote`),
   getMyStatus: () => api.get('/api/debates/my-status'),
+  submitPreSurvey: (debateId, response) =>
+    api.post(`/api/debates/${debateId}/pre-survey`, { response }),
+  submitPostSurvey: (debateId, response) =>
+    api.post(`/api/debates/${debateId}/post-survey`, { response }),
 };
 
 export const authAPI = {

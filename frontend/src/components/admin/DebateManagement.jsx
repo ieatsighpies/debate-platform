@@ -205,154 +205,322 @@ const DebateManagement = () => {
     }
   };
 
-  // Chat History Modal Component
-  const ChatHistoryModal = () => {
-    if (!showChatModal || !selectedDebate) return null;
+// Chat History Modal Component
+const ChatHistoryModal = () => {
+  if (!showChatModal || !selectedDebate) return null;
 
-    const { arguments: debateArgs = [] } = selectedDebate;
+  const { arguments: debateArgs = [], preDebateSurvey = {}, postDebateSurvey = {} } = selectedDebate;
 
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
-          {/* Header */}
-          <div className="flex justify-between items-start p-6 border-b">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                Chat History
-              </h2>
-              <p className="text-gray-600 text-sm">
-                {selectedDebate.topicQuestion}
-              </p>
-              <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+  // Survey response labels
+  const preSurveyLabels = {
+    'firm_on_stance': 'Firm on Stance',
+    'convinced_of_stance': 'Convinced of Stance',
+    'open_to_change': 'Open to Change'
+  };
+
+  const postSurveyLabels = {
+    'still_firm': 'Still Firm',
+    'opponent_made_points': 'Opponent Made Points',
+    'convinced_to_change': 'Convinced to Change'
+  };
+
+  // Map survey responses to numeric conviction levels (higher = more open to change)
+  const preSurveyIndex = {
+    'firm_on_stance': 0,        // Most closed
+    'convinced_of_stance': 1,   // Middle
+    'open_to_change': 2         // Most open
+  };
+
+  const postSurveyIndex = {
+    'still_firm': 0,            // Most closed
+    'opponent_made_points': 1,  // Middle
+    'convinced_to_change': 2    // Most open (actually changed)
+  };
+
+  // Helper function to determine change in conviction
+  const getConvictionChange = (preSurvey, postSurvey) => {
+    if (!preSurvey || !postSurvey) {
+      return { text: 'No data', color: 'text-gray-500' };
+    }
+
+    const preIndex = preSurveyIndex[preSurvey];
+    const postIndex = postSurveyIndex[postSurvey];
+
+    if (preIndex === undefined || postIndex === undefined) {
+      return { text: 'Unknown', color: 'text-gray-500' };
+    }
+
+    const diff = postIndex - preIndex;
+
+    if (diff > 0) {
+      return {
+        text: 'More Open',
+        color: 'text-green-600',
+        arrow: '↑'
+      };
+    } else if (diff < 0) {
+      return {
+        text: 'Less Open',
+        color: 'text-red-600',
+        arrow: '↓'
+      };
+    } else {
+      return {
+        text: 'Unchanged',
+        color: 'text-gray-600',
+        arrow: '→'
+      };
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
+        {/* Header */}
+        <div className="flex justify-between items-start p-6 border-b">
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              Chat History
+            </h2>
+            <p className="text-gray-600 text-sm">
+              {selectedDebate.topicQuestion}
+            </p>
+            <div className="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+              <span>
+                Created: {new Date(selectedDebate.createdAt).toLocaleString()}
+              </span>
+              {selectedDebate.completedAt && (
                 <span>
-                  Created: {new Date(selectedDebate.createdAt).toLocaleString()}
+                  Completed: {new Date(selectedDebate.completedAt).toLocaleString()}
                 </span>
-                {selectedDebate.completedAt && (
-                  <span>
-                    Completed: {new Date(selectedDebate.completedAt).toLocaleString()}
+              )}
+            </div>
+          </div>
+          <button
+            onClick={() => {
+              setShowChatModal(false);
+              setSelectedDebate(null);
+            }}
+            className="text-gray-400 hover:text-gray-600 transition"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Survey Responses Section - COMPACT */}
+        {selectedDebate.status === 'completed' && (
+          <div className="px-6 py-3 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
+            <h3 className="text-xs font-bold text-gray-600 mb-2 uppercase tracking-wide">
+              Survey Responses
+            </h3>
+
+            <div className="grid grid-cols-2 gap-3">
+              {/* Player 1 Surveys - COMPACT */}
+              <div className="bg-white rounded px-3 py-2 shadow-sm">
+                <div className="flex items-center space-x-1.5 mb-2">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                    selectedDebate.player1Stance === 'for'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}>
+                    {selectedDebate.player1Stance === 'for' ? 'FOR' : 'AGAINST'}
                   </span>
-                )}
+                  <span className="font-medium text-sm text-gray-700 truncate">
+                    {selectedDebate.player1UserId?.username || 'Player 1'}
+                  </span>
+                </div>
+
+                <div className="space-y-1.5 text-xs">
+                  {/* Pre-Survey */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">Before:</span>
+                    <span className="text-blue-700 font-medium text-right">
+                      {preDebateSurvey.player1 ? (
+                        preSurveyLabels[preDebateSurvey.player1] || preDebateSurvey.player1
+                      ) : 'No response'}
+                    </span>
+                  </div>
+
+                  {/* Post-Survey */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">After:</span>
+                    <span className="text-purple-700 font-medium text-right">
+                      {postDebateSurvey.player1 ? (
+                        postSurveyLabels[postDebateSurvey.player1] || postDebateSurvey.player1
+                      ) : 'No response'}
+                    </span>
+                  </div>
+
+                  {/* Comparison */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">Change:</span>
+                    <span className={`font-medium text-right ${getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).color}`}>
+                      {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).arrow} {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).text}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Player 2 Surveys - COMPACT */}
+              <div className="bg-white rounded px-3 py-2 shadow-sm">
+                <div className="flex items-center space-x-1.5 mb-2">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${
+                    selectedDebate.player2Stance === 'for'
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-red-100 text-red-700'
+                  }`}>
+                    {selectedDebate.player2Stance === 'for' ? 'FOR' : 'AGAINST'}
+                  </span>
+                  <span className="font-medium text-sm text-gray-700 truncate">
+                    {selectedDebate.player2Type === 'ai'
+                      ? `AI: ${selectedDebate.player2AIModel || 'Bot'}`
+                      : (selectedDebate.player2UserId?.username || 'Player 2')
+                    }
+                  </span>
+                </div>
+
+                <div className="space-y-1.5 text-xs">
+                  {/* Pre-Survey */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">Before:</span>
+                    <span className="text-blue-700 font-medium text-right">
+                      {preDebateSurvey.player2 ? (
+                        preSurveyLabels[preDebateSurvey.player2] || preDebateSurvey.player2
+                      ) : 'No response'}
+                    </span>
+                  </div>
+
+                  {/* Post-Survey */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">After:</span>
+                    <span className="text-purple-700 font-medium text-right">
+                      {postDebateSurvey.player2 ? (
+                        postSurveyLabels[postDebateSurvey.player2] || postDebateSurvey.player2
+                      ) : 'No response'}
+                    </span>
+                  </div>
+
+                  {/* Comparison */}
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="text-gray-500 flex-shrink-0">Change:</span>
+                    <span className={`font-medium text-right ${getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).color}`}>
+                      {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).arrow} {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).text}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <button
-              onClick={() => {
-                setShowChatModal(false);
-                setSelectedDebate(null);
-              }}
-              className="text-gray-400 hover:text-gray-600 transition"
-            >
-              <X size={24} />
-            </button>
+          </div>
+        )}
+
+        {/* Players Info - MINIMAL */}
+        <div className="px-6 py-2 bg-gray-50 border-b flex items-center justify-between text-xs">
+          <div className="flex items-center space-x-1.5">
+            <span className={`px-1.5 py-0.5 rounded font-medium ${
+              selectedDebate.player1Stance === 'for'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'
+            }`}>
+              {selectedDebate.player1Stance === 'for' ? 'FOR' : 'AGAINST'}
+            </span>
+            <span className="text-gray-700">
+              {selectedDebate.player1UserId?.username || 'Player 1'}
+            </span>
           </div>
 
-          {/* Players Info */}
-          <div className="px-6 py-4 bg-gray-50 border-b">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center space-x-2">
-                <span className={`px-2 py-1 rounded text-xs font-medium ${
-                  selectedDebate.player1Stance === 'for'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {selectedDebate.player1Stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
-                </span>
-                <span className="font-medium">
-                  {selectedDebate.player1UserId?.username || 'Player 1'}
-                </span>
-              </div>
+          <div className="flex items-center space-x-1.5">
+            <span className={`px-1.5 py-0.5 rounded font-medium ${
+              selectedDebate.player2Stance === 'for'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'
+            }`}>
+              {selectedDebate.player2Stance === 'for' ? 'FOR' : 'AGAINST'}
+            </span>
+            <span className="text-gray-700">
+              {selectedDebate.player2Type === 'ai'
+                ? `AI: ${selectedDebate.player2AIModel || 'Bot'}`
+                : (selectedDebate.player2UserId?.username || 'Player 2')
+              }
+            </span>
+          </div>
+        </div>
 
-              <div className="flex items-center space-x-2">
-                <span className={`px-2 py-1 rounded text-xs font-medium ${
-                  selectedDebate.player2Stance === 'for'
-                    ? 'bg-green-100 text-green-800'
-                    : 'bg-red-100 text-red-800'
-                }`}>
-                  {selectedDebate.player2Stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
-                </span>
-                <span className="font-medium">
-                  {selectedDebate.player2Type === 'ai'
-                    ? `🤖 ${selectedDebate.player2AIModel || 'AI'}`
-                    : (selectedDebate.player2UserId?.username || 'Player 2')
-                  }
-                </span>
-              </div>
+        {/* Arguments List */}
+        <div className="flex-1 overflow-y-auto p-6">
+          {debateArgs.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              No arguments in this debate
             </div>
-          </div>
-
-          {/* Arguments List */}
-          <div className="flex-1 overflow-y-auto p-6">
-            {debateArgs.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
-                No arguments in this debate
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {debateArgs.map((arg, index) => (
-                  <div
-                    key={index}
-                    className={`p-4 rounded-lg border-l-4 ${
-                      arg.stance === 'for'
-                        ? 'bg-green-50 border-green-500'
-                        : 'bg-red-50 border-red-500'
-                    }`}
-                  >
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex items-center space-x-2">
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          arg.stance === 'for'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {arg.stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
-                        </span>
-                        <span className="text-xs text-gray-600">
-                          Round {arg.round}
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-500">
-                        {arg.submittedBy === 'ai' ? '🤖 AI' : '👤 Human'}
+          ) : (
+            <div className="space-y-4">
+              {debateArgs.map((arg, index) => (
+                <div
+                  key={index}
+                  className={`p-4 rounded-lg border-l-4 ${
+                    arg.stance === 'for'
+                      ? 'bg-green-50 border-green-500'
+                      : 'bg-red-50 border-red-500'
+                  }`}
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex items-center space-x-2">
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${
+                        arg.stance === 'for'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}>
+                        {arg.stance === 'for' ? 'FOR' : 'AGAINST'}
+                      </span>
+                      <span className="text-xs text-gray-600">
+                        Round {arg.round}
                       </span>
                     </div>
-                    <p className="text-gray-800 whitespace-pre-wrap">
-                      {arg.text}
-                    </p>
-                    {arg.createdAt && (
-                      <p className="text-xs text-gray-500 mt-2">
-                        {new Date(arg.createdAt).toLocaleString()}
-                      </p>
-                    )}
+                    <span className="text-xs text-gray-500">
+                      {arg.submittedBy === 'ai' ? 'AI' : 'Human'}
+                    </span>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  <p className="text-gray-800 whitespace-pre-wrap">
+                    {arg.text}
+                  </p>
+                  {arg.createdAt && (
+                    <p className="text-xs text-gray-500 mt-2">
+                      {new Date(arg.createdAt).toLocaleString()}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
-          {/* Footer Actions */}
-          <div className="flex justify-between items-center p-6 border-t bg-gray-50">
-            <div className="text-sm text-gray-600">
-              {debateArgs.length} argument{debateArgs.length !== 1 ? 's' : ''} total
-            </div>
-            <div className="flex space-x-3">
-              <button
-                onClick={() => handleCopyChat(selectedDebate)}
-                className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition text-sm"
-              >
-                <Copy size={16} className="mr-2" />
-                Copy
-              </button>
-              <button
-                onClick={() => handleExportChat(selectedDebate)}
-                className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm"
-              >
-                <Download size={16} className="mr-2" />
-                Export JSON
-              </button>
-            </div>
+        {/* Footer Actions */}
+        <div className="flex justify-between items-center p-6 border-t bg-gray-50">
+          <div className="text-sm text-gray-600">
+            {debateArgs.length} argument{debateArgs.length !== 1 ? 's' : ''} total
+          </div>
+          <div className="flex space-x-3">
+            <button
+              onClick={() => handleCopyChat(selectedDebate)}
+              className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition text-sm"
+            >
+              <Copy size={16} className="mr-2" />
+              Copy
+            </button>
+            <button
+              onClick={() => handleExportChat(selectedDebate)}
+              className="flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm"
+            >
+              <Download size={16} className="mr-2" />
+              Export JSON
+            </button>
           </div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
+
+
 
   const renderDebateCard = (debate) => (
     <div key={debate._id} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-indigo-500">

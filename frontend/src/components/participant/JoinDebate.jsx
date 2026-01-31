@@ -16,6 +16,8 @@ const JoinDebate = () => {
   const [loading, setLoading] = useState(false);
   const [existingDebate, setExistingDebate] = useState(null);
   const [checkingStatus, setCheckingStatus] = useState(true);
+  const [preSurveyAnswer, setPreSurveyAnswer] = useState('');
+
 
   useEffect(() => {
     fetchTopics();
@@ -78,13 +80,21 @@ const JoinDebate = () => {
       return;
     }
 
+    if (!preSurveyAnswer) {
+      toast.error('Please complete the pre-debate question');
+      return;
+    }
+
     try {
       setLoading(true);
 
       const response = await debateAPI.joinDebate({
         gameMode,
         topicId: selectedTopic,
-        stance: selectedStance
+        stance: selectedStance,
+        preDebateSurvey: {
+          player1: preSurveyAnswer,
+        },
       });
 
       toast.success(response.data.message);
@@ -96,6 +106,7 @@ const JoinDebate = () => {
       setLoading(false);
     }
   };
+
 
   if (checkingStatus) {
     return (
@@ -228,10 +239,64 @@ const JoinDebate = () => {
             </div>
           </div>
 
+          {/* Pre-Debate Survey */}
+          <div className="mt-6 bg-white rounded-lg shadow-md p-6">
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              Before you debate
+            </h2>
+            <p className="text-sm text-gray-600 mb-4">
+              Tell us how you currently feel about your stance on this topic. This is required before we find you a match.
+            </p>
+
+            <div className="space-y-3">
+              {[
+                {
+                  value: 'firm_on_stance',
+                  label: 'I am firm on my stance.',
+                  description: 'I have strong conviction in my position.'
+                },
+                {
+                  value: 'convinced_of_stance',
+                  label: 'I am convinced of my stance.',
+                  description: 'I believe my position is correct.'
+                },
+                {
+                  value: 'open_to_change',
+                  label: 'I am open to changing my mind about this.',
+                  description: 'I am willing to reconsider my position.'
+                }
+              ].map(option => (
+                <label
+                  key={option.value}
+                  className={`block p-4 border-2 rounded-lg cursor-pointer transition ${
+                    preSurveyAnswer === option.value
+                      ? 'border-indigo-600 bg-indigo-50'
+                      : 'border-gray-200 hover:border-indigo-300'
+                  }`}
+                >
+                  <div className="flex items-start">
+                    <input
+                      type="radio"
+                      name="preSurvey"
+                      value={option.value}
+                      checked={preSurveyAnswer === option.value}
+                      onChange={e => setPreSurveyAnswer(e.target.value)}
+                      className="mt-1 mr-3"
+                    />
+                    <div>
+                      <div className="font-medium text-gray-800">{option.label}</div>
+                      <div className="text-sm text-gray-600 mt-1">{option.description}</div>
+                    </div>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
           {/* Submit Button */}
           <button
             onClick={handleJoinDebate}
-            disabled={!selectedTopic || !selectedStance || loading}
+            disabled={!selectedTopic || !selectedStance || !preSurveyAnswer || loading}
             className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {loading ? (

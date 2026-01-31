@@ -68,7 +68,7 @@ const debateSchema = new mongoose.Schema({
   },
   maxRounds: {
     type: Number,
-    default: 20
+    default: 10
   },
   firstPlayer: {
     type: String,
@@ -84,7 +84,7 @@ const debateSchema = new mongoose.Schema({
   aiResponseDelay: {
     type: Number,
     default: 10, // Seconds to wait before AI responds
-    min: 3,
+    min: 7,
     max: 30
   },
   aiLastResponseAt: {
@@ -119,6 +119,50 @@ const debateSchema = new mongoose.Schema({
     }
   }],
 
+  // PRE-DEBATE SURVEY
+  preDebateSurvey: {
+    player1: {
+      type: String,
+      enum: [
+        'firm_on_stance',           // "I am firm on my stance."
+        'convinced_of_stance',      // "I am convinced of my stance."
+        'open_to_change'            // "I am open to changing my mind about this."
+      ],
+      default: null
+    },
+    player2: {
+      type: String,
+      enum: [
+        'firm_on_stance',
+        'convinced_of_stance',
+        'open_to_change'
+      ],
+      default: null
+    }
+  },
+
+  // POST-DEBATE SURVEY
+  postDebateSurvey: {
+    player1: {
+      type: String,
+      enum: [
+        'still_firm',                // "I am still firm on my stance."
+        'opponent_made_points',      // "My opponent made good points, but my stance remains the same."
+        'convinced_to_change'        // "My opponent convinced me to change my stance."
+      ],
+      default: null
+    },
+    player2: {
+      type: String,
+      enum: [
+        'still_firm',
+        'opponent_made_points',
+        'convinced_to_change'
+      ],
+      default: null
+    }
+  },
+
   // Closing statements
   player1ClosingStatement: String,
   player2ClosingStatement: String,
@@ -142,7 +186,7 @@ const debateSchema = new mongoose.Schema({
     ref: 'User',
     default: null // Admin who manually matched this debate
   },
-  //end vote before 20 rounds
+  //end vote before 10 rounds
   earlyEndVotes: {
   player1Voted: { type: Boolean, default: false },
   player2Voted: { type: Boolean, default: false },

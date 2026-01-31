@@ -223,8 +223,8 @@ const MatchmakingDashboard = () => {
             >
               <Bot className="mx-auto mb-2" size={32} />
               <p className="font-semibold text-center">{ai.name}</p>
-              <p className="text-xs text-gray-500 text-center mt-1 capitalize">
-                {ai.difficulty} difficulty
+              <p className="text-xs text-gray-500 text-center mt-2 leading-relaxed">
+                {ai.description}
               </p>
             </button>
           ))}

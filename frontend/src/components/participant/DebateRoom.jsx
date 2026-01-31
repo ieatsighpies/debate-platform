@@ -5,6 +5,7 @@ import { useSocket } from '../../context/socketContext';
 import { useAuth } from '../../context/AuthContext';
 import { Loader2, Clock, Users, X, CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import PostDebateSurveyModal from './PostDebateSurveyModal';
 
 const DebateRoom = () => {
   const { debateId } = useParams();
@@ -24,7 +25,10 @@ const DebateRoom = () => {
   });
   const [votingInProgress, setVotingInProgress] = useState(false);
 
-  // Use ref to avoid stale closure in socket handlers
+  // NEW: Post-debate survey state
+  const [showPostSurvey, setShowPostSurvey] = useState(false);
+  const [postSurveySubmitted, setPostSurveySubmitted] = useState(false);
+
   const debateIdRef = useRef(debateId);
 
   // Fetch debate data
@@ -53,6 +57,21 @@ const DebateRoom = () => {
           yourVote: isPlayer1 ? (votes.player1Voted || false) : (votes.player2Voted || false)
         });
       }
+
+      // NEW: Check if we need to show post-debate survey
+      if (response.data.debate.status === 'completed') {
+        const isPlayer1 = response.data.debate.isPlayer1;
+        const hasSubmitted = isPlayer1
+          ? response.data.debate.postDebateSurvey?.player1
+          : response.data.debate.postDebateSurvey?.player2;
+
+        if (!hasSubmitted && !postSurveySubmitted) {
+          setShowPostSurvey(true);
+        } else {
+          setPostSurveySubmitted(true);
+        }
+      }
+
       setError(null);
     } catch (err) {
       console.error('[DebateRoom] Error fetching debate:', err);
@@ -67,7 +86,7 @@ const DebateRoom = () => {
     fetchDebate();
   }, [debateId]);
 
-  // Socket setup - FIXED: Runs immediately when socket is available
+  // Socket setup
   useEffect(() => {
     if (!debateId || !socket || !connected) {
       console.log('[DebateRoom] Socket not ready:', { debateId, socket: !!socket, connected });
@@ -75,11 +94,8 @@ const DebateRoom = () => {
     }
 
     console.log('[DebateRoom] Setting up socket listeners for:', debateId);
-
-    // Join the room immediately
     joinDebateRoom(debateId);
 
-    // FIXED: Socket handlers that don't rely on stale state
     const handleArgumentAdded = (data) => {
       console.log('[DebateRoom] Argument added event:', data);
       if (data.debateId === debateIdRef.current) {
@@ -95,7 +111,6 @@ const DebateRoom = () => {
       }
     };
 
-    // FIXED: Also listen for 'debate:matched' or 'debate:joined' events
     const handlePlayerJoined = (data) => {
       console.log('[DebateRoom] ✅ Player joined event received!', data);
       if (data.debateId === debateIdRef.current) {
@@ -137,11 +152,11 @@ const DebateRoom = () => {
     socket.on('debate:completed', handleDebateCompleted);
     socket.on('debate:cancelled', handleDebateCancelled);
     socket.on('debate:earlyEndVote', handleEarlyEndVote);
-    // FIXED: Add connection status monitoring
+
     const handleConnect = () => {
       console.log('[DebateRoom] Socket reconnected, rejoining room');
       joinDebateRoom(debateId);
-      fetchDebate(); // Re-fetch on reconnect
+      fetchDebate();
     };
 
     socket.on('connect', handleConnect);
@@ -158,7 +173,6 @@ const DebateRoom = () => {
     };
   }, [socket, connected, debateId]);
 
-  // FIXED: Add polling as backup when in waiting status
   useEffect(() => {
     if (debate?.status !== 'waiting') return;
 
@@ -166,7 +180,7 @@ const DebateRoom = () => {
     const pollInterval = setInterval(() => {
       console.log('[DebateRoom] Polling for debate update...');
       fetchDebate();
-    }, 3000); // Poll every 3 seconds
+    }, 3000);
 
     return () => {
       console.log('[DebateRoom] Stopping polling');
@@ -174,7 +188,20 @@ const DebateRoom = () => {
     };
   }, [debate?.status]);
 
-  // Cancel debate
+  // NEW: Handle post-debate survey submission
+  const handlePostSurveySubmit = async (response) => {
+    try {
+      await debateAPI.submitPostSurvey(debateId, response);
+      toast.success('Thank you for your feedback!');
+      setPostSurveySubmitted(true);
+      setShowPostSurvey(false);
+      fetchDebate();
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to submit survey');
+      throw error;
+    }
+  };
+
   const handleCancelDebate = async () => {
     if (!window.confirm('Cancel this debate?')) return;
 
@@ -187,7 +214,6 @@ const DebateRoom = () => {
     }
   };
 
-  // Submit argument
   const handleSubmitArgument = async () => {
     if (!argument.trim()) {
       toast.error('Please enter an argument');
@@ -221,33 +247,22 @@ const DebateRoom = () => {
     }
   };
 
-  // FIXED: Vote handlers moved OUTSIDE useEffect to component level
   const handleVoteEarlyEnd = async () => {
-  if (votingInProgress) return;
+    if (votingInProgress) return;
 
-  console.log('🔵 [DEBUG] Starting vote process');
-  console.log('🔵 [DEBUG] debateId:', debateId);
-  console.log('🔵 [DEBUG] current round:', debate.currentRound);
+    console.log('🔵 [DEBUG] Starting vote process');
+    setVotingInProgress(true);
 
-  setVotingInProgress(true);
-
-  try {
-    console.log('🔵 [DEBUG] Calling API...');
-    const response = await debateAPI.voteEarlyEnd(debateId);
-    console.log('🔵 [DEBUG] API response:', response);
-
-    toast.success('Vote recorded. Waiting for opponent...');
-  } catch (error) {
-    console.error('🔴 [DEBUG] Error occurred:', error);
-    console.error('🔴 [DEBUG] Error response:', error.response);
-    console.error('🔴 [DEBUG] Error status:', error.response?.status);
-    console.error('🔴 [DEBUG] Error message:', error.response?.data?.message);
-
-    toast.error(error.response?.data?.message || 'Failed to vote');
-    setVotingInProgress(false);
-  }
-};
-
+    try {
+      const response = await debateAPI.voteEarlyEnd(debateId);
+      console.log('🔵 [DEBUG] API response:', response);
+      toast.success('Vote recorded. Waiting for opponent...');
+    } catch (error) {
+      console.error('🔴 [DEBUG] Error occurred:', error);
+      toast.error(error.response?.data?.message || 'Failed to vote');
+      setVotingInProgress(false);
+    }
+  };
 
   const handleRevokeEarlyEndVote = async () => {
     try {
@@ -312,7 +327,7 @@ const DebateRoom = () => {
     );
   }
 
-  // Waiting room view remains the same...
+  // Waiting room view
   if (debate.status === 'waiting') {
     return (
       <div className="min-h-screen bg-gray-50 py-8">
@@ -392,6 +407,13 @@ const DebateRoom = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
+        {/* NEW: Post-debate survey modal */}
+        <PostDebateSurveyModal
+          isOpen={showPostSurvey}
+          onSubmit={handlePostSurveySubmit}
+          onClose={() => {}} // Prevent closing - mandatory
+        />
+
         {/* Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex justify-between items-start mb-6">
@@ -615,7 +637,7 @@ const DebateRoom = () => {
         )}
 
         {/* Completed */}
-        {debate.status === 'completed' && (
+        {debate.status === 'completed' && postSurveySubmitted && (
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-4">
               <CheckCircle className="text-blue-600" size={40} />

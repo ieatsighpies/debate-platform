@@ -5,14 +5,12 @@ class AIService {
   constructor() {
     this.personalities = aiPersonalities;
     this.openaiApiKey = process.env.OPENAI_API_KEY;
-    // Removed Anthropic/Claude since we're using cheap OpenAI models only
     this.openaiEnabled = process.env.ENABLE_OPENAI === 'true';
-    // ✅ UPDATED: Default to cheapest model
     this.openaiModel = process.env.OPENAI_MODEL || 'gpt-4o-mini';
   }
 
   /**
-   * Generate argument - Main entry point (SIMPLIFIED FOR OPENAI ONLY)
+   * Generate argument - Main entry point
    */
   async generateArgument(debate, customPrompt = null) {
     const personality = this.personalities[debate.player2AIModel];
@@ -38,14 +36,13 @@ class AIService {
     // Replace placeholders in prompt
     const finalPrompt = this.replacePlaceholders(systemPrompt, context);
 
-    // ✅ SIMPLIFIED: All AI personalities now use OpenAI with per-personality model
     let argument;
 
     if (personality.requiresAPIKey && this.openaiEnabled && this.openaiApiKey) {
       argument = await this.generateWithOpenAI(finalPrompt, personality, context);
     } else {
-      // Rule-based fallback for template-based bots
-      argument = this.generateRuleBased(finalPrompt, personality, context);
+      // Rule-based fallback (no templates now, so basic fallback)
+      argument = this.generateBasicFallback(context, personality);
     }
 
     // Ensure argument meets constraints
@@ -57,13 +54,12 @@ class AIService {
   }
 
   /**
-   * Generate argument with OpenAI (gpt-4o-mini or gpt-3.5-turbo)
+   * Generate argument with OpenAI
    */
   async generateWithOpenAI(systemPrompt, personality, context) {
     try {
       console.log('[AI Service] Calling OpenAI API with model:', personality.model || this.openaiModel);
 
-      // ✅ Build messages array with conversation history
       const messages = [
         {
           role: 'system',
@@ -71,7 +67,7 @@ class AIService {
         }
       ];
 
-      // ✅ Add debate history as alternating user/assistant messages
+      // Add debate history as alternating user/assistant messages
       if (context.DEBATE_HISTORY && context.DEBATE_HISTORY !== 'Debate just started.') {
         const historyLines = context.DEBATE_HISTORY.split('\n').filter(line => line.trim());
 
@@ -79,8 +75,7 @@ class AIService {
           const match = line.match(/\d+\.\s*\[(\w+)\]:\s*(.+)/);
           if (match) {
             const [, stance, text] = match;
-            // AI's arguments are 'assistant', opponent's are 'user'
-            const isAIArgument = stance.toLowerCase() === context.STANCE.toLowerCase().replace(' ', '');
+            const isAIArgument = stance.toLowerCase() === context.STANCE.toLowerCase();
             messages.push({
               role: isAIArgument ? 'assistant' : 'user',
               content: text.trim()
@@ -89,24 +84,22 @@ class AIService {
         });
       }
 
-      // ✅ Add current round instruction
+      // Add current round instruction
       messages.push({
         role: 'user',
         content: `Round ${context.CURRENT_ROUND}/${context.MAX_ROUNDS}. Generate your next argument for the ${context.STANCE} stance on "${context.TOPIC}". Maximum 500 characters. ${context.OPPONENT_ARGUMENT !== 'No previous arguments yet.' ? 'Respond to: ' + context.OPPONENT_ARGUMENT : ''}`
       });
 
-      // ✅ OPTIMIZED for cheap models
       const requestPayload = {
-        model: personality.model || this.openaiModel, // Use personality-specific model
+        model: personality.model || this.openaiModel,
         messages: messages,
-        max_tokens: Math.min(300, parseInt(process.env.OPENAI_MAX_TOKENS) || 250), // Conservative for cost
-        temperature: personality.difficulty === 'easy' ? 0.5 : 0.7, // Lower for easy bots
+        max_tokens: Math.min(300, parseInt(process.env.OPENAI_MAX_TOKENS) || 250),
+        temperature: 0.7,
         top_p: 0.9,
         presence_penalty: 0.4,
         frequency_penalty: 0.2
       };
 
-      // Log request if debugging
       if (process.env.DEBUG_AI === 'true') {
         console.log('[AI Service] 📤 Request payload:', JSON.stringify(requestPayload, null, 2));
       }
@@ -119,7 +112,7 @@ class AIService {
             'Authorization': `Bearer ${this.openaiApiKey}`,
             'Content-Type': 'application/json'
           },
-          timeout: 25000 // Reduced timeout for faster cheap models
+          timeout: 25000
         }
       );
 
@@ -132,8 +125,8 @@ class AIService {
 
     } catch (error) {
       console.error('[AI Service] ❌ OpenAI API error:', error.response?.data || error.message);
-      console.log('[AI Service] Using rule-based fallback');
-      return this.generateRuleBased(systemPrompt, personality, context);
+      console.log('[AI Service] Using basic fallback');
+      return this.generateBasicFallback(context, personality);
     }
   }
 
@@ -186,70 +179,18 @@ class AIService {
   }
 
   /**
-   * Rule-based argument generation (for fallback)
+   * Basic fallback when API is unavailable
    */
-  generateRuleBased(prompt, personality, context) {
-    const templates = personality.templates;
-    const roundType = this.determineRoundType(context.CURRENT_ROUND, context.MAX_ROUNDS);
+  generateBasicFallback(context, personality) {
+    const stancePhrase = context.STANCE_PHRASE;
 
-    let template;
-    if (roundType === 'opening') {
-      template = templates.opening[Math.floor(Math.random() * templates.opening.length)];
-    } else if (roundType === 'closing') {
-      template = templates.closing[Math.floor(Math.random() * templates.closing.length)];
-    } else {
-      template = templates.counter[Math.floor(Math.random() * templates.counter.length)];
-    }
+    const basicArguments = [
+      `I ${context.STANCE_VERB} ${context.TOPIC} because ${stancePhrase}. This position is supported by clear evidence and logical reasoning.`,
+      `My stance on ${context.TOPIC} is ${context.STANCE} because the benefits are significant. ${context.COUNTER_POINT}.`,
+      `I maintain that ${stancePhrase} regarding ${context.TOPIC}. The evidence strongly supports this position.`
+    ];
 
-    // Replace placeholders in template
-    let argument = this.replacePlaceholders(template, context);
-
-    // Add some variation based on opponent's argument
-    if (context.OPPONENT_ARGUMENT !== 'No previous arguments yet.') {
-      const response = this.generateContextualResponse(
-        context.OPPONENT_ARGUMENT,
-        context.STANCE,
-        personality.difficulty
-      );
-      argument += ' ' + response;
-    }
-
-    return argument;
-  }
-
-  /**
-   * Generate contextual response to opponent's argument
-   */
-  generateContextualResponse(opponentArg, stance, difficulty) {
-    const responses = {
-      easy: [
-        "That's one way to look at it.",
-        "But there are other factors to consider.",
-        "This overlooks some important points."
-      ],
-      medium: [
-        "However, this analysis doesn't account for the broader implications.",
-        "While that point has merit, it fails to address the core issue.",
-        "This argument overlooks critical evidence that contradicts this view."
-      ],
-      hard: [
-        "This reasoning, though initially persuasive, collapses under closer scrutiny.",
-        "The logical structure of this argument contains a fundamental flaw that undermines its conclusion.",
-        "While superficially compelling, this position fails to withstand rigorous examination of the underlying premises."
-      ]
-    };
-
-    const pool = responses[difficulty] || responses.medium;
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-
-  /**
-   * Determine round type
-   */
-  determineRoundType(current, max) {
-    if (current === 1) return 'opening';
-    if (current === max) return 'closing';
-    return 'middle';
+    return basicArguments[Math.floor(Math.random() * basicArguments.length)];
   }
 
   /**
@@ -319,14 +260,8 @@ class AIService {
    * Get list of available AI personalities
    */
   getAvailablePersonalities() {
-    return Object.keys(this.personalities).map(key => ({
-      id: key,
-      name: this.personalities[key].name,
-      difficulty: this.personalities[key].difficulty,
-      displayName: this.personalities[key].displayName,
-      model: this.personalities[key].model || 'gpt-4o-mini',
-      requiresAPIKey: this.personalities[key].requiresAPIKey
-    }));
+    const aiPersonalitiesModule = require('../config/aiPersonalities');
+    return aiPersonalitiesModule.getAIPersonalities();
   }
 
   /**
@@ -340,12 +275,95 @@ class AIService {
     return {
       id: modelId,
       name: personality.name,
-      difficulty: personality.difficulty,
+      personality: personality.personality,
       model: personality.model || 'gpt-4o-mini',
       defaultPrompt: personality.defaultPrompt,
       responseDelay: personality.responseDelay,
       argumentLength: personality.argumentLength
     };
+  }
+
+  /**
+   * Generate AI's post-debate survey response
+   */
+  async generatePostSurveyResponse(debate) {
+    try {
+      const aiPersonality = debate.preDebateSurvey.player2;
+      const aiStance = debate.player2Stance;
+
+      if (!aiPersonality) {
+        console.error('[AI PostSurvey] No AI personality found in pre-survey');
+        return 'opponent_made_points';
+      }
+
+      console.log('[AI PostSurvey] Generating response for personality:', aiPersonality);
+
+      // Get opponent's arguments
+      const humanArguments = debate.arguments.filter(arg => arg.stance !== aiStance);
+
+      // Use the helper from aiPersonalities
+      const prompt = aiPersonalities.getPostSurveyPrompt(
+        aiPersonality,
+        debate.topicQuestion,
+        aiStance,
+        humanArguments
+      );
+
+      // Call OpenAI API
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          model: 'gpt-4o-mini',
+          messages: [
+            {
+              role: 'user',
+              content: prompt
+            }
+          ],
+          max_tokens: 50,
+          temperature: 0.7
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.openaiApiKey}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 15000
+        }
+      );
+
+      const cleanResponse = response.data.choices[0].message.content.trim().toLowerCase();
+
+      // Validate response
+      const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
+      if (validResponses.includes(cleanResponse)) {
+        console.log('[AI PostSurvey] Response:', cleanResponse);
+        return cleanResponse;
+      }
+
+      // Fallback based on personality
+      const fallbacks = {
+        firm_on_stance: 'still_firm',
+        convinced_of_stance: 'opponent_made_points',
+        open_to_change: 'opponent_made_points'
+      };
+
+      console.log('[AI PostSurvey] Invalid response, using fallback:', fallbacks[aiPersonality]);
+      return fallbacks[aiPersonality];
+
+    } catch (error) {
+      console.error('[AI PostSurvey] Error:', error.response?.data || error.message);
+
+      // Fallback based on personality
+      const aiPersonality = debate.preDebateSurvey?.player2;
+      const fallbacks = {
+        firm_on_stance: 'still_firm',
+        convinced_of_stance: 'opponent_made_points',
+        open_to_change: 'opponent_made_points'
+      };
+
+      return fallbacks[aiPersonality] || 'opponent_made_points';
+    }
   }
 }
 
