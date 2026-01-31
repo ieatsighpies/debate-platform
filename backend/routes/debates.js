@@ -700,7 +700,7 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     }
 
     if (text.trim().length > 500) {
-      return res.status(400).json({ message: 'Argument too long (max 200 characters)' });
+      return res.status(400).json({ message: 'Argument too long (max 500 characters)' });
     }
 
     const debate = await Debate.findById(req.params.debateId);
@@ -775,18 +775,26 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
       });
     }
 
-    // Trigger AI response if applicable
+    // ✅ FIXED: Trigger AI response immediately after sending response
+    // This ensures we don't lose the reference and the function executes
     if (debate.player2Type === 'ai' && debate.status === 'active' && debate.aiEnabled) {
       const delay = (debate.aiResponseDelay || 10) * 1000;
-      console.log(`[AI] Scheduling AI response in ${delay / 1000} seconds...`);
+      const debateId = debate._id;
 
-      setTimeout(async () => {
-        try {
-          await triggerAIResponse(debate._id, io);
-        } catch (error) {
-          console.error('[AI] Error in scheduled response:', error);
-        }
-      }, delay);
+      console.log(`[AI] Scheduling AI response in ${delay / 1000} seconds for debate:`, debateId);
+
+      // Use setImmediate to ensure this runs after response is sent
+      setImmediate(async () => {
+        setTimeout(async () => {
+          try {
+            console.log(`[AI] Executing scheduled AI response for debate:`, debateId);
+            const currentIO = req.app.get('io'); // Get fresh io reference
+            await triggerAIResponse(debateId, currentIO);
+          } catch (error) {
+            console.error('[AI] Error in scheduled response:', error);
+          }
+        }, delay);
+      });
     }
 
     res.json({ debate });
