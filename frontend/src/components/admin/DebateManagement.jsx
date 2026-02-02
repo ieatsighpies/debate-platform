@@ -412,6 +412,21 @@ const ChatHistoryModal = () => {
             </div>
           </div>
         )}
+        {/* Turing Test Results */}
+        <div className="flex items-start justify-between gap-2 mt-1 pt-1 border-t border-gray-100">
+          <span className="text-gray-500 flex-shrink-0 text-xs">Perceived opponent as:</span>
+          <span className={`font-medium text-right text-xs ${
+            postDebateSurvey.player1OpponentPerception === 'human' ? 'text-blue-600' :
+            postDebateSurvey.player1OpponentPerception === 'ai' ? 'text-purple-600' :
+            'text-gray-500'
+          }`}>
+            {postDebateSurvey.player1OpponentPerception ? (
+              postDebateSurvey.player1OpponentPerception.charAt(0).toUpperCase() +
+              postDebateSurvey.player1OpponentPerception.slice(1)
+            ) : 'No response'}
+          </span>
+        </div>
+
 
         {/* Players Info - MINIMAL */}
         <div className="px-6 py-2 bg-gray-50 border-b flex items-center justify-between text-xs">

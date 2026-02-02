@@ -649,7 +649,7 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
 
     console.log('[Debate] ✅ AI opponent matched:', {
       debateId: debate._id,
-      aiModel: aiModelId,
+      aiModel: aiModel,
       aiStance,
       aiPersonality: randomAIPersonality,
       firstPlayer: debate.firstPlayer
@@ -1174,14 +1174,23 @@ router.post('/:debateId/pre-survey', authenticate, async (req, res) => {
 router.post('/:debateId/post-survey', authenticate, async (req, res) => {
   try {
     const { debateId } = req.params;
-    const { response } = req.body;
+    const { response, opponentPerception } = req.body;
     const userId = req.user.userId;
 
     const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
+    const validPerceptions = ['human', 'ai', 'unsure'];
 
     if (!response || !validResponses.includes(response)) {
+      console.log('Invalid post-survey response:', response);
       return res.status(400).json({
         message: 'Invalid response. Must be one of: still_firm, opponent_made_points, convinced_to_change'
+      });
+    }
+
+    // ✅ Validate opponent perception
+    if (opponentPerception && !validPerceptions.includes(opponentPerception)) {
+      return res.status(400).json({
+        message: 'Invalid opponent perception. Must be one of: human, ai, unsure'
       });
     }
 
@@ -1210,11 +1219,19 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player1 = response;
+      // ✅ Save opponent perception
+      if (opponentPerception) {
+        debate.postDebateSurvey.player1OpponentPerception = opponentPerception;
+      }
     } else if (isPlayer2) {
       if (debate.postDebateSurvey.player2) {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player2 = response;
+      // ✅ Save opponent perception
+      if (opponentPerception) {
+        debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
+      }
     }
 
     await debate.save();

@@ -46,7 +46,7 @@ export const debateAPI = {
   submitPreSurvey: (debateId, response) =>
     api.post(`/api/debates/${debateId}/pre-survey`, { response }),
   submitPostSurvey: (debateId, response) =>
-    api.post(`/api/debates/${debateId}/post-survey`, { response }),
+    api.post(`/api/debates/${debateId}/post-survey`, response ),
 };
 
 export const authAPI = {

@@ -191,6 +191,7 @@ const DebateRoom = () => {
   // NEW: Handle post-debate survey submission
   const handlePostSurveySubmit = async (response) => {
     try {
+      console.log('[Survey] Submitting:', response); // ✅ Debug log
       await debateAPI.submitPostSurvey(debateId, response);
       toast.success('Thank you for your feedback!');
       setPostSurveySubmitted(true);

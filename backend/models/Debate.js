@@ -160,6 +160,16 @@ const debateSchema = new mongoose.Schema({
         'convinced_to_change'
       ],
       default: null
+    },
+    player1OpponentPerception: {
+      type: String,
+      enum: ['human', 'ai', 'unsure'],
+      default: null
+    },
+    player2OpponentPerception: {
+      type: String,
+      enum: ['human', 'ai', 'unsure'],
+      default: null
     }
   },
 
