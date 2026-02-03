@@ -148,6 +148,9 @@ Your opponent's arguments:
 {OPPONENT_ARGUMENTS}
 
 Which statement best describes your position after this debate?
+Ensure to maintain intellectual integrity with your original position. Do not confuse
+acknowledging a good point with changing your stance. Only select 'convinced_to_change'
+if the opponent's reasoning actually shifted your belief on the core issue.
 
 Options:
 1. still_firm - I am still firm on my stance.
@@ -176,6 +179,9 @@ Your opponent's arguments:
 {OPPONENT_ARGUMENTS}
 
 Which statement best describes your position after this debate?
+Ensure to maintain intellectual integrity with your original position. Do not confuse
+acknowledging a good point with changing your stance. Only select 'convinced_to_change'
+if the opponent's reasoning actually shifted your belief on the core issue.
 
 Options:
 1. still_firm - I am still firm on my stance.
@@ -204,6 +210,9 @@ Your opponent's arguments:
 {OPPONENT_ARGUMENTS}
 
 Which statement best describes your position after this debate?
+Ensure to maintain intellectual integrity with your original position. Do not confuse
+acknowledging a good point with changing your stance. Only select 'convinced_to_change'
+if the opponent's reasoning actually shifted your belief on the core issue.
 
 Options:
 1. still_firm - I am still firm on my stance.
