@@ -426,7 +426,44 @@ const ChatHistoryModal = () => {
             ) : 'No response'}
           </span>
         </div>
+        {/* Confidence Level */}
+        <div className="flex items-start justify-between gap-2 mt-1 pt-1 border-t border-gray-100">
+          <span className="text-gray-500 flex-shrink-0 text-xs">Confidence:</span>
+          <span className="font-medium text-right text-xs text-green-700">
+            {postDebateSurvey.player1PerceptionConfidence ? (
+              `${postDebateSurvey.player1PerceptionConfidence}/5`
+            ) : 'No response'}
+          </span>
+        </div>
 
+        {/* Suspicion Timing */}
+        <div className="flex items-start justify-between gap-2 mt-1 pt-1 border-t border-gray-100">
+          <span className="text-gray-500 flex-shrink-0 text-xs">Suspected:</span>
+          <span className="font-medium text-right text-xs text-blue-700">
+            {postDebateSurvey.player1SuspicionTiming ? (
+              postDebateSurvey.player1SuspicionTiming.replace(/_/g, ' ').replace(/rounds/g, 'R')
+            ) : 'No response'}
+          </span>
+        </div>
+
+        {/* Detection Cues */}
+        {postDebateSurvey.player1DetectionCues && postDebateSurvey.player1DetectionCues.length > 0 && (
+          <div className="mt-2 pt-2 border-t border-gray-200">
+            <span className="text-xs text-gray-500 font-medium">Detection cues:</span>
+            <div className="mt-1 flex flex-wrap gap-1">
+              {postDebateSurvey.player1DetectionCues.map((cue, idx) => (
+                <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">
+                  {cue.replace(/_/g, ' ')}
+                </span>
+              ))}
+            </div>
+            {postDebateSurvey.player1DetectionOther && (
+              <div className="mt-1 text-xs text-gray-600 italic">
+                Other: {postDebateSurvey.player1DetectionOther}
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Players Info - MINIMAL */}
         <div className="px-6 py-2 bg-gray-50 border-b flex items-center justify-between text-xs">

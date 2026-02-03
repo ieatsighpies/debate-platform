@@ -651,7 +651,7 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
       debateId: debate._id,
       aiModel: aiModel,
       aiStance,
-      aiPersonality: randomAIPersonality,
+      aiPersonality: selectedPersonality,
       firstPlayer: debate.firstPlayer
     });
 
@@ -680,7 +680,7 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
         firstPlayer: debate.firstPlayer,
         player2Type: debate.player2Type,
         player2AIModel: debate.player2AIModel,
-        aiPersonality: randomAIPersonality
+        aiPersonality: selectedPersonality
       }
     });
   } catch (error) {
@@ -1174,11 +1174,17 @@ router.post('/:debateId/pre-survey', authenticate, async (req, res) => {
 router.post('/:debateId/post-survey', authenticate, async (req, res) => {
   try {
     const { debateId } = req.params;
-    const { response, opponentPerception } = req.body;
+    const { response, opponentPerception,
+      perceptionConfidence,      // Q3
+      suspicionTiming,           // Q4
+      detectionCues,             // Q5
+      detectionOther             // Q5 - other
+     } = req.body;
     const userId = req.user.userId;
 
     const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
     const validPerceptions = ['human', 'ai', 'unsure'];
+    const validTimings = ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'];
 
     if (!response || !validResponses.includes(response)) {
       console.log('Invalid post-survey response:', response);
@@ -1191,6 +1197,26 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
     if (opponentPerception && !validPerceptions.includes(opponentPerception)) {
       return res.status(400).json({
         message: 'Invalid opponent perception. Must be one of: human, ai, unsure'
+      });
+    }
+    // ✅ Validate confidence (1-5)
+    if (!perceptionConfidence || perceptionConfidence < 1 || perceptionConfidence > 5) {
+      return res.status(400).json({
+        message: 'Invalid confidence level. Must be between 1 and 5'
+      });
+    }
+
+    // ✅ Validate timing
+    if (!suspicionTiming || !validTimings.includes(suspicionTiming)) {
+      return res.status(400).json({
+        message: 'Invalid suspicion timing'
+      });
+    }
+
+    // ✅ Validate detection cues (array)
+    if (!detectionCues || !Array.isArray(detectionCues) || detectionCues.length === 0) {
+      return res.status(400).json({
+        message: 'Please select at least one detection cue'
       });
     }
 
@@ -1219,19 +1245,27 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player1 = response;
-      // ✅ Save opponent perception
-      if (opponentPerception) {
-        debate.postDebateSurvey.player1OpponentPerception = opponentPerception;
+      debate.postDebateSurvey.player1OpponentPerception = opponentPerception;
+      debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence; // ✅ Q3
+      debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;           // ✅ Q4
+      debate.postDebateSurvey.player1DetectionCues = detectionCues;               // ✅ Q5
+      if (detectionOther) {
+        debate.postDebateSurvey.player1DetectionOther = detectionOther;           // ✅ Q5 other
       }
+      console.log('[Post-Survey] ✅ Saved for player1');
     } else if (isPlayer2) {
       if (debate.postDebateSurvey.player2) {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player2 = response;
-      // ✅ Save opponent perception
-      if (opponentPerception) {
-        debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
+      debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
+      debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence; // ✅ Q3
+      debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;           // ✅ Q4
+      debate.postDebateSurvey.player2DetectionCues = detectionCues;               // ✅ Q5
+      if (detectionOther) {
+        debate.postDebateSurvey.player2DetectionOther = detectionOther;           // ✅ Q5 other
       }
+      console.log('[Post-Survey] ✅ Saved for player2');
     }
 
     await debate.save();
