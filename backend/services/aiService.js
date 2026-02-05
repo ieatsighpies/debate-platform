@@ -242,19 +242,42 @@ class AIService {
    * Enforce constraints (length, character limits)
    */
   enforceConstraints(argument, personality) {
-    // Trim to max 500 characters (debate rule)
-    if (argument.length > 500) {
-      argument = argument.substring(0, 497) + '...';
-    }
+  // Calculate target length with variation
+  const minLength = personality.argumentLength.min;
+  const maxLength = Math.min(500, personality.argumentLength.max);
 
-    // Ensure minimum length for personality
-    const minLength = personality.argumentLength.min;
-    if (argument.length < minLength) {
-      argument += ' This position is well-supported by evidence and sound reasoning.';
-    }
+  // Add randomness: target length varies ±10% from midpoint
+  const midpoint = (minLength + maxLength) / 2;
+  const variation = midpoint * 0.1;
+  const targetLength = Math.floor(
+    midpoint + (Math.random() * 2 - 1) * variation
+  );
 
-    return argument.trim();
+  // Smart truncation at sentence boundaries
+  if (argument.length > targetLength) {
+    // Find last complete sentence before target
+    const truncated = argument.substring(0, targetLength);
+    const lastPeriod = truncated.lastIndexOf('.');
+    const lastQuestion = truncated.lastIndexOf('?');
+    const lastExclamation = truncated.lastIndexOf('!');
+
+    const lastSentenceEnd = Math.max(lastPeriod, lastQuestion, lastExclamation);
+
+    if (lastSentenceEnd > minLength) {
+      // Cut at sentence boundary
+      argument = argument.substring(0, lastSentenceEnd + 1);
+    } else {
+      // No good sentence break, cut at word boundary
+      const cutPoint = truncated.lastIndexOf(' ');
+      argument = cutPoint > 0
+        ? argument.substring(0, cutPoint)
+        : truncated;
+    }
   }
+
+  return argument.trim();
+}
+
 
   /**
    * Get list of available AI personalities
