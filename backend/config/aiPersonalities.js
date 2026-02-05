@@ -24,7 +24,7 @@ Previous discussion:
 They just said:
 {OPPONENT_ARGUMENT}
 
-Your response (150-450 characters, make it count):`,
+Your response (2-3 complete sentences, roughly 150-450 characters):`,
     requiresAPIKey: true
   },
 
@@ -49,7 +49,7 @@ What's been said so far:
 Their last argument:
 {OPPONENT_ARGUMENT}
 
-Your counter (150-450 characters):`,
+Your counter (2-3 complete sentences, roughly 150-450 characters):`,
     requiresAPIKey: true
   },
 
@@ -76,7 +76,7 @@ Discussion so far:
 What they just argued:
 {OPPONENT_ARGUMENT}
 
-Your response (150-450 characters):`,
+Your response (2-3 complete sentences, roughly 150-450 characters):`,
     requiresAPIKey: true
   }
 };
