@@ -311,12 +311,138 @@ const MatchmakingDashboard = () => {
         </div>
       )}
 
-      {/* Prompt Editor Modal - Keep existing code */}
-      {showPromptEditor && selectedDebate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          {/* ...existing modal code unchanged... */}
+      {/* Prompt Editor Modal */}
+{showPromptEditor && selectedDebate && (
+  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="p-6 border-b border-gray-200">
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-xl font-bold text-gray-800">Custom AI Prompt</h3>
+            <p className="text-sm text-gray-600 mt-1">
+              {selectedDebate.topicQuestion}
+            </p>
+          </div>
+          <button
+            onClick={() => {
+              setShowPromptEditor(false);
+              setSelectedDebate(null);
+              setCustomPrompt('');
+            }}
+            className="text-gray-400 hover:text-gray-600"
+          >
+            ✕
+          </button>
         </div>
-      )}
+      </div>
+
+      <div className="p-6 space-y-6">
+        {/* AI Personality Selector in Modal */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-3">
+            AI Personality
+          </label>
+          <div className="grid grid-cols-3 gap-3">
+            {aiPersonalities.map(ai => (
+              <button
+                key={ai.id}
+                onClick={() => handleAISelect(ai.id)}
+                className={`p-3 rounded-lg border-2 transition ${
+                  selectedAI === ai.id
+                    ? 'border-indigo-600 bg-indigo-50'
+                    : 'border-gray-300 hover:border-indigo-300'
+                }`}
+              >
+                <Bot className="mx-auto mb-1" size={24} />
+                <p className="font-semibold text-sm text-center">{ai.name}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Response Delay */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Response Delay: {responseDelay} seconds
+          </label>
+          <input
+            type="range"
+            min="7"
+            max="30"
+            value={responseDelay}
+            onChange={(e) => setResponseDelay(Number(e.target.value))}
+            className="w-full"
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Time AI waits before responding (7-30 seconds)
+          </p>
+        </div>
+
+        {/* Default Prompt Preview */}
+        {defaultPrompt && (
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Default Prompt Preview
+            </label>
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm text-gray-700 max-h-48 overflow-y-auto">
+              <pre className="whitespace-pre-wrap font-mono text-xs">
+                {defaultPrompt}
+              </pre>
+            </div>
+          </div>
+        )}
+
+        {/* Custom Prompt Editor */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Custom Prompt (Optional)
+          </label>
+          <textarea
+            value={customPrompt}
+            onChange={(e) => setCustomPrompt(e.target.value)}
+            placeholder="Leave empty to use default prompt, or write your custom instructions..."
+            className="w-full h-64 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none font-mono text-sm"
+          />
+          <p className="text-xs text-gray-500 mt-2">
+            Use placeholders: {'{TOPIC}'}, {'{STANCE}'}, {'{CURRENT_ROUND}'}, {'{MAX_ROUNDS}'}, {'{DEBATE_HISTORY}'}, {'{OPPONENT_ARGUMENT}'}
+          </p>
+        </div>
+      </div>
+
+      {/* Modal Actions */}
+      <div className="p-6 border-t border-gray-200 flex justify-end space-x-3">
+        <button
+          onClick={() => {
+            setShowPromptEditor(false);
+            setSelectedDebate(null);
+            setCustomPrompt('');
+          }}
+          className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={() => handleMatchWithAI(selectedDebate._id)}
+          disabled={loading || !selectedAI}
+          className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-400 text-white rounded-lg transition flex items-center space-x-2"
+        >
+          {loading ? (
+            <>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <span>Matching...</span>
+            </>
+          ) : (
+            <>
+              <Zap size={16} />
+              <span>Match with AI</span>
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
