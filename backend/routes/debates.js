@@ -1249,6 +1249,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence; // ✅ Q3
       debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;           // ✅ Q4
       debate.postDebateSurvey.player1DetectionCues = detectionCues;               // ✅ Q5
+      console.log(response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther);
       if (detectionOther) {
         debate.postDebateSurvey.player1DetectionOther = detectionOther;           // ✅ Q5 other
       }

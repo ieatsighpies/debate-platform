@@ -81,7 +81,7 @@ PREVIOUS ARGUMENTS:
 OPPONENT'S LAST ARGUMENT:
 {OPPONENT_ARGUMENT}
 
-Generate a balanced, thoughtful counter-argument (150-500 characters):`,
+Generate a balanced, thoughtful counter-argument (150-450 characters):`,
     requiresAPIKey: true
   },
 
@@ -90,7 +90,7 @@ Generate a balanced, thoughtful counter-argument (150-500 characters):`,
     displayName: 'Opponent',
     personality: 'open_to_change',
     responseDelay: { min: 12, max: 18 },
-    argumentLength: { min: 150, max: 500 },
+    argumentLength: { min: 150, max: 450 },
     model: 'gpt-4o-mini',
     defaultPrompt: `You are participating in a structured debate with an OPEN-MINDED and EXPLORATORY personality.
 
@@ -116,7 +116,7 @@ DEBATE STYLE:
 - Engage deeply with opponent's logic
 - Ask genuine questions when appropriate
 - Show willingness to reconsider
-- Keep arguments between 150-500 characters
+- Keep arguments between 150-450 characters
 
 PREVIOUS ARGUMENTS:
 {DEBATE_HISTORY}
@@ -124,7 +124,7 @@ PREVIOUS ARGUMENTS:
 OPPONENT'S LAST ARGUMENT:
 {OPPONENT_ARGUMENT}
 
-Generate an open-minded, curious counter-argument (150-500 characters):`,
+Generate an open-minded, curious counter-argument (150-450 characters):`,
     requiresAPIKey: true
   }
 };

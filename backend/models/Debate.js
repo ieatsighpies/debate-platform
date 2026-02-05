@@ -170,49 +170,49 @@ const debateSchema = new mongoose.Schema({
       type: String,
       enum: ['human', 'ai', 'unsure'],
       default: null
-    }
-  },
-  // ✅ NEW: Q3 - Confidence level
-  player1PerceptionConfidence: {
-    type: Number,
-    min: 1,
-    max: 5,
-    default: null
-  },
-  player2PerceptionConfidence: {
-    type: Number,
-    min: 1,
-    max: 5,
-    default: null
-  },
-  // ✅ NEW: Q4 - When suspected
-  player1SuspicionTiming: {
-    type: String,
-    enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
-    default: null
-  },
-  player2SuspicionTiming: {
-    type: String,
-    enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
-    default: null
-  },
-  // ✅ NEW: Q5 - Detection cues
-  player1DetectionCues: {
-    type: [String],
-    default: []
-  },
-  player2DetectionCues: {
-    type: [String],
-    default: []
-  },
-  // ✅ NEW: Q5 - Other reason (if specified)
-  player1DetectionOther: {
-    type: String,
-    default: null
-  },
-  player2DetectionOther: {
-    type: String,
-    default: null
+    },
+    // ✅ NEW: Q3 - Confidence level
+    player1PerceptionConfidence: {
+      type: Number,
+      min: 1,
+      max: 5,
+      default: null
+    },
+    player2PerceptionConfidence: {
+      type: Number,
+      min: 1,
+      max: 5,
+      default: null
+    },
+    // ✅ NEW: Q4 - When suspected
+    player1SuspicionTiming: {
+      type: String,
+      enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
+      default: null
+    },
+    player2SuspicionTiming: {
+      type: String,
+      enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
+      default: null
+    },
+    // ✅ NEW: Q5 - Detection cues
+    player1DetectionCues: {
+      type: [String],
+      default: []
+    },
+    player2DetectionCues: {
+      type: [String],
+      default: []
+    },
+    // ✅ NEW: Q5 - Other reason (if specified)
+    player1DetectionOther: {
+      type: String,
+      default: null
+    },
+    player2DetectionOther: {
+      type: String,
+      default: null
+    },
   },
 
   // Closing statements
