@@ -8,7 +8,7 @@ import {
   Zap,
   Clock,
   User,
-  CheckCircle,
+  ChevronDown,
   XCircle,
   RefreshCw,
   Bot,
@@ -25,6 +25,7 @@ const DebateManagement = () => {
   const [activeTab, setActiveTab] = useState('active');
   const [selectedDebate, setSelectedDebate] = useState(null);
   const [showChatModal, setShowChatModal] = useState(false);
+  const [showSurveyDetails, setShowSurveyDetails] = useState(false);
   const { socket, connected } = useSocket();
 
   // ✅ Memoize fetchDebates so it's stable across renders
@@ -212,7 +213,6 @@ const DebateManagement = () => {
   };
 
 // Chat History Modal Component
-// ✅ Chat History Modal Component - Complete with all labels
 const ChatHistoryModal = () => {
   if (!showChatModal || !selectedDebate) return null;
 
@@ -224,10 +224,23 @@ const ChatHistoryModal = () => {
     player1UserId,
     player2UserId,
     player2Type,
-    player2AIModel
+    player2AIModel,
+    status
   } = selectedDebate;
 
   const isHumanAI = gameMode === 'human-ai' || player2Type === 'ai';
+
+  // ✅ Map AI model to personality name
+  const getAIPersonalityName = (aiModel) => {
+    const personalityMap = {
+      'firm-debater': 'Firm Debater',
+      'balanced-debater': 'Balanced Debater',
+      'open-debater': 'Open-Minded Debater'
+    };
+    return personalityMap[aiModel] || 'AI';
+  };
+
+  const aiPersonalityName = isHumanAI ? getAIPersonalityName(player2AIModel) : null;
 
   // Survey response labels
   const preSurveyLabels = {
@@ -242,7 +255,6 @@ const ChatHistoryModal = () => {
     'convinced_to_change': 'Convinced to Change'
   };
 
-  // ✅ Q3: Confidence levels
   const confidenceLevels = {
     1: 'Not confident at all',
     2: 'Slightly confident',
@@ -251,7 +263,6 @@ const ChatHistoryModal = () => {
     5: 'Extremely confident'
   };
 
-  // ✅ Q4: Suspicion timing
   const timingLabels = {
     'before_5': 'Before round 5',
     'rounds_5_10': 'Between rounds 5-10',
@@ -260,7 +271,6 @@ const ChatHistoryModal = () => {
     'never_suspected': 'I never suspected / realized only now'
   };
 
-  // ✅ Q5: Detection cues - AI perception
   const aiDetectionCuesLabels = {
     'perfect_grammar': 'Perfect grammar / no typos',
     'repetitive_phrases': 'Repetitive word use or phrases',
@@ -271,7 +281,6 @@ const ChatHistoryModal = () => {
     'other': 'Other'
   };
 
-  // ✅ Q5: Detection cues - Human perception
   const humanDetectionCuesLabels = {
     'natural_flow': 'Natural conversational flow',
     'typos_informal': 'Occasional typos or informal language',
@@ -317,7 +326,6 @@ const ChatHistoryModal = () => {
     }
   };
 
-  // ✅ Helper to get detection cue label based on perception
   const getDetectionCueLabel = (cue, perception) => {
     if (perception === 'ai') {
       return aiDetectionCuesLabels[cue] || cue.replace(/_/g, ' ');
@@ -327,11 +335,10 @@ const ChatHistoryModal = () => {
     return cue.replace(/_/g, ' ');
   };
 
-  // Helper to determine who submitted an argument
   const getArgumentAuthor = (arg) => {
     if (arg.submittedBy === 'ai') {
       return {
-        name: `AI (${player2AIModel || 'Bot'})`,
+        name: aiPersonalityName || 'AI',
         type: 'ai',
         icon: <Bot size={14} className="mr-1" />
       };
@@ -369,6 +376,11 @@ const ChatHistoryModal = () => {
               }`}>
                 {isHumanAI ? '🤖 Human vs AI' : '👥 Human vs Human'}
               </span>
+              {isHumanAI && aiPersonalityName && (
+                <span className="px-2 py-1 rounded text-xs font-medium bg-indigo-100 text-indigo-700">
+                  {aiPersonalityName}
+                </span>
+              )}
             </div>
             <p className="text-gray-600 text-sm">
               {selectedDebate.topicQuestion}
@@ -395,238 +407,253 @@ const ChatHistoryModal = () => {
           </button>
         </div>
 
-        {/* Survey Responses Section */}
-        {selectedDebate.status === 'completed' && (
-          <div className="px-6 py-4 bg-gradient-to-r from-blue-50 to-purple-50 border-b">
-            <h3 className="text-xs font-bold text-gray-600 mb-3 uppercase tracking-wide">
-              Survey Responses
-            </h3>
+        {/* Survey Responses Section - COMPACT */}
+        {status === 'completed' && (
+          <div className="px-6 py-3 bg-gray-50 border-b">
+            <button
+              onClick={() => setShowSurveyDetails(!showSurveyDetails)}
+              className="flex items-center justify-between w-full mb-2"
+            >
+              <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide flex items-center">
+                Survey Responses
+                <ChevronDown
+                  size={16}
+                  className={`ml-2 transition-transform ${showSurveyDetails ? 'rotate-180' : ''}`}
+                />
+              </h3>
+              <span className="text-xs text-gray-500">
+                {showSurveyDetails ? 'Hide' : 'Show'} details
+              </span>
+            </button>
 
-            <div className={`grid ${isHumanAI ? 'grid-cols-1' : 'grid-cols-2'} gap-4`}>
-              {/* Player 1 - Always human */}
-              <div className="bg-white rounded-lg px-4 py-3 shadow-sm">
-                <div className="flex items-center space-x-2 mb-3">
-                  <User size={16} className="text-gray-600" />
-                  <span className="font-semibold text-sm text-gray-800">
+            {/* Compact Summary Bar - Always Visible */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Player 1 Summary */}
+              <div className="bg-white rounded-lg px-3 py-2 shadow-sm flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <User size={14} className="text-gray-600" />
+                  <span className="font-semibold text-xs text-gray-800">
                     {player1UserId?.username || 'Player 1'}
                   </span>
-                  <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                    selectedDebate.player1Stance === 'for'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-red-100 text-red-700'
-                  }`}>
-                    {selectedDebate.player1Stance?.toUpperCase()}
-                  </span>
                 </div>
-
-                <div className="space-y-2 text-xs">
-                  {/* Pre-Survey */}
-                  <div className="pb-2 border-b border-gray-100">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-gray-500 flex-shrink-0 font-medium">Before debate:</span>
-                      <span className="text-blue-700 font-semibold text-right">
-                        {preDebateSurvey.player1 ? (
-                          preSurveyLabels[preDebateSurvey.player1] || preDebateSurvey.player1
-                        ) : 'No response'}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Post-Survey */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-gray-500 flex-shrink-0 font-medium">After debate:</span>
-                      <span className="text-purple-700 font-semibold text-right">
-                        {postDebateSurvey.player1 ? (
-                          postSurveyLabels[postDebateSurvey.player1] || postDebateSurvey.player1
-                        ) : 'No response'}
-                      </span>
-                    </div>
-
-                    <div className="flex items-start justify-between gap-2">
-                      <span className="text-gray-500 flex-shrink-0">Conviction change:</span>
-                      <span className={`font-semibold text-right ${getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).color}`}>
-                        {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).arrow} {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).text}
-                      </span>
-                    </div>
-
-                    {/* Turing Test fields */}
-                    {(
-                      <>
-                        <div className="pt-2 border-t border-gray-100">
-                          <div className="flex items-start justify-between gap-2">
-                            <span className="text-gray-500 flex-shrink-0 font-medium">Perceived opponent as:</span>
-                            <span className={`font-semibold text-right ${
-                              postDebateSurvey.player1OpponentPerception === 'human' ? 'text-blue-600' :
-                              postDebateSurvey.player1OpponentPerception === 'ai' ? 'text-purple-600' :
-                              'text-gray-500'
-                            }`}>
-                              {postDebateSurvey.player1OpponentPerception ? (
-                                postDebateSurvey.player1OpponentPerception.charAt(0).toUpperCase() +
-                                postDebateSurvey.player1OpponentPerception.slice(1)
-                              ) : 'No response'}
-                            </span>
-                          </div>
-
-                          {/* ✅ Confidence level with full label */}
-                          {postDebateSurvey.player1PerceptionConfidence && (
-                            <div className="flex items-start justify-between gap-2 mt-1.5">
-                              <span className="text-gray-500 flex-shrink-0">Confidence:</span>
-                              <span className="font-semibold text-right text-green-700">
-                                {confidenceLevels[postDebateSurvey.player1PerceptionConfidence] ||
-                                 `Level ${postDebateSurvey.player1PerceptionConfidence}`}
-                              </span>
-                            </div>
-                          )}
-
-                          {/* ✅ Suspicion timing with full label */}
-                          {postDebateSurvey.player1SuspicionTiming && (
-                            <div className="flex items-start justify-between gap-2 mt-1.5">
-                              <span className="text-gray-500 flex-shrink-0">When suspected:</span>
-                              <span className="font-semibold text-right text-blue-700">
-                                {timingLabels[postDebateSurvey.player1SuspicionTiming] ||
-                                 postDebateSurvey.player1SuspicionTiming.replace(/_/g, ' ')}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-
-                        {/* ✅ Detection Cues with proper labels */}
-                        {postDebateSurvey.player1DetectionCues && postDebateSurvey.player1DetectionCues.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-gray-200">
-                            <span className="text-xs text-gray-500 font-medium block mb-1.5">Detection cues:</span>
-                            <div className="flex flex-wrap gap-1">
-                              {postDebateSurvey.player1DetectionCues.map((cue, idx) => (
-                                <span key={idx} className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-medium">
-                                  {getDetectionCueLabel(cue, postDebateSurvey.player1OpponentPerception)}
-                                </span>
-                              ))}
-                            </div>
-                            {postDebateSurvey.player1DetectionOther && (
-                              <div className="mt-1.5 text-xs text-gray-700 bg-gray-50 p-2 rounded border border-gray-200">
-                                <span className="font-semibold">Other reason:</span> {postDebateSurvey.player1DetectionOther}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </>
-                    )}
-                  </div>
+                <div className="flex items-center space-x-1">
+                  {preDebateSurvey.player1 && postDebateSurvey.player1 && (
+                    <span className={`text-sm font-bold ${getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).color}`}>
+                      {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).arrow}
+                    </span>
+                  )}
+                  <span className={`text-xs font-medium ${
+                    postDebateSurvey.player1 === 'convinced_to_change' ? 'text-green-600' :
+                    postDebateSurvey.player1 === 'opponent_made_points' ? 'text-yellow-600' :
+                    'text-gray-600'
+                  }`}>
+                    {postDebateSurvey.player1 ? (
+                      postSurveyLabels[postDebateSurvey.player1]?.split(' ')[0] || 'N/A'
+                    ) : 'N/A'}
+                  </span>
                 </div>
               </div>
 
-              {/* Player 2 - Only show if Human vs Human */}
-              {!isHumanAI && (
-                <div className="bg-white rounded-lg px-4 py-3 shadow-sm">
-                  <div className="flex items-center space-x-2 mb-3">
-                    <User size={16} className="text-gray-600" />
-                    <span className="font-semibold text-sm text-gray-800">
-                      {player2UserId?.username || 'Player 2'}
-                    </span>
-                    <span className={`px-2 py-0.5 rounded text-xs font-medium ${
-                      selectedDebate.player2Stance === 'for'
-                        ? 'bg-green-100 text-green-700'
-                        : 'bg-red-100 text-red-700'
-                    }`}>
-                      {selectedDebate.player2Stance?.toUpperCase()}
-                    </span>
-                  </div>
-
-                  <div className="space-y-2 text-xs">
-                    <div className="pb-2 border-b border-gray-100">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-gray-500 flex-shrink-0 font-medium">Before debate:</span>
-                        <span className="text-blue-700 font-semibold text-right">
-                          {preDebateSurvey.player2 ? (
-                            preSurveyLabels[preDebateSurvey.player2] || preDebateSurvey.player2
-                          ) : 'No response'}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-gray-500 flex-shrink-0 font-medium">After debate:</span>
-                        <span className="text-purple-700 font-semibold text-right">
-                          {postDebateSurvey.player2 ? (
-                            postSurveyLabels[postDebateSurvey.player2] || postDebateSurvey.player2
-                          ) : 'No response'}
-                        </span>
-                      </div>
-
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-gray-500 flex-shrink-0">Conviction change:</span>
-                        <span className={`font-semibold text-right ${getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).color}`}>
-                          {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).arrow} {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).text}
-                        </span>
-                      </div>
-                    </div>
-                    {/* Turing Test fields */}
-                {(
-                  <>
-                    <div className="pt-2 border-t border-gray-100">
-                      <div className="flex items-start justify-between gap-2">
-                        <span className="text-gray-500 flex-shrink-0 font-medium">Perceived opponent as:</span>
-                        <span className={`font-semibold text-right ${
-                          postDebateSurvey.player2OpponentPerception === 'human' ? 'text-blue-600' :
-                          postDebateSurvey.player2OpponentPerception === 'ai' ? 'text-purple-600' :
-                          'text-gray-500'
-                        }`}>
-                          {postDebateSurvey.player2OpponentPerception ? (
-                            postDebateSurvey.player2OpponentPerception.charAt(0).toUpperCase() +
-                            postDebateSurvey.player2OpponentPerception.slice(1)
-                          ) : 'No response'}
-                        </span>
-                      </div>
-
-                      {/* ✅ Confidence level with full label */}
-                      {postDebateSurvey.player2PerceptionConfidence && (
-                        <div className="flex items-start justify-between gap-2 mt-1.5">
-                          <span className="text-gray-500 flex-shrink-0">Confidence:</span>
-                          <span className="font-semibold text-right text-green-700">
-                            {confidenceLevels[postDebateSurvey.player2PerceptionConfidence] ||
-                              `Level ${postDebateSurvey.player2PerceptionConfidence}`}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* ✅ Suspicion timing with full label */}
-                      {postDebateSurvey.player2SuspicionTiming && (
-                        <div className="flex items-start justify-between gap-2 mt-1.5">
-                          <span className="text-gray-500 flex-shrink-0">When suspected:</span>
-                          <span className="font-semibold text-right text-blue-700">
-                            {timingLabels[postDebateSurvey.player2SuspicionTiming] ||
-                              postDebateSurvey.player2SuspicionTiming.replace(/_/g, ' ')}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* ✅ Detection Cues with proper labels */}
-                    {postDebateSurvey.player2DetectionCues && postDebateSurvey.player2DetectionCues.length > 0 && (
-                      <div className="mt-2 pt-2 border-t border-gray-200">
-                        <span className="text-xs text-gray-500 font-medium block mb-1.5">Detection cues:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {postDebateSurvey.player2DetectionCues.map((cue, idx) => (
-                            <span key={idx} className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-medium">
-                              {getDetectionCueLabel(cue, postDebateSurvey.player2OpponentPerception)}
-                            </span>
-                          ))}
-                        </div>
-                        {postDebateSurvey.player2DetectionOther && (
-                          <div className="mt-1.5 text-xs text-gray-700 bg-gray-50 p-2 rounded border border-gray-200">
-                            <span className="font-semibold">Other reason:</span> {postDebateSurvey.player2DetectionOther}
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </>
-                )}
-                  </div>
+              {/* Player 2/AI Summary */}
+              <div className="bg-white rounded-lg px-3 py-2 shadow-sm flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  {isHumanAI ? (
+                    <Bot size={14} className="text-purple-600" />
+                  ) : (
+                    <User size={14} className="text-gray-600" />
+                  )}
+                  <span className="font-semibold text-xs text-gray-800">
+                    {isHumanAI ? aiPersonalityName : (player2UserId?.username || 'Player 2')}
+                  </span>
                 </div>
-              )}
-
+                <div className="flex items-center space-x-1">
+                  {preDebateSurvey.player2 && postDebateSurvey.player2 && (
+                    <span className={`text-sm font-bold ${getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).color}`}>
+                      {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).arrow}
+                    </span>
+                  )}
+                  <span className={`text-xs font-medium ${
+                    postDebateSurvey.player2 === 'convinced_to_change' ? 'text-green-600' :
+                    postDebateSurvey.player2 === 'opponent_made_points' ? 'text-yellow-600' :
+                    'text-gray-600'
+                  }`}>
+                    {postDebateSurvey.player2 ? (
+                      postSurveyLabels[postDebateSurvey.player2]?.split(' ')[0] || 'N/A'
+                    ) : 'N/A'}
+                  </span>
+                </div>
+              </div>
             </div>
+
+            {/* Expandable Detailed View */}
+            {showSurveyDetails && (
+              <div className="grid grid-cols-2 gap-3 mt-3">
+                {/* Player 1 Details */}
+                <div className="bg-white rounded-lg px-3 py-2 shadow-sm space-y-2 text-xs">
+                  {preDebateSurvey.player1 && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Before:</span>
+                      <span className="text-blue-700 font-medium">
+                        {preSurveyLabels[preDebateSurvey.player1]}
+                      </span>
+                    </div>
+                  )}
+
+                  {postDebateSurvey.player1 && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">After:</span>
+                      <span className="text-purple-700 font-medium">
+                        {postSurveyLabels[postDebateSurvey.player1]}
+                      </span>
+                    </div>
+                  )}
+
+                  {postDebateSurvey.player1OpponentPerception && (
+                    <div className="pt-2 border-t border-gray-100 space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-gray-500">Perceived as:</span>
+                        <span className={`font-medium ${
+                          postDebateSurvey.player1OpponentPerception === 'ai' ? 'text-purple-600' : 'text-blue-600'
+                        }`}>
+                          {postDebateSurvey.player1OpponentPerception === 'ai' ? '🤖 AI' : '👤 Human'}
+                        </span>
+                      </div>
+                      {postDebateSurvey.player1PerceptionConfidence && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Confidence:</span>
+                          <span className="text-green-700 font-medium">
+                            {postDebateSurvey.player1PerceptionConfidence}/5
+                          </span>
+                        </div>
+                      )}
+                      {postDebateSurvey.player1SuspicionTiming && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">When:</span>
+                          <span className="text-blue-700 font-medium text-right">
+                            {timingLabels[postDebateSurvey.player1SuspicionTiming]?.replace('Between ', '') || postDebateSurvey.player1SuspicionTiming}
+                          </span>
+                        </div>
+                      )}
+                      {postDebateSurvey.player1DetectionCues && postDebateSurvey.player1DetectionCues.length > 0 && (
+                        <div className="pt-1">
+                          <span className="text-gray-500 block mb-1">Cues:</span>
+                          <div className="flex flex-wrap gap-1">
+                            {postDebateSurvey.player1DetectionCues.slice(0, 3).map((cue, idx) => (
+                              <span key={idx} className="text-xs bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded">
+                                {getDetectionCueLabel(cue, postDebateSurvey.player1OpponentPerception)}
+                              </span>
+                            ))}
+                            {postDebateSurvey.player1DetectionCues.length > 3 && (
+                              <span className="text-xs text-gray-500">+{postDebateSurvey.player1DetectionCues.length - 3}</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Player 2/AI Details */}
+                <div className="bg-white rounded-lg px-3 py-2 shadow-sm space-y-2 text-xs">
+                  {isHumanAI ? (
+                    // AI Details
+                    <>
+                      {preDebateSurvey.player2 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Before:</span>
+                          <span className="text-blue-700 font-medium">
+                            {preSurveyLabels[preDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.player2 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">After:</span>
+                          <span className="text-purple-700 font-medium">
+                            {postSurveyLabels[postDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.aiResponse && (
+                        <div className="pt-2 border-t border-gray-100">
+                          <span className="text-gray-500 block mb-1">Reflection:</span>
+                          <p className="text-gray-600 italic line-clamp-3">
+                            "{postDebateSurvey.aiResponse}"
+                          </p>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    // Human Player 2 Details
+                    <>
+                      {preDebateSurvey.player2 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Before:</span>
+                          <span className="text-blue-700 font-medium">
+                            {preSurveyLabels[preDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.player2 && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">After:</span>
+                          <span className="text-purple-700 font-medium">
+                            {postSurveyLabels[postDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.player2OpponentPerception && (
+                        <div className="pt-2 border-t border-gray-100 space-y-1">
+                          <div className="flex justify-between">
+                            <span className="text-gray-500">Perceived as:</span>
+                            <span className={`font-medium ${
+                              postDebateSurvey.player2OpponentPerception === 'ai' ? 'text-purple-600' : 'text-blue-600'
+                            }`}>
+                              {postDebateSurvey.player2OpponentPerception === 'ai' ? '🤖 AI' : '👤 Human'}
+                            </span>
+                          </div>
+                          {postDebateSurvey.player2PerceptionConfidence && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">Confidence:</span>
+                              <span className="text-green-700 font-medium">
+                                {postDebateSurvey.player2PerceptionConfidence}/5
+                              </span>
+                            </div>
+                          )}
+                          {postDebateSurvey.player2SuspicionTiming && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-500">When:</span>
+                              <span className="text-blue-700 font-medium text-right">
+                                {timingLabels[postDebateSurvey.player2SuspicionTiming]?.replace('Between ', '') || postDebateSurvey.player2SuspicionTiming}
+                              </span>
+                            </div>
+                          )}
+                          {postDebateSurvey.player2DetectionCues && postDebateSurvey.player2DetectionCues.length > 0 && (
+                            <div className="pt-1">
+                              <span className="text-gray-500 block mb-1">Cues:</span>
+                              <div className="flex flex-wrap gap-1">
+                                {postDebateSurvey.player2DetectionCues.slice(0, 3).map((cue, idx) => (
+                                  <span key={idx} className="text-xs bg-indigo-50 text-indigo-700 px-1.5 py-0.5 rounded">
+                                    {getDetectionCueLabel(cue, postDebateSurvey.player2OpponentPerception).split(' ')[0]}
+                                  </span>
+                                ))}
+                                {postDebateSurvey.player2DetectionCues.length > 3 && (
+                                  <span className="text-xs text-gray-500">+{postDebateSurvey.player2DetectionCues.length - 3}</span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         )}
 
@@ -711,6 +738,7 @@ const ChatHistoryModal = () => {
     </div>
   );
 };
+
 
 
 
