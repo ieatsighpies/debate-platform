@@ -182,121 +182,75 @@ const calculateAIThinkingDelay = (debate) => {
 // ============================================
 const handleAIEarlyEndVote = async (debate, io) => {
   try {
-    const debateId = debate._id.toString();
+    console.log('[AI EarlyEnd] Human voted, calculating AI response...');
 
-    cleanupAITimeout(debateId);
+    // ✅ Calculate AI strategy
+    const strategy = calculateAIVoteStrategy(debate);
 
-    const aiStrategy = calculateAIVoteStrategy(debate);
-    const thinkingDelay = calculateAIThinkingDelay(debate);
+    console.log('[AI EarlyEnd] Strategy calculated:', {
+      shouldAgree: strategy.shouldAgree,
+      confidence: strategy.confidence,
+      factors: strategy.factors
+    });
 
-    console.log('[AI EarlyEnd] AI will respond in', (thinkingDelay / 1000).toFixed(1), 'seconds');
-    console.log('[AI EarlyEnd] AI decision:', aiStrategy.shouldAgree ? 'AGREE' : 'DECLINE');
-    console.log('[AI EarlyEnd] Confidence:', (aiStrategy.confidence * 100).toFixed(1) + '%');
+    if (strategy.shouldAgree) {
+      // ✅ Determine which player is AI
+      const isPlayer1AI = debate.player1Type === 'ai';
+      const aiVoteField = isPlayer1AI ? 'player1Voted' : 'player2Voted';
+      const aiTimestampField = isPlayer1AI ? 'player1Timestamp' : 'player2Timestamp';
 
-    const timeoutId = setTimeout(async () => {
-      try {
-        const currentDebate = await Debate.findOne({
-          _id: debateId,
-          status: 'active',
-          // ✅ Accept both gameMode values
-          $or: [
-            { gameMode: 'human-ai' },
-            { isAIOpponent: true }
-          ]
-        });
+      // Add delay to simulate thinking (1-3 seconds)
+      const thinkingDelay = 1000 + Math.random() * 2000;
 
-        if (!currentDebate) {
-          console.log('[AI EarlyEnd] ❌ Debate no longer active');
-          aiVoteTimeouts.delete(debateId);
-          return;
-        }
+      setTimeout(async () => {
+        try {
+          // Reload debate to ensure fresh data
+          const freshDebate = await Debate.findById(debate._id);
 
-        // ✅ Get player IDs
-        const player1Id = currentDebate.participant1?.toString();
-        const player2Id = currentDebate.participant2?.toString();
-
-        // ✅ Check if votes array exists and has player1's vote
-        const earlyEndVotes = currentDebate.earlyEndVotes || [];
-        const player1Voted = earlyEndVotes.some(voterId => voterId.toString() === player1Id);
-
-        if (!player1Voted) {
-          console.log('[AI EarlyEnd] ❌ Human revoked vote, cancelling AI response');
-          aiVoteTimeouts.delete(debateId);
-          return;
-        }
-
-        // ✅ Check if AI already voted
-        const aiAlreadyVoted = earlyEndVotes.some(voterId => voterId.toString() === player2Id);
-        if (aiAlreadyVoted) {
-          console.log('[AI EarlyEnd] ⚠️ AI already voted');
-          aiVoteTimeouts.delete(debateId);
-          return;
-        }
-
-        if (aiStrategy.shouldAgree) {
-          console.log('[AI EarlyEnd] ✅ AI voting to end debate');
-
-          // ✅ Add AI's vote to the array
-          const updatedDebate = await Debate.findOneAndUpdate(
-            {
-              _id: debateId,
-              status: 'active',
-              earlyEndVotes: { $ne: player2Id } // Ensure AI hasn't voted yet
-            },
-            {
-              $push: { earlyEndVotes: player2Id }
-            },
-            { new: true }
-          );
-
-          if (updatedDebate) {
-            console.log('[AI EarlyEnd] ✅ AI vote recorded');
-
-            // ✅ Emit with correct voter list
-            if (io) {
-              io.to(`debate:${debateId}`).emit('debate:earlyEndVote', {
-                debateId,
-                voters: updatedDebate.earlyEndVotes.map(id => id.toString()),
-                totalVotes: updatedDebate.earlyEndVotes.length,
-                required: 1, // ✅ In AI mode, only 1 vote needed
-                mode: 'ai',
-                aiAgreed: true
-              });
-            }
-
-            // ✅ End debate immediately (only 1 vote needed in AI mode)
-            await completeDebateEarly(debateId, 'player_vote_ai_mode', io);
-            console.log('[AI EarlyEnd] ✅ Debate ended in AI mode');
-          } else {
-            console.log('[AI EarlyEnd] ⚠️ Failed to update debate (already voted or status changed)');
+          if (!freshDebate || freshDebate.status !== 'active') {
+            console.log('[AI EarlyEnd] Debate no longer active, aborting');
+            return;
           }
-        } else {
-          console.log('[AI EarlyEnd] 🤐 AI declined to vote - continuing debate');
 
-          // ✅ Optionally notify frontend that AI declined
+          // Record AI vote
+          freshDebate.earlyEndVotes[aiVoteField] = true;
+          freshDebate.earlyEndVotes[aiTimestampField] = new Date();
+          await freshDebate.save();
+
+          console.log('[AI EarlyEnd] ✅ AI voted to end debate');
+
+          // Emit update to all clients
           if (io) {
-            io.to(`debate:${debateId}`).emit('debate:aiEarlyEndDeclined', {
-              debateId,
-              message: 'AI prefers to continue the debate'
+            io.to(`debate:${freshDebate._id}`).emit('debate:earlyEndVote', {
+              debateId: freshDebate._id.toString(),
+              votes: {
+                player1Voted: freshDebate.earlyEndVotes.player1Voted || false,
+                player2Voted: freshDebate.earlyEndVotes.player2Voted || false
+              }
             });
           }
+
+          const player1Voted = freshDebate.earlyEndVotes.player1Voted || false;
+          const player2Voted = freshDebate.earlyEndVotes.player2Voted || false;
+
+          if (player1Voted && player2Voted) {
+            console.log('[AI EarlyEnd] Both voted - ending debate');
+            await completeDebateEarly(freshDebate._id, 'mutual_consent', io);
+          }
+
+        } catch (error) {
+          console.error('[AI EarlyEnd] ❌ Error in timeout handler:', error);
         }
+      }, thinkingDelay);
 
-        aiVoteTimeouts.delete(debateId);
-
-      } catch (error) {
-        console.error('[AI EarlyEnd] ❌ Error in timeout handler:', error);
-        aiVoteTimeouts.delete(debateId);
-      }
-    }, thinkingDelay);
-
-    aiVoteTimeouts.set(debateId, timeoutId);
+    } else {
+      console.log('[AI EarlyEnd] AI decided not to vote (strategy.shouldAgree = false)');
+    }
 
   } catch (error) {
-    console.error('[AI EarlyEnd] ❌ Error setting up AI vote:', error);
+    console.error('[AI EarlyEnd] ❌ Error handling AI vote:', error);
   }
 };
-
 
 // Debate topics
 const topics = [
@@ -936,14 +890,8 @@ router.post('/:debateId/vote-end', authenticate, async (req, res) => {
       return res.status(400).json({ message: 'Debate is not active' });
     }
 
-    // Check if minimum rounds requirement met
     if (debate.currentRound < 5) {
       return res.status(400).json({ message: 'Must complete at least 5 rounds before ending early' });
-    }
-
-    // Check if votes already expired
-    if (debate.earlyEndVotes.expired) {
-      return res.status(400).json({ message: 'Voting has expired for this debate' });
     }
 
     // Determine which player is voting
@@ -966,11 +914,6 @@ router.post('/:debateId/vote-end', authenticate, async (req, res) => {
     debate.earlyEndVotes[voteField] = true;
     debate.earlyEndVotes[timestampField] = new Date();
 
-    // In human-AI mode, mark that human voted
-    if (debate.gameMode === 'human-ai') {
-      debate.earlyEndVotes.humanVoted = true;
-    }
-
     await debate.save();
 
     console.log('[EarlyEnd] Vote recorded:', {
@@ -981,43 +924,44 @@ router.post('/:debateId/vote-end', authenticate, async (req, res) => {
 
     const io = req.app.get('io');
 
-    // Check if both voted (human-human mode)
-    if (debate.gameMode === 'human-human' &&
-        debate.earlyEndVotes.player1Voted &&
-        debate.earlyEndVotes.player2Voted) {
-
-      console.log('[EarlyEnd] Both players voted - ending debate');
-      await completeDebateEarly(debate._id, 'mutual_consent', io);
-
-      return res.json({
-        message: 'Both players agreed - debate ending',
-        votesComplete: true
-      });
-    }
-
     // Emit vote update
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:earlyEndVote', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         votes: {
-          player1Voted: debate.earlyEndVotes.player1Voted,
-          player2Voted: debate.earlyEndVotes.player2Voted,
-          yourVote: isPlayer1 ? debate.earlyEndVotes.player1Voted : debate.earlyEndVotes.player2Voted
+          player1Voted: debate.earlyEndVotes.player1Voted || false,
+          player2Voted: debate.earlyEndVotes.player2Voted || false
         }
       });
     }
 
-    // Trigger AI response in human-AI mode
-    if (debate.gameMode === 'human-ai' && debate.earlyEndVotes.humanVoted) {
-      console.log('[EarlyEnd] Human voted in AI mode - triggering AI response');
+    // ✅ Check if both voted (human-human mode)
+    if (debate.gameMode === 'human-human') {
+      const player1Voted = debate.earlyEndVotes.player1Voted || false;
+      const player2Voted = debate.earlyEndVotes.player2Voted || false;
+
+      if (player1Voted && player2Voted) {
+        console.log('[EarlyEnd] Both players voted - ending debate');
+        await completeDebateEarly(debate._id, 'mutual_consent', io);
+
+        return res.json({
+          message: 'Both players agreed - debate ending',
+          votesComplete: true
+        });
+      }
+    }
+
+    // ✅ Trigger AI response in human-AI mode
+    if (debate.gameMode === 'human-ai') {
+      console.log('[EarlyEnd] Human voted in AI mode - triggering AI handler');
       handleAIEarlyEndVote(debate, io);
     }
 
     res.json({
       message: 'Vote recorded',
       votes: {
-        player1Voted: debate.earlyEndVotes.player1Voted,
-        player2Voted: debate.earlyEndVotes.player2Voted
+        player1Voted: debate.earlyEndVotes.player1Voted || false,
+        player2Voted: debate.earlyEndVotes.player2Voted || false
       }
     });
 

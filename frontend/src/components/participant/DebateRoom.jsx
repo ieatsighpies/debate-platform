@@ -142,58 +142,85 @@ const DebateRoom = () => {
       }
     };
 
-    // ✅ Handle early end vote updates
-    const handleEarlyEndVote = (data) => {
-      console.log('[DebateRoom] Early end vote update:', data);
+    // In DebateRoom.jsx - Update the socket handler
+const handleEarlyEndVote = (data) => {
+  console.log('[DebateRoom] 📥 Early end vote update received:', data);
 
-      if (!data || data.debateId !== debateIdRef.current) return;
+  if (!data || data.debateId !== debateIdRef.current) {
+    console.log('[DebateRoom] ❌ Event not for this debate');
+    return;
+  }
 
-      if (!data.votes) {
-        console.error('[Vote] Invalid vote data received:', data);
-        return;
-      }
+  if (!data.votes) {
+    console.error('[Vote] ❌ Invalid vote data received:', data);
+    return;
+  }
 
-      const isPlayer1 = debate?.isPlayer1;
-      const yourVoteStatus = isPlayer1
-        ? (data.votes.player1Voted || false)
-        : (data.votes.player2Voted || false);
+  // ✅ Get current debate state to determine player position
+  const currentDebate = debate;
+  if (!currentDebate) {
+    console.error('[Vote] ❌ No debate state available');
+    return;
+  }
 
-      const newVoteState = {
-        player1Voted: data.votes.player1Voted || false,
-        player2Voted: data.votes.player2Voted || false,
-        yourVote: yourVoteStatus
-      };
+  const isPlayer1 = currentDebate.isPlayer1;
+  const yourVoteStatus = isPlayer1
+    ? (data.votes.player1Voted || false)
+    : (data.votes.player2Voted || false);
 
-      console.log('[Vote] Updating state:', {
-        isPlayer1,
-        newVoteState,
-        receivedData: data.votes
-      });
+  const newVoteState = {
+    player1Voted: data.votes.player1Voted || false,
+    player2Voted: data.votes.player2Voted || false,
+    yourVote: yourVoteStatus
+  };
 
-      setEarlyEndVotes(newVoteState);
-      setVotingInProgress(false);
+  console.log('[Vote] ✅ Updating state:', {
+    isPlayer1,
+    received: data.votes,
+    newState: newVoteState,
+    yourVote: yourVoteStatus
+  });
 
-      setDebate(prev => prev ? {
-        ...prev,
-        earlyEndVotes: {
-          player1Voted: newVoteState.player1Voted,
-          player2Voted: newVoteState.player2Voted
-        }
-      } : prev);
+  // ✅ Update vote state
+  setEarlyEndVotes(newVoteState);
+  setVotingInProgress(false);
 
-      // ✅ Always show as if it's human-human mode
-      if (newVoteState.player1Voted && newVoteState.player2Voted) {
-        toast.success('Both players agreed - debate ending early!');
-        setTimeout(() => fetchDebate(), 1000);
-      } else if (yourVoteStatus) {
-        toast.success('Your vote recorded. Waiting for opponent...');
-      } else if (isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted) {
-        toast('Opponent voted to end debate early.', {
-          icon: '👤',
-          duration: 4000
-        });
+  // ✅ Update debate object
+  setDebate(prev => {
+    if (!prev) return prev;
+    return {
+      ...prev,
+      earlyEndVotes: {
+        player1Voted: newVoteState.player1Voted,
+        player2Voted: newVoteState.player2Voted
       }
     };
+  });
+
+  // Show appropriate message
+  if (newVoteState.player1Voted && newVoteState.player2Voted) {
+    toast.success('Both players agreed - debate ending early!');
+    setTimeout(() => fetchDebate(), 1000);
+  } else if (yourVoteStatus) {
+    // Only show this if YOUR status just changed to true
+    const wasYourVote = earlyEndVotes.yourVote;
+    if (!wasYourVote) {
+      toast.success('Your vote recorded. Waiting for opponent...');
+    }
+  } else {
+    // Opponent voted
+    const opponentVoted = isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted;
+    const wasOpponentVoted = isPlayer1 ? earlyEndVotes.player2Voted : earlyEndVotes.player1Voted;
+
+    if (opponentVoted && !wasOpponentVoted) {
+      toast('Opponent voted to end debate early.', {
+        icon: '👤',
+        duration: 4000
+      });
+    }
+  }
+};
+
 
     socket.on('debate:argumentAdded', handleArgumentAdded);
     socket.on('debate:active', handleDebateStarted);
