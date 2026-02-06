@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import api from '../services/api';
-import axios from 'axios';
-import config from '../config';
 
 const AuthContext = createContext();
 
@@ -20,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // Check if token is expired
-  const isTokenExpired = (token) => {
+  const isTokenExpired = useCallback((token) => {
     try {
       const decoded = jwtDecode(token);
       const now = Date.now() / 1000;
@@ -28,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return true;
     }
-  };
+  }, []); // ✅ Wrap in useCallback to make it stable
 
   // Load saved auth on mount
   useEffect(() => {
@@ -46,6 +44,21 @@ export const AuthProvider = ({ children }) => {
       }
     }
     setLoading(false);
+  }, [isTokenExpired]); // ✅ Add isTokenExpired
+
+  const logout = useCallback(async () => {
+    console.log('[Auth] Logging out...');
+
+    try {
+      await api.post('/api/auth/logout');
+    } catch (error) {
+      console.error('[Auth] Logout error:', error);
+    }
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setToken(null);
+    setUser(null);
   }, []);
 
   // Check expiration periodically
@@ -55,53 +68,36 @@ export const AuthProvider = ({ children }) => {
     const interval = setInterval(() => {
       if (isTokenExpired(token)) {
         console.log('[Auth] Token expired, logging out...');
-        logout();
-      navigate(`/login`, { replace: true });
+        logout(); // ✅ Just logout, interceptor handles redirect
       }
-    }, 60000); // Check every minute
+    }, 60000);
 
     return () => clearInterval(interval);
-  }, [token]); // ✅ Add token to dependency
+  }, [token, logout, isTokenExpired]); // ✅ Add all dependencies
 
-  const login = (token, user) => {
+  const refreshAuth = useCallback(() => {
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+
+    if (savedToken && savedUser && !isTokenExpired(savedToken)) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
+      return true;
+    }
+    return false;
+  }, [isTokenExpired]); // ✅ Add isTokenExpired
+
+  const login = useCallback((token, user) => {
     console.log('[Auth] Storing credentials:', { user });
-    // Store auth
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
     setToken(token);
     setUser(user);
-  };
-
-  const logout = useCallback(async () => {
-    console.log('[Auth] Logging out...');
-
-    try {
-      await api.post(`/api/auth/logout`);
-    } catch (error) {
-      console.error('[Auth] Logout error:', error);
-    }
-
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setToken(null);
-    setUser(null);
-  }, []); // Now safe to use in other useEffects
-
-const refreshAuth = useCallback(() => {
-  const savedToken = localStorage.getItem('token');
-  const savedUser = localStorage.getItem('user');
-
-  if (savedToken && savedUser && !isTokenExpired(savedToken)) {
-    setToken(savedToken);
-    setUser(JSON.parse(savedUser));
-    return true;
-  }
-  return false;
-}, []);
+  }, []);
 
   const value = {
     user,
-    token, // ✅ Add this so components can access token
+    token,
     loading,
     login,
     logout,

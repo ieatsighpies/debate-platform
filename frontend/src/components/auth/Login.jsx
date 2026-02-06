@@ -65,9 +65,7 @@ const Login = () => {
 
       console.log('[Guest] API response:', response.data);
 
-      // Store directly in localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      login(response.data.token, response.data.user);
 
       console.log('[Guest] Navigating...');
 
