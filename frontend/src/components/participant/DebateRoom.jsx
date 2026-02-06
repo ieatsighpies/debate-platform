@@ -31,9 +31,8 @@ const DebateRoom = () => {
 
   const debateIdRef = useRef(debateId);
 
-  // ✅ Determine game mode and player status
+  // ✅ HIDDEN from user - internal only
   const isHumanAI = debate?.gameMode === 'human-ai' || debate?.isAIOpponent === true;
-  const isHumanHuman = !isHumanAI;
 
   // Fetch debate data
   const fetchDebate = async () => {
@@ -51,12 +50,11 @@ const DebateRoom = () => {
       const debateData = response.data.debate;
       setDebate(debateData);
 
-      // ✅ Update vote state using boolean structure
+      // ✅ Update vote state
       if (debateData.earlyEndVotes) {
         const isPlayer1 = debateData.isPlayer1;
         const votes = debateData.earlyEndVotes;
 
-        // ✅ Properly determine YOUR vote status
         const yourVoteStatus = isPlayer1
           ? (votes.player1Voted || false)
           : (votes.player2Voted || false);
@@ -144,19 +142,17 @@ const DebateRoom = () => {
       }
     };
 
-    // ✅ Handle early end vote updates (boolean structure) - FIXED
+    // ✅ Handle early end vote updates
     const handleEarlyEndVote = (data) => {
       console.log('[DebateRoom] Early end vote update:', data);
 
       if (!data || data.debateId !== debateIdRef.current) return;
 
-      // ✅ Validate data structure
       if (!data.votes) {
         console.error('[Vote] Invalid vote data received:', data);
         return;
       }
 
-      // ✅ Determine if current user voted
       const isPlayer1 = debate?.isPlayer1;
       const yourVoteStatus = isPlayer1
         ? (data.votes.player1Voted || false)
@@ -177,7 +173,6 @@ const DebateRoom = () => {
       setEarlyEndVotes(newVoteState);
       setVotingInProgress(false);
 
-      // ✅ Update debate object as well
       setDebate(prev => prev ? {
         ...prev,
         earlyEndVotes: {
@@ -186,28 +181,17 @@ const DebateRoom = () => {
         }
       } : prev);
 
-      // ✅ Show appropriate message based on mode
-      const gameMode = debate?.gameMode || (debate?.isAIOpponent ? 'human-ai' : 'human-human');
-
-      if (gameMode === 'human-ai') {
-        if (yourVoteStatus) {
-          toast.success('Vote recorded - ending debate!');
-          setTimeout(() => fetchDebate(), 1000);
-        }
-      } else {
-        // Human-Human mode
-        if (newVoteState.player1Voted && newVoteState.player2Voted) {
-          toast.success('Both players agreed - debate ending early!');
-          setTimeout(() => fetchDebate(), 1000);
-        } else if (yourVoteStatus) {
-          toast.success('Your vote recorded. Waiting for opponent...');
-        } else if (isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted) {
-          // ✅ Use valid toast method
-          toast('Opponent voted to end debate early.', {
-            icon: '👤',
-            duration: 4000
-          });
-        }
+      // ✅ Always show as if it's human-human mode
+      if (newVoteState.player1Voted && newVoteState.player2Voted) {
+        toast.success('Both players agreed - debate ending early!');
+        setTimeout(() => fetchDebate(), 1000);
+      } else if (yourVoteStatus) {
+        toast.success('Your vote recorded. Waiting for opponent...');
+      } else if (isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted) {
+        toast('Opponent voted to end debate early.', {
+          icon: '👤',
+          duration: 4000
+        });
       }
     };
 
@@ -235,7 +219,7 @@ const DebateRoom = () => {
       socket.off('connect', handleConnect);
       leaveDebateRoom(debateId);
     };
-  }, [socket, connected, debateId, debate?.gameMode, debate?.isPlayer1, navigate, joinDebateRoom, leaveDebateRoom]);
+  }, [socket, connected, debateId, debate?.isPlayer1, navigate, joinDebateRoom, leaveDebateRoom]);
 
   // Polling for waiting room
   useEffect(() => {
@@ -326,12 +310,8 @@ const DebateRoom = () => {
       const response = await debateAPI.voteEarlyEnd(debateId);
       console.log('🔵 [Vote] API response:', response);
 
-      // ✅ Different message based on mode
-      if (isHumanAI) {
-        toast.success('Vote recorded - ending debate!');
-      } else {
-        toast.success('Vote recorded. Waiting for opponent...');
-      }
+      // ✅ Always show same message (hide AI mode)
+      toast.success('Vote recorded. Waiting for opponent...');
     } catch (error) {
       console.error('🔴 [Vote] Error occurred:', error);
       toast.error(error.response?.data?.message || 'Failed to vote');
@@ -348,42 +328,33 @@ const DebateRoom = () => {
     }
   };
 
-  // ✅ Get opponent vote status (boolean method)
+  // ✅ Get opponent vote status - Always show for consistency
   const getOpponentVoteStatus = () => {
-    if (!debate || !debate.earlyEndVotes || isHumanAI) return false;
+    if (!debate || !debate.earlyEndVotes) return false;
 
     const isPlayer1 = debate.isPlayer1;
     return isPlayer1 ? earlyEndVotes.player2Voted : earlyEndVotes.player1Voted;
   };
 
-  // ✅ Calculate vote progress (boolean method)
+  // ✅ Calculate vote progress - Always 2 votes required
   const getVoteProgress = () => {
     if (!debate || !debate.earlyEndVotes) {
       return {
         current: 0,
-        required: isHumanAI ? 1 : 2,
+        required: 2,
         message: 'No votes yet'
       };
     }
 
-    if (isHumanAI) {
-      const hasVoted = earlyEndVotes.yourVote;
-      return {
-        current: hasVoted ? 1 : 0,
-        required: 1,
-        message: hasVoted ? 'Vote recorded - ending debate' : 'Vote to end debate with AI'
-      };
-    } else {
-      const player1Voted = earlyEndVotes.player1Voted || false;
-      const player2Voted = earlyEndVotes.player2Voted || false;
-      const current = (player1Voted ? 1 : 0) + (player2Voted ? 1 : 0);
+    const player1Voted = earlyEndVotes.player1Voted || false;
+    const player2Voted = earlyEndVotes.player2Voted || false;
+    const current = (player1Voted ? 1 : 0) + (player2Voted ? 1 : 0);
 
-      return {
-        current,
-        required: 2,
-        message: current === 2 ? 'Both players voted' : `${current}/2 players voted`
-      };
-    }
+    return {
+      current,
+      required: 2,
+      message: current === 2 ? 'Both players voted' : `${current}/2 players voted`
+    };
   };
 
   // Loading state
@@ -528,6 +499,7 @@ const DebateRoom = () => {
           isOpen={showPostSurvey}
           onSubmit={handlePostSurveySubmit}
           onClose={() => {}}
+          isAIOpponent={isHumanAI}
         />
 
         {/* Header */}
@@ -546,16 +518,11 @@ const DebateRoom = () => {
                   {debate.status.toUpperCase()}
                 </span>
                 <span className="font-medium">Round {debate.currentRound} / {debate.maxRounds}</span>
-                {isHumanAI && (
-                  <span className="px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-800">
-                    🤖 vs AI
-                  </span>
-                )}
               </div>
             </div>
           </div>
 
-          {/* Players */}
+          {/* Players - ✅ No AI indicator shown */}
           <div className="grid grid-cols-1 gap-4">
             <div className="border-2 border-indigo-500 rounded-lg p-4 bg-indigo-50">
               <div className="flex items-center justify-between mb-2">
@@ -573,9 +540,7 @@ const DebateRoom = () => {
 
             <div className="border rounded-lg p-4 bg-gray-50">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-medium text-gray-600">
-                  {isHumanAI ? 'AI Opponent' : 'Opponent'}
-                </p>
+                <p className="text-sm font-medium text-gray-600">Opponent</p>
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                   debate.yourStance === 'for'
                     ? 'bg-red-100 text-red-800'
@@ -584,9 +549,7 @@ const DebateRoom = () => {
                   {debate.yourStance === 'for' ? '👎 AGAINST' : '👍 FOR'}
                 </span>
               </div>
-              <p className="font-semibold text-lg text-gray-400">
-                {isHumanAI ? '🤖 AI' : 'Anonymous'}
-              </p>
+              <p className="font-semibold text-lg text-gray-400">Anonymous</p>
             </div>
           </div>
         </div>
@@ -622,7 +585,7 @@ const DebateRoom = () => {
                       )}
                       {!arg.isYours && (
                         <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded font-medium">
-                          {isHumanAI ? '🤖 AI' : 'Opponent'}
+                          Opponent
                         </span>
                       )}
                     </div>
@@ -639,7 +602,7 @@ const DebateRoom = () => {
           )}
         </div>
 
-        {/* Early End Voting */}
+        {/* ✅ Early End Voting - Always shows 2 players required */}
         {debate.status === 'active' && debate.currentRound >= 5 && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="border-t pt-4">
@@ -648,42 +611,27 @@ const DebateRoom = () => {
               </h3>
 
               <p className="text-sm text-gray-600 mb-4">
-                {isHumanAI
-                  ? 'You can end this debate with the AI at any time.'
-                  : 'Both participants must agree to conclude this debate early.'
-                }
+                Both participants must agree to conclude this debate early.
               </p>
 
+              {/* ✅ Always show both players */}
               <div className="flex items-center space-x-4 mb-4">
-                {isHumanAI ? (
-                  <div className="flex items-center">
-                    <div className={`w-3 h-3 rounded-full mr-2 ${
-                      earlyEndVotes.yourVote ? 'bg-green-500' : 'bg-gray-300'
-                    }`}></div>
-                    <span className="text-sm text-gray-700">
-                      Your vote {earlyEndVotes.yourVote ? '✓' : ''}
-                    </span>
-                  </div>
-                ) : (
-                  <>
-                    <div className="flex items-center">
-                      <div className={`w-3 h-3 rounded-full mr-2 ${
-                        earlyEndVotes.yourVote ? 'bg-green-500' : 'bg-gray-300'
-                      }`}></div>
-                      <span className="text-sm text-gray-700">
-                        You {earlyEndVotes.yourVote ? '✓' : ''}
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <div className={`w-3 h-3 rounded-full mr-2 ${
-                        getOpponentVoteStatus() ? 'bg-green-500' : 'bg-gray-300'
-                      }`}></div>
-                      <span className="text-sm text-gray-700">
-                        Opponent {getOpponentVoteStatus() ? '✓' : ''}
-                      </span>
-                    </div>
-                  </>
-                )}
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 rounded-full mr-2 ${
+                    earlyEndVotes.yourVote ? 'bg-green-500' : 'bg-gray-300'
+                  }`}></div>
+                  <span className="text-sm text-gray-700">
+                    You {earlyEndVotes.yourVote ? '✓' : ''}
+                  </span>
+                </div>
+                <div className="flex items-center">
+                  <div className={`w-3 h-3 rounded-full mr-2 ${
+                    getOpponentVoteStatus() ? 'bg-green-500' : 'bg-gray-300'
+                  }`}></div>
+                  <span className="text-sm text-gray-700">
+                    Opponent {getOpponentVoteStatus() ? '✓' : ''}
+                  </span>
+                </div>
               </div>
 
               <div className="mb-4">
@@ -711,7 +659,7 @@ const DebateRoom = () => {
                       Recording vote...
                     </>
                   ) : (
-                    `Vote to End ${isHumanAI ? '' : 'Early'}`
+                    'Vote to End Early'
                   )}
                 </button>
               ) : (
@@ -722,14 +670,9 @@ const DebateRoom = () => {
                   >
                     Revoke Vote
                   </button>
-                  {isHumanHuman && !getOpponentVoteStatus() && (
+                  {!getOpponentVoteStatus() && (
                     <p className="text-sm text-center text-amber-600 font-medium">
                       Waiting for opponent's agreement...
-                    </p>
-                  )}
-                  {isHumanAI && (
-                    <p className="text-sm text-center text-green-600 font-medium">
-                      Ending debate...
                     </p>
                   )}
                 </div>
@@ -790,10 +733,10 @@ const DebateRoom = () => {
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <Loader2 className="animate-spin mx-auto mb-4 text-indigo-600" size={40} />
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Waiting for {isHumanAI ? "AI's" : "opponent's"} argument...
+              Waiting for opponent's argument...
             </h3>
             <p className="text-gray-600 text-sm">
-              {isHumanAI ? 'AI is preparing its response' : 'Your opponent is preparing their response'}
+              Your opponent is preparing their response
             </p>
           </div>
         )}
