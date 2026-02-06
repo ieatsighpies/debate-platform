@@ -73,9 +73,9 @@ const Login = () => {
 
       // Check for active debate
       if (response.data.activeDebate) {
-        window.location.href = `/debate/${response.data.activeDebate}`;
+        navigate(`/debate/${response.data.activeDebate}`, { replace: true });
       } else {
-        window.location.href = '/participant';
+        navigate('/participant', { replace: true });
       }
     } catch (error) {
       console.error('[Guest] Login error:', error);

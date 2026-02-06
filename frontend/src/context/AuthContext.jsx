@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
       if (isTokenExpired(token)) {
         console.log('[Auth] Token expired, logging out...');
         logout();
-        window.location.href = '/login';
+      navigate(`/login`, { replace: true });
       }
     }, 60000); // Check every minute
 
