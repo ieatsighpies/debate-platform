@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { debateAPI } from '../../services/api';
 import { useSocket } from '../../context/socketContext';
 import toast from 'react-hot-toast';
@@ -26,27 +26,8 @@ const DebateManagement = () => {
   const [showChatModal, setShowChatModal] = useState(false);
   const { socket, connected } = useSocket();
 
-  useEffect(() => {
-    fetchDebates();
-
-    if (socket && connected) {
-      socket.emit('join:admin');
-
-      socket.on('debate:created', handleDebateCreated);
-      socket.on('debate:started', fetchDebates);
-      socket.on('debate:completed', fetchDebates);
-      socket.on('debates:cleanup', fetchDebates);
-
-      return () => {
-        socket.off('debate:created');
-        socket.off('debate:started');
-        socket.off('debate:completed');
-        socket.off('debates:cleanup');
-      };
-    }
-  }, [socket, connected]);
-
-  const fetchDebates = async () => {
+  // ✅ Memoize fetchDebates so it's stable across renders
+  const fetchDebates = useCallback(async () => {
     try {
       const response = await debateAPI.getAllDebates();
       setDebates(response.data.debates);
@@ -56,12 +37,36 @@ const DebateManagement = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleDebateCreated = (data) => {
+  const handleDebateCreated = useCallback((data) => {
     console.log('[Admin] New debate created:', data);
     fetchDebates();
-  };
+  }, [fetchDebates]);
+
+  useEffect(() => {
+    fetchDebates();
+  }, [fetchDebates]);
+
+  useEffect(() => {
+    if (!socket || !connected) return;
+
+    console.log('[Admin] Setting up socket listeners');
+    socket.emit('join:admin');
+
+    socket.on('debate:created', handleDebateCreated);
+    socket.on('debate:started', fetchDebates);
+    socket.on('debate:completed', fetchDebates);
+    socket.on('debates:cleanup', fetchDebates);
+
+    return () => {
+      console.log('[Admin] Cleaning up socket listeners');
+      socket.off('debate:created', handleDebateCreated);
+      socket.off('debate:started', fetchDebates);
+      socket.off('debate:completed', fetchDebates);
+      socket.off('debates:cleanup', fetchDebates);
+    };
+  }, [socket, connected, handleDebateCreated, fetchDebates]);
 
   const handleEndDebate = async (debateId) => {
     if (!window.confirm('End this debate early?')) return;

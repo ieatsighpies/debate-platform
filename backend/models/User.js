@@ -18,6 +18,10 @@ const userSchema = new mongoose.Schema({
     enum: ['admin', 'participant'],
     default: 'participant'
   },
+  isGuest: {
+    type: Boolean,
+    default: false
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

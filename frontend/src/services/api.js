@@ -50,8 +50,10 @@ export const debateAPI = {
 };
 
 export const authAPI = {
-  login: (username, password) => axios.post(`${API_URL}/api/auth/login`, { username, password }),
-  register: (username, password) => axios.post(`${API_URL}/api/auth/register`, { username, password }),
+login: (username, password) => api.post('/api/auth/login', { username, password }),
+  guestLogin: () => api.post('/api/auth/guest-login'),
+  register: (username, password) => api.post('/api/auth/register', { username, password }),
+  logout: () => api.post('/api/auth/logout'),
   getUsers: () => api.get('/api/auth/users'),
   createUser: (data) => api.post('/api/auth/register', data),
   deleteUser: (id) => api.delete(`/api/auth/users/${id}`)

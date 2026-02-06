@@ -15,9 +15,9 @@ export default ({ mode }) => {
     server: {
       port: 3000,
       proxy: {
-        '/api': apiUrl || 'http://localhost:5555',  // Use env or fallback
+        '/api': apiUrl,  // Use env or fallback
         '/socket.io': {
-          target: apiUrl || 'http://localhost:5555',  // Use env or fallback
+          target: apiUrl,  // Use env or fallback
           ws: true
         }
       }
@@ -41,7 +41,7 @@ export default ({ mode }) => {
       port: 4173,
       proxy: {
         '/api': {
-          target: apiUrl || 'http://localhost:5555',  // Use env or fallback
+          target: apiUrl,  // Use env or fallback
           changeOrigin: true
         }
       }

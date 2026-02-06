@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Debate = require('../models/Debate');
 const authenticate = require('../middleware/auth');
+const bcrypt = require('bcrypt');
+const { uniqueNamesGenerator, adjectives, animals, colors } = require('unique-names-generator');
 
 // Login (no auth required)
 router.post('/login', async (req, res) => {
@@ -49,6 +52,148 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error('[Auth] Login error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+router.post('/guest-login', async (req, res) => {
+  try {
+    // Check for existing guest with active debate (keep your existing logic)
+    const guestUsers = await User.find({ isGuest: true });
+
+    for (const guest of guestUsers) {
+      const activeDebate = await Debate.findOne({
+        $or: [
+          { player1UserId: guest._id },
+          { player2UserId: guest._id }
+        ],
+        status: 'active'
+      });
+
+      if (activeDebate) {
+        const token = jwt.sign(
+          { userId: guest._id, username: guest.username, role: guest.role },
+          process.env.JWT_SECRET,
+          { expiresIn: '1d' }
+        );
+
+        return res.json({
+          message: 'Resuming guest session',
+          token,
+          user: {
+            userId: guest._id,
+            username: guest.username,
+            role: guest.role
+          },
+          activeDebate: activeDebate._id
+        });
+      }
+    }
+
+    // ✅ Generate unique guest name with retry logic
+    let guestUsername;
+    let attempts = 0;
+    const maxAttempts = 10;
+
+    while (attempts < maxAttempts) {
+      guestUsername = uniqueNamesGenerator({
+        dictionaries: [adjectives, animals],
+        separator: '',
+        length: 2,
+        style: 'capital'
+      });
+
+      // Check if username already exists
+      const existingUser = await User.findOne({ username: guestUsername });
+      if (!existingUser) {
+        break; // Username is unique
+      }
+
+      attempts++;
+      console.log(`[Guest] Username ${guestUsername} taken, retrying...`);
+    }
+
+    // Fallback to timestamp if all attempts fail
+    if (attempts === maxAttempts) {
+      guestUsername = `Guest_${Date.now()}`;
+    }
+
+    const guestUser = new User({
+      username: guestUsername,
+      passwordHash: await bcrypt.hash(Math.random().toString(36), 10),
+      role: 'participant',
+      isGuest: true
+    });
+
+    await guestUser.save();
+    console.log(`[Guest] Created new guest: ${guestUsername}`);
+
+    const token = jwt.sign(
+      { userId: guestUser._id, username: guestUser.username, role: guestUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
+
+    res.json({
+      message: 'Guest login successful',
+      token,
+      user: {
+        userId: guestUser._id,
+        username: guestUser.username,
+        role: guestUser.role
+      },
+      activeDebate: null
+    });
+  } catch (error) {
+    console.error('[Guest] Error:', error);
+    res.status(500).json({ message: 'Server error during guest login', error: error.message });
+  }
+});
+
+router.post('/logout', authenticate, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // ✅ If guest, check for debates
+    if (user.isGuest) {
+      const debates = await Debate.find({
+        $or: [
+          { player1UserId: userId },
+          { player2UserId: userId }
+        ]
+      });
+
+      const hasCompletedDebate = debates.some(d => d.status === 'completed');
+      const hasActiveDebate = debates.some(d => d.status === 'active');
+      const hasNoDebates = debates.length === 0;
+
+      // Delete if no debates at all
+      if (hasNoDebates) {
+        await User.findByIdAndDelete(userId);
+        console.log(`[Logout] Deleted unused guest: ${user.username}`);
+        return res.json({
+          message: 'Guest account deleted (no debates)',
+          deleted: true
+        });
+      }
+
+      // Keep if completed or active debate exists
+      console.log(`[Logout] Keeping guest ${user.username} (has debates)`);
+      return res.json({
+        message: 'Logout successful',
+        deleted: false
+      });
+    }
+
+    // Regular user logout (no deletion)
+    res.json({ message: 'Logout successful', deleted: false });
+  } catch (error) {
+    console.error('[Logout] Error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
