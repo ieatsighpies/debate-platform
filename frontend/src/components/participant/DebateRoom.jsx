@@ -56,17 +56,22 @@ const DebateRoom = () => {
         const isPlayer1 = debateData.isPlayer1;
         const votes = debateData.earlyEndVotes;
 
+        // ✅ Properly determine YOUR vote status
+        const yourVoteStatus = isPlayer1
+          ? (votes.player1Voted || false)
+          : (votes.player2Voted || false);
+
         setEarlyEndVotes({
           player1Voted: votes.player1Voted || false,
           player2Voted: votes.player2Voted || false,
-          yourVote: isPlayer1 ? (votes.player1Voted || false) : (votes.player2Voted || false)
+          yourVote: yourVoteStatus
         });
 
         console.log('[Vote] State initialized:', {
+          isPlayer1,
           player1Voted: votes.player1Voted,
           player2Voted: votes.player2Voted,
-          yourVote: isPlayer1 ? votes.player1Voted : votes.player2Voted,
-          isPlayer1,
+          yourVote: yourVoteStatus,
           gameMode: debateData.gameMode
         });
       }
@@ -139,50 +144,69 @@ const DebateRoom = () => {
       }
     };
 
-    // ✅ Handle early end vote updates (boolean structure)
+    // ✅ Handle early end vote updates (boolean structure) - FIXED
     const handleEarlyEndVote = (data) => {
       console.log('[DebateRoom] Early end vote update:', data);
 
       if (!data || data.debateId !== debateIdRef.current) return;
 
-      // ✅ Update state from boolean structure
-      if (data.votes) {
-        const newVoteState = {
-          player1Voted: data.votes.player1Voted || false,
-          player2Voted: data.votes.player2Voted || false,
-          yourVote: data.votes.yourVote || false
-        };
+      // ✅ Validate data structure
+      if (!data.votes) {
+        console.error('[Vote] Invalid vote data received:', data);
+        return;
+      }
 
-        console.log('[Vote] Updating state:', newVoteState);
-        setEarlyEndVotes(newVoteState);
-        setVotingInProgress(false);
+      // ✅ Determine if current user voted
+      const isPlayer1 = debate?.isPlayer1;
+      const yourVoteStatus = isPlayer1
+        ? (data.votes.player1Voted || false)
+        : (data.votes.player2Voted || false);
 
-        // ✅ Update debate object as well
-        setDebate(prev => prev ? {
-          ...prev,
-          earlyEndVotes: {
-            player1Voted: newVoteState.player1Voted,
-            player2Voted: newVoteState.player2Voted
-          }
-        } : prev);
+      const newVoteState = {
+        player1Voted: data.votes.player1Voted || false,
+        player2Voted: data.votes.player2Voted || false,
+        yourVote: yourVoteStatus
+      };
 
-        // ✅ Show appropriate message based on mode
-        const gameMode = debate?.gameMode || (data.votes.player1Voted && data.votes.player2Voted ? 'human-human' : 'human-ai');
+      console.log('[Vote] Updating state:', {
+        isPlayer1,
+        newVoteState,
+        receivedData: data.votes
+      });
 
-        if (gameMode === 'human-ai') {
-          if (newVoteState.yourVote) {
-            toast.success('Vote recorded - ending debate!');
-            setTimeout(() => fetchDebate(), 1000);
-          }
-        } else {
-          if (newVoteState.player1Voted && newVoteState.player2Voted) {
-            toast.success('Both players agreed - debate ending early!');
-            setTimeout(() => fetchDebate(), 1000);
-          } else if (newVoteState.yourVote) {
-            toast.success('Your vote recorded. Waiting for opponent...');
-          } else {
-            toast.info('Opponent voted to end debate early.');
-          }
+      setEarlyEndVotes(newVoteState);
+      setVotingInProgress(false);
+
+      // ✅ Update debate object as well
+      setDebate(prev => prev ? {
+        ...prev,
+        earlyEndVotes: {
+          player1Voted: newVoteState.player1Voted,
+          player2Voted: newVoteState.player2Voted
+        }
+      } : prev);
+
+      // ✅ Show appropriate message based on mode
+      const gameMode = debate?.gameMode || (debate?.isAIOpponent ? 'human-ai' : 'human-human');
+
+      if (gameMode === 'human-ai') {
+        if (yourVoteStatus) {
+          toast.success('Vote recorded - ending debate!');
+          setTimeout(() => fetchDebate(), 1000);
+        }
+      } else {
+        // Human-Human mode
+        if (newVoteState.player1Voted && newVoteState.player2Voted) {
+          toast.success('Both players agreed - debate ending early!');
+          setTimeout(() => fetchDebate(), 1000);
+        } else if (yourVoteStatus) {
+          toast.success('Your vote recorded. Waiting for opponent...');
+        } else if (isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted) {
+          // ✅ Use valid toast method
+          toast('Opponent voted to end debate early.', {
+            icon: '👤',
+            duration: 4000
+          });
         }
       }
     };
@@ -211,7 +235,7 @@ const DebateRoom = () => {
       socket.off('connect', handleConnect);
       leaveDebateRoom(debateId);
     };
-  }, [socket, connected, debateId, debate?.gameMode, navigate, joinDebateRoom, leaveDebateRoom]);
+  }, [socket, connected, debateId, debate?.gameMode, debate?.isPlayer1, navigate, joinDebateRoom, leaveDebateRoom]);
 
   // Polling for waiting room
   useEffect(() => {
@@ -290,7 +314,10 @@ const DebateRoom = () => {
   };
 
   const handleVoteEarlyEnd = async () => {
-    if (votingInProgress || earlyEndVotes.yourVote) return;
+    if (votingInProgress || earlyEndVotes.yourVote) {
+      console.log('[Vote] Already voted or voting in progress');
+      return;
+    }
 
     console.log('🔵 [Vote] Starting vote process');
     setVotingInProgress(true);
@@ -519,7 +546,6 @@ const DebateRoom = () => {
                   {debate.status.toUpperCase()}
                 </span>
                 <span className="font-medium">Round {debate.currentRound} / {debate.maxRounds}</span>
-                {/* ✅ Show game mode indicator */}
                 {isHumanAI && (
                   <span className="px-2 py-1 rounded text-xs font-medium bg-purple-100 text-purple-800">
                     🤖 vs AI
@@ -613,7 +639,7 @@ const DebateRoom = () => {
           )}
         </div>
 
-        {/* ✅ Early End Voting - Boolean Method */}
+        {/* Early End Voting */}
         {debate.status === 'active' && debate.currentRound >= 5 && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="border-t pt-4">
@@ -621,7 +647,6 @@ const DebateRoom = () => {
                 End Debate Early
               </h3>
 
-              {/* ✅ Different description based on mode */}
               <p className="text-sm text-gray-600 mb-4">
                 {isHumanAI
                   ? 'You can end this debate with the AI at any time.'
@@ -629,10 +654,8 @@ const DebateRoom = () => {
                 }
               </p>
 
-              {/* ✅ Vote status indicators */}
               <div className="flex items-center space-x-4 mb-4">
                 {isHumanAI ? (
-                  // AI mode: Only show player's status
                   <div className="flex items-center">
                     <div className={`w-3 h-3 rounded-full mr-2 ${
                       earlyEndVotes.yourVote ? 'bg-green-500' : 'bg-gray-300'
@@ -642,7 +665,6 @@ const DebateRoom = () => {
                     </span>
                   </div>
                 ) : (
-                  // Human-Human mode: Show both players
                   <>
                     <div className="flex items-center">
                       <div className={`w-3 h-3 rounded-full mr-2 ${
@@ -664,7 +686,6 @@ const DebateRoom = () => {
                 )}
               </div>
 
-              {/* Vote progress bar */}
               <div className="mb-4">
                 <div className="flex justify-between text-xs text-gray-600 mb-1">
                   <span>{voteProgress.message}</span>
@@ -678,7 +699,6 @@ const DebateRoom = () => {
                 </div>
               </div>
 
-              {/* Vote/Revoke button */}
               {!earlyEndVotes.yourVote ? (
                 <button
                   onClick={handleVoteEarlyEnd}
