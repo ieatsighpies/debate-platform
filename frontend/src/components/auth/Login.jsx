@@ -57,7 +57,23 @@ const Login = () => {
 
   const handleGuestLogin = async () => {
     setError('');
-    setGuestLoading(true);
+// ✅ Check if there's already a guest logged in
+  const existingToken = localStorage.getItem('token');
+  const existingUser = localStorage.getItem('user');
+
+  if (existingToken && existingUser) {
+    const user = JSON.parse(existingUser);
+    if (user.isGuest) {
+      const confirmed = window.confirm(
+        'A guest is already logged in on this browser. ' +
+        'Continuing will log out the previous guest. ' +
+        'Continue?'
+      );
+      if (!confirmed) return;
+    }
+  }
+
+  setGuestLoading(true);
 
     try {
       console.log('[Guest] Calling guest login API...');

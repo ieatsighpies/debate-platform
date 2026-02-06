@@ -198,7 +198,11 @@ const handleAIEarlyEndVote = async (debate, io) => {
         const currentDebate = await Debate.findOne({
           _id: debateId,
           status: 'active',
-          gameMode: 'human-ai'
+          // ✅ Accept both gameMode values
+          $or: [
+            { gameMode: 'human-ai' },
+            { isAIOpponent: true }
+          ]
         });
 
         if (!currentDebate) {
@@ -207,14 +211,24 @@ const handleAIEarlyEndVote = async (debate, io) => {
           return;
         }
 
-        if (!currentDebate.earlyEndVotes.humanVoted) {
+        // ✅ Get player IDs
+        const player1Id = currentDebate.participant1?.toString();
+        const player2Id = currentDebate.participant2?.toString();
+
+        // ✅ Check if votes array exists and has player1's vote
+        const earlyEndVotes = currentDebate.earlyEndVotes || [];
+        const player1Voted = earlyEndVotes.some(voterId => voterId.toString() === player1Id);
+
+        if (!player1Voted) {
           console.log('[AI EarlyEnd] ❌ Human revoked vote, cancelling AI response');
           aiVoteTimeouts.delete(debateId);
           return;
         }
 
-        if (currentDebate.earlyEndVotes.expired) {
-          console.log('[AI EarlyEnd] ❌ Votes expired, ignoring');
+        // ✅ Check if AI already voted
+        const aiAlreadyVoted = earlyEndVotes.some(voterId => voterId.toString() === player2Id);
+        if (aiAlreadyVoted) {
+          console.log('[AI EarlyEnd] ⚠️ AI already voted');
           aiVoteTimeouts.delete(debateId);
           return;
         }
@@ -222,38 +236,50 @@ const handleAIEarlyEndVote = async (debate, io) => {
         if (aiStrategy.shouldAgree) {
           console.log('[AI EarlyEnd] ✅ AI voting to end debate');
 
+          // ✅ Add AI's vote to the array
           const updatedDebate = await Debate.findOneAndUpdate(
             {
               _id: debateId,
               status: 'active',
-              'earlyEndVotes.player2Voted': { $ne: true }
+              earlyEndVotes: { $ne: player2Id } // Ensure AI hasn't voted yet
             },
             {
-              $set: {
-                'earlyEndVotes.player2Voted': true,
-                'earlyEndVotes.player2Timestamp': new Date()
-              }
+              $push: { earlyEndVotes: player2Id }
             },
             { new: true }
           );
 
           if (updatedDebate) {
+            console.log('[AI EarlyEnd] ✅ AI vote recorded');
+
+            // ✅ Emit with correct voter list
             if (io) {
               io.to(`debate:${debateId}`).emit('debate:earlyEndVote', {
                 debateId,
-                votes: {
-                  player1Voted: true,
-                  player2Voted: true,
-                  yourVote: true
-                }
+                voters: updatedDebate.earlyEndVotes.map(id => id.toString()),
+                totalVotes: updatedDebate.earlyEndVotes.length,
+                required: 1, // ✅ In AI mode, only 1 vote needed
+                mode: 'ai',
+                aiAgreed: true
               });
             }
 
-            await completeDebateEarly(debateId, 'mutual_consent_ai', io);
-            console.log('[AI EarlyEnd] ✅ Debate ended by mutual consent');
+            // ✅ End debate immediately (only 1 vote needed in AI mode)
+            await completeDebateEarly(debateId, 'player_vote_ai_mode', io);
+            console.log('[AI EarlyEnd] ✅ Debate ended in AI mode');
+          } else {
+            console.log('[AI EarlyEnd] ⚠️ Failed to update debate (already voted or status changed)');
           }
         } else {
-          console.log('[AI EarlyEnd] 🤐 AI declined to vote - no action taken');
+          console.log('[AI EarlyEnd] 🤐 AI declined to vote - continuing debate');
+
+          // ✅ Optionally notify frontend that AI declined
+          if (io) {
+            io.to(`debate:${debateId}`).emit('debate:aiEarlyEndDeclined', {
+              debateId,
+              message: 'AI prefers to continue the debate'
+            });
+          }
         }
 
         aiVoteTimeouts.delete(debateId);
