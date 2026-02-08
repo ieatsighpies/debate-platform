@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { authAPI } from '../../services/api';
 import { LogIn, AlertCircle, Users } from 'lucide-react';
-
+import GuestResumeForm from './GuestResumeForm';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [guestLoading, setGuestLoading] = useState(false);
+  const [showResumeForm, setShowResumeForm] = useState(false);
 
   // Redirect if already logged in
   React.useEffect(() => {
@@ -98,6 +99,15 @@ const Login = () => {
     }
   };
 
+  const handleResumeSuccess = (data) => {
+    login(data.token, data.user);
+
+    if (data.activeDebate) {
+      navigate(`/debate/${data.activeDebate}`, { replace: true });
+    } else {
+      navigate('/participant', { replace: true });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center px-4">
@@ -198,6 +208,36 @@ const Login = () => {
             </>
           )}
         </button>
+        {/* Resume Guest Session Section */}
+        <div className="mt-6 border-t pt-6">
+          {!showResumeForm ? (
+            <button
+              onClick={() => setShowResumeForm(true)}
+              className="w-full py-2 text-indigo-600 hover:text-indigo-800 text-sm font-medium transition flex items-center justify-center"
+            >
+              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+              Already a guest? Resume your session
+            </button>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold text-gray-700">
+                  Resume Guest Session
+                </h3>
+                <button
+                  onClick={() => setShowResumeForm(false)}
+                  className="text-gray-400 hover:text-gray-600 text-sm"
+                >
+                  ✕ Close
+                </button>
+              </div>
+
+              <GuestResumeForm onSuccess={handleResumeSuccess} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

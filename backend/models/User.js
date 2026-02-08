@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema({
   },
   passwordHash: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.isGuest; // ✅ Only require password for non-guests
+    },
     select: false
   },
   role: {

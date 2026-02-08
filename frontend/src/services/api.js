@@ -56,7 +56,9 @@ login: (username, password) => api.post('/api/auth/login', { username, password 
   logout: () => api.post('/api/auth/logout'),
   getUsers: () => api.get('/api/auth/users'),
   createUser: (data) => api.post('/api/auth/register', data),
-  deleteUser: (id) => api.delete(`/api/auth/users/${id}`)
+  deleteUser: (id) => api.delete(`/api/auth/users/${id}`),
+  resumeGuest: (data) => api.post('/api/auth/guest-resume', data),
+  getRecentGuests: () => api.get('/api/auth/guest-list-recent'),
 };
 
 export default api;

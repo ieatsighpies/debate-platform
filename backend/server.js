@@ -4,6 +4,8 @@ const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const { cleanupStaleGuests } = require('./utils/guestCleanup');
+cleanupStaleGuests();
 
 // Load environment variables based on NODE_ENV
 const envFile = process.env.NODE_ENV === 'production'

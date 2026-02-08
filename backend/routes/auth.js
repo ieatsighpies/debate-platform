@@ -5,7 +5,8 @@ const User = require('../models/User');
 const Debate = require('../models/Debate');
 const authenticate = require('../middleware/auth');
 const bcrypt = require('bcrypt');
-const { uniqueNamesGenerator, adjectives, animals, colors } = require('unique-names-generator');
+const { uniqueNamesGenerator, adjectives, animals } = require('unique-names-generator');
+const { guestLoginLimiter } = require('../middleware/rateLimiter');
 
 // Login (no auth required)
 router.post('/login', async (req, res) => {
@@ -55,41 +56,10 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/guest-login', async (req, res) => {
+router.post('/guest-login', guestLoginLimiter, async (req, res) => {
   try {
-    // Check for existing guest with active debate (keep your existing logic)
-    const guestUsers = await User.find({ isGuest: true });
 
-    for (const guest of guestUsers) {
-      const activeDebate = await Debate.findOne({
-        $or: [
-          { player1UserId: guest._id },
-          { player2UserId: guest._id }
-        ],
-        status: 'active'
-      });
-
-      if (activeDebate) {
-        const token = jwt.sign(
-          { userId: guest._id, username: guest.username, role: guest.role },
-          process.env.JWT_SECRET,
-          { expiresIn: '1d' }
-        );
-
-        return res.json({
-          message: 'Resuming guest session',
-          token,
-          user: {
-            userId: guest._id,
-            username: guest.username,
-            role: guest.role
-          },
-          activeDebate: activeDebate._id
-        });
-      }
-    }
-
-    // ✅ Generate unique guest name with retry logic
+    // ✅ Step 2: Generate unique guest username with retry
     let guestUsername;
     let attempts = 0;
     const maxAttempts = 10;
@@ -102,31 +72,35 @@ router.post('/guest-login', async (req, res) => {
         style: 'capital'
       });
 
-      // Check if username already exists
       const existingUser = await User.findOne({ username: guestUsername });
       if (!existingUser) {
-        break; // Username is unique
+        break; // ✅ Username is unique
       }
 
       attempts++;
-      console.log(`[Guest] Username ${guestUsername} taken, retrying...`);
+      console.log(`[Guest] Username ${guestUsername} taken, attempt ${attempts}/${maxAttempts}`);
     }
 
-    // Fallback to timestamp if all attempts fail
+    // Fallback to timestamp if collision persists
     if (attempts === maxAttempts) {
-      guestUsername = `Guest_${Date.now()}`;
+      const timestamp = Date.now();
+      guestUsername = `Guest${timestamp}`;
+      console.log(`[Guest] Using fallback username: ${guestUsername}`);
     }
 
+    // ✅ Step 3: Create guest user WITHOUT password
     const guestUser = new User({
       username: guestUsername,
-      passwordHash: await bcrypt.hash(Math.random().toString(36), 10),
+      // ❌ DO NOT SET passwordHash for guests
       role: 'participant',
-      isGuest: true
+      isGuest: true,
+      lastLogin: new Date()
     });
 
     await guestUser.save();
-    console.log(`[Guest] Created new guest: ${guestUsername}`);
+    console.log(`[Guest] ✅ Created new guest: ${guestUsername} (${guestUser._id})`);
 
+    // ✅ Step 4: Generate JWT token
     const token = jwt.sign(
       { userId: guestUser._id, username: guestUser.username, role: guestUser.role },
       process.env.JWT_SECRET,
@@ -139,13 +113,102 @@ router.post('/guest-login', async (req, res) => {
       user: {
         userId: guestUser._id,
         username: guestUser.username,
-        role: guestUser.role
+        role: guestUser.role,
+        isGuest: true
       },
       activeDebate: null
     });
+
   } catch (error) {
-    console.error('[Guest] Error:', error);
-    res.status(500).json({ message: 'Server error during guest login', error: error.message });
+    console.error('[Guest] ❌ Error:', error);
+
+    // ✅ Better error handling
+    if (error.code === 11000) {
+      // Duplicate username - retry once with timestamp
+      return res.status(409).json({
+        message: 'Username collision, please try again',
+        error: 'duplicate_username'
+      });
+    }
+
+    res.status(500).json({
+      message: 'Server error during guest login',
+      error: error.message
+    });
+  }
+});
+
+router.post('/guest-resume', async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    if (!username) {
+      return res.status(400).json({ message: 'Username is required' });
+    }
+
+    // ✅ Find SPECIFIC guest by username
+    const guestUser = await User.findOne({
+      username: username.trim(),
+      isGuest: true
+    });
+
+    if (!guestUser) {
+      return res.status(404).json({
+        message: 'Guest session not found'
+      });
+    }
+
+    // Generate new token for this specific user
+    const token = jwt.sign(
+      { userId: guestUser._id, username: guestUser.username, role: guestUser.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    guestUser.lastLogin = new Date();
+    await guestUser.save();
+
+    res.json({
+      message: 'Session resumed',
+      token,
+      user: {
+        userId: guestUser._id,
+        username: guestUser.username,
+        role: guestUser.role,
+        isGuest: true
+      }
+    });
+
+  } catch (error) {
+    console.error('[Guest Resume] Error:', error);
+    res.status(500).json({ message: 'Failed to resume session' });
+  }
+});
+
+// Backend: routes/auth.js
+router.get('/guest-list-recent', async (req, res) => {
+  try {
+    // ✅ Only show guests active in last 7 days
+    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+
+    const recentGuests = await User.find({
+      isGuest: true,
+      lastLogin: { $gte: sevenDaysAgo }
+    })
+    .select('username lastLogin') // Only return username and lastLogin
+    .sort({ lastLogin: -1 }) // Most recent first
+    .limit(20); // Limit to 20 for performance
+
+    res.json({
+      guests: recentGuests.map(g => ({
+        username: g.username,
+        lastSeen: g.lastLogin
+      }))
+    });
+
+  } catch (error) {
+    console.error('[Guest List] Error:', error);
+    res.status(500).json({ message: 'Failed to fetch guest list' });
   }
 });
 
