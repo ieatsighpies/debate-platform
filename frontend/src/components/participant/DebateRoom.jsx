@@ -76,15 +76,27 @@ const DebateRoom = () => {
 
       // Check if we need to show post-debate survey
       if (debateData.status === 'completed') {
-        const isPlayer1 = debateData.isPlayer1;
-        const hasSubmitted = isPlayer1
-          ? debateData.postDebateSurvey?.player1
-          : debateData.postDebateSurvey?.player2;
+        // ✅ Check if current user has already submitted
+        const currentUsername = user?.username;
+        const hasSubmitted = debateData.postSurveys?.some(
+          survey => survey.playerId === currentUsername
+        );
 
-        if (!hasSubmitted && !postSurveySubmitted) {
+        console.log('[Survey] Check:', {
+          currentUser: currentUsername,
+          postSurveys: debateData.postSurveys,
+          hasSubmitted,
+          postSurveySubmitted,
+          showPostSurvey
+        });
+
+        // ✅ Only show if not already submitted AND modal isn't already shown
+        if (!hasSubmitted && !postSurveySubmitted && !showPostSurvey) {
           setShowPostSurvey(true);
-        } else {
-          setPostSurveySubmitted(true);
+        } else if (hasSubmitted) {
+            // ✅ Force close if backend confirms submission
+            setPostSurveySubmitted(true);
+            setShowPostSurvey(false);
         }
       }
 
@@ -266,18 +278,27 @@ const handleEarlyEndVote = (data) => {
 
   // Handle post-debate survey submission
   const handlePostSurveySubmit = async (response) => {
-    try {
-      console.log('[Survey] Submitting:', response);
-      await debateAPI.submitPostSurvey(debateId, response);
-      toast.success('Thank you for your feedback!');
-      setPostSurveySubmitted(true);
-      setShowPostSurvey(false);
+  try {
+    console.log('[Survey] Submitting:', response);
+    await debateAPI.submitPostSurvey(debateId, response);
+
+    // ✅ Set state FIRST before fetching
+    setPostSurveySubmitted(true);
+    setShowPostSurvey(false);
+
+    toast.success('Thank you for your feedback!');
+
+    // ✅ Fetch after a small delay to ensure state is set
+    setTimeout(() => {
       fetchDebate();
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to submit survey');
-      throw error;
-    }
-  };
+    }, 100);
+
+  } catch (error) {
+    console.error('[Survey] Submission error:', error);
+    toast.error(error.response?.data?.message || 'Failed to submit survey');
+    throw error;
+  }
+};
 
   const handleCancelDebate = async () => {
     if (!window.confirm('Cancel this debate?')) return;
