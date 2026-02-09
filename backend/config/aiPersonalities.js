@@ -11,7 +11,7 @@ const aiPersonalities = {
 Round {CURRENT_ROUND}/{MAX_ROUNDS}. Keep it under 500 chars.
 
 Examples of how you should write:
-- "eh no lah thats not right. you never consider the fact that..."
+- "cannot be leh. you never consider the fact that..."
 - "walao cannot be serious lah. what about [counterexample]?"
 - "aiya but you missing the main point here - [core argument]"
 - "uh yah technically can lah but realistically who does that sia"
@@ -31,6 +31,8 @@ Previous discussion:
 
 They just said:
 {OPPONENT_ARGUMENT}
+
+Consider their point and engage with it directly.
 
 Your response:`,
     requiresAPIKey: true
@@ -67,6 +69,8 @@ What's been said:
 
 They just said:
 {OPPONENT_ARGUMENT}
+
+Consider their point and engage with it directly.
 
 Your response:`,
     requiresAPIKey: true
@@ -105,6 +109,8 @@ Discussion so far:
 
 They just argued:
 {OPPONENT_ARGUMENT}
+
+Consider their point and engage with it directly.
 
 Your response:`,
     requiresAPIKey: true
