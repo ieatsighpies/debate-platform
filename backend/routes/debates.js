@@ -155,27 +155,64 @@ const calculateAIVoteStrategy = (debate) => {
 // ============================================
 // CALCULATE AI THINKING DELAY
 // ============================================
-const calculateAIThinkingDelay = (debate) => {
-  let delay = 3000 + Math.random() * 17000;
+const aiPersonalities = require('../config/aiPersonalities');
+/**
+ * Calculate realistic response delay based on argument length and debate context
+ */
+function calculateAIResponseDelay(argumentLength, debate, personality) {
+  const round = debate.currentRound;
 
-  const roundsRemaining = debate.maxRounds - debate.currentRound;
+  // Base typing speed: 40-70 chars per second (realistic human range)
+  const baseTypingSpeed = 40 + Math.random() * 30;
 
-  if (roundsRemaining <= 2) {
-    delay *= 0.6;
+  // Calculate typing time based on argument length
+  const typingTime = (argumentLength / baseTypingSpeed) * 1000; // milliseconds
+
+  // Add "thinking time" before typing (varies by round)
+  let thinkingTime;
+
+  if (round <= 3) {
+    // Early rounds: more thinking (3-8 seconds)
+    thinkingTime = 3000 + Math.random() * 5000;
+  } else if (round <= 10) {
+    // Middle rounds: less thinking (1-4 seconds)
+    thinkingTime = 1000 + Math.random() * 3000;
+  } else {
+    // Late rounds: variable (quick or slow due to fatigue)
+    thinkingTime = Math.random() > 0.6
+      ? 500 + Math.random() * 2000    // Quick: 0.5-2.5s
+      : 2000 + Math.random() * 6000;  // Slow: 2-8s
   }
 
-  if (debate.arguments.length > 15) {
-    delay *= 1.3;
+  // Add random "typing pauses" (0-2 pauses)
+  const numPauses = Math.floor(Math.random() * 3);
+  let pauseTime = 0;
+  for (let i = 0; i < numPauses; i++) {
+    pauseTime += 800 + Math.random() * 2200; // 0.8-3 second pauses each
   }
 
+  // Total delay
+  let totalDelay = thinkingTime + typingTime + pauseTime;
+
+  // Apply personality modifier
+  if (personality.personality === 'firm_on_stance') {
+    totalDelay *= 0.85; // Firm debaters respond faster
+  } else if (personality.personality === 'open_to_change') {
+    totalDelay *= 1.15; // Open debaters take longer
+  }
+
+  // Random "distraction" spike (10% chance)
   if (Math.random() < 0.1) {
-    delay += 10000 + Math.random() * 10000;
+    totalDelay += 5000 + Math.random() * 10000; // +5-15 seconds
   }
 
-  delay = Math.max(3000, Math.min(35000, delay));
+  // Enforce bounds
+  const minDelay = 2000;  // 2 seconds minimum
+  const maxDelay = 35000; // 35 seconds maximum
+  totalDelay = Math.max(minDelay, Math.min(maxDelay, totalDelay));
 
-  return delay;
-};
+  return Math.floor(totalDelay);
+}
 
 // ============================================
 // HANDLE AI EARLY END VOTE
@@ -646,9 +683,14 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     // If AI goes first, generate opening argument
     if (debate.firstPlayer === aiStance) {
       console.log('[Debate] AI goes first, generating opening argument...');
-      setTimeout(async () => {
-        await triggerAIResponse(debate._id, io);
-      }, debate.aiResponseDelay * 1000);
+      // ✅ REMOVE OLD DELAY LOGIC, USE NEW FUNCTION
+      setImmediate(async () => {
+        try {
+          await triggerAIResponse(debate._id, io);
+        } catch (error) {
+          console.error('[AI] Error generating opening argument:', error);
+        }
+      });
     }
 
     res.json({
@@ -756,26 +798,20 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     }
 
     // ✅ FIXED: Trigger AI response immediately after sending response
-    // This ensures we don't lose the reference and the function executes
     if (debate.player2Type === 'ai' && debate.status === 'active' && debate.aiEnabled) {
-      const delay = (debate.aiResponseDelay || 10) * 1000;
-      const debateId = debate._id;
+    const debateId = debate._id;
 
-      console.log(`[AI] Scheduling AI response in ${delay / 1000} seconds for debate:`, debateId);
+    console.log('[AI] Scheduling AI response for debate:', debateId);
 
-      // Use setImmediate to ensure this runs after response is sent
-      setImmediate(async () => {
-        setTimeout(async () => {
-          try {
-            console.log(`[AI] Executing scheduled AI response for debate:`, debateId);
-            const currentIO = req.app.get('io'); // Get fresh io reference
-            await triggerAIResponse(debateId, currentIO);
-          } catch (error) {
-            console.error('[AI] Error in scheduled response:', error);
-          }
-        }, delay);
-      });
-    }
+    setImmediate(async () => {
+      try {
+        const currentIO = req.app.get('io');
+        await triggerAIResponse(debateId, currentIO);
+      } catch (error) {
+        console.error('[AI] Error in scheduled response:', error);
+      }
+    });
+  }
 
     res.json({ debate });
   } catch (error) {
@@ -1154,7 +1190,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
 
     const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
     const validPerceptions = ['human', 'ai', 'unsure'];
-    const validTimings = ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'];
+    const validTimings = ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'];
 
     if (!response || !validResponses.includes(response)) {
       console.log('Invalid post-survey response:', response);
@@ -1345,6 +1381,17 @@ async function triggerAIResponse(debateId, io) {
     console.log('[AI] Generating AI argument...');
 
     const aiArgument = await aiService.generateArgument(debate);
+
+    // ✅ GET PERSONALITY FOR DELAY CALCULATION
+    const personality = aiPersonalities[debate.player2AIModel];
+
+    // ✅ CALCULATE DELAY BASED ON ARGUMENT LENGTH
+    const delay = calculateAIResponseDelay(aiArgument.length, debate, personality) || responseDelay;
+
+    console.log(`[AI] Argument generated (${aiArgument.length} chars). Waiting ${(delay/1000).toFixed(1)}s before sending...`);
+
+    // ✅ WAIT THE CALCULATED DELAY
+    await new Promise(resolve => setTimeout(resolve, delay));
 
     debate.arguments.push({
       stance: debate.player2Stance,

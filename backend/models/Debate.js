@@ -187,12 +187,12 @@ const debateSchema = new mongoose.Schema({
     // ✅ NEW: Q4 - When suspected
     player1SuspicionTiming: {
       type: String,
-      enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
+      enum: ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'],
       default: null
     },
     player2SuspicionTiming: {
       type: String,
-      enum: ['before_5', 'rounds_5_10', 'rounds_10_15', 'rounds_15_20', 'never_suspected'],
+      enum: ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'],
       default: null
     },
     // ✅ NEW: Q5 - Detection cues

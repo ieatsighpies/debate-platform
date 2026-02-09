@@ -94,10 +94,10 @@ class AIService {
         model: personality.model || this.openaiModel,
         messages: messages,
         max_tokens: Math.min(300, parseInt(process.env.OPENAI_MAX_TOKENS) || 250),
-        temperature: 0.7,
+        temperature: 1.0,
         top_p: 0.9,
         presence_penalty: 0.4,
-        frequency_penalty: 0.2
+        frequency_penalty: 0.3
       };
 
       if (process.env.DEBUG_AI === 'true') {
@@ -194,49 +194,201 @@ class AIService {
   }
 
   /**
-   * Generate counter points based on topic keywords
-   */
-  generateCounterPoint(debate) {
-    const topic = debate.topicQuestion.toLowerCase();
-    const stance = debate.player2Stance;
+ * Generate counter points based on topic keywords - returns random angle each time
+ */
+generateCounterPoint(debate) {
+  const topic = debate.topicQuestion.toLowerCase();
+  const stance = debate.player2Stance;
+  const round = debate.currentRound;
 
-    if (topic.includes('chatgpt') || topic.includes('ai')) {
-      return stance === 'for'
-        ? 'AI tools enhance learning when used responsibly'
-        : 'over-reliance on AI undermines critical thinking skills';
+  // ✅ Multiple angles for each topic - randomly selected
+  const topicAngles = {
+    'ai': {
+      for: [
+        'AI tools enhance learning when used responsibly',
+        'automation frees humans for creative work',
+        'AI can democratize access to expertise',
+        'early adoption builds critical digital literacy',
+        'AI augments rather than replaces human intelligence',
+        'efficiency gains allow focus on higher-order thinking'
+      ],
+      against: [
+        'over-reliance on AI undermines critical thinking skills',
+        'students lose foundational problem-solving abilities',
+        'creates unfair advantages and inequality',
+        'removes the struggle necessary for deep learning',
+        'makes people intellectually lazy and dependent',
+        'erodes authentic assessment of student abilities'
+      ]
+    },
+    'pineapple': {
+      for: [
+        'diverse flavor combinations expand culinary creativity',
+        'sweet and savory contrasts are proven flavor science',
+        'cultural fusion should be celebrated not gatekept',
+        'personal taste preferences are subjective and valid',
+        'traditional recipes were once innovations too',
+        'texture and acidity balance enhances the dish'
+      ],
+      against: [
+        'traditional recipes exist for good reason',
+        'moisture from pineapple ruins pizza texture',
+        'fruit on savory dishes violates fundamental culinary principles',
+        'sweetness overwhelms the cheese and sauce balance',
+        'some boundaries in food pairing should be respected',
+        'it disrespects Italian culinary heritage'
+      ]
+    },
+    'work_life': {
+      for: [
+        'financial security enables long-term life satisfaction',
+        'career advancement creates opportunities for family',
+        'strong work ethic builds character and discipline',
+        'professional success provides resources for better quality of life',
+        'delayed gratification leads to greater rewards',
+        'building wealth early allows freedom later'
+      ],
+      against: [
+        'work-life balance is essential for overall well-being',
+        'time with loved ones cannot be recovered or bought',
+        'burnout destroys both productivity and health',
+        'relationships and experiences matter more than money',
+        'quality of life means nothing without time to enjoy it',
+        'regret over missed moments is permanent'
+      ]
     }
-    if (topic.includes('pizza') || topic.includes('pineapple')) {
-      return stance === 'for'
-        ? 'diverse flavor combinations expand culinary creativity'
-        : 'traditional recipes exist for good reason';
-    }
-    if (topic.includes('work') || topic.includes('pay') || topic.includes('life')) {
-      return stance === 'for'
-        ? 'financial security enables long-term life satisfaction'
-        : 'work-life balance is essential for overall well-being';
-    }
+  };
 
-    return stance === 'for'
-      ? 'the benefits clearly outweigh any potential drawbacks'
-      : 'the risks and negative consequences are too significant to ignore';
+  // ✅ Detect topic category
+  let category = null;
+  if (topic.includes('chatgpt') || topic.includes('ai') || topic.includes('gpt')) {
+    category = 'ai';
+  } else if (topic.includes('pizza') || topic.includes('pineapple')) {
+    category = 'pineapple';
+  } else if (topic.includes('work') || topic.includes('pay') || topic.includes('life') || topic.includes('balance')) {
+    category = 'work_life';
   }
+
+  // ✅ Get angles for this topic and stance
+  if (category && topicAngles[category]) {
+    const angles = topicAngles[category][stance];
+
+    // Return random angle, avoiding repetition within same debate
+    const usedAngles = debate.counterPointsUsed || [];
+    const availableAngles = angles.filter(angle => !usedAngles.includes(angle));
+
+    if (availableAngles.length > 0) {
+      const selected = availableAngles[Math.floor(Math.random() * availableAngles.length)];
+
+      // Track usage (you'll need to store this in debate object)
+      if (!debate.counterPointsUsed) debate.counterPointsUsed = [];
+      debate.counterPointsUsed.push(selected);
+
+      return selected;
+    }
+
+    // If all used, reset and pick random
+    debate.counterPointsUsed = [];
+    return angles[Math.floor(Math.random() * angles.length)];
+  }
+
+  // ✅ Generic fallback - also with variation
+  const genericAngles = {
+    for: [
+      'the benefits clearly outweigh any potential drawbacks',
+      'practical advantages make this approach superior',
+      'evidence and data support this position strongly',
+      'this addresses real-world needs more effectively',
+      'the positive impact on society is undeniable',
+      'opponents ignore the tangible benefits'
+    ],
+    against: [
+      'the risks and negative consequences are too significant to ignore',
+      'potential harms outweigh any supposed benefits',
+      'this creates more problems than it solves',
+      'unintended consequences make this dangerous',
+      'ethical concerns cannot be dismissed',
+      'proponents overlook serious downsides'
+    ]
+  };
+
+  return genericAngles[stance][Math.floor(Math.random() * genericAngles[stance].length)];
+}
 
   /**
    * Generate strategic notes for advanced AI
    */
-  generateStrategicNotes(debate) {
-    const args = debate.arguments;
-    if (args.length === 0) return 'First argument - establish strong foundation.';
+  /**
+ * Generate strategic notes for advanced AI - varies by round
+ */
+generateStrategicNotes(debate) {
+  const args = debate.arguments;
+  const round = debate.currentRound;
 
-    const myArgs = args.filter(a => a.stance === debate.player2Stance);
-    const theirArgs = args.filter(a => a.stance !== debate.player2Stance);
+  if (args.length === 0) return 'First argument - establish strong foundation.';
 
-    return `You've made ${myArgs.length} arguments. Opponent has made ${theirArgs.length}. ${
-      myArgs.length < theirArgs.length
-        ? 'Focus on addressing their strongest point.'
-        : 'Build on your previous arguments and introduce new evidence.'
-    }`;
+  const myArgs = args.filter(a => a.stance === debate.player2Stance);
+  const theirArgs = args.filter(a => a.stance !== debate.player2Stance);
+
+  // ✅ Round-specific strategic guidance
+  let strategy = '';
+
+  // Early rounds (1-5): Establish position
+  if (round <= 5) {
+    const strategies = [
+      'Establish your core position clearly.',
+      'Focus on your strongest argument first.',
+      'Set up the framework for your stance.',
+      'Address the fundamental question directly.'
+    ];
+    strategy = strategies[Math.floor(Math.random() * strategies.length)];
   }
+
+  // Mid rounds (6-12): Engage and counter
+  else if (round <= 12) {
+    if (theirArgs.length > 0) {
+      const lastOpponentArg = theirArgs[theirArgs.length - 1].text;
+      const strategies = [
+        'Counter their specific claim with concrete evidence.',
+        'Point out the weakness in their logic.',
+        'Introduce a new angle they haven\'t considered.',
+        'Use a real-world example to illustrate your point.',
+        'Challenge their assumptions directly.',
+        'Bring up practical implications they\'re ignoring.'
+      ];
+      strategy = strategies[Math.floor(Math.random() * strategies.length)];
+    } else {
+      strategy = 'Build on your previous arguments with new evidence.';
+    }
+  }
+
+  // Late rounds (13-17): Pivot or deepen
+  else if (round <= 17) {
+    const strategies = [
+      'Shift to a different aspect of the topic you haven\'t explored.',
+      'Go deeper into one specific point with detailed analysis.',
+      'Use a hypothetical scenario to test their position.',
+      'Address the broader implications of this debate.',
+      'Focus on the strongest counterargument they\'ve made.',
+      'Bring in a fresh perspective or example.'
+    ];
+    strategy = strategies[Math.floor(Math.random() * strategies.length)];
+  }
+
+  // Final rounds (18+): Consolidate or concede gracefully
+  else {
+    const strategies = [
+      'Synthesize your strongest points into a cohesive argument.',
+      'Acknowledge valid concerns but reinforce why your stance holds.',
+      'Make your most compelling practical argument.',
+      'Focus on real-world consequences.',
+      'Keep it simple and direct - one strong final point.'
+    ];
+    strategy = strategies[Math.floor(Math.random() * strategies.length)];
+  }
+
+  return `Round ${round}/${debate.maxRounds}. ${strategy}`;
+}
 
   /**
    * Enforce constraints (length, character limits)

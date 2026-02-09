@@ -55,12 +55,15 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
 
   // ✅ Q4: Suspicion timing
   const timingOptions = [
-    { value: 'before_5', label: 'Before round 5' },
-    { value: 'rounds_5_10', label: 'Between rounds 5-10' },
-    { value: 'rounds_10_15', label: 'Between rounds 10-15' },
-    { value: 'rounds_15_20', label: 'Between rounds 15-20' },
-    { value: 'never_suspected', label: 'I never suspected / realized only now' }
-  ];
+  { value: 'round_1_2', label: 'Round 1-2 (immediately)' },
+  { value: 'round_3_4', label: 'Round 3-4 (early)' },
+  { value: 'round_5_7', label: 'Round 5-7 (mid-early)' },
+  { value: 'round_8_12', label: 'Round 8-12 (middle)' },
+  { value: 'round_13_17', label: 'Round 13-17 (late)' },
+  { value: 'round_18_20', label: 'Round 18-20 (very late)' },
+  { value: 'never_suspected', label: 'I never suspected / realized only now' }
+];
+
 
   // ✅ Q5: Detection cues (dynamic based on perception)
   const aiDetectionCues = [
