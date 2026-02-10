@@ -60,6 +60,10 @@ class AIService {
     try {
       console.log('[AI Service] Calling OpenAI API with model:', personality.model || this.openaiModel);
 
+      // Strip the conversation history/opponent argument from the system prompt
+      // since we provide those as proper chat messages below.
+      // This prevents the model from seeing them as passive context and ignoring them.
+
       const messages = [
         {
           role: 'system',
@@ -68,6 +72,7 @@ class AIService {
       ];
 
       // Add debate history as alternating user/assistant messages
+      // This makes the model treat the conversation as a real back-and-forth
       if (context.DEBATE_HISTORY && context.DEBATE_HISTORY !== 'Debate just started.') {
         const historyLines = context.DEBATE_HISTORY.split('\n').filter(line => line.trim());
 
@@ -84,11 +89,24 @@ class AIService {
         });
       }
 
-      // Add current round instruction
-      messages.push({
-        role: 'user',
-        content: `Round ${context.CURRENT_ROUND}/${context.MAX_ROUNDS}. Generate your next argument for the ${context.STANCE} stance on "${context.TOPIC}". Maximum 500 characters. ${context.OPPONENT_ARGUMENT !== 'No previous arguments yet.' ? 'Respond to: ' + context.OPPONENT_ARGUMENT : ''}`
-      });
+      // Final user message: the opponent's latest argument.
+      // Don't duplicate it if it was already the last message in history.
+      const lastMsg = messages[messages.length - 1];
+      const opponentArg = context.OPPONENT_ARGUMENT;
+      const alreadyInHistory = lastMsg && lastMsg.role === 'user' &&
+        lastMsg.content.trim() === opponentArg.trim();
+
+      if (opponentArg && opponentArg !== 'No previous arguments yet.' && !alreadyInHistory) {
+        messages.push({
+          role: 'user',
+          content: opponentArg
+        });
+      } else if (opponentArg === 'No previous arguments yet.') {
+        messages.push({
+          role: 'user',
+          content: `start the debate - share your take on ${context.TOPIC} (${context.STANCE} side). keep it casual and under 500 chars`
+        });
+      }
 
       const requestPayload = {
         model: personality.model || this.openaiModel,
