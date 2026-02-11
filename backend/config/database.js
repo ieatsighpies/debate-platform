@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 async function connectDB() {
   try {
-    const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/debate-platform';
+    const uri = process.env.MONGO_URI;
     console.log('Attempting MongoDB connection...');
     const conn = await mongoose.connect(uri, {
       useNewUrlParser: true,

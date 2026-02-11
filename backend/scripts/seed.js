@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 async function seed() {
   try {
-    await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/debate-platform');
+    await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB');
 
     const adminExists = await User.findOne({ username: 'admin' });

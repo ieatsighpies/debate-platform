@@ -43,7 +43,7 @@ app.get('/', function (req, res) {
 // ============================================
 // CORS Configuration
 // ============================================
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
+const CLIENT_URL = process.env.CLIENT_URL;
 
 app.use(cors({
   origin: CLIENT_URL,
@@ -118,7 +118,7 @@ io.on('connection', (socket) => {
 // ============================================
 // MongoDB Connection
 // ============================================
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/debate-platform-v2';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
@@ -134,7 +134,7 @@ mongoose.connect(MONGODB_URI)
 // ============================================
 // Start Server
 // ============================================
-const PORT = process.env.PORT || 5555;
+const PORT = process.env.PORT;
 
 server.listen(PORT, '0.0.0.0', () => {
   console.log('\n=================================');
