@@ -30,6 +30,7 @@ validateEnv();
 
 const authRoutes = require('./routes/auth');
 const debateRoutes = require('./routes/debates');
+const { startAutoMatchJob } = require('./utils/autoMatch');
 
 const app = express();
 const server = http.createServer(app);
@@ -123,6 +124,7 @@ mongoose.connect(MONGODB_URI)
   .then(() => {
     console.log('[MongoDB] ✅ Connected to MongoDB');
     console.log('[MongoDB] Database:', mongoose.connection.name);
+    startAutoMatchJob(io);
   })
   .catch((error) => {
     console.error('[MongoDB] ❌ Connection error:', error);
