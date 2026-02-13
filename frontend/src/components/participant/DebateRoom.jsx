@@ -44,6 +44,7 @@ const DebateRoom = () => {
   const debateIdRef = useRef(debateId);
   const debateRef = useRef(null);
   const beliefPromptDelayRef = useRef(null);
+  const normsShownOnceRef = useRef(false);
 
   useEffect(() => {
     debateIdRef.current = debateId;
@@ -147,8 +148,8 @@ const DebateRoom = () => {
       setError(null);
 
       // Show norms once before round 1 for active debates
-      if (debateData.status === 'active' && debateData.currentRound === 1 && !debateData._normsShown) {
-        // Use local flag to avoid blocking server model changes
+      if (debateData.status === 'active' && debateData.currentRound === 1 && !normsShownOnceRef.current && !debateData._normsShown) {
+        normsShownOnceRef.current = true;
         console.log('[Norms] Showing norms before round 1');
         setShowNorms(true);
       }
@@ -188,6 +189,17 @@ const DebateRoom = () => {
     return Math.max(...completedRounds);
   };
 
+  const calculateBeliefPromptDelay = (debateData, roundNumber) => {
+    const args = (debateData?.arguments || []).filter(arg => arg.round === roundNumber);
+    const opponentArg = args.find(arg => arg.stance !== debateData?.yourStance);
+    const opponentLength = opponentArg?.text?.length || 0;
+    const baseDelay = 1500;
+    const perCharDelay = 25;
+    const maxDelay = 8000;
+    const delay = baseDelay + opponentLength * perCharDelay;
+    return Math.min(maxDelay, Math.max(baseDelay, delay));
+  };
+
   // Initial fetch
   useEffect(() => {
     fetchDebate();
@@ -214,10 +226,12 @@ const DebateRoom = () => {
       if (beliefPromptDelayRef.current) {
         clearTimeout(beliefPromptDelayRef.current);
       }
+      const promptDelay = calculateBeliefPromptDelay(debate, latestCompletedRound);
+      console.log('[BeliefDebug] Prompt delay (ms)', promptDelay);
       beliefPromptDelayRef.current = setTimeout(() => {
         setShowBeliefPrompt(true);
         beliefPromptDelayRef.current = null;
-      }, 2500);
+      }, promptDelay);
     }
   }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
 

@@ -252,9 +252,18 @@ const ChatHistoryModal = () => {
   };
 
   const postSurveyLabels = {
-    'still_firm': 'Still Firm',
-    'opponent_made_points': 'Opponent Made Points',
-    'convinced_to_change': 'Convinced to Change'
+    'strengthened': 'Strengthened stance',
+    'slightly_strengthened': 'Slightly strengthened',
+    'no_effect': 'No effect',
+    'slightly_weakened': 'Slightly weakened',
+    'weakened': 'Weakened stance'
+  };
+
+  const getPostSurveyColor = (status) => {
+    if (!status) return 'text-gray-600';
+    if (['weakened', 'slightly_weakened'].includes(status)) return 'text-green-600';
+    if (['strengthened', 'slightly_strengthened'].includes(status)) return 'text-red-600';
+    return 'text-gray-600';
   };
 
   const confidenceLevels = {
@@ -300,9 +309,11 @@ const ChatHistoryModal = () => {
   };
 
   const postSurveyIndex = {
-    'still_firm': 0,
-    'opponent_made_points': 1,
-    'convinced_to_change': 2
+    'strengthened': 0,
+    'slightly_strengthened': 1,
+    'no_effect': 2,
+    'slightly_weakened': 3,
+    'weakened': 4
   };
 
   const getConvictionChange = (preSurvey, postSurvey) => {
@@ -444,11 +455,7 @@ const ChatHistoryModal = () => {
                       {getConvictionChange(preDebateSurvey.player1, postDebateSurvey.player1).arrow}
                     </span>
                   )}
-                  <span className={`text-xs font-medium ${
-                    postDebateSurvey.player1 === 'convinced_to_change' ? 'text-green-600' :
-                    postDebateSurvey.player1 === 'opponent_made_points' ? 'text-yellow-600' :
-                    'text-gray-600'
-                  }`}>
+                  <span className={`text-xs font-medium ${getPostSurveyColor(postDebateSurvey.player1)}`}>
                     {postDebateSurvey.player1 ? (
                       postSurveyLabels[postDebateSurvey.player1]?.split(' ')[0] || 'N/A'
                     ) : 'N/A'}
@@ -474,11 +481,7 @@ const ChatHistoryModal = () => {
                       {getConvictionChange(preDebateSurvey.player2, postDebateSurvey.player2).arrow}
                     </span>
                   )}
-                  <span className={`text-xs font-medium ${
-                    postDebateSurvey.player2 === 'convinced_to_change' ? 'text-green-600' :
-                    postDebateSurvey.player2 === 'opponent_made_points' ? 'text-yellow-600' :
-                    'text-gray-600'
-                  }`}>
+                  <span className={`text-xs font-medium ${getPostSurveyColor(postDebateSurvey.player2)}`}>
                     {postDebateSurvey.player2 ? (
                       postSurveyLabels[postDebateSurvey.player2]?.split(' ')[0] || 'N/A'
                     ) : 'N/A'}
@@ -506,6 +509,23 @@ const ChatHistoryModal = () => {
                       <span className="text-gray-500">After:</span>
                       <span className="text-purple-700 font-medium">
                         {postSurveyLabels[postDebateSurvey.player1]}
+                      </span>
+                    </div>
+                  )}
+
+                  {postDebateSurvey.player1StanceStrength && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Stance strength:</span>
+                      <span className="text-indigo-700 font-medium">
+                        {postDebateSurvey.player1StanceStrength}/7
+                      </span>
+                    </div>
+                  )}
+                  {postDebateSurvey.player1StanceConfidence && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-500">Stance confidence:</span>
+                      <span className="text-indigo-700 font-medium">
+                        {postDebateSurvey.player1StanceConfidence}/7
                       </span>
                     </div>
                   )}
@@ -574,6 +594,23 @@ const ChatHistoryModal = () => {
                           <span className="text-gray-500">After:</span>
                           <span className="text-purple-700 font-medium">
                             {postSurveyLabels[postDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.player2StanceStrength && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Stance strength:</span>
+                          <span className="text-indigo-700 font-medium">
+                            {postDebateSurvey.player2StanceStrength}/7
+                          </span>
+                        </div>
+                      )}
+                      {postDebateSurvey.player2StanceConfidence && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Stance confidence:</span>
+                          <span className="text-indigo-700 font-medium">
+                            {postDebateSurvey.player2StanceConfidence}/7
                           </span>
                         </div>
                       )}
