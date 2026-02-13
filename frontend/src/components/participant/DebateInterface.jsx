@@ -162,7 +162,7 @@ const DebateInterface = () => {
                 Opponent Stance: <span className={debate.yourStance === 'for' ? 'text-red-600' : 'text-green-600'}></span>
                 <span className="font-medium">
                   Your Stance: <span className={debate.yourStance === 'for' ? 'text-green-600' : 'text-red-600'}>
-                    {debate.yourStance === 'for' ? '👍 FOR' : '👎 AGAINST'}
+                    {debate.yourStance === 'for' ? '👍 Leaning for' : '👎 Leaning against'}
                   </span>
                 </span>
                 <span>Round: {debate.currentRound} / {debate.maxRounds}</span>
@@ -236,7 +236,7 @@ const DebateInterface = () => {
                     <span className={`font-semibold text-sm ${
                       arg.stance === 'for' ? 'text-green-700' : 'text-red-700'
                     }`}>
-                      {arg.stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
+                      {arg.stance === 'for' ? '👍 Leaning for' : '👎 Leaning against'}
                       {arg.isYours ? ' (You)' : ' (Opponent)'}
                     </span>
                     <span className="text-xs text-gray-500">Round {arg.round}</span>
@@ -263,6 +263,10 @@ const DebateInterface = () => {
               )}
             </div>
 
+            <div className="mt-2 text-sm text-gray-600">
+              <strong>Good norms:</strong> Use reasons, not insults. Acknowledge at least one thing your opponent cares about.
+            </div>
+            
             <textarea
               value={argument}
               onChange={(e) => setArgument(e.target.value)}

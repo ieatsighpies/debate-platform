@@ -42,6 +42,8 @@ export const SocketProvider = ({ children }) => {
     console.log('[Socket] Creating new connection to:', SOCKET_URL);
     console.log('[Socket] User:', user.username, 'Role:', user.role);
 
+    const token = localStorage.getItem('token');
+
     const newSocket = io(SOCKET_URL, {
       transports: ['websocket', 'polling'],
       reconnection: true,
@@ -51,7 +53,8 @@ export const SocketProvider = ({ children }) => {
       timeout: 20000,
       auth: {
         username: user.username,
-        role: user.role
+        role: user.role,
+        token
       }
     });
 

@@ -27,6 +27,11 @@ const debateSchema = new mongoose.Schema({
     enum: ['for', 'against'],
     required: true
   },
+  player1StanceChoice: {
+    type: String,
+    enum: ['for', 'against', 'unsure'],
+    default: null
+  },
 
   // Player 2 (Human or AI)
   player2Type: {
@@ -51,6 +56,40 @@ const debateSchema = new mongoose.Schema({
     type: String,
     enum: ['for', 'against'],
     default: null
+  },
+  player2StanceChoice: {
+    type: String,
+    enum: ['for', 'against', 'unsure'],
+    default: null
+  },
+
+  // Current belief stance (can shift independently of gameplay stance)
+  currentBelief: {
+    player1: {
+      type: String,
+      enum: ['for', 'against', 'unsure'],
+      default: null
+    },
+    player2: {
+      type: String,
+      enum: ['for', 'against', 'unsure'],
+      default: null
+    }
+  },
+  // Numeric belief values (0-100) to capture fine-grained shifts
+  currentBeliefValue: {
+    player1: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: null
+    },
+    player2: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: null
+    }
   },
 
   // Status
@@ -143,24 +182,50 @@ const debateSchema = new mongoose.Schema({
 
   // POST-DEBATE SURVEY
   postDebateSurvey: {
+    // Q1: Stance change effect
     player1: {
       type: String,
       enum: [
-        'still_firm',                // "I am still firm on my stance."
-        'opponent_made_points',      // "My opponent made good points, but my stance remains the same."
-        'convinced_to_change'        // "My opponent convinced me to change my stance."
+        'strengthened',
+        'slightly_strengthened',
+        'no_effect',
+        'slightly_weakened',
+        'weakened'
       ],
       default: null
     },
     player2: {
       type: String,
       enum: [
-        'still_firm',
-        'opponent_made_points',
-        'convinced_to_change'
+        'strengthened',
+        'slightly_strengthened',
+        'no_effect',
+        'slightly_weakened',
+        'weakened'
       ],
       default: null
     },
+        // AI awareness effect (if opponent perceived as AI)
+        player1AiAwarenessEffect: {
+          type: String,
+          enum: ['no_difference', 'less_persuasive', 'more_persuasive', 'not_sure'],
+          default: null
+        },
+        player2AiAwarenessEffect: {
+          type: String,
+          enum: ['no_difference', 'less_persuasive', 'more_persuasive', 'not_sure'],
+          default: null
+        },
+        player1AiAwarenessJustification: {
+          type: String,
+          maxlength: 1000,
+          default: null
+        },
+        player2AiAwarenessJustification: {
+          type: String,
+          maxlength: 1000,
+          default: null
+        },
     player1OpponentPerception: {
       type: String,
       enum: ['human', 'ai', 'unsure'],
@@ -169,6 +234,31 @@ const debateSchema = new mongoose.Schema({
     player2OpponentPerception: {
       type: String,
       enum: ['human', 'ai', 'unsure'],
+      default: null
+    },
+    // ✅ NEW: Stance strength & confidence (post)
+    player1StanceStrength: {
+      type: Number,
+      min: 1,
+      max: 7,
+      default: null
+    },
+    player2StanceStrength: {
+      type: Number,
+      min: 1,
+      max: 7,
+      default: null
+    },
+    player1StanceConfidence: {
+      type: Number,
+      min: 1,
+      max: 7,
+      default: null
+    },
+    player2StanceConfidence: {
+      type: Number,
+      min: 1,
+      max: 7,
       default: null
     },
     // ✅ NEW: Q3 - Confidence level
@@ -214,6 +304,64 @@ const debateSchema = new mongoose.Schema({
       default: null
     },
   },
+
+  // Belief updates after rounds
+  beliefHistory: [{
+    round: {
+      type: Number,
+      required: true
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
+    player: {
+      type: String,
+      enum: ['player1', 'player2'],
+      required: true
+    },
+    // Original categorical belief (kept for compatibility)
+    belief: {
+      type: String,
+      enum: ['for', 'against', 'unsure'],
+      default: null
+    },
+    // Numeric belief value (0-100) for fine-grained measurement
+    beliefValue: {
+      type: Number,
+      min: 0,
+      max: 100,
+      required: false
+    },
+    // Self-reported influence (0-100)
+    influence: {
+      type: Number,
+      min: 0,
+      max: 100,
+      required: true
+    },
+    // Optional confidence rating (0-100)
+    confidence: {
+      type: Number,
+      min: 0,
+      max: 100,
+      default: null
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
+
+  // Reflection / paraphrase entries after rounds (optional)
+  reflections: [{
+    round: { type: Number, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    paraphrase: { type: String, maxlength: 1000 },
+    acknowledgement: { type: String, maxlength: 500 },
+    timestamp: { type: Date, default: Date.now }
+  }],
 
   // Closing statements
   player1ClosingStatement: String,

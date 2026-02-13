@@ -1,32 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, CheckCircle } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
   const [selectedResponse, setSelectedResponse] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [opponentPerception, setOpponentPerception] = useState('');
+  const [stanceStrength, setStanceStrength] = useState(null);
+  const [stanceConfidence, setStanceConfidence] = useState(null);
   const [perceptionConfidence, setPerceptionConfidence] = useState(null); // ✅ Q3
   const [suspicionTiming, setSuspicionTiming] = useState('');             // ✅ Q4
   const [detectionCues, setDetectionCues] = useState([]);                 // ✅ Q5
   const [detectionOther, setDetectionOther] = useState('');               // ✅ Q5 other
   const [showOtherInput, setShowOtherInput] = useState(false);
   const dialogRef = useRef(null);
+  const [aiAwarenessJustification, setAiAwarenessJustification] = useState('');
+  const [aiAwarenessEffect, setAiAwarenessEffect] = useState('');
+  const aiAwarenessOptions = [
+    { value: 'no_difference', label: 'No, I treated the arguments seriously regardless.' },
+    { value: 'less_persuasive', label: 'Yes, knowing it was AI made the arguments less persuasive.' },
+    { value: 'more_persuasive', label: 'Yes, knowing it was AI made the arguments more persuasive.' },
+    { value: 'not_sure', label: 'Not sure / can’t say.' }
+  ];
 
   const surveyOptions = [
     {
-      value: 'still_firm',
-      label: 'I am still firm on my stance.',
-      description: 'My position has not changed'
+      value: 'strengthened',
+      label: 'Strengthened my original view',
+      description: 'I feel more confident in my original stance.'
     },
     {
-      value: 'opponent_made_points',
-      label: 'My opponent made good points, but my stance remains the same.',
-      description: 'I acknowledge their arguments but still hold my position'
+      value: 'slightly_strengthened',
+      label: 'Slightly strengthened',
+      description: 'My original stance is a bit stronger.'
     },
     {
-      value: 'convinced_to_change',
-      label: 'My opponent convinced me to change my stance.',
-      description: 'I have reconsidered my position based on their arguments'
+      value: 'no_effect',
+      label: 'No real effect',
+      description: 'The debate did not change my stance.'
+    },
+    {
+      value: 'slightly_weakened',
+      label: 'Slightly weakened',
+      description: 'My original stance is a bit weaker.'
+    },
+    {
+      value: 'weakened',
+      label: 'Weakened my original view',
+      description: 'I feel less confident in my original stance.'
     }
   ];
 
@@ -42,7 +63,33 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
       label: 'AI',
       emoji: '🤖',
       description: 'My opponent was AI'
+    },
+    {
+      value: 'unsure',
+      label: 'Unsure',
+      emoji: '❓',
+      description: 'I am not sure whether they were human or AI'
     }
+  ];
+
+  const stanceStrengthLevels = [
+    { value: 1, label: 'Very weak' },
+    { value: 2, label: 'Weak' },
+    { value: 3, label: 'Somewhat weak' },
+    { value: 4, label: 'Neutral' },
+    { value: 5, label: 'Somewhat strong' },
+    { value: 6, label: 'Strong' },
+    { value: 7, label: 'Very strong' }
+  ];
+
+  const stanceConfidenceLevels = [
+    { value: 1, label: 'Not confident at all' },
+    { value: 2, label: 'Slightly confident' },
+    { value: 3, label: 'Somewhat confident' },
+    { value: 4, label: 'Moderately confident' },
+    { value: 5, label: 'Quite confident' },
+    { value: 6, label: 'Very confident' },
+    { value: 7, label: 'Extremely confident' }
   ];
   // ✅ Q3: Confidence levels
   const confidenceLevels = [
@@ -86,7 +133,19 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     { value: 'other', label: 'Other (please specify)' }
   ];
 
-  const currentDetectionCues = opponentPerception === 'ai' ? aiDetectionCues : humanDetectionCues;
+  const unsureDetectionCues = [
+    { value: 'mixed_signals', label: 'Mixed signals (some AI-like, some human-like)' },
+    { value: 'response_timing', label: 'Response timing felt inconsistent' },
+    { value: 'tone_shifts', label: 'Tone shifts across rounds' },
+    { value: 'argument_structure', label: 'Argument structure felt inconsistent' },
+    { value: 'other', label: 'Other (please specify)' }
+  ];
+
+  const currentDetectionCues = opponentPerception === 'ai'
+    ? aiDetectionCues
+    : opponentPerception === 'human'
+      ? humanDetectionCues
+      : unsureDetectionCues;
 
 
   useEffect(() => {
@@ -127,10 +186,29 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
       toast.error('Please select how the debate affected your perspective');
       return;
     }
+    // Require AI awareness effect if opponentPerception is 'ai'
+    if (opponentPerception === 'ai' && !aiAwarenessEffect) {
+      toast.error('Please answer how knowing your opponent was AI affected your stance change');
+      return;
+    }
+    if (opponentPerception === 'ai' && !aiAwarenessJustification.trim()) {
+      toast.error('Please provide a brief justification or description for your answer about AI awareness.');
+      return;
+    }
+
+    if (!stanceStrength) {
+      toast.error('Please rate your current stance strength');
+      return;
+    }
+
+    if (!stanceConfidence) {
+      toast.error('Please rate your confidence in your current stance');
+      return;
+    }
 
     // ✅ Require opponent perception response
     if (!opponentPerception) {
-      toast.error('Please indicate whether you think your opponent was AI or human');
+      toast.error('Please indicate whether you think your opponent was AI, human, or unsure');
       return;
     }
     if (!perceptionConfidence) {
@@ -157,11 +235,15 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     try {
       await onSubmit({
         response: selectedResponse,
+        stanceStrength: stanceStrength,
+        stanceConfidence: stanceConfidence,
         opponentPerception: opponentPerception,
         perceptionConfidence: perceptionConfidence,
         suspicionTiming: suspicionTiming,
         detectionCues: detectionCues,
-        detectionOther: detectionOther.trim()
+        detectionOther: detectionOther.trim(),
+        aiAwarenessEffect: opponentPerception === 'ai' ? aiAwarenessEffect : undefined,
+        aiAwarenessJustification: opponentPerception === 'ai' ? aiAwarenessJustification.trim() : undefined
       });
     } finally {
       setSubmitting(false);
@@ -178,9 +260,9 @@ return (
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className="rounded-lg shadow-2xl p-0 max-w-2xl w-full backdrop:bg-black backdrop:bg-opacity-50"
+      className="rounded-lg shadow-2xl p-0 max-w-2xl w-full max-h-[90vh] overflow-y-auto backdrop:bg-black backdrop:bg-opacity-50"
     >
-      <div className="bg-white rounded-lg max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg">
         {/* Header */}
         <div className="bg-indigo-600 text-white px-6 py-4 rounded-t-lg sticky top-0 z-10">
           <div className="flex items-center justify-between">
@@ -194,13 +276,13 @@ return (
         {/* Body */}
         <div className="p-6">
           <p className="text-gray-700 mb-6">
-            Thank you for participating in this debate. Before you go, please answer these two questions:
+            Thank you for participating in this debate. Before you go, please answer these questions:
           </p>
 
           {/* Question 1: Conviction Change */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              1. How did this debate affect your perspective?
+              1. Overall, how did this debate affect your view on this topic?
             </h3>
 
             <div className="space-y-3">
@@ -232,24 +314,96 @@ return (
               ))}
             </div>
           </div>
+          {/* Question 2: Stance Strength */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+              2. How strong is your final stance on this topic?
+            </h3>
 
-          {/* Question 2: Opponent Perception */}
+            <div className="space-y-2">
+              {stanceStrengthLevels.map((level) => (
+                <label
+                  key={level.value}
+                  className={`block p-3 border-2 rounded-lg cursor-pointer transition ${
+                    stanceStrength === level.value
+                      ? 'border-indigo-600 bg-indigo-50'
+                      : 'border-gray-200 hover:border-indigo-300'
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="stanceStrength"
+                      value={level.value}
+                      checked={stanceStrength === level.value}
+                      onChange={(e) => setStanceStrength(parseInt(e.target.value))}
+                      className="mr-3"
+                      disabled={submitting}
+                    />
+                    <div className="flex items-center justify-between flex-1">
+                      <span className="font-medium text-gray-800">{level.label}</span>
+                      <span className="text-gray-500 text-sm">({level.value})</span>
+                    </div>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Question 3: Stance Confidence */}
+          <div className="mb-8">
+            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+              3. How confident are you in your final stance?
+            </h3>
+
+            <div className="space-y-2">
+              {stanceConfidenceLevels.map((level) => (
+                <label
+                  key={level.value}
+                  className={`block p-3 border-2 rounded-lg cursor-pointer transition ${
+                    stanceConfidence === level.value
+                      ? 'border-indigo-600 bg-indigo-50'
+                      : 'border-gray-200 hover:border-indigo-300'
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="radio"
+                      name="stanceConfidence"
+                      value={level.value}
+                      checked={stanceConfidence === level.value}
+                      onChange={(e) => setStanceConfidence(parseInt(e.target.value))}
+                      className="mr-3"
+                      disabled={submitting}
+                    />
+                    <div className="flex items-center justify-between flex-1">
+                      <span className="font-medium text-gray-800">{level.label}</span>
+                      <span className="text-gray-500 text-sm">({level.value})</span>
+                    </div>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          {/* Question 4: Opponent Perception */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              2. Do you think your opponent was AI or human?
+              4. Do you think your opponent was AI or human?
             </h3>
             <p className="text-sm text-gray-600 mb-3">
               Based on their arguing style and responses, make your best guess.
             </p>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {perceptionOptions.map((option) => (
                 <label
                   key={option.value}
-                  className={`block p-4 border-2 rounded-lg cursor-pointer transition text-center ${
+                  className={`block p-4 border-2 rounded-lg cursor-pointer transition text-center whitespace-normal break-words ${
                     opponentPerception === option.value
                       ? 'border-purple-600 bg-purple-50'
                       : 'border-gray-200 hover:border-purple-300'
                   }`}
+                  style={{ minHeight: 100 }}
                 >
                   <input
                     type="radio"
@@ -266,11 +420,11 @@ return (
               ))}
             </div>
           </div>
-          {/* ✅ Q3: Confidence Level */}
+          {/* ✅ Q5: Confidence Level */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                3. How confident are you in your answer above?
+                5. How confident are you in your answer above?
               </h3>
 
               <div className="space-y-2">
@@ -304,11 +458,11 @@ return (
             </div>
           )}
 
-          {/* ✅ Q4: When Suspected */}
+          {/* ✅ Q6: When Suspected */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                4. When did you first suspect your opponent was {opponentPerception === 'ai' ? 'AI' : 'human'}?
+                6. When did you first suspect your opponent was {opponentPerception === 'ai' ? 'AI' : opponentPerception === 'human' ? 'human' : 'AI or human'}?
               </h3>
 
               <div className="space-y-2">
@@ -339,11 +493,11 @@ return (
             </div>
           )}
 
-          {/* ✅ Q5: Detection Cues */}
+          {/* ✅ Q7: Detection Cues */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                5. What made you think your opponent was {opponentPerception === 'ai' ? 'AI' : 'human'}?
+                7. What made you think your opponent was {opponentPerception === 'ai' ? 'AI' : opponentPerception === 'human' ? 'human' : 'unclear'}?
               </h3>
               <p className="text-sm text-gray-600 mb-3">
                 Check all that apply:
@@ -390,7 +544,56 @@ return (
               </div>
             </div>
           )}
-
+          {/* Follow-up: Did knowing it was AI affect your stance change? */}
+          {opponentPerception === 'ai' && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                Did knowing your opponent was AI affect your stance change?
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                This helps us analyze whether knowing an argument comes from AI changes how persuasive it feels, compared to treating arguments on their own merits. (Good survey design: ask about confounds, avoid leading language, and offer a neutral option.)
+              </p>
+              <div className="space-y-2 mb-4">
+                {aiAwarenessOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`block p-3 border-2 rounded-lg cursor-pointer transition ${
+                      aiAwarenessEffect === option.value
+                        ? 'border-fuchsia-600 bg-fuchsia-50'
+                        : 'border-gray-200 hover:border-fuchsia-300'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        name="aiAwarenessEffect"
+                        value={option.value}
+                        checked={aiAwarenessEffect === option.value}
+                        onChange={(e) => setAiAwarenessEffect(e.target.value)}
+                        className="mr-3"
+                        disabled={submitting}
+                      />
+                      <span className="font-medium text-gray-800">{option.label}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1" htmlFor="aiAwarenessJustification">
+                  Please briefly explain your answer:
+                </label>
+                <textarea
+                  id="aiAwarenessJustification"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-fuchsia-500 focus:border-transparent min-h-[60px]"
+                  value={aiAwarenessJustification}
+                  onChange={e => setAiAwarenessJustification(e.target.value)}
+                  placeholder="Describe how (if at all) knowing your opponent was AI influenced your reaction to their arguments..."
+                  disabled={submitting}
+                  required
+                />
+              </div>
+            </div>
+          )}
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
             <p className="text-sm text-amber-800">
               <strong>Note:</strong> All responses are required. Your answers are anonymous and used only for research purposes.

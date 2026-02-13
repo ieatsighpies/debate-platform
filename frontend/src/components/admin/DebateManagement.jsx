@@ -59,6 +59,7 @@ const DebateManagement = () => {
     socket.on('debate:created', handleDebateCreated);
     socket.on('debate:started', fetchDebates);
     socket.on('debate:completed', fetchDebates);
+    socket.on('debate:argumentAdded', fetchDebates);
     socket.on('debates:cleanup', fetchDebates);
 
     return () => {
@@ -66,6 +67,7 @@ const DebateManagement = () => {
       socket.off('debate:created', handleDebateCreated);
       socket.off('debate:started', fetchDebates);
       socket.off('debate:completed', fetchDebates);
+      socket.off('debate:argumentAdded', fetchDebates);
       socket.off('debates:cleanup', fetchDebates);
     };
   }, [socket, connected, handleDebateCreated, fetchDebates]);
@@ -510,12 +512,12 @@ const ChatHistoryModal = () => {
 
                   {postDebateSurvey.player1OpponentPerception && (
                     <div className="pt-2 border-t border-gray-100 space-y-1">
-                      <div className="flex justify-between">
+                          <div className="flex justify-between">
                         <span className="text-gray-500">Perceived as:</span>
                         <span className={`font-medium ${
-                          postDebateSurvey.player1OpponentPerception === 'ai' ? 'text-purple-600' : 'text-blue-600'
+                          postDebateSurvey.player1OpponentPerception === 'ai' ? 'text-purple-600' : (postDebateSurvey.player1OpponentPerception === 'human' ? 'text-blue-600' : 'text-gray-600')
                         }`}>
-                          {postDebateSurvey.player1OpponentPerception === 'ai' ? '🤖 AI' : '👤 Human'}
+                          {postDebateSurvey.player1OpponentPerception === 'ai' ? '🤖 AI' : (postDebateSurvey.player1OpponentPerception === 'human' ? '👤 Human' : '❓ Unsure')}
                         </span>
                       </div>
                       {postDebateSurvey.player1PerceptionConfidence && (
@@ -611,9 +613,9 @@ const ChatHistoryModal = () => {
                           <div className="flex justify-between">
                             <span className="text-gray-500">Perceived as:</span>
                             <span className={`font-medium ${
-                              postDebateSurvey.player2OpponentPerception === 'ai' ? 'text-purple-600' : 'text-blue-600'
+                              postDebateSurvey.player2OpponentPerception === 'ai' ? 'text-purple-600' : (postDebateSurvey.player2OpponentPerception === 'human' ? 'text-blue-600' : 'text-gray-600')
                             }`}>
-                              {postDebateSurvey.player2OpponentPerception === 'ai' ? '🤖 AI' : '👤 Human'}
+                              {postDebateSurvey.player2OpponentPerception === 'ai' ? '🤖 AI' : (postDebateSurvey.player2OpponentPerception === 'human' ? '👤 Human' : '❓ Unsure')}
                             </span>
                           </div>
                           {postDebateSurvey.player2PerceptionConfidence && (
@@ -684,7 +686,7 @@ const ChatHistoryModal = () => {
                             ? 'bg-green-100 text-green-800'
                             : 'bg-red-100 text-red-800'
                         }`}>
-                          {arg.stance === 'for' ? 'FOR' : 'AGAINST'}
+                            {arg.stance === 'for' ? 'Leaning for' : 'Leaning against'}
                         </span>
                         <span className="text-xs text-gray-600">
                           Round {arg.round}

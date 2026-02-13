@@ -54,6 +54,12 @@ const completeDebateEarly = async (debateId, reason, io) => {
           ? 'Both participants agreed to end early'
           : 'Debate completed'
       });
+      io.to('admin').emit('debate:completed', {
+        debateId,
+        reason: reason === 'mutual_consent' || reason === 'mutual_consent_ai'
+          ? 'Both participants agreed to end early'
+          : 'Debate completed'
+      });
     }
 
     return debate;
@@ -445,9 +451,12 @@ router.post('/join', authenticate, async (req, res) => {
       return res.status(400).json({ message: 'Invalid gameMode' });
     }
 
-    if (!['for', 'against'].includes(stance)) {
+    if (!['for', 'against', 'unsure'].includes(stance)) {
       return res.status(400).json({ message: 'Invalid stance' });
     }
+
+    const stanceChoice = stance;
+    const isUnsure = stanceChoice === 'unsure';
 
     const topicIdNum = parseInt(topicId);
     const topic = topics.find(t => t.id === topicIdNum);
@@ -485,36 +494,76 @@ router.post('/join', authenticate, async (req, res) => {
       });
     }
 
-    // Calculate opposite stance
-    const oppositeStance = stance === 'for' ? 'against' : 'for';
+    let joinedDebate = null;
 
-    // Try to join existing debate with OPPOSITE stance
-    const joinedDebate = await Debate.findOneAndUpdate(
-      {
+    if (isUnsure) {
+      const match = await Debate.findOne({
         gameMode,
         topicId: topicIdNum,
         status: 'waiting',
-        player1Stance: oppositeStance, // MUST have opposite stance
         player2UserId: null,
         player1UserId: { $ne: userId }
-      },
-      {
-        $set: {
-          player2Type: 'human',
-          player2UserId: userId,
-          player2Stance: stance, // This user's chosen stance
-          status: 'active',
-          startedAt: new Date(),
-          firstPlayer: Math.random() < 0.5 ? 'for' : 'against',
-          lastActivityAt: new Date(),
-          'preDebateSurvey.player2': preDebateSurvey.player1 // STORE PLAYER2 SURVEY
-        }
-      },
-      {
-        new: true,
-        runValidators: true
+      });
+
+      if (match) {
+        const assignedStance = match.player1Stance === 'for' ? 'against' : 'for';
+        joinedDebate = await Debate.findOneAndUpdate(
+          {
+            _id: match._id,
+            status: 'waiting',
+            player2UserId: null
+          },
+          {
+            $set: {
+              player2Type: 'human',
+              player2UserId: userId,
+              player2Stance: assignedStance,
+              player2StanceChoice: stanceChoice,
+              'currentBelief.player2': stanceChoice,
+              status: 'active',
+              startedAt: new Date(),
+              firstPlayer: Math.random() < 0.5 ? 'for' : 'against',
+              lastActivityAt: new Date(),
+              'preDebateSurvey.player2': preDebateSurvey.player1
+            }
+          },
+          {
+            new: true,
+            runValidators: true
+          }
+        );
       }
-    );
+    } else {
+      const oppositeStance = stanceChoice === 'for' ? 'against' : 'for';
+      joinedDebate = await Debate.findOneAndUpdate(
+        {
+          gameMode,
+          topicId: topicIdNum,
+          status: 'waiting',
+          player1Stance: oppositeStance, // MUST have opposite stance
+          player2UserId: null,
+          player1UserId: { $ne: userId }
+        },
+        {
+          $set: {
+            player2Type: 'human',
+            player2UserId: userId,
+            player2Stance: stanceChoice,
+            player2StanceChoice: stanceChoice,
+            'currentBelief.player2': stanceChoice,
+            status: 'active',
+            startedAt: new Date(),
+            firstPlayer: Math.random() < 0.5 ? 'for' : 'against',
+            lastActivityAt: new Date(),
+            'preDebateSurvey.player2': preDebateSurvey.player1 // STORE PLAYER2 SURVEY
+          }
+        },
+        {
+          new: true,
+          runValidators: true
+        }
+      );
+    }
 
     if (joinedDebate) {
       console.log('[Debate] ✅ Joined existing debate:', joinedDebate._id);
@@ -523,6 +572,10 @@ router.post('/join', authenticate, async (req, res) => {
       const io = req.app.get('io');
       if (io) {
         io.to(`debate:${joinedDebate._id}`).emit('debate:started', {
+          debateId: joinedDebate._id,
+          firstPlayer: joinedDebate.firstPlayer
+        });
+        io.to('admin').emit('debate:started', {
           debateId: joinedDebate._id,
           firstPlayer: joinedDebate.firstPlayer
         });
@@ -540,12 +593,21 @@ router.post('/join', authenticate, async (req, res) => {
     // Create new debate
     console.log('[Debate] No matching debate found, creating new...');
 
+    const assignedStance = isUnsure
+      ? (Math.random() < 0.5 ? 'for' : 'against')
+      : stanceChoice;
+
     const newDebate = new Debate({
       topicId: topicIdNum,
       topicQuestion: topic.question,
       gameMode,
       player1UserId: userId,
-      player1Stance: stance,
+      player1Stance: assignedStance,
+      player1StanceChoice: stanceChoice,
+      currentBelief: {
+        player1: stanceChoice,
+        player2: null
+      },
       player2Type: null,
       status: 'waiting',
       currentRound: 1,
@@ -651,6 +713,9 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     debate.player2AIModel = aiModel; // Use admin-selected model
     debate.player2AIPrompt = customPrompt || null;
     debate.player2Stance = aiStance;
+    debate.player2StanceChoice = aiStance;
+    debate.currentBelief = debate.currentBelief || {};
+    debate.currentBelief.player2 = aiStance;
     debate.gameMode = 'human-ai';
     debate.status = 'active';
     debate.startedAt = new Date();
@@ -675,6 +740,10 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:started', {
+        debateId: debate._id,
+        firstPlayer: debate.firstPlayer
+      });
+      io.to('admin').emit('debate:started', {
         debateId: debate._id,
         firstPlayer: debate.firstPlayer
       });
@@ -795,6 +864,12 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
         status: debate.status,
         currentRound: debate.currentRound
       });
+      io.to('admin').emit('debate:argumentAdded', {
+        debateId: debate._id,
+        argument: debate.arguments[debate.arguments.length - 1],
+        status: debate.status,
+        currentRound: debate.currentRound
+      });
     }
 
     // ✅ FIXED: Trigger AI response immediately after sending response
@@ -817,6 +892,255 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
   } catch (error) {
     console.error('[Debate] Error submitting argument:', error);
     res.status(500).json({ message: 'Failed to submit argument' });
+  }
+});
+
+// Submit round belief update (accepts categorical or numeric beliefValue)
+router.post('/:debateId/belief-update', authenticate, async (req, res) => {
+  try {
+    const { debateId } = req.params;
+    const { round, belief, beliefValue, influence, confidence } = req.body;
+    const userId = req.user.userId;
+
+    console.log('[BeliefDebug] Incoming belief-update request', {
+      debateId,
+      userId,
+      payload: { round, belief, beliefValue, influence, confidence }
+    });
+
+    const roundNumber = parseInt(round, 10);
+    if (!roundNumber || roundNumber < 1) {
+      return res.status(400).json({ message: 'Invalid round number' });
+    }
+
+    // Validate influence
+    const influenceScore = parseInt(influence, 10);
+    if (Number.isNaN(influenceScore) || influenceScore < 0 || influenceScore > 100) {
+      return res.status(400).json({ message: 'Invalid influence score (0-100)' });
+    }
+
+    // Validate optional confidence
+    let confidenceScore = null;
+    if (typeof confidence !== 'undefined' && confidence !== null) {
+      confidenceScore = parseInt(confidence, 10);
+      if (Number.isNaN(confidenceScore) || confidenceScore < 0 || confidenceScore > 100) {
+        return res.status(400).json({ message: 'Invalid confidence score (0-100)' });
+      }
+    }
+
+    // Validate belief / beliefValue
+    let beliefCategory = null;
+    let beliefNumeric = null;
+
+    if (typeof beliefValue !== 'undefined' && beliefValue !== null) {
+      const bv = parseInt(beliefValue, 10);
+      if (Number.isNaN(bv) || bv < 0 || bv > 100) {
+        return res.status(400).json({ message: 'Invalid beliefValue (0-100)' });
+      }
+      beliefNumeric = bv;
+      // Derive categorical belief from value (<=33 -> against, 34-66 -> unsure, >=67 -> for)
+      if (bv <= 33) beliefCategory = 'against';
+      else if (bv <= 66) beliefCategory = 'unsure';
+      else beliefCategory = 'for';
+    } else if (belief) {
+      if (!['for', 'against', 'unsure'].includes(belief)) {
+        return res.status(400).json({ message: 'Invalid belief choice' });
+      }
+      beliefCategory = belief;
+      // Map categorical to numeric defaults
+      beliefNumeric = belief === 'for' ? 100 : (belief === 'against' ? 0 : 50);
+    } else {
+      return res.status(400).json({ message: 'Either belief or beliefValue is required' });
+    }
+
+    const debate = await Debate.findById(debateId);
+
+    if (!debate) {
+      return res.status(404).json({ message: 'Debate not found' });
+    }
+
+    if (!['active', 'completed'].includes(debate.status)) {
+      return res.status(400).json({ message: 'Debate is not active or completed' });
+    }
+
+    const isPlayer1 = debate.player1UserId.toString() === userId;
+    const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
+
+    if (!isPlayer1 && !isPlayer2) {
+      return res.status(403).json({ message: 'You are not part of this debate' });
+    }
+
+    const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
+    if (roundArgs.length < 2) {
+      console.log('[BeliefDebug] Round not complete yet', { debateId, round: roundNumber, foundArgs: roundArgs.length });
+      return res.status(400).json({ message: 'Round is not complete yet' });
+    }
+
+    const alreadySubmitted = (debate.beliefHistory || []).some(entry =>
+      entry.round === roundNumber &&
+      entry.userId.toString() === userId
+    );
+
+    if (alreadySubmitted) {
+      console.log('[BeliefDebug] Duplicate belief submission attempt', { debateId, round: roundNumber, userId });
+      return res.status(400).json({ message: 'Belief update already submitted for this round' });
+    }
+
+    debate.beliefHistory.push({
+      round: roundNumber,
+      userId,
+      player: isPlayer1 ? 'player1' : 'player2',
+      belief: beliefCategory,
+      beliefValue: beliefNumeric,
+      influence: influenceScore,
+      confidence: confidenceScore
+    });
+
+    debate.currentBelief = debate.currentBelief || {};
+    debate.currentBeliefValue = debate.currentBeliefValue || {};
+    if (isPlayer1) {
+      debate.currentBelief.player1 = beliefCategory;
+      debate.currentBeliefValue.player1 = beliefNumeric;
+    } else {
+      debate.currentBelief.player2 = beliefCategory;
+      debate.currentBeliefValue.player2 = beliefNumeric;
+    }
+
+    await debate.save();
+
+    console.log('[BeliefDebug] Belief update saved to DB', { debateId, round: roundNumber, userId });
+
+    res.json({ message: 'Belief update submitted' });
+  } catch (error) {
+    console.error('[Debate] Error submitting belief update:', error);
+    res.status(500).json({ message: 'Failed to submit belief update' });
+  }
+});
+
+// Submit reflection / paraphrase after a completed round
+router.post('/:debateId/reflection', authenticate, async (req, res) => {
+  try {
+    const { debateId } = req.params;
+    const { round, paraphrase, acknowledgement } = req.body;
+    const userId = req.user.userId;
+
+    const roundNumber = parseInt(round, 10);
+    if (!roundNumber || roundNumber < 1) {
+      return res.status(400).json({ message: 'Invalid round number' });
+    }
+
+    if (!paraphrase || typeof paraphrase !== 'string' || paraphrase.trim().length === 0) {
+      return res.status(400).json({ message: 'Paraphrase is required' });
+    }
+
+    const debate = await Debate.findById(debateId);
+    if (!debate) return res.status(404).json({ message: 'Debate not found' });
+
+    if (debate.status !== 'active' && debate.status !== 'completed') {
+      return res.status(400).json({ message: 'Debate is not active or completed' });
+    }
+
+    const isPlayer1 = debate.player1UserId.toString() === userId;
+    const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
+    if (!isPlayer1 && !isPlayer2) return res.status(403).json({ message: 'You are not part of this debate' });
+
+    const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
+    if (roundArgs.length < 2) return res.status(400).json({ message: 'Round is not complete yet' });
+
+    const already = (debate.reflections || []).some(r => r.round === roundNumber && r.userId.toString() === userId);
+    if (already) return res.status(400).json({ message: 'Reflection already submitted for this round' });
+
+    debate.reflections = debate.reflections || [];
+    debate.reflections.push({ round: roundNumber, userId, paraphrase: paraphrase.trim(), acknowledgement: acknowledgement ? acknowledgement.trim() : '' });
+
+    await debate.save();
+
+    console.log('[Reflection] Saved', { debateId, round: roundNumber, userId });
+
+    res.json({ message: 'Reflection submitted' });
+  } catch (error) {
+    console.error('[Reflection] Error submitting reflection:', error);
+    res.status(500).json({ message: 'Failed to submit reflection' });
+  }
+});
+
+// Analytics: compute persuasion metrics for a debate
+router.get('/:debateId/analytics', authenticate, async (req, res) => {
+  try {
+    const debate = await Debate.findById(req.params.debateId).populate('player1UserId', 'username').populate('player2UserId', 'username');
+    if (!debate) return res.status(404).json({ message: 'Debate not found' });
+
+    // Helper to pick initial numeric belief
+    const mapCategoryToNumeric = (cat) => {
+      if (!cat) return null;
+      if (cat === 'for') return 100;
+      if (cat === 'against') return 0;
+      return 50; // unsure
+    };
+
+    const computeForPlayer = (playerKey, opponentKey, playerUserId, opponentStance) => {
+      // Get user's belief entries
+      const entries = (debate.beliefHistory || []).filter(e => e.player === playerKey).sort((a,b) => a.round - b.round);
+
+      // initial: first beliefValue if exists, else map playerXStanceChoice or map currentBelief
+      let initial = null;
+      if (entries.length > 0 && typeof entries[0].beliefValue === 'number') initial = entries[0].beliefValue;
+      if (initial === null) {
+        // try stanceChoice on debate
+        const stanceChoiceField = playerKey === 'player1' ? debate.player1StanceChoice : debate.player2StanceChoice;
+        initial = mapCategoryToNumeric(stanceChoiceField) || mapCategoryToNumeric(debate.currentBelief && debate.currentBelief[playerKey]);
+      }
+      if (initial === null) initial = 50;
+
+      // final
+      let final = null;
+      const lastEntry = entries.slice(-1)[0];
+      if (lastEntry && typeof lastEntry.beliefValue === 'number') final = lastEntry.beliefValue;
+      if (final === null) final = debate.currentBeliefValue && debate.currentBeliefValue[playerKey] ? debate.currentBeliefValue[playerKey] : mapCategoryToNumeric(debate.currentBelief && debate.currentBelief[playerKey]) || initial;
+
+      const cumulativeShift = final - initial;
+
+      // Compute influence-weighted persuasion attributed to opponent
+      let prev = initial;
+      let attribution = 0;
+      for (const e of entries) {
+        const val = (typeof e.beliefValue === 'number') ? e.beliefValue : (mapCategoryToNumeric(e.belief) || prev);
+        const delta = val - prev;
+        prev = val;
+        // direction: if opponent stance is 'for' (100), positive delta moves toward opponent
+        const directionMultiplier = opponentStance === 'for' ? 1 : -1;
+        const towardOpponent = delta * directionMultiplier;
+        const attributed = towardOpponent * ((e.influence || 0) / 100);
+        attribution += attributed;
+      }
+
+      return {
+        initial,
+        final,
+        cumulativeShift,
+        influenceAttributedToOpponent: attribution // can be negative if moved away from opponent
+      };
+    };
+
+    const p1 = computeForPlayer('player1','player2', debate.player1UserId, debate.player2Stance);
+    const p2 = computeForPlayer('player2','player1', debate.player2UserId, debate.player1Stance);
+
+    res.json({
+      debateId: debate._id,
+      players: {
+        player1: {
+          user: debate.player1UserId,
+          ...p1
+        },
+        player2: {
+          user: debate.player2UserId,
+          ...p2
+        }
+      }
+    });
+  } catch (error) {
+    console.error('[Debate] Error computing analytics:', error);
+    res.status(500).json({ message: 'Failed to compute analytics' });
   }
 });
 
@@ -904,6 +1228,10 @@ router.put('/:debateId/end-early', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:completed', {
+        debateId: debate._id,
+        reason: 'Admin ended debate early'
+      });
+      io.to('admin').emit('debate:completed', {
         debateId: debate._id,
         reason: 'Admin ended debate early'
       });
@@ -1189,21 +1517,44 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
   try {
     const { debateId } = req.params;
     const { response, opponentPerception,
-      perceptionConfidence,      // Q3
-      suspicionTiming,           // Q4
-      detectionCues,             // Q5
-      detectionOther             // Q5 - other
+      stanceStrength,            // NEW: Q2
+      stanceConfidence,          // NEW: Q3
+      perceptionConfidence,      // Q5
+      suspicionTiming,           // Q6
+      detectionCues,             // Q7
+      detectionOther,            // Q7 - other
+      aiAwarenessEffect,         // AI follow-up
+      aiAwarenessJustification   // AI follow-up textbox
      } = req.body;
     const userId = req.user.userId;
 
-    const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
+    const validResponses = [
+        'strengthened',
+        'slightly_strengthened',
+        'no_effect',
+        'slightly_weakened',
+        'weakened'
+      ];
     const validPerceptions = ['human', 'ai', 'unsure'];
     const validTimings = ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'];
 
     if (!response || !validResponses.includes(response)) {
       console.log('Invalid post-survey response:', response);
       return res.status(400).json({
-        message: 'Invalid response. Must be one of: still_firm, opponent_made_points, convinced_to_change'
+        message: `Invalid response. Must be one of: ${validResponses.join(', ')}`
+      });
+    }
+
+    // ✅ Validate stance strength/confidence (1-7)
+    if (!stanceStrength || stanceStrength < 1 || stanceStrength > 7) {
+      return res.status(400).json({
+        message: 'Invalid stance strength. Must be between 1 and 7'
+      });
+    }
+
+    if (!stanceConfidence || stanceConfidence < 1 || stanceConfidence > 7) {
+      return res.status(400).json({
+        message: 'Invalid stance confidence. Must be between 1 and 7'
       });
     }
 
@@ -1260,23 +1611,32 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       }
       debate.postDebateSurvey.player1 = response;
       debate.postDebateSurvey.player1OpponentPerception = opponentPerception;
-      debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence; // ✅ Q3
-      debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;           // ✅ Q4
-      debate.postDebateSurvey.player1DetectionCues = detectionCues;               // ✅ Q5
-      console.log(response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther);
+      debate.postDebateSurvey.player1StanceStrength = stanceStrength;             // ✅ NEW Q2
+      debate.postDebateSurvey.player1StanceConfidence = stanceConfidence;         // ✅ NEW Q3
+      debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence; // ✅ Q5
+      debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;           // ✅ Q6
+      debate.postDebateSurvey.player1DetectionCues = detectionCues;               // ✅ Q7
       if (detectionOther) {
         debate.postDebateSurvey.player1DetectionOther = detectionOther;           // ✅ Q5 other
       }
-      console.log('[Post-Survey] ✅ Saved for player1');
+      if (aiAwarenessEffect) {
+        debate.postDebateSurvey.player1AiAwarenessEffect = aiAwarenessEffect;
+      }
+      if (aiAwarenessJustification) {
+        debate.postDebateSurvey.player1AiAwarenessJustification = aiAwarenessJustification;
+      }
+      console.log('[Post-Survey] ✅ Saved for player1', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
     } else if (isPlayer2) {
       if (debate.postDebateSurvey.player2) {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player2 = response;
       debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
-      debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence; // ✅ Q3
-      debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;           // ✅ Q4
-      debate.postDebateSurvey.player2DetectionCues = detectionCues;               // ✅ Q5
+      debate.postDebateSurvey.player2StanceStrength = stanceStrength;             // ✅ NEW Q2
+      debate.postDebateSurvey.player2StanceConfidence = stanceConfidence;         // ✅ NEW Q3
+      debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence; // ✅ Q5
+      debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;           // ✅ Q6
+      debate.postDebateSurvey.player2DetectionCues = detectionCues;               // ✅ Q7
       if (detectionOther) {
         debate.postDebateSurvey.player2DetectionOther = detectionOther;           // ✅ Q5 other
       }
@@ -1418,16 +1778,22 @@ async function triggerAIResponse(debateId, io) {
           console.log('[Debate] Generating AI post-survey response (AI completed final round)...');
           const aiResponse = await generateAIPostSurvey(debate);
           debate.postDebateSurvey.player2 = aiResponse;
-          console.log('[Debate] AI post-survey:', aiResponse);
-        }
-        debate.status = 'completed';
-        debate.completedAt = new Date();
-      } else {
-        debate.currentRound += 1;
-      }
-    }
-
-    await debate.save();
+          debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
+          debate.postDebateSurvey.player2StanceStrength = stanceStrength;
+          debate.postDebateSurvey.player2StanceConfidence = stanceConfidence;
+          debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence;
+          debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;
+          debate.postDebateSurvey.player2DetectionCues = detectionCues;
+          if (detectionOther) {
+            debate.postDebateSurvey.player2DetectionOther = detectionOther;
+          }
+          if (aiAwarenessEffect) {
+            debate.postDebateSurvey.player2AiAwarenessEffect = aiAwarenessEffect;
+          }
+          if (aiAwarenessJustification) {
+            debate.postDebateSurvey.player2AiAwarenessJustification = aiAwarenessJustification;
+          }
+          console.log('[Post-Survey] ✅ Saved for player2', { aiResponse, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
 
     console.log('[AI] ✅ AI argument submitted');
 
@@ -1438,6 +1804,15 @@ async function triggerAIResponse(debateId, io) {
         status: debate.status,
         currentRound: debate.currentRound
       });
+      io.to('admin').emit('debate:argumentAdded', {
+        debateId: debate._id,
+        argument: debate.arguments[debate.arguments.length - 1],
+        status: debate.status,
+        currentRound: debate.currentRound
+      });
+    }
+  }
+}
     }
   } catch (error) {
     console.error('[AI] Error generating response:', error);

@@ -33,8 +33,21 @@ class AIService {
     // Use custom prompt if provided, otherwise use default
     const systemPrompt = customPrompt || debate.player2AIPrompt || personality.defaultPrompt;
 
-    // Replace placeholders in prompt
-    const finalPrompt = this.replacePlaceholders(systemPrompt, context);
+    let finalPrompt = this.replacePlaceholders(systemPrompt, context);
+
+    // Enforce respectful, evidence-based, and occasionally conciliatory responses
+    finalPrompt += `
+AI response requirements:
+- Use at least one brief concrete example, piece of evidence, or illustrative scenario to support your main claim (can be hypothetical if needed).
+- Keep tone respectful and non-adversarial; avoid insults, sarcasm, or dismissive language.
+- Where appropriate, include an acknowledgement or conciliatory phrase such as "I see why someone might disagree" or "I'd be okay with X compromise." This can be brief and should not undermine the main point.
+- Prefer clear reasons over rhetoric; cite examples rather than vague claims. Do not invent verifiable facts.
+- Keep responses concise, focused, and helpful for understanding tradeoffs.
+`;
+
+    if (context.OPPONENT_STANCE_CHOICE === 'unsure') {
+      finalPrompt += `\n\nOpponent chose UNSURE. Adjust your approach:\n- be exploratory and collaborative, not combative\n- ask at most one clarifying question if helpful\n- focus on tradeoffs and criteria, not winning\n- avoid dunking or overly absolute claims\n- keep tone curious and constructive\n`;
+    }
 
     let argument;
 
@@ -156,6 +169,8 @@ class AIService {
       .filter(arg => arg.stance !== debate.player2Stance)
       .sort((a, b) => b.timestamp - a.timestamp)[0];
 
+    const opponentStanceChoice = debate.player1StanceChoice || null;
+
     const stancePhrase = debate.player2Stance === 'for'
       ? 'we should support this'
       : 'we should oppose this';
@@ -177,6 +192,7 @@ class AIService {
       STANCE_VERB: stanceVerb,
       CURRENT_ROUND: debate.currentRound,
       MAX_ROUNDS: debate.maxRounds,
+      OPPONENT_STANCE_CHOICE: opponentStanceChoice,
       OPPONENT_ARGUMENT: lastOpponentArg ? lastOpponentArg.text : 'No previous arguments yet.',
       DEBATE_HISTORY: debateHistory || 'Debate just started.',
       COUNTER_POINT: this.generateCounterPoint(debate),
@@ -201,11 +217,14 @@ class AIService {
    */
   generateBasicFallback(context, personality) {
     const stancePhrase = context.STANCE_PHRASE;
+    const unsurePrefix = context.OPPONENT_STANCE_CHOICE === 'unsure'
+      ? 'i get why you are unsure - lets weigh this carefully. '
+      : '';
 
     const basicArguments = [
-      `I ${context.STANCE_VERB} ${context.TOPIC} because ${stancePhrase}. This position is supported by clear evidence and logical reasoning.`,
-      `My stance on ${context.TOPIC} is ${context.STANCE} because the benefits are significant. ${context.COUNTER_POINT}.`,
-      `I maintain that ${stancePhrase} regarding ${context.TOPIC}. The evidence strongly supports this position.`
+      `${unsurePrefix}I ${context.STANCE_VERB} ${context.TOPIC} because ${stancePhrase}. For example, ${context.COUNTER_POINT}. I understand some may disagree; I see why someone might feel that way.`,
+      `${unsurePrefix}My stance on ${context.TOPIC} is ${context.STANCE} because the benefits are significant. For instance, ${context.COUNTER_POINT}. I aim to be respectful and offer this as a reasoned view.`,
+      `${unsurePrefix}I maintain that ${stancePhrase} regarding ${context.TOPIC}. One brief example: ${context.COUNTER_POINT}. While I hold this view, I acknowledge tradeoffs and would be open to compromise on implementation.`
     ];
 
     return basicArguments[Math.floor(Math.random() * basicArguments.length)];
@@ -528,7 +547,13 @@ generateStrategicNotes(debate) {
       const cleanResponse = response.data.choices[0].message.content.trim().toLowerCase();
 
       // Validate response
-      const validResponses = ['still_firm', 'opponent_made_points', 'convinced_to_change'];
+      const validResponses = [
+        'strengthened',
+        'slightly_strengthened',
+        'no_effect',
+        'slightly_weakened',
+        'weakened'
+      ];
       if (validResponses.includes(cleanResponse)) {
         console.log('[AI PostSurvey] Response:', cleanResponse);
         return cleanResponse;
@@ -536,9 +561,9 @@ generateStrategicNotes(debate) {
 
       // Fallback based on personality
       const fallbacks = {
-        firm_on_stance: 'still_firm',
-        convinced_of_stance: 'opponent_made_points',
-        open_to_change: 'opponent_made_points'
+        firm_on_stance: 'strengthened',
+        convinced_of_stance: 'no_effect',
+        open_to_change: 'weakened'
       };
 
       console.log('[AI PostSurvey] Invalid response, using fallback:', fallbacks[aiPersonality]);
@@ -550,12 +575,12 @@ generateStrategicNotes(debate) {
       // Fallback based on personality
       const aiPersonality = debate.preDebateSurvey?.player2;
       const fallbacks = {
-        firm_on_stance: 'still_firm',
-        convinced_of_stance: 'opponent_made_points',
-        open_to_change: 'opponent_made_points'
+        firm_on_stance: 'strengthened',
+        convinced_of_stance: 'no_effect',
+        open_to_change: 'weakened'
       };
 
-      return fallbacks[aiPersonality] || 'opponent_made_points';
+      return fallbacks[aiPersonality] || 'weakened';
     }
   }
 }

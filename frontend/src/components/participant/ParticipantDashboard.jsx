@@ -170,7 +170,7 @@ const ParticipantDashboard = () => {
               <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">
                 2
               </span>
-              <p>Choose your stance (For or Against)</p>
+              <p>Choose your stance (Leaning for or Leaning against)</p>
             </div>
             <div className="flex items-start">
               <span className="flex-shrink-0 w-6 h-6 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-sm font-medium mr-3">

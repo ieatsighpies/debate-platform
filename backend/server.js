@@ -4,6 +4,7 @@ const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 const { cleanupStaleGuests } = require('./utils/guestCleanup');
 cleanupStaleGuests();
 
@@ -91,6 +92,29 @@ app.get('/health', (req, res) => {
 // ============================================
 io.on('connection', (socket) => {
   console.log('[Socket] Client connected:', socket.id);
+
+  // Join admin room
+  socket.on('join:admin', () => {
+    const token = socket.handshake?.auth?.token;
+    if (!token) {
+      console.warn('[Socket] Admin join denied (missing token):', socket.id);
+      return;
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      if (decoded?.role !== 'admin') {
+        console.warn('[Socket] Admin join denied (non-admin):', socket.id);
+        return;
+      }
+    } catch (error) {
+      console.warn('[Socket] Admin join denied (invalid token):', socket.id);
+      return;
+    }
+
+    console.log('[Socket] Client joined admin room:', socket.id);
+    socket.join('admin');
+  });
 
   // Join debate room
   socket.on('join:debate', (debateId) => {

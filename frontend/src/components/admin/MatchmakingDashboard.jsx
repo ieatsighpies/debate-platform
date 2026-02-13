@@ -270,7 +270,7 @@ const MatchmakingDashboard = () => {
                           ? 'bg-green-100 text-green-800'
                           : 'bg-red-100 text-red-800'
                       }`}>
-                        {debate.player1Stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
+                        {debate.player1Stance === 'for' ? '👍 Leaning for' : '👎 Leaning against'}
                       </span>
                       <span className={`flex items-center ${
                         pastAutoAssign && autoAssignEnabled ? 'text-red-600 font-semibold' : ''

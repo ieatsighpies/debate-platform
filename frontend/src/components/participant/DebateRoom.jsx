@@ -24,12 +24,33 @@ const DebateRoom = () => {
     yourVote: false
   });
   const [votingInProgress, setVotingInProgress] = useState(false);
+  const [showBeliefPrompt, setShowBeliefPrompt] = useState(false);
+  const [showNorms, setShowNorms] = useState(false);
+  const [showReflectionPrompt, setShowReflectionPrompt] = useState(false);
+  const [reflectionParaphrase, setReflectionParaphrase] = useState('');
+  const [reflectionAcknowledgement, setReflectionAcknowledgement] = useState('');
+  const [reflectionSubmitting, setReflectionSubmitting] = useState(false);
+  const [beliefRound, setBeliefRound] = useState(null);
+  const [beliefValue, setBeliefValue] = useState(50); // 0-100 numeric belief (50 = unsure)
+  const [influenceValue, setInfluenceValue] = useState(0);
+  const [confidenceValue, setConfidenceValue] = useState(50); // optional confidence 0-100
+  const [beliefSubmitting, setBeliefSubmitting] = useState(false);
+  const [skippedBeliefRounds, setSkippedBeliefRounds] = useState([]);
 
   // Post-debate survey state
   const [showPostSurvey, setShowPostSurvey] = useState(false);
   const [postSurveySubmitted, setPostSurveySubmitted] = useState(false);
 
   const debateIdRef = useRef(debateId);
+  const debateRef = useRef(null);
+
+  useEffect(() => {
+    debateIdRef.current = debateId;
+  }, [debateId]);
+
+  useEffect(() => {
+    debateRef.current = debate;
+  }, [debate]);
 
   // ✅ HIDDEN from user - internal only
   const isHumanAI = debate?.gameMode === 'human-ai' || debate?.isAIOpponent === true;
@@ -39,12 +60,14 @@ const DebateRoom = () => {
 
     const response = survey[playerKey];
     const perception = survey[`${playerKey}OpponentPerception`];
+    const stanceStrength = survey[`${playerKey}StanceStrength`];
+    const stanceConfidence = survey[`${playerKey}StanceConfidence`];
     const confidence = survey[`${playerKey}PerceptionConfidence`];
     const timing = survey[`${playerKey}SuspicionTiming`];
     const cues = survey[`${playerKey}DetectionCues`];
     const other = survey[`${playerKey}DetectionOther`];
 
-    if (!response || !perception || !confidence || !timing) return false;
+    if (!response || !perception || !stanceStrength || !stanceConfidence || !confidence || !timing) return false;
     if (!Array.isArray(cues) || cues.length === 0) return false;
     if (cues.includes('other') && (!other || !other.trim())) return false;
 
@@ -65,6 +88,7 @@ const DebateRoom = () => {
       console.log('[DebateRoom] Debate fetched:', response.data);
 
       const debateData = response.data.debate;
+      debateRef.current = debateData;
       setDebate(debateData);
 
       // ✅ Update vote state
@@ -120,7 +144,27 @@ const DebateRoom = () => {
       }
 
       setError(null);
+
+      // Show norms once before round 1 for active debates
+      if (debateData.status === 'active' && debateData.currentRound === 1 && !debateData._normsShown) {
+        // Use local flag to avoid blocking server model changes
+        console.log('[Norms] Showing norms before round 1');
+        setShowNorms(true);
+      }
     } catch (err) {
+        useEffect(() => {
+          if (!debate || debate.status !== 'active') return;
+          const latestCompletedRound = getLatestCompletedRound(debate);
+          if (!latestCompletedRound) return;
+
+          const alreadyReflected = (debate.reflections || []).some(r => r.round === latestCompletedRound && r.userId?.toString() === user?.userId);
+          if (alreadyReflected) return;
+
+          if (!showReflectionPrompt) {
+            console.log('[Reflection] Showing reflection prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
+            setShowReflectionPrompt(true);
+          }
+        }, [debate, showReflectionPrompt, user?.userId]);
       console.error('[DebateRoom] Error fetching debate:', err);
       setError(err.response?.data?.message || 'Failed to load debate');
     } finally {
@@ -128,10 +172,55 @@ const DebateRoom = () => {
     }
   };
 
+  const getLatestCompletedRound = (debateData) => {
+    if (!debateData?.arguments?.length) return null;
+    const roundCounts = debateData.arguments.reduce((acc, arg) => {
+      acc[arg.round] = (acc[arg.round] || 0) + 1;
+      return acc;
+    }, {});
+
+    const completedRounds = Object.keys(roundCounts)
+      .map((round) => parseInt(round, 10))
+      .filter((round) => roundCounts[round] >= 2);
+
+    if (completedRounds.length === 0) return null;
+    return Math.max(...completedRounds);
+  };
+
   // Initial fetch
   useEffect(() => {
     fetchDebate();
   }, [debateId]);
+
+  useEffect(() => {
+    if (!debate || debate.status !== 'active') return;
+
+    const latestCompletedRound = getLatestCompletedRound(debate);
+    if (!latestCompletedRound) return;
+
+    if (skippedBeliefRounds.includes(latestCompletedRound)) return;
+
+    const alreadySubmitted = (debate.beliefHistory || []).some((entry) =>
+      entry.round === latestCompletedRound &&
+      entry.userId?.toString() === user?.userId
+    );
+
+    if (!alreadySubmitted && !showBeliefPrompt) {
+      setBeliefRound(latestCompletedRound);
+      setBeliefValue(50);
+      setInfluenceValue(0);
+      console.log('[BeliefDebug] Showing belief prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
+      setShowBeliefPrompt(true);
+    }
+  }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
+
+  useEffect(() => {
+    if (debate && debate.status !== 'active' && showBeliefPrompt) {
+      console.log('[BeliefDebug] Hiding prompt because debate is not active', { debateId, status: debate?.status });
+      setShowBeliefPrompt(false);
+      setBeliefValue(50);
+    }
+  }, [debate?.status, showBeliefPrompt]);
 
   // Socket setup
   useEffect(() => {
@@ -145,9 +234,41 @@ const DebateRoom = () => {
 
     const handleArgumentAdded = (data) => {
       console.log('[DebateRoom] Argument added event:', data);
-      if (data.debateId === debateIdRef.current) {
-        fetchDebate();
+      if (data.debateId !== debateIdRef.current) {
+        return;
       }
+
+      setDebate((prev) => {
+        if (!prev || !data.argument) return prev;
+
+        const existing = prev.arguments || [];
+        const nextArg = {
+          ...data.argument,
+          isYours: data.argument.stance === prev.yourStance
+        };
+
+        const alreadyExists = existing.some((arg) => {
+          if (arg._id && nextArg._id) return arg._id === nextArg._id;
+          return (
+            arg.round === nextArg.round &&
+            arg.stance === nextArg.stance &&
+            arg.text === nextArg.text &&
+            arg.submittedBy === nextArg.submittedBy
+          );
+        });
+
+        if (alreadyExists) return prev;
+
+        return {
+          ...prev,
+          arguments: [...existing, nextArg],
+          status: data.status || prev.status,
+          currentRound: data.currentRound || prev.currentRound
+        };
+      });
+
+      // Reconcile with server state in the background.
+      setTimeout(() => fetchDebate(), 250);
     };
 
     const handleDebateStarted = (data) => {
@@ -188,7 +309,7 @@ const handleEarlyEndVote = (data) => {
   }
 
   // ✅ Get current debate state to determine player position
-  const currentDebate = debate;
+  const currentDebate = debateRef.current;
   if (!currentDebate) {
     console.error('[Vote] ❌ No debate state available');
     return;
@@ -319,6 +440,85 @@ const handleEarlyEndVote = (data) => {
   }
 };
 
+  const handleSubmitBeliefUpdate = async () => {
+    if (!beliefRound || beliefSubmitting) return;
+
+    try {
+      setBeliefSubmitting(true);
+      console.log('[BeliefDebug] Submitting belief update', {
+        debateId,
+        round: beliefRound,
+        beliefValue,
+        influenceValue,
+        confidenceValue,
+        userId: user?.userId
+      });
+
+      // Optimistically hide the prompt and mark this round as skipped
+      setShowBeliefPrompt(false);
+      setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
+
+      await debateAPI.submitBeliefUpdate(debateId, {
+        round: beliefRound,
+        beliefValue: beliefValue,
+        influence: influenceValue,
+        confidence: confidenceValue
+      });
+
+      console.log('[BeliefDebug] Belief update saved successfully', { debateId, round: beliefRound, userId: user?.userId });
+      toast.success('Belief update saved');
+      setBeliefValue(50);
+      fetchDebate();
+    } catch (error) {
+      console.error('[BeliefDebug] Error saving belief update', error.response?.data || error.message || error);
+      toast.error(error.response?.data?.message || 'Failed to save belief update');
+      // If saving failed, allow the user to try again by reopening the prompt
+      setShowBeliefPrompt(true);
+      setSkippedBeliefRounds((prev) => prev.filter((r) => r !== beliefRound));
+    } finally {
+      setBeliefSubmitting(false);
+    }
+  };
+
+  const handleSkipBeliefUpdate = () => {
+    if (!beliefRound) return;
+    console.log('[BeliefDebug] Skipping belief update', { debateId, round: beliefRound, userId: user?.userId });
+    setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
+    setShowBeliefPrompt(false);
+    setBeliefValue(50);
+  };
+
+  const handleSubmitReflection = async () => {
+    if (!debate || !getLatestCompletedRound(debate) || reflectionSubmitting) return;
+    const round = getLatestCompletedRound(debate);
+
+    try {
+      setReflectionSubmitting(true);
+      console.log('[Reflection] Submitting', { debateId, round, paraphrase: reflectionParaphrase });
+      setShowReflectionPrompt(false);
+
+      await debateAPI.submitReflection(debateId, { round, paraphrase: reflectionParaphrase, acknowledgement: reflectionAcknowledgement });
+
+      toast.success('Reflection saved');
+      setReflectionParaphrase('');
+      setReflectionAcknowledgement('');
+      fetchDebate();
+    } catch (err) {
+      console.error('[Reflection] Error saving', err.response?.data || err.message || err);
+      toast.error(err.response?.data?.message || 'Failed to save reflection');
+      setShowReflectionPrompt(true);
+    } finally {
+      setReflectionSubmitting(false);
+    }
+  };
+
+  const handleSkipReflection = () => {
+    const round = getLatestCompletedRound(debate);
+    if (!round) return;
+    console.log('[Reflection] Skipping for round', { debateId, round, userId: user?.userId });
+    setShowReflectionPrompt(false);
+  };
+
   const handleCancelDebate = async () => {
     if (!window.confirm('Cancel this debate?')) return;
 
@@ -344,10 +544,32 @@ const handleEarlyEndVote = (data) => {
 
     try {
       setSubmitting(true);
-      await debateAPI.submitArgument(debateId, argument.trim());
+      const response = await debateAPI.submitArgument(debateId, argument.trim());
+      if (response?.data?.debate) {
+        setDebate((prev) => {
+          if (!prev) return response.data.debate;
+
+          const merged = {
+            ...response.data.debate,
+            yourStance: prev.yourStance,
+            isPlayer1: prev.isPlayer1,
+            isPlayer2: prev.isPlayer2
+          };
+
+          if (Array.isArray(merged.arguments)) {
+            merged.arguments = merged.arguments.map((arg) => ({
+              ...arg,
+              isYours: arg.stance === prev.yourStance
+            }));
+          }
+
+          return merged;
+        });
+      } else {
+        fetchDebate();
+      }
       setArgument('');
       toast.success('Argument submitted');
-      fetchDebate();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to submit argument');
     } finally {
@@ -379,6 +601,10 @@ const handleEarlyEndVote = (data) => {
 
       // ✅ Always show same message (hide AI mode)
       toast.success('Vote recorded. Waiting for opponent...');
+
+      if (!connected) {
+        fetchDebate();
+      }
     } catch (error) {
       console.error('🔴 [Vote] Error occurred:', error);
       toast.error(error.response?.data?.message || 'Failed to vote');
@@ -390,6 +616,9 @@ const handleEarlyEndVote = (data) => {
     try {
       await debateAPI.revokeEarlyEndVote(debateId);
       toast.success('Vote revoked');
+      if (!connected) {
+        fetchDebate();
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to revoke vote');
     }
@@ -569,6 +798,46 @@ const handleEarlyEndVote = (data) => {
           isAIOpponent={isHumanAI}
         />
 
+        {/* Norms modal shown once before round 1 */}
+        {showNorms && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6">
+              <h3 className="text-lg font-semibold mb-3">Discussion Norms</h3>
+              <p className="text-sm text-gray-700 mb-4">Goal: discuss pros and cons and see if your view shifts at all — we aim to understand each other's reasons, not to 'destroy' the other side.</p>
+              <div className="flex justify-end">
+                <button onClick={() => { setShowNorms(false); }} className="px-4 py-2 bg-indigo-600 text-white rounded-lg">Got it</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Reflection prompt modal */}
+        {showReflectionPrompt && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-xl w-full p-6">
+              <h3 className="text-lg font-semibold mb-2">Reflection</h3>
+              <p className="text-sm text-gray-700 mb-3">Please paraphrase the main concern or point your opponent raised this round, and note if you feel anything changed for you.</p>
+              <textarea
+                value={reflectionParaphrase}
+                onChange={(e) => setReflectionParaphrase(e.target.value)}
+                rows={4}
+                className="w-full p-3 border border-gray-300 rounded mb-3"
+                placeholder="Paraphrase your opponent's main point..."
+              />
+              <input
+                value={reflectionAcknowledgement}
+                onChange={(e) => setReflectionAcknowledgement(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded mb-3"
+                placeholder="Did this change your view? (short note, optional)"
+              />
+              <div className="flex justify-end space-x-2">
+                <button onClick={handleSkipReflection} className="px-4 py-2 text-gray-600">Skip</button>
+                <button onClick={handleSubmitReflection} disabled={reflectionSubmitting || !reflectionParaphrase.trim()} className="px-4 py-2 bg-indigo-600 text-white rounded">{reflectionSubmitting ? 'Saving...' : 'Submit'}</button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex justify-between items-start mb-6">
@@ -599,10 +868,15 @@ const handleEarlyEndVote = (data) => {
                     ? 'bg-green-100 text-green-800'
                     : 'bg-red-100 text-red-800'
                 }`}>
-                  {debate.yourStance === 'for' ? '👍 FOR' : '👎 AGAINST'}
+                  {debate.yourStance === 'for' ? '👍 Leaning for' : '👎 Leaning against'}
                 </span>
               </div>
               <p className="font-semibold text-lg">{user?.username}</p>
+              {debate.currentBelief && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Current lean: {debate.isPlayer1 ? debate.currentBelief.player1 : debate.currentBelief.player2 || 'unsure'}
+                </p>
+              )}
             </div>
 
             <div className="border rounded-lg p-4 bg-gray-50">
@@ -638,13 +912,13 @@ const handleEarlyEndVote = (data) => {
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex items-center space-x-2">
-                      <span className={`text-xs font-medium px-2 py-1 rounded ${
-                        arg.stance === 'for'
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
-                      }`}>
-                        {arg.stance === 'for' ? '👍 FOR' : '👎 AGAINST'}
-                      </span>
+                          <span className={`text-xs font-medium px-2 py-1 rounded ${
+                            arg.stance === 'for'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-red-100 text-red-800'
+                          }`}>
+                            {arg.stance === 'for' ? '👍 Leaning for' : '👎 Leaning against'}
+                          </span>
                       {arg.isYours && (
                         <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded font-medium">
                           You
@@ -759,6 +1033,9 @@ const handleEarlyEndVote = (data) => {
                 Round {debate.currentRound}
               </span>
             </div>
+            <div className="mt-2 text-sm text-gray-600">
+              <strong>Good norms:</strong> Use reasons, not insults. Acknowledge at least one thing your opponent cares about.
+            </div>
             <textarea
               value={argument}
               onChange={(e) => setArgument(e.target.value)}
@@ -831,6 +1108,82 @@ const handleEarlyEndVote = (data) => {
           </div>
         )}
       </div>
+
+      {showBeliefPrompt && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Belief Check (Round {beliefRound})
+            </h3>
+            <p className="text-sm text-gray-600 mb-4">
+              After this round, where do you lean?
+            </p>
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">Where do you lean after this round?</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={beliefValue}
+                onChange={(e) => setBeliefValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="flex items-center justify-between mt-1">
+                <div className="text-xs text-gray-500">0 = Leaning Against • 50 = Unsure • 100 = Leaning For</div>
+                <div className="text-xs font-medium text-gray-700">{beliefValue}/100</div>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">
+                How much did your opponent’s argument influence your thinking this round?
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={influenceValue}
+                onChange={(e) => setInfluenceValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="text-xs text-gray-500 mt-1">{influenceValue}/100</div>
+            </div>
+
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">How confident are you in your current view right now?</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={confidenceValue}
+                onChange={(e) => setConfidenceValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="text-xs text-gray-500 mt-1">{confidenceValue}/100</div>
+            </div>
+
+            <div className="flex items-center justify-end mt-4 space-x-2">
+              <button
+                onClick={handleSkipBeliefUpdate}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                disabled={beliefSubmitting}
+              >
+                Skip for now
+              </button>
+              <button
+                onClick={handleSubmitBeliefUpdate}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
+                disabled={beliefSubmitting}
+              >
+                {beliefSubmitting ? 'Saving...' : 'Submit'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

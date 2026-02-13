@@ -212,7 +212,7 @@ const JoinDebate = () => {
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Your Stance
             </label>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
               <button
                 onClick={() => setSelectedStance('for')}
                 className={`p-4 border-2 rounded-lg transition ${
@@ -222,7 +222,7 @@ const JoinDebate = () => {
                 }`}
               >
                 <div className="text-2xl mb-2">👍</div>
-                <div className="font-semibold text-green-800">For</div>
+                <div className="font-semibold text-green-800">Leaning for</div>
               </button>
 
               <button
@@ -234,9 +234,24 @@ const JoinDebate = () => {
                 }`}
               >
                 <div className="text-2xl mb-2">👎</div>
-                <div className="font-semibold text-red-800">Against</div>
+                <div className="font-semibold text-red-800">Leaning against</div>
+              </button>
+
+              <button
+                onClick={() => setSelectedStance('unsure')}
+                className={`p-4 border-2 rounded-lg transition ${
+                  selectedStance === 'unsure'
+                    ? 'border-blue-600 bg-blue-50'
+                    : 'border-gray-300 hover:border-gray-400'
+                }`}
+              >
+                <div className="text-2xl mb-2">❓</div>
+                <div className="font-semibold text-blue-800">Unsure</div>
               </button>
             </div>
+            <p className="text-xs text-gray-500 mt-2">
+              If you choose Unsure, we will assign you a side for this debate.
+            </p>
           </div>
 
           {/* Pre-Debate Survey */}
