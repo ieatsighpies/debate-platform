@@ -34,6 +34,23 @@ const DebateRoom = () => {
   // ✅ HIDDEN from user - internal only
   const isHumanAI = debate?.gameMode === 'human-ai' || debate?.isAIOpponent === true;
 
+  const isPostSurveyCompleteForPlayer = (survey, playerKey) => {
+    if (!survey || !playerKey) return false;
+
+    const response = survey[playerKey];
+    const perception = survey[`${playerKey}OpponentPerception`];
+    const confidence = survey[`${playerKey}PerceptionConfidence`];
+    const timing = survey[`${playerKey}SuspicionTiming`];
+    const cues = survey[`${playerKey}DetectionCues`];
+    const other = survey[`${playerKey}DetectionOther`];
+
+    if (!response || !perception || !confidence || !timing) return false;
+    if (!Array.isArray(cues) || cues.length === 0) return false;
+    if (cues.includes('other') && (!other || !other.trim())) return false;
+
+    return true;
+  };
+
   // Fetch debate data
   const fetchDebate = async () => {
     if (!debateIdRef.current) {
@@ -76,27 +93,29 @@ const DebateRoom = () => {
 
       // Check if we need to show post-debate survey
       if (debateData.status === 'completed') {
-        // ✅ Check if current user has already submitted
-        const currentUsername = user?.username;
-        const hasSubmitted = debateData.postSurveys?.some(
-          survey => survey.playerId === currentUsername
-        );
+        const isPlayer1 = debateData.isPlayer1;
+        const isPlayer2 = debateData.isPlayer2;
+        const survey = debateData.postDebateSurvey || {};
+
+        const hasSubmitted = isPlayer1
+          ? isPostSurveyCompleteForPlayer(survey, 'player1')
+          : isPlayer2
+            ? isPostSurveyCompleteForPlayer(survey, 'player2')
+            : false;
 
         console.log('[Survey] Check:', {
-          currentUser: currentUsername,
-          postSurveys: debateData.postSurveys,
+          isPlayer1,
+          isPlayer2,
           hasSubmitted,
           postSurveySubmitted,
           showPostSurvey
         });
 
-        // ✅ Only show if not already submitted AND modal isn't already shown
         if (!hasSubmitted && !postSurveySubmitted && !showPostSurvey) {
           setShowPostSurvey(true);
         } else if (hasSubmitted) {
-            // ✅ Force close if backend confirms submission
-            setPostSurveySubmitted(true);
-            setShowPostSurvey(false);
+          setPostSurveySubmitted(true);
+          setShowPostSurvey(false);
         }
       }
 

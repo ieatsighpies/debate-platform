@@ -880,18 +880,26 @@ router.put('/:debateId/end-early', authenticate, async (req, res) => {
       return res.status(403).json({ message: 'Admin access required' });
     }
 
-    const debate = await Debate.findByIdAndUpdate(
-      req.params.debateId,
-      {
-        status: 'completed',
-        completedAt: new Date()
-      },
-      { new: true }
-    );
+    const debate = await Debate.findById(req.params.debateId);
 
     if (!debate) {
       return res.status(404).json({ message: 'Debate not found' });
     }
+
+    // Auto-fill AI post-survey if needed
+    if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
+      console.log('[Debate] Generating AI post-survey response (admin end early)...');
+      const aiResponse = await generateAIPostSurvey(debate);
+      debate.postDebateSurvey.player2 = aiResponse;
+      console.log('[Debate] AI post-survey:', aiResponse);
+    }
+
+    debate.status = 'completed';
+    debate.completedAt = new Date();
+    debate.completionReason = 'admin_end_early';
+    debate.earlyEndVotes.expired = true;
+
+    await debate.save();
 
     const io = req.app.get('io');
     if (io) {
@@ -1405,6 +1413,13 @@ async function triggerAIResponse(debateId, io) {
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     if (newRoundArgs.length === 2) {
       if (debate.currentRound >= debate.maxRounds) {
+        // Auto-fill AI post-survey if AI completed the final round
+        if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
+          console.log('[Debate] Generating AI post-survey response (AI completed final round)...');
+          const aiResponse = await generateAIPostSurvey(debate);
+          debate.postDebateSurvey.player2 = aiResponse;
+          console.log('[Debate] AI post-survey:', aiResponse);
+        }
         debate.status = 'completed';
         debate.completedAt = new Date();
       } else {
