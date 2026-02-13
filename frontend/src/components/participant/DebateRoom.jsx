@@ -43,6 +43,7 @@ const DebateRoom = () => {
 
   const debateIdRef = useRef(debateId);
   const debateRef = useRef(null);
+  const beliefPromptDelayRef = useRef(null);
 
   useEffect(() => {
     debateIdRef.current = debateId;
@@ -210,7 +211,13 @@ const DebateRoom = () => {
       setBeliefValue(50);
       setInfluenceValue(0);
       console.log('[BeliefDebug] Showing belief prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
-      setShowBeliefPrompt(true);
+      if (beliefPromptDelayRef.current) {
+        clearTimeout(beliefPromptDelayRef.current);
+      }
+      beliefPromptDelayRef.current = setTimeout(() => {
+        setShowBeliefPrompt(true);
+        beliefPromptDelayRef.current = null;
+      }, 2500);
     }
   }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
 
@@ -219,8 +226,21 @@ const DebateRoom = () => {
       console.log('[BeliefDebug] Hiding prompt because debate is not active', { debateId, status: debate?.status });
       setShowBeliefPrompt(false);
       setBeliefValue(50);
+      if (beliefPromptDelayRef.current) {
+        clearTimeout(beliefPromptDelayRef.current);
+        beliefPromptDelayRef.current = null;
+      }
     }
   }, [debate?.status, showBeliefPrompt]);
+
+  useEffect(() => {
+    return () => {
+      if (beliefPromptDelayRef.current) {
+        clearTimeout(beliefPromptDelayRef.current);
+        beliefPromptDelayRef.current = null;
+      }
+    };
+  }, []);
 
   // Socket setup
   useEffect(() => {

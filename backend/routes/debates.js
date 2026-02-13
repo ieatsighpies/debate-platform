@@ -1749,17 +1749,13 @@ async function triggerAIResponse(debateId, io) {
     console.log('[AI] Generating AI argument...');
 
     const aiArgument = await aiService.generateArgument(debate);
-
-    // ✅ GET PERSONALITY FOR DELAY CALCULATION
     const personality = aiPersonalities[debate.player2AIModel];
-
-    // ✅ CALCULATE DELAY BASED ON ARGUMENT LENGTH
-    const delay = calculateAIResponseDelay(aiArgument.length, debate, personality) || responseDelay;
+    const configuredDelayMs = debate.aiResponseDelay ? debate.aiResponseDelay * 1000 : 0;
+    const delay = calculateAIResponseDelay(aiArgument.length, debate, personality) || configuredDelayMs || 2000;
 
     console.log(`[AI] Argument generated (${aiArgument.length} chars). Waiting ${(delay/1000).toFixed(1)}s before sending...`);
 
-    // ✅ WAIT THE CALCULATED DELAY
-    await new Promise(resolve => setTimeout(resolve, delay));
+    await new Promise((resolve) => setTimeout(resolve, delay));
 
     debate.arguments.push({
       stance: debate.player2Stance,
@@ -1767,52 +1763,44 @@ async function triggerAIResponse(debateId, io) {
       round: debate.currentRound,
       submittedBy: 'ai'
     });
-
     debate.aiLastResponseAt = new Date();
 
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     if (newRoundArgs.length === 2) {
       if (debate.currentRound >= debate.maxRounds) {
-        // Auto-fill AI post-survey if AI completed the final round
         if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
           console.log('[Debate] Generating AI post-survey response (AI completed final round)...');
           const aiResponse = await generateAIPostSurvey(debate);
           debate.postDebateSurvey.player2 = aiResponse;
-          debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
-          debate.postDebateSurvey.player2StanceStrength = stanceStrength;
-          debate.postDebateSurvey.player2StanceConfidence = stanceConfidence;
-          debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence;
-          debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;
-          debate.postDebateSurvey.player2DetectionCues = detectionCues;
-          if (detectionOther) {
-            debate.postDebateSurvey.player2DetectionOther = detectionOther;
-          }
-          if (aiAwarenessEffect) {
-            debate.postDebateSurvey.player2AiAwarenessEffect = aiAwarenessEffect;
-          }
-          if (aiAwarenessJustification) {
-            debate.postDebateSurvey.player2AiAwarenessJustification = aiAwarenessJustification;
-          }
-          console.log('[Post-Survey] ✅ Saved for player2', { aiResponse, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
+        }
+        debate.status = 'completed';
+        debate.completedAt = new Date();
+        debate.completionReason = 'natural_completion';
+        debate.earlyEndVotes.expired = true;
+        cleanupAITimeout(debate._id);
+      } else {
+        debate.currentRound += 1;
+      }
+    }
 
+    await debate.save();
+
+    const latestArgument = debate.arguments[debate.arguments.length - 1];
     console.log('[AI] ✅ AI argument submitted');
 
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:argumentAdded', {
         debateId: debate._id,
-        argument: debate.arguments[debate.arguments.length - 1],
+        argument: latestArgument,
         status: debate.status,
         currentRound: debate.currentRound
       });
       io.to('admin').emit('debate:argumentAdded', {
         debateId: debate._id,
-        argument: debate.arguments[debate.arguments.length - 1],
+        argument: latestArgument,
         status: debate.status,
         currentRound: debate.currentRound
       });
-    }
-  }
-}
     }
   } catch (error) {
     console.error('[AI] Error generating response:', error);
