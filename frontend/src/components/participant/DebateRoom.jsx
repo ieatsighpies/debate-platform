@@ -43,7 +43,6 @@ const DebateRoom = () => {
 
   const debateIdRef = useRef(debateId);
   const debateRef = useRef(null);
-  const beliefPromptDelayRef = useRef(null);
   const normsShownOnceRef = useRef(false);
 
   useEffect(() => {
@@ -189,17 +188,6 @@ const DebateRoom = () => {
     return Math.max(...completedRounds);
   };
 
-  const calculateBeliefPromptDelay = (debateData, roundNumber) => {
-    const args = (debateData?.arguments || []).filter(arg => arg.round === roundNumber);
-    const opponentArg = args.find(arg => arg.stance !== debateData?.yourStance);
-    const opponentLength = opponentArg?.text?.length || 0;
-    const baseDelay = 1500;
-    const perCharDelay = 25;
-    const maxDelay = 8000;
-    const delay = baseDelay + opponentLength * perCharDelay;
-    return Math.min(maxDelay, Math.max(baseDelay, delay));
-  };
-
   // Initial fetch
   useEffect(() => {
     fetchDebate();
@@ -223,15 +211,7 @@ const DebateRoom = () => {
       setBeliefValue(50);
       setInfluenceValue(0);
       console.log('[BeliefDebug] Showing belief prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
-      if (beliefPromptDelayRef.current) {
-        clearTimeout(beliefPromptDelayRef.current);
-      }
-      const promptDelay = calculateBeliefPromptDelay(debate, latestCompletedRound);
-      console.log('[BeliefDebug] Prompt delay (ms)', promptDelay);
-      beliefPromptDelayRef.current = setTimeout(() => {
-        setShowBeliefPrompt(true);
-        beliefPromptDelayRef.current = null;
-      }, promptDelay);
+      setShowBeliefPrompt(true);
     }
   }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
 
@@ -240,21 +220,8 @@ const DebateRoom = () => {
       console.log('[BeliefDebug] Hiding prompt because debate is not active', { debateId, status: debate?.status });
       setShowBeliefPrompt(false);
       setBeliefValue(50);
-      if (beliefPromptDelayRef.current) {
-        clearTimeout(beliefPromptDelayRef.current);
-        beliefPromptDelayRef.current = null;
-      }
     }
   }, [debate?.status, showBeliefPrompt]);
-
-  useEffect(() => {
-    return () => {
-      if (beliefPromptDelayRef.current) {
-        clearTimeout(beliefPromptDelayRef.current);
-        beliefPromptDelayRef.current = null;
-      }
-    };
-  }, []);
 
   // Socket setup
   useEffect(() => {
@@ -315,6 +282,13 @@ const DebateRoom = () => {
 
     const handleDebateCompleted = (data) => {
       console.log('[DebateRoom] Debate completed:', data);
+      if (data.debateId === debateIdRef.current) {
+        fetchDebate();
+      }
+    };
+
+    const handleRoundAdvanced = (data) => {
+      console.log('[DebateRoom] Round advanced:', data);
       if (data.debateId === debateIdRef.current) {
         fetchDebate();
       }
@@ -411,6 +385,7 @@ const handleEarlyEndVote = (data) => {
     socket.on('debate:argumentAdded', handleArgumentAdded);
     socket.on('debate:active', handleDebateStarted);
     socket.on('debate:completed', handleDebateCompleted);
+    socket.on('debate:roundAdvanced', handleRoundAdvanced);
     socket.on('debate:cancelled', handleDebateCancelled);
     socket.on('debate:earlyEndVote', handleEarlyEndVote);
 
@@ -427,6 +402,7 @@ const handleEarlyEndVote = (data) => {
       socket.off('debate:argumentAdded', handleArgumentAdded);
       socket.off('debate:active', handleDebateStarted);
       socket.off('debate:completed', handleDebateCompleted);
+      socket.off('debate:roundAdvanced', handleRoundAdvanced);
       socket.off('debate:cancelled', handleDebateCancelled);
       socket.off('debate:earlyEndVote', handleEarlyEndVote);
       socket.off('connect', handleConnect);
@@ -488,7 +464,7 @@ const handleEarlyEndVote = (data) => {
         userId: user?.userId
       });
 
-      // Optimistically hide the prompt and mark this round as skipped
+      // Optimistically hide the prompt and mark this round as handled
       setShowBeliefPrompt(false);
       setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
 
@@ -514,12 +490,29 @@ const handleEarlyEndVote = (data) => {
     }
   };
 
-  const handleSkipBeliefUpdate = () => {
-    if (!beliefRound) return;
-    console.log('[BeliefDebug] Skipping belief update', { debateId, round: beliefRound, userId: user?.userId });
-    setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
-    setShowBeliefPrompt(false);
-    setBeliefValue(50);
+  const handleSkipBeliefUpdate = async () => {
+    if (!beliefRound || beliefSubmitting) return;
+
+    try {
+      setBeliefSubmitting(true);
+      console.log('[BeliefDebug] Skipping belief update', { debateId, round: beliefRound, userId: user?.userId });
+
+      setShowBeliefPrompt(false);
+      setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
+
+      await debateAPI.submitBeliefSkip(debateId, { round: beliefRound });
+
+      toast.success('Belief check skipped');
+      setBeliefValue(50);
+      fetchDebate();
+    } catch (error) {
+      console.error('[BeliefDebug] Error skipping belief update', error.response?.data || error.message || error);
+      toast.error(error.response?.data?.message || 'Failed to skip belief update');
+      setShowBeliefPrompt(true);
+      setSkippedBeliefRounds((prev) => prev.filter((r) => r !== beliefRound));
+    } finally {
+      setBeliefSubmitting(false);
+    }
   };
 
   const handleSubmitReflection = async () => {
@@ -1056,8 +1049,85 @@ const handleEarlyEndVote = (data) => {
           </div>
         )}
 
-        {/* Argument Input */}
-        {isYourTurn && (
+        {/* Belief Check (replaces argument input when active) */}
+        {showBeliefPrompt ? (
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold text-gray-800">
+                Belief Check (Round {beliefRound})
+              </h3>
+              <span className="text-sm text-gray-600">
+                Round {debate.currentRound}
+              </span>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              After this round, where do you lean?
+            </p>
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">Where do you lean after this round?</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={beliefValue}
+                onChange={(e) => setBeliefValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="flex items-center justify-between mt-1">
+                <div className="text-xs text-gray-500">0 = Leaning Against • 50 = Unsure • 100 = Leaning For</div>
+                <div className="text-xs font-medium text-gray-700">{beliefValue}/100</div>
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">
+                How much did your opponent's argument influence your thinking this round?
+              </label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={influenceValue}
+                onChange={(e) => setInfluenceValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="text-xs text-gray-500 mt-1">{influenceValue}/100</div>
+            </div>
+
+            <div className="mb-4">
+              <label className="text-sm font-medium text-gray-700">How confident are you in your current view right now?</label>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={confidenceValue}
+                onChange={(e) => setConfidenceValue(parseInt(e.target.value, 10))}
+                className="w-full mt-2"
+                disabled={beliefSubmitting}
+              />
+              <div className="text-xs text-gray-500 mt-1">{confidenceValue}/100</div>
+            </div>
+
+            <div className="flex items-center justify-end mt-4 space-x-2">
+              <button
+                onClick={handleSkipBeliefUpdate}
+                className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                disabled={beliefSubmitting}
+              >
+                Skip for now
+              </button>
+              <button
+                onClick={handleSubmitBeliefUpdate}
+                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
+                disabled={beliefSubmitting}
+              >
+                {beliefSubmitting ? 'Saving...' : 'Submit'}
+              </button>
+            </div>
+          </div>
+        ) : isYourTurn ? (
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-green-700">
@@ -1104,10 +1174,7 @@ const handleEarlyEndVote = (data) => {
               </button>
             </div>
           </div>
-        )}
-
-        {/* Waiting for opponent */}
-        {debate.status === 'active' && !isYourTurn && (
+        ) : debate.status === 'active' ? (
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <Loader2 className="animate-spin mx-auto mb-4 text-indigo-600" size={40} />
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -1117,7 +1184,7 @@ const handleEarlyEndVote = (data) => {
               Your opponent is preparing their response
             </p>
           </div>
-        )}
+        ) : null}
 
         {/* Completed */}
         {debate.status === 'completed' && postSurveySubmitted && (
@@ -1143,81 +1210,6 @@ const handleEarlyEndVote = (data) => {
         )}
       </div>
 
-      {showBeliefPrompt && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6">
-            <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Belief Check (Round {beliefRound})
-            </h3>
-            <p className="text-sm text-gray-600 mb-4">
-              After this round, where do you lean?
-            </p>
-            <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700">Where do you lean after this round?</label>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={beliefValue}
-                onChange={(e) => setBeliefValue(parseInt(e.target.value, 10))}
-                className="w-full mt-2"
-                disabled={beliefSubmitting}
-              />
-              <div className="flex items-center justify-between mt-1">
-                <div className="text-xs text-gray-500">0 = Leaning Against • 50 = Unsure • 100 = Leaning For</div>
-                <div className="text-xs font-medium text-gray-700">{beliefValue}/100</div>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700">
-                How much did your opponent’s argument influence your thinking this round?
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={influenceValue}
-                onChange={(e) => setInfluenceValue(parseInt(e.target.value, 10))}
-                className="w-full mt-2"
-                disabled={beliefSubmitting}
-              />
-              <div className="text-xs text-gray-500 mt-1">{influenceValue}/100</div>
-            </div>
-
-            <div className="mb-4">
-              <label className="text-sm font-medium text-gray-700">How confident are you in your current view right now?</label>
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={confidenceValue}
-                onChange={(e) => setConfidenceValue(parseInt(e.target.value, 10))}
-                className="w-full mt-2"
-                disabled={beliefSubmitting}
-              />
-              <div className="text-xs text-gray-500 mt-1">{confidenceValue}/100</div>
-            </div>
-
-            <div className="flex items-center justify-end mt-4 space-x-2">
-              <button
-                onClick={handleSkipBeliefUpdate}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                disabled={beliefSubmitting}
-              >
-                Skip for now
-              </button>
-              <button
-                onClick={handleSubmitBeliefUpdate}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
-                disabled={beliefSubmitting}
-              >
-                {beliefSubmitting ? 'Saving...' : 'Submit'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

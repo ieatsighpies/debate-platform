@@ -9,7 +9,7 @@ const aiPersonalities = {
     model: 'gpt-4o-mini',
     defaultPrompt: `You are a real person debating {TOPIC}. You believe {STANCE}. Round {CURRENT_ROUND}/{MAX_ROUNDS}.
 
-    You are texting on your phone a bit annoyed. Keep it sharp, fast, and direct.
+    You are texting on your phone a bit annoyed. Keep it sharp, fast, and direct. Match their argument length.
 
     Style:
     - short, pointed sentences that still read smoothly, not disjointed fragments
@@ -45,7 +45,7 @@ const aiPersonalities = {
     defaultPrompt: `You are a real person casually debating {TOPIC} online. You lean {STANCE} but you're not unreasonable. Round {CURRENT_ROUND}/{MAX_ROUNDS}.
 
     You're typing quickly like you would to a trusted friend. You give credit where it's due while still defending your position. Keep it short, direct, and readable.
-
+    Match their argument length.
     Style:
     - give a little ground sometimes, but not every reply
     - uneven punctuation, sometimes lowercase, but stay grammatically understandable
@@ -81,7 +81,7 @@ const aiPersonalities = {
     defaultPrompt: `You are a real person debating {TOPIC} online. You currently lean {STANCE} but honestly you could be convinced otherwise if the argument is good enough. Round {CURRENT_ROUND}/{MAX_ROUNDS}.
 
     You type like you're chatting with someone. You genuinely consider what they say and you're not afraid to note moments that intrigue you before pushing back. Keep it concise, thoughtful, and direct.
-
+    Match their argument length.
     Style:
     - react to their specific point, not generic rebuttals
     - natural typing, lower-case ok, uneven punctuation, but stay clear
@@ -208,6 +208,37 @@ const getPostSurveyPrompt = (preSurveyResponse, topic, stance, opponentArguments
     .replace('{OPPONENT_ARGUMENTS}', opponentArgsText || 'No arguments provided.');
 };
 
+const getBeliefPrompt = (preSurveyResponse, topic, stance, roundNumber, opponentArguments, ownArguments) => {
+  const personality = personalityContexts[preSurveyResponse] || personalityContexts.convinced_of_stance;
+
+  const opponentArgsText = opponentArguments
+    .map(arg => `- ${arg.text}`)
+    .join('\n');
+
+  const ownArgsText = ownArguments
+    .map(arg => `- ${arg.text}`)
+    .join('\n');
+
+  return `You are the ${personality.name} in a debate about "${topic}" arguing ${stance === 'for' ? 'FOR' : 'AGAINST'}.
+
+Round ${roundNumber} just ended. Update your belief after seeing both arguments.
+
+Opponent's argument(s) this round:
+${opponentArgsText || 'No opponent arguments.'}
+
+Your argument(s) this round:
+${ownArgsText || 'No AI arguments.'}
+
+Respond with ONLY valid JSON in this exact shape:
+{"beliefValue": <0-100>, "influence": <0-100>, "confidence": <0-100>}
+
+Guidelines:
+- beliefValue: 0 = leaning against, 50 = unsure, 100 = leaning for
+- influence: how much opponent arguments influenced you this round
+- confidence: how confident you are in your current view
+`;
+};
+
 // Get available personalities for admin selection
 const getAIPersonalities = () => {
    // Only return the 3 personality-based AIs
@@ -239,6 +270,7 @@ module.exports = aiPersonalities;
 module.exports.personalityContexts = personalityContexts;
 module.exports.getPersonalityContext = getPersonalityContext;
 module.exports.getPostSurveyPrompt = getPostSurveyPrompt;
+module.exports.getBeliefPrompt = getBeliefPrompt;
 module.exports.getAIModelByPersonality = getAIModelByPersonality;
 module.exports.getAIPersonalities = getAIPersonalities;
 module.exports.getPersonalityDescription = getPersonalityDescription;

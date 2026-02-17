@@ -583,6 +583,78 @@ generateStrategicNotes(debate) {
       return fallbacks[aiPersonality] || 'weakened';
     }
   }
+
+  async generateBeliefUpdate(debate, roundNumber) {
+    try {
+      const aiPersonality = debate.preDebateSurvey?.player2;
+      const aiStance = debate.player2Stance;
+
+      if (!aiPersonality) {
+        console.error('[AI Belief] No AI personality found in pre-survey');
+        return null;
+      }
+
+      const roundArgs = (debate.arguments || []).filter(arg => arg.round === roundNumber);
+      const opponentArgs = roundArgs.filter(arg => arg.stance !== aiStance);
+      const ownArgs = roundArgs.filter(arg => arg.stance === aiStance);
+
+      const prompt = aiPersonalities.getBeliefPrompt(
+        aiPersonality,
+        debate.topicQuestion,
+        aiStance,
+        roundNumber,
+        opponentArgs,
+        ownArgs
+      );
+
+      if (!this.openaiEnabled || !this.openaiApiKey) {
+        return null;
+      }
+
+      const response = await axios.post(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          model: 'gpt-4o-mini',
+          messages: [{ role: 'user', content: prompt }],
+          max_tokens: 80,
+          temperature: 0.4
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${this.openaiApiKey}`,
+            'Content-Type': 'application/json'
+          },
+          timeout: 15000
+        }
+      );
+
+      const raw = response.data.choices[0].message.content.trim();
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) {
+        console.log('[AI Belief] Invalid JSON response');
+        return null;
+      }
+
+      const parsed = JSON.parse(jsonMatch[0]);
+      const beliefValue = parseInt(parsed.beliefValue, 10);
+      const influence = parseInt(parsed.influence, 10);
+      const confidence = parseInt(parsed.confidence, 10);
+
+      if ([beliefValue, influence, confidence].some(val => Number.isNaN(val))) {
+        console.log('[AI Belief] Invalid numeric fields');
+        return null;
+      }
+
+      return {
+        beliefValue: Math.min(100, Math.max(0, beliefValue)),
+        influence: Math.min(100, Math.max(0, influence)),
+        confidence: Math.min(100, Math.max(0, confidence))
+      };
+    } catch (error) {
+      console.error('[AI Belief] Error:', error.response?.data || error.message);
+      return null;
+    }
+  }
 }
 
 module.exports = new AIService();

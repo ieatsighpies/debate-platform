@@ -220,6 +220,163 @@ function calculateAIResponseDelay(argumentLength, debate, personality) {
   return Math.floor(totalDelay);
 }
 
+const mapBeliefCategoryToNumeric = (category) => {
+  if (category === 'for') return 100;
+  if (category === 'against') return 0;
+  if (category === 'unsure') return 50;
+  return 50;
+};
+
+const mapBeliefValueToCategory = (value) => {
+  if (typeof value !== 'number') return 'unsure';
+  if (value <= 33) return 'against';
+  if (value <= 66) return 'unsure';
+  return 'for';
+};
+
+const recordAIBeliefUpdate = async (debate, roundNumber) => {
+  if (!debate || debate.player2Type !== 'ai') return false;
+
+  const existing = (debate.beliefHistory || []).some(entry =>
+    entry.round === roundNumber && entry.player === 'player2'
+  );
+  if (existing) {
+    console.log('[AI Belief] Skip - already recorded', {
+      debateId: debate._id,
+      round: roundNumber
+    });
+    return false;
+  }
+
+  let beliefNumeric = null;
+  let influence = 0;
+  let confidence = null;
+
+  const aiBelief = await aiService.generateBeliefUpdate(debate, roundNumber);
+  if (aiBelief) {
+    beliefNumeric = aiBelief.beliefValue;
+    influence = aiBelief.influence;
+    confidence = aiBelief.confidence;
+  }
+
+  if (beliefNumeric === null) {
+    const beliefCategoryFallback =
+      (debate.currentBelief && debate.currentBelief.player2) ||
+      debate.player2StanceChoice ||
+      debate.player2Stance ||
+      'unsure';
+
+    beliefNumeric =
+      (debate.currentBeliefValue && typeof debate.currentBeliefValue.player2 === 'number')
+        ? debate.currentBeliefValue.player2
+        : mapBeliefCategoryToNumeric(beliefCategoryFallback);
+  }
+
+  const beliefCategory = mapBeliefValueToCategory(beliefNumeric);
+
+  debate.beliefHistory = debate.beliefHistory || [];
+  debate.beliefHistory.push({
+    round: roundNumber,
+    userId: null,
+    player: 'player2',
+    belief: beliefCategory,
+    beliefValue: beliefNumeric,
+    influence,
+    confidence,
+    skipped: false
+  });
+
+  debate.currentBelief = debate.currentBelief || {};
+  debate.currentBeliefValue = debate.currentBeliefValue || {};
+  debate.currentBelief.player2 = beliefCategory;
+  debate.currentBeliefValue.player2 = beliefNumeric;
+
+  console.log('[AI Belief] Recorded', {
+    debateId: debate._id,
+    round: roundNumber,
+    belief: beliefCategory,
+    beliefValue: beliefNumeric,
+    influence,
+    confidence
+  });
+
+  return true;
+};
+
+const hasBeliefEntryForRound = (debate, roundNumber, playerKey) => {
+  return (debate.beliefHistory || []).some(entry =>
+    entry.round === roundNumber && entry.player === playerKey
+  );
+};
+
+const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
+  if (!debate || debate.status !== 'active') return false;
+
+  const roundNumber = debate.currentRound;
+  const roundArgs = (debate.arguments || []).filter(arg => arg.round === roundNumber);
+  if (roundArgs.length < 2) return false;
+
+  const requirePlayer2 = debate.player2Type === 'human' || debate.player2Type === 'ai';
+  const player1Done = hasBeliefEntryForRound(debate, roundNumber, 'player1');
+  const player2Done = requirePlayer2 ? hasBeliefEntryForRound(debate, roundNumber, 'player2') : true;
+
+  if (!player1Done || !player2Done) return false;
+
+  if (debate.currentRound >= debate.maxRounds) {
+    if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
+      console.log('[Debate] Generating AI post-survey response (belief-gated completion)...');
+      const aiResponse = await generateAIPostSurvey(debate);
+      debate.postDebateSurvey.player2 = aiResponse;
+    }
+
+    debate.status = 'completed';
+    debate.completedAt = new Date();
+    debate.completionReason = 'natural_completion';
+    debate.earlyEndVotes.expired = true;
+    cleanupAITimeout(debate._id);
+  } else {
+    debate.currentRound += 1;
+  }
+
+  await debate.save();
+
+  if (io) {
+    io.to(`debate:${debate._id}`).emit('debate:roundAdvanced', {
+      debateId: debate._id,
+      currentRound: debate.currentRound,
+      status: debate.status
+    });
+    io.to('admin').emit('debate:roundAdvanced', {
+      debateId: debate._id,
+      currentRound: debate.currentRound,
+      status: debate.status
+    });
+
+    if (debate.status === 'completed') {
+      io.to(`debate:${debate._id}`).emit('debate:completed', {
+        debateId: debate._id,
+        reason: 'Debate completed'
+      });
+      io.to('admin').emit('debate:completed', {
+        debateId: debate._id,
+        reason: 'Debate completed'
+      });
+    }
+  }
+
+  if (debate.status === 'active' && debate.player2Type === 'ai' && debate.aiEnabled) {
+    setImmediate(async () => {
+      try {
+        await triggerAIResponse(debate._id, io);
+      } catch (error) {
+        console.error('[AI] Error triggering response after round advance:', error);
+      }
+    });
+  }
+
+  return true;
+};
+
 // ============================================
 // HANDLE AI EARLY END VOTE
 // ============================================
@@ -835,22 +992,8 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
 
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     if (newRoundArgs.length === 2) {
-      if (debate.currentRound >= debate.maxRounds) {
-        // AUTO-FILL AI POST-SURVEY
-        if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
-          console.log('[Debate] Generating AI post-survey response...');
-          const aiResponse = await generateAIPostSurvey(debate);
-          debate.postDebateSurvey.player2 = aiResponse;
-          console.log('[Debate] AI post-survey:', aiResponse);
-        }
-
-        debate.status = 'completed';
-        debate.completedAt = new Date();
-        debate.completionReason = 'natural_completion';
-        debate.earlyEndVotes.expired = true;
-        cleanupAITimeout(debate._id);
-      } else {
-        debate.currentRound += 1;
+      if (debate.player2Type === 'ai') {
+        recordAIBeliefUpdate(debate, debate.currentRound);
       }
     }
 
@@ -902,7 +1045,7 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
     const { round, belief, beliefValue, influence, confidence } = req.body;
     const userId = req.user.userId;
 
-    console.log('[BeliefDebug] Incoming belief-update request', {
+    console.log('[Belief] Submit request', {
       debateId,
       userId,
       payload: { round, belief, beliefValue, influence, confidence }
@@ -965,6 +1108,7 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
 
     const isPlayer1 = debate.player1UserId.toString() === userId;
     const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
+    const playerKey = isPlayer1 ? 'player1' : 'player2';
 
     if (!isPlayer1 && !isPlayer2) {
       return res.status(403).json({ message: 'You are not part of this debate' });
@@ -972,17 +1116,17 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
 
     const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
     if (roundArgs.length < 2) {
-      console.log('[BeliefDebug] Round not complete yet', { debateId, round: roundNumber, foundArgs: roundArgs.length });
+      console.log('[Belief] Round not complete', { debateId, round: roundNumber, player: playerKey, foundArgs: roundArgs.length });
       return res.status(400).json({ message: 'Round is not complete yet' });
     }
 
     const alreadySubmitted = (debate.beliefHistory || []).some(entry =>
       entry.round === roundNumber &&
-      entry.userId.toString() === userId
+      entry.userId && entry.userId.toString() === userId
     );
 
     if (alreadySubmitted) {
-      console.log('[BeliefDebug] Duplicate belief submission attempt', { debateId, round: roundNumber, userId });
+      console.log('[Belief] Duplicate submit', { debateId, round: roundNumber, player: playerKey });
       return res.status(400).json({ message: 'Belief update already submitted for this round' });
     }
 
@@ -1008,12 +1152,89 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
 
     await debate.save();
 
-    console.log('[BeliefDebug] Belief update saved to DB', { debateId, round: roundNumber, userId });
+    console.log('[Belief] Saved', { debateId, round: roundNumber, player: playerKey });
+
+    if (roundNumber === debate.currentRound) {
+      const io = req.app.get('io');
+      await maybeAdvanceRoundAfterBeliefs(debate, io);
+    }
 
     res.json({ message: 'Belief update submitted' });
   } catch (error) {
     console.error('[Debate] Error submitting belief update:', error);
     res.status(500).json({ message: 'Failed to submit belief update' });
+  }
+});
+
+// Skip round belief update
+router.post('/:debateId/belief-skip', authenticate, async (req, res) => {
+  try {
+    const { debateId } = req.params;
+    const { round } = req.body;
+    const userId = req.user.userId;
+
+    const roundNumber = parseInt(round, 10);
+    if (!roundNumber || roundNumber < 1) {
+      return res.status(400).json({ message: 'Invalid round number' });
+    }
+
+    const debate = await Debate.findById(debateId);
+    if (!debate) {
+      return res.status(404).json({ message: 'Debate not found' });
+    }
+
+    if (!['active', 'completed'].includes(debate.status)) {
+      return res.status(400).json({ message: 'Debate is not active or completed' });
+    }
+
+    const isPlayer1 = debate.player1UserId.toString() === userId;
+    const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
+    const playerKey = isPlayer1 ? 'player1' : 'player2';
+
+    if (!isPlayer1 && !isPlayer2) {
+      return res.status(403).json({ message: 'You are not part of this debate' });
+    }
+
+    const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
+    if (roundArgs.length < 2) {
+      console.log('[Belief] Skip blocked - round not complete', { debateId, round: roundNumber, player: playerKey, foundArgs: roundArgs.length });
+      return res.status(400).json({ message: 'Round is not complete yet' });
+    }
+
+    const alreadySubmitted = (debate.beliefHistory || []).some(entry =>
+      entry.round === roundNumber && entry.userId && entry.userId.toString() === userId
+    );
+
+    if (alreadySubmitted) {
+      console.log('[Belief] Duplicate skip', { debateId, round: roundNumber, player: playerKey });
+      return res.status(400).json({ message: 'Belief update already submitted for this round' });
+    }
+
+    debate.beliefHistory = debate.beliefHistory || [];
+    debate.beliefHistory.push({
+      round: roundNumber,
+      userId,
+      player: isPlayer1 ? 'player1' : 'player2',
+      belief: null,
+      beliefValue: null,
+      influence: 0,
+      confidence: null,
+      skipped: true
+    });
+
+    await debate.save();
+
+    console.log('[Belief] Skip saved', { debateId, round: roundNumber, player: playerKey });
+
+    if (roundNumber === debate.currentRound) {
+      const io = req.app.get('io');
+      await maybeAdvanceRoundAfterBeliefs(debate, io);
+    }
+
+    res.json({ message: 'Belief update skipped' });
+  } catch (error) {
+    console.error('[Debate] Error skipping belief update:', error);
+    res.status(500).json({ message: 'Failed to skip belief update' });
   }
 });
 
@@ -1767,20 +1988,7 @@ async function triggerAIResponse(debateId, io) {
 
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     if (newRoundArgs.length === 2) {
-      if (debate.currentRound >= debate.maxRounds) {
-        if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
-          console.log('[Debate] Generating AI post-survey response (AI completed final round)...');
-          const aiResponse = await generateAIPostSurvey(debate);
-          debate.postDebateSurvey.player2 = aiResponse;
-        }
-        debate.status = 'completed';
-        debate.completedAt = new Date();
-        debate.completionReason = 'natural_completion';
-        debate.earlyEndVotes.expired = true;
-        cleanupAITimeout(debate._id);
-      } else {
-        debate.currentRound += 1;
-      }
+      await recordAIBeliefUpdate(debate, debate.currentRound);
     }
 
     await debate.save();

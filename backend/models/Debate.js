@@ -314,7 +314,7 @@ const debateSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      required: false
     },
     player: {
       type: String,
@@ -347,6 +347,10 @@ const debateSchema = new mongoose.Schema({
       min: 0,
       max: 100,
       default: null
+    },
+    skipped: {
+      type: Boolean,
+      default: false
     },
     createdAt: {
       type: Date,
