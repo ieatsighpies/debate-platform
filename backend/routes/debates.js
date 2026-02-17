@@ -1955,16 +1955,49 @@ async function triggerAIResponse(debateId, io) {
 
     const currentRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     let isAITurn = false;
+    let isPlayer1Turn = false;
 
     if (currentRoundArgs.length === 0) {
       isAITurn = (debate.firstPlayer === debate.player2Stance);
+      isPlayer1Turn = (debate.firstPlayer === debate.player1Stance);
     } else if (currentRoundArgs.length === 1) {
       isAITurn = (currentRoundArgs[0].stance !== debate.player2Stance);
+      isPlayer1Turn = (currentRoundArgs[0].stance !== debate.player1Stance);
     }
 
     if (!isAITurn) {
-      console.log('[AI] Not AI\'s turn yet');
-      return;
+      if (!isPlayer1Turn) {
+        const lastArgument = debate.arguments[debate.arguments.length - 1];
+        if (!lastArgument) {
+          throw new Error('Turn discrepancy detected: no arguments found to derive next turn');
+        }
+
+        let expectedTurnStance = null;
+        if (lastArgument.stance === debate.player1Stance) {
+          expectedTurnStance = debate.player2Stance;
+        } else if (lastArgument.stance === debate.player2Stance) {
+          expectedTurnStance = debate.player1Stance;
+        } else {
+          throw new Error('Turn discrepancy detected: last argument stance does not match any player stance');
+        }
+
+        console.log('[AI] Turn discrepancy detected, deriving next turn from last argument', {
+          debateId: debate._id,
+          currentRound: debate.currentRound,
+          lastArgumentRound: lastArgument.round,
+          lastArgumentStance: lastArgument.stance,
+          expectedTurnStance
+        });
+
+        if (expectedTurnStance === debate.player2Stance) {
+          isAITurn = true;
+        }
+      }
+
+      if (!isAITurn) {
+        console.log('[AI] Not AI\'s turn yet');
+        return;
+      }
     }
 
     console.log('[AI] Generating AI argument...');
