@@ -535,7 +535,6 @@ const handleEarlyEndVote = (data) => {
     try {
       setReflectionSubmitting(true);
       console.log('[Reflection] Submitting', { debateId, round, paraphrase: reflectionParaphrase });
-      setShowReflectionPrompt(false);
 
       await debateAPI.submitReflection(debateId, { round, paraphrase: reflectionParaphrase, acknowledgement: reflectionAcknowledgement });
 
@@ -543,6 +542,7 @@ const handleEarlyEndVote = (data) => {
       setReflectionParaphrase('');
       setReflectionAcknowledgement('');
       setReflectionHandledRounds((prev) => [...new Set([...prev, round])]);
+      setShowReflectionPrompt(false);
       fetchDebate();
     } catch (err) {
       console.error('[Reflection] Error saving', err.response?.data || err.message || err);
