@@ -260,7 +260,7 @@ const DebateInterface = () => {
             <div className="mt-2 text-sm text-gray-600">
               <strong>Good norms:</strong> Use reasons, not insults. Acknowledge at least one thing your opponent cares about.
             </div>
-            
+
             <textarea
               value={argument}
               onChange={(e) => setArgument(e.target.value)}
