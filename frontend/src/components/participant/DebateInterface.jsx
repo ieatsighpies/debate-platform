@@ -139,14 +139,8 @@ const DebateInterface = () => {
   const isMyTurn = () => {
     if (debate.status !== 'active') return false;
 
-    const currentRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
-
-    if (currentRoundArgs.length === 0) {
-      return debate.firstPlayer === debate.yourStance;
-    } else if (currentRoundArgs.length === 1) {
-      return currentRoundArgs[0].stance !== debate.yourStance;
-    }
-    return false;
+    if (!debate.nextTurn) return false;
+    return debate.nextTurn === debate.yourStance;
   };
 
   return (

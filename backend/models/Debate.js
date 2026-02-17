@@ -114,6 +114,11 @@ const debateSchema = new mongoose.Schema({
     enum: ['for', 'against'],
     default: null
   },
+  nextTurn: {
+    type: String,
+    enum: ['for', 'against'],
+    default: null
+  },
 
   // AI Control
   aiEnabled: {

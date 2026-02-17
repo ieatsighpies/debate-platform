@@ -32,6 +32,7 @@ const completeDebateEarly = async (debateId, reason, io) => {
     debate.completedAt = new Date();
     debate.completionReason = reason;
     debate.earlyEndVotes.expired = true;
+    debate.nextTurn = null;
 
     await debate.save();
 
@@ -234,6 +235,22 @@ const mapBeliefValueToCategory = (value) => {
   return 'for';
 };
 
+const getOppositeStance = (stance) => (stance === 'for' ? 'against' : 'for');
+
+const getExpectedNextTurn = (debate) => {
+  const currentRoundArgs = (debate.arguments || []).filter(arg => arg.round === debate.currentRound);
+
+  if (currentRoundArgs.length === 0) {
+    return debate.firstPlayer;
+  }
+
+  if (currentRoundArgs.length === 1) {
+    return getOppositeStance(currentRoundArgs[0].stance);
+  }
+
+  return null;
+};
+
 const recordAIBeliefUpdate = async (debate, roundNumber) => {
   if (!debate || debate.player2Type !== 'ai') return false;
 
@@ -333,9 +350,14 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
     debate.completedAt = new Date();
     debate.completionReason = 'natural_completion';
     debate.earlyEndVotes.expired = true;
+    debate.nextTurn = null;
     cleanupAITimeout(debate._id);
   } else {
+    if (!debate.firstPlayer) {
+      throw new Error('Cannot advance round without firstPlayer set');
+    }
     debate.currentRound += 1;
+    debate.nextTurn = debate.firstPlayer;
   }
 
   await debate.save();
@@ -664,6 +686,7 @@ router.post('/join', authenticate, async (req, res) => {
 
       if (match) {
         const assignedStance = match.player1Stance === 'for' ? 'against' : 'for';
+        const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
         joinedDebate = await Debate.findOneAndUpdate(
           {
             _id: match._id,
@@ -679,7 +702,8 @@ router.post('/join', authenticate, async (req, res) => {
               'currentBelief.player2': stanceChoice,
               status: 'active',
               startedAt: new Date(),
-              firstPlayer: Math.random() < 0.5 ? 'for' : 'against',
+              firstPlayer,
+              nextTurn: firstPlayer,
               lastActivityAt: new Date(),
               'preDebateSurvey.player2': preDebateSurvey.player1
             }
@@ -692,6 +716,7 @@ router.post('/join', authenticate, async (req, res) => {
       }
     } else {
       const oppositeStance = stanceChoice === 'for' ? 'against' : 'for';
+      const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
       joinedDebate = await Debate.findOneAndUpdate(
         {
           gameMode,
@@ -710,7 +735,8 @@ router.post('/join', authenticate, async (req, res) => {
             'currentBelief.player2': stanceChoice,
             status: 'active',
             startedAt: new Date(),
-            firstPlayer: Math.random() < 0.5 ? 'for' : 'against',
+            firstPlayer,
+            nextTurn: firstPlayer,
             lastActivityAt: new Date(),
             'preDebateSurvey.player2': preDebateSurvey.player1 // STORE PLAYER2 SURVEY
           }
@@ -877,6 +903,7 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     debate.status = 'active';
     debate.startedAt = new Date();
     debate.firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+    debate.nextTurn = debate.firstPlayer;
     debate.matchedBy = req.user.userId;
     debate.aiEnabled = true;
     debate.aiResponseDelay = responseDelay || 10;
@@ -971,15 +998,26 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     const userStance = isPlayer1 ? debate.player1Stance : debate.player2Stance;
 
     const currentRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
-
-    let isUserTurn = false;
-    if (currentRoundArgs.length === 0) {
-      isUserTurn = (debate.firstPlayer === userStance);
-    } else if (currentRoundArgs.length === 1) {
-      isUserTurn = (currentRoundArgs[0].stance !== userStance);
+    if (currentRoundArgs.length >= 2) {
+      return res.status(400).json({ message: 'Round is already complete' });
     }
 
-    if (!isUserTurn) {
+    const expectedNextTurn = getExpectedNextTurn(debate);
+    if (debate.nextTurn !== expectedNextTurn) {
+      console.error('[Turn] Mismatch detected on submit', {
+        debateId: debate._id,
+        currentRound: debate.currentRound,
+        nextTurn: debate.nextTurn,
+        expectedNextTurn
+      });
+      return res.status(409).json({ message: 'Turn state mismatch. Please refresh and try again.' });
+    }
+
+    if (!debate.nextTurn) {
+      return res.status(409).json({ message: 'Turn state missing. Round may be awaiting belief check.' });
+    }
+
+    if (debate.nextTurn !== userStance) {
       return res.status(400).json({ message: 'Not your turn' });
     }
 
@@ -991,10 +1029,15 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     });
 
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
-    if (newRoundArgs.length === 2) {
+    if (newRoundArgs.length === 1) {
+      debate.nextTurn = getOppositeStance(userStance);
+    } else if (newRoundArgs.length === 2) {
+      debate.nextTurn = null;
       if (debate.player2Type === 'ai') {
         await recordAIBeliefUpdate(debate, debate.currentRound);
       }
+    } else {
+      throw new Error('Round has more than two arguments');
     }
 
     await debate.save();
@@ -1414,7 +1457,11 @@ router.post('/:debateId/trigger-ai', authenticate, async (req, res) => {
     res.json({ message: 'AI response triggered' });
   } catch (error) {
     console.error('[Debate] Error triggering AI:', error);
-    res.status(500).json({ message: error.message });
+    const message = error.message || 'Failed to trigger AI';
+    const isTurnIssue = message.startsWith('Turn state mismatch') ||
+      message.startsWith('Turn state missing') ||
+      message.startsWith('Not AI\'s turn');
+    res.status(isTurnIssue ? 409 : 500).json({ message });
   }
 });
 
@@ -1443,6 +1490,7 @@ router.put('/:debateId/end-early', authenticate, async (req, res) => {
     debate.completedAt = new Date();
     debate.completionReason = 'admin_end_early';
     debate.earlyEndVotes.expired = true;
+    debate.nextTurn = null;
 
     await debate.save();
 
@@ -1953,51 +2001,17 @@ async function triggerAIResponse(debateId, io) {
       return;
     }
 
-    const currentRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
-    let isAITurn = false;
-    let isPlayer1Turn = false;
-
-    if (currentRoundArgs.length === 0) {
-      isAITurn = (debate.firstPlayer === debate.player2Stance);
-      isPlayer1Turn = (debate.firstPlayer === debate.player1Stance);
-    } else if (currentRoundArgs.length === 1) {
-      isAITurn = (currentRoundArgs[0].stance !== debate.player2Stance);
-      isPlayer1Turn = (currentRoundArgs[0].stance !== debate.player1Stance);
+    const expectedNextTurn = getExpectedNextTurn(debate);
+    if (debate.nextTurn !== expectedNextTurn) {
+      throw new Error(`Turn state mismatch: nextTurn=${debate.nextTurn} expected=${expectedNextTurn}`);
     }
 
-    if (!isAITurn) {
-      if (!isPlayer1Turn) {
-        const lastArgument = debate.arguments[debate.arguments.length - 1];
-        if (!lastArgument) {
-          throw new Error('Turn discrepancy detected: no arguments found to derive next turn');
-        }
+    if (!expectedNextTurn) {
+      throw new Error('Round complete; awaiting belief check');
+    }
 
-        let expectedTurnStance = null;
-        if (lastArgument.stance === debate.player1Stance) {
-          expectedTurnStance = debate.player2Stance;
-        } else if (lastArgument.stance === debate.player2Stance) {
-          expectedTurnStance = debate.player1Stance;
-        } else {
-          throw new Error('Turn discrepancy detected: last argument stance does not match any player stance');
-        }
-
-        console.log('[AI] Turn discrepancy detected, deriving next turn from last argument', {
-          debateId: debate._id,
-          currentRound: debate.currentRound,
-          lastArgumentRound: lastArgument.round,
-          lastArgumentStance: lastArgument.stance,
-          expectedTurnStance
-        });
-
-        if (expectedTurnStance === debate.player2Stance) {
-          isAITurn = true;
-        }
-      }
-
-      if (!isAITurn) {
-        console.log('[AI] Not AI\'s turn yet');
-        return;
-      }
+    if (debate.nextTurn !== debate.player2Stance) {
+      throw new Error(`Not AI's turn: nextTurn=${debate.nextTurn}`);
     }
 
     console.log('[AI] Generating AI argument...');
@@ -2020,8 +2034,13 @@ async function triggerAIResponse(debateId, io) {
     debate.aiLastResponseAt = new Date();
 
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
-    if (newRoundArgs.length === 2) {
+    if (newRoundArgs.length === 1) {
+      debate.nextTurn = getOppositeStance(debate.player2Stance);
+    } else if (newRoundArgs.length === 2) {
+      debate.nextTurn = null;
       await recordAIBeliefUpdate(debate, debate.currentRound);
+    } else {
+      throw new Error('Round has more than two arguments');
     }
 
     await debate.save();

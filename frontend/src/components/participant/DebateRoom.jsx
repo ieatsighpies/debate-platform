@@ -813,12 +813,8 @@ const handleEarlyEndVote = (data) => {
 
   // Active/Completed debate view
   const canSubmitArgument = debate.status === 'active' && debate.arguments;
-  const currentRoundArgs = debate.arguments?.filter(arg => arg.round === debate.currentRound) || [];
-  const isYourTurn = canSubmitArgument && (
-    (currentRoundArgs.length === 0 && debate.firstPlayer === debate.yourStance) ||
-    (currentRoundArgs.length === 1 && currentRoundArgs[0].stance !== debate.yourStance)
-  );
-  const isOpponentTurn = canSubmitArgument && !isYourTurn && currentRoundArgs.length < 2;
+  const isYourTurn = canSubmitArgument && debate.nextTurn === debate.yourStance;
+  const isOpponentTurn = canSubmitArgument && !!debate.nextTurn && debate.nextTurn !== debate.yourStance;
 
   const voteProgress = getVoteProgress();
 
