@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const Debate = require('../models/Debate');
 const authenticate = require('../middleware/auth');
-const bcrypt = require('bcrypt');
 const { uniqueNamesGenerator, adjectives, animals } = require('unique-names-generator');
 const { guestLoginLimiter } = require('../middleware/rateLimiter');
 

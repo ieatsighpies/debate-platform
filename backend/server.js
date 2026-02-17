@@ -32,6 +32,7 @@ validateEnv();
 const authRoutes = require('./routes/auth');
 const debateRoutes = require('./routes/debates');
 const { startAutoMatchJob } = require('./utils/autoMatch');
+const { startCleanupJob } = require('./utils/debateCleanup');
 
 const app = express();
 const server = http.createServer(app);
@@ -149,6 +150,7 @@ mongoose.connect(MONGODB_URI)
     console.log('[MongoDB] ✅ Connected to MongoDB');
     console.log('[MongoDB] Database:', mongoose.connection.name);
     startAutoMatchJob(io);
+    startCleanupJob(io, 5);
   })
   .catch((error) => {
     console.error('[MongoDB] ❌ Connection error:', error);
