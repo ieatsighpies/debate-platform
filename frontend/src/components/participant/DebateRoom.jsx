@@ -818,6 +818,7 @@ const handleEarlyEndVote = (data) => {
     (currentRoundArgs.length === 0 && debate.firstPlayer === debate.yourStance) ||
     (currentRoundArgs.length === 1 && currentRoundArgs[0].stance !== debate.yourStance)
   );
+  const isOpponentTurn = canSubmitArgument && !isYourTurn && currentRoundArgs.length < 2;
 
   const voteProgress = getVoteProgress();
 
@@ -1181,7 +1182,7 @@ const handleEarlyEndVote = (data) => {
               </button>
             </div>
           </div>
-        ) : debate.status === 'active' ? (
+        ) : debate.status === 'active' && isOpponentTurn ? (
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <Loader2 className="animate-spin mx-auto mb-4 text-indigo-600" size={40} />
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
