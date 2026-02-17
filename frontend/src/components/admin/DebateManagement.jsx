@@ -26,6 +26,8 @@ const DebateManagement = () => {
   const [selectedDebate, setSelectedDebate] = useState(null);
   const [showChatModal, setShowChatModal] = useState(false);
   const [showSurveyDetails, setShowSurveyDetails] = useState(false);
+  const [gameMode, setGameMode] = useState('all');
+  const [aiPersonality, setAiPersonality] = useState(null);
   const { socket, connected } = useSocket();
 
   // ✅ Memoize fetchDebates so it's stable across renders
@@ -92,6 +94,20 @@ const DebateManagement = () => {
     } catch (error) {
       toast.error('Failed to update AI control');
     }
+  };
+
+  const filterDebates = (debatesList) => {
+    return debatesList.filter(debate => {
+      if (gameMode === 'human-human') {
+        return debate.gameMode === 'human-human';
+      } else if (gameMode === 'human-ai') {
+        if (aiPersonality && aiPersonality !== 'all') {
+          return debate.gameMode === 'human-ai' && debate.player2AIModel === aiPersonality;
+        }
+        return debate.gameMode === 'human-ai';
+      }
+      return true;
+    });
   };
 
   const handleTriggerAI = async (debateId) => {
@@ -866,8 +882,9 @@ const ChatHistoryModal = () => {
       </div>
 
       {debate.arguments && debate.arguments.length > 0 && (
-        <div className="text-sm text-gray-600 mb-4">
-          <p>{debate.arguments.length} argument{debate.arguments.length !== 1 ? 's' : ''} submitted</p>
+        <div className="text-sm text-gray-600 mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+          <p className="font-medium text-blue-900">📊 {debate.arguments.length} argument{debate.arguments.length !== 1 ? 's' : ''} submitted</p>
+          <p className="text-xs text-blue-700 mt-1">Across {Math.ceil(debate.arguments.length / 2)} round{Math.ceil(debate.arguments.length / 2) !== 1 ? 's' : ''}</p>
         </div>
       )}
 
@@ -966,30 +983,85 @@ const ChatHistoryModal = () => {
 
       {/* Tabs */}
       <div className="flex space-x-4 border-b border-gray-200">
-        {['waiting', 'active', 'completed', 'abandoned'].map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 font-medium transition capitalize ${
-              activeTab === tab
-                ? 'text-indigo-600 border-b-2 border-indigo-600'
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            {tab} ({debates[tab].length})
-          </button>
-        ))}
+        {['waiting', 'active', 'completed', 'abandoned'].map(tab => {
+          const filteredCount = filterDebates(debates[tab]).length;
+          return (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-2 font-medium transition capitalize ${
+                activeTab === tab
+                  ? 'text-indigo-600 border-b-2 border-indigo-600'
+                  : 'text-gray-600 hover:text-gray-800'
+              }`}
+            >
+              {tab} ({filteredCount})
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Filters */}
+      <div className="bg-gray-50 p-4 rounded-lg space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Game Mode</label>
+          <div className="flex space-x-3">
+            {['all', 'human-human', 'human-ai'].map(mode => (
+              <button
+                key={mode}
+                onClick={() => {
+                  setGameMode(mode);
+                  if (mode !== 'human-ai') {
+                    setAiPersonality(null);
+                  }
+                }}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                  gameMode === mode
+                    ? 'bg-indigo-600 text-white'
+                    : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
+                }`}
+              >
+                {mode === 'all' ? 'All' : mode === 'human-human' ? '👥 Human vs Human' : '🤖 Human vs AI'}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {gameMode === 'human-ai' && (
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">AI Personality</label>
+            <div className="flex space-x-3">
+              {['all', 'firm-debater', 'balanced-debater', 'open-debater'].map(personality => (
+                <button
+                  key={personality}
+                  onClick={() => setAiPersonality(personality)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+                    (aiPersonality || 'all') === personality
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  {personality === 'all' ? 'All' : personality.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Debate List */}
       <div className="space-y-4">
-        {debates[activeTab].length === 0 ? (
-          <div className="text-center py-12 bg-gray-50 rounded-lg">
-            <p className="text-gray-500">No {activeTab} debates</p>
-          </div>
-        ) : (
-          debates[activeTab].map(renderDebateCard)
-        )}
+        {(() => {
+          const filteredDebates = filterDebates(debates[activeTab]);
+          if (filteredDebates.length === 0) {
+            return (
+              <div className="text-center py-12 bg-gray-50 rounded-lg">
+                <p className="text-gray-500">No {activeTab} debates matching filters</p>
+              </div>
+            );
+          }
+          return filteredDebates.map(renderDebateCard);
+        })()}
       </div>
 
       {/* Chat History Modal */}
