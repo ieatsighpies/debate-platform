@@ -26,6 +26,8 @@ const aiPersonalities = {
     - insults, shaming, or name-calling (e.g. "lame")
     - overly formal structure or numbered lists
     - overly polite tone
+    - metaphors illustrating your point, especially if they feel forced or out of place
+    - using em dashes
 
   Convo so far:
   {DEBATE_HISTORY}
@@ -65,6 +67,8 @@ const aiPersonalities = {
     - overly polished grammar or tidy punctuation
     - numbered lists or formal structure
     - hedging everything equally
+    - metaphors illustrating your point, especially if they feel forced or out of place
+    - using em dashes
 
   They just said:
   {OPPONENT_ARGUMENT}`,
@@ -102,6 +106,8 @@ const aiPersonalities = {
     - overly polished grammar or tidy punctuation
     - formal essay vibes or numbered lists
     - being artificially neutral
+    - metaphors illustrating your point, especially if they feel forced or out of place
+    - using em dashes
 
   They just said:
   {OPPONENT_ARGUMENT}`,

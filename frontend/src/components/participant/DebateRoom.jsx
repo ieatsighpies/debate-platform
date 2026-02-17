@@ -153,19 +153,6 @@ const DebateRoom = () => {
         setShowNorms(true);
       }
     } catch (err) {
-        useEffect(() => {
-          if (!debate || debate.status !== 'active') return;
-          const latestCompletedRound = getLatestCompletedRound(debate);
-          if (!latestCompletedRound) return;
-
-          const alreadyReflected = (debate.reflections || []).some(r => r.round === latestCompletedRound && r.userId?.toString() === user?.userId);
-          if (alreadyReflected) return;
-
-          if (!showReflectionPrompt) {
-            console.log('[Reflection] Showing reflection prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
-            setShowReflectionPrompt(true);
-          }
-        }, [debate, showReflectionPrompt, user?.userId]);
       console.error('[DebateRoom] Error fetching debate:', err);
       setError(err.response?.data?.message || 'Failed to load debate');
     } finally {
@@ -214,6 +201,26 @@ const DebateRoom = () => {
       setShowBeliefPrompt(true);
     }
   }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
+
+  useEffect(() => {
+    if (!debate || debate.status !== 'active') return;
+    const latestCompletedRound = getLatestCompletedRound(debate);
+    if (!latestCompletedRound) return;
+
+    const alreadyReflected = (debate.reflections || []).some(
+      r => r.round === latestCompletedRound && r.userId?.toString() === user?.userId
+    );
+    if (alreadyReflected) return;
+
+    if (!showReflectionPrompt) {
+      console.log('[Reflection] Showing reflection prompt', {
+        debateId,
+        round: latestCompletedRound,
+        userId: user?.userId
+      });
+      setShowReflectionPrompt(true);
+    }
+  }, [debate, showReflectionPrompt, user?.userId]);
 
   useEffect(() => {
     if (debate && debate.status !== 'active' && showBeliefPrompt) {

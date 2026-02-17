@@ -993,7 +993,7 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     const newRoundArgs = debate.arguments.filter(arg => arg.round === debate.currentRound);
     if (newRoundArgs.length === 2) {
       if (debate.player2Type === 'ai') {
-        recordAIBeliefUpdate(debate, debate.currentRound);
+        await recordAIBeliefUpdate(debate, debate.currentRound);
       }
     }
 
