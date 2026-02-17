@@ -30,6 +30,7 @@ const DebateRoom = () => {
   const [reflectionParaphrase, setReflectionParaphrase] = useState('');
   const [reflectionAcknowledgement, setReflectionAcknowledgement] = useState('');
   const [reflectionSubmitting, setReflectionSubmitting] = useState(false);
+  const [reflectionHandledRounds, setReflectionHandledRounds] = useState([]);
   const [beliefRound, setBeliefRound] = useState(null);
   const [beliefValue, setBeliefValue] = useState(50); // 0-100 numeric belief (50 = unsure)
   const [influenceValue, setInfluenceValue] = useState(0);
@@ -210,7 +211,12 @@ const DebateRoom = () => {
     const alreadyReflected = (debate.reflections || []).some(
       r => r.round === latestCompletedRound && r.userId?.toString() === user?.userId
     );
-    if (alreadyReflected) return;
+    if (alreadyReflected) {
+      setReflectionHandledRounds((prev) => [...new Set([...prev, latestCompletedRound])]);
+      return;
+    }
+
+    if (reflectionHandledRounds.includes(latestCompletedRound)) return;
 
     if (!showReflectionPrompt) {
       console.log('[Reflection] Showing reflection prompt', {
@@ -220,7 +226,7 @@ const DebateRoom = () => {
       });
       setShowReflectionPrompt(true);
     }
-  }, [debate, showReflectionPrompt, user?.userId]);
+  }, [debate, showReflectionPrompt, user?.userId, reflectionHandledRounds]);
 
   useEffect(() => {
     if (debate && debate.status !== 'active' && showBeliefPrompt) {
@@ -536,6 +542,7 @@ const handleEarlyEndVote = (data) => {
       toast.success('Reflection saved');
       setReflectionParaphrase('');
       setReflectionAcknowledgement('');
+      setReflectionHandledRounds((prev) => [...new Set([...prev, round])]);
       fetchDebate();
     } catch (err) {
       console.error('[Reflection] Error saving', err.response?.data || err.message || err);
@@ -551,6 +558,7 @@ const handleEarlyEndVote = (data) => {
     if (!round) return;
     console.log('[Reflection] Skipping for round', { debateId, round, userId: user?.userId });
     setShowReflectionPrompt(false);
+    setReflectionHandledRounds((prev) => [...new Set([...prev, round])]);
   };
 
   const handleCancelDebate = async () => {
