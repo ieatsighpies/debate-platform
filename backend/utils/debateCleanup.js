@@ -18,11 +18,12 @@ async function cleanupStaleDebates(io) {
       }
     );
 
-    // Mark active debates with no activity in 30 minutes as abandoned
+    // Mark active debates with no activity in 1 day as abandoned
+    const yesterday = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const abandonedActive = await Debate.updateMany(
       {
         status: 'active',
-        lastActivityAt: { $lt: thirtyMinutesAgo }
+        lastActivityAt: { $lt: yesterday }
       },
       {
         $set: { status: 'abandoned', completedAt: new Date() }
