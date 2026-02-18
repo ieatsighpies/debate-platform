@@ -67,6 +67,7 @@ async function autoMatchWaitingDebates(io, options = {}) {
           status: 'active',
           startedAt: new Date(),
           firstPlayer,
+          nextTurn: firstPlayer,
           matchedBy: null,
           aiEnabled: true,
           aiResponseDelay: 10,
