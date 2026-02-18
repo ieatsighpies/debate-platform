@@ -1,6 +1,7 @@
 const Debate = require('../models/Debate');
 const aiPersonalities = require('../config/aiPersonalities');
 const { triggerAIResponse } = require('../routes/debates');
+const turnValidator = require('./turnValidator');
 
 const DEFAULT_WAIT_MS = 60 * 1000;
 const DEFAULT_INTERVAL_MS = 30 * 1000;
@@ -79,6 +80,15 @@ async function autoMatchWaitingDebates(io, options = {}) {
 
     if (!updated) {
       continue;
+    }
+
+    // Validate turn state after matching
+    const validation = turnValidator.validateTurnState(updated);
+    if (!validation.isValid) {
+      console.warn('[AutoMatch] Turn state validation failed after matching:', {
+        debateId: updated._id,
+        errors: validation.errors
+      });
     }
 
     console.log('[AutoMatch] ✅ Matched waiting debate with AI:', {

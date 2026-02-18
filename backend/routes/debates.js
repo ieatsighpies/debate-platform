@@ -3,6 +3,7 @@ const router = express.Router();
 const Debate = require('../models/Debate');
 const authenticate = require('../middleware/auth');
 const aiService = require('../services/aiService');
+const turnValidator = require('../utils/turnValidator');
 
 // ============================================
 // GLOBAL TIMEOUT TRACKING
@@ -1042,6 +1043,15 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
 
     await debate.save();
 
+    // Validate turn state after argument submission
+    const validation = turnValidator.validateTurnState(debate);
+    if (!validation.isValid) {
+      console.warn('[Debate] Turn state validation failed after argument submission:', {
+        debateId: debate._id,
+        errors: validation.errors
+      });
+    }
+
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:argumentAdded', {
@@ -1988,6 +1998,21 @@ async function triggerAIResponse(debateId, io) {
       throw new Error('Debate not found');
     }
 
+    // Validate turn state - auto-fix if needed
+    const validation = turnValidator.validateTurnState(debate);
+    if (!validation.isValid) {
+      console.warn('[AI] Turn state validation failed:', {
+        debateId: debate._id,
+        errors: validation.errors
+      });
+
+      const fixed = turnValidator.autoFixTurnState(debate);
+      if (fixed) {
+        await debate.save();
+        console.log('[AI] Turn state was auto-fixed');
+      }
+    }
+
     if (debate.player2Type !== 'ai') {
       throw new Error('Debate does not have AI opponent');
     }
@@ -2044,6 +2069,15 @@ async function triggerAIResponse(debateId, io) {
     }
 
     await debate.save();
+
+    // Validate turn state after AI response
+    const aiValidation = turnValidator.validateTurnState(debate);
+    if (!aiValidation.isValid) {
+      console.warn('[AI] Turn state validation failed after AI response:', {
+        debateId: debate._id,
+        errors: aiValidation.errors
+      });
+    }
 
     const latestArgument = debate.arguments[debate.arguments.length - 1];
     console.log('[AI] ✅ AI argument submitted');

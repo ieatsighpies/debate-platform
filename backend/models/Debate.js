@@ -415,6 +415,25 @@ debateSchema.index({ status: 1, createdAt: -1 });
 // Automatically update lastActivityAt on save
 debateSchema.pre('save', function(next) {
   this.lastActivityAt = new Date();
+
+  // Validate turn state to prevent logic loss
+  const turnValidator = require('../utils/turnValidator');
+  const validation = turnValidator.validateTurnState(this);
+
+  if (!validation.isValid) {
+    console.warn('[Debate] Turn state validation failed:', {
+      debateId: this._id,
+      status: this.status,
+      errors: validation.errors
+    });
+
+    // Auto-fix the turn state
+    const fixed = turnValidator.autoFixTurnState(this);
+    if (fixed) {
+      console.log('[Debate] Turn state auto-fixed for debate:', this._id);
+    }
+  }
+
   next();
 });
 
