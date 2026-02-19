@@ -851,32 +851,6 @@ const handleEarlyEndVote = (data) => {
         )}
 
         {/* Reflection prompt modal */}
-        {showReflectionPrompt && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-xl max-w-xl w-full p-6">
-              <h3 className="text-lg font-semibold mb-2">Reflection</h3>
-              <p className="text-sm text-gray-700 mb-3">Please paraphrase the main concern or point your opponent raised this round, and note if you feel anything changed for you.</p>
-              <textarea
-                value={reflectionParaphrase}
-                onChange={(e) => setReflectionParaphrase(e.target.value)}
-                rows={4}
-                className="w-full p-3 border border-gray-300 rounded mb-3"
-                placeholder="Paraphrase your opponent's main point..."
-              />
-              <input
-                value={reflectionAcknowledgement}
-                onChange={(e) => setReflectionAcknowledgement(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded mb-3"
-                placeholder="Did this change your view? (short note, optional)"
-              />
-              <div className="flex justify-end space-x-2">
-                <button onClick={handleSkipReflection} className="px-4 py-2 text-gray-600">Skip</button>
-                <button onClick={handleSubmitReflection} disabled={reflectionSubmitting || !reflectionParaphrase.trim()} className="px-4 py-2 bg-indigo-600 text-white rounded">{reflectionSubmitting ? 'Saving...' : 'Submit'}</button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Header */}
         <div className="bg-white rounded-lg shadow-md p-6 mb-6">
           <div className="flex justify-between items-start mb-6">
@@ -1061,8 +1035,32 @@ const handleEarlyEndVote = (data) => {
           </div>
         )}
 
-        {/* Belief Check (replaces argument input when active) */}
-        {showBeliefPrompt ? (
+        {/* Reflection (appears after opponent's turn) */}
+        {showReflectionPrompt ? (
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h3 className="text-lg font-semibold mb-2 text-gray-800">Reflection</h3>
+            <p className="text-sm text-gray-700 mb-4">Please paraphrase the main concern or point your opponent raised this round, and note if you feel anything changed for you.</p>
+            <textarea
+              value={reflectionParaphrase}
+              onChange={(e) => setReflectionParaphrase(e.target.value)}
+              rows={4}
+              className="w-full p-3 border border-gray-300 rounded mb-3 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="Paraphrase your opponent's main point..."
+              disabled={reflectionSubmitting}
+            />
+            <input
+              value={reflectionAcknowledgement}
+              onChange={(e) => setReflectionAcknowledgement(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              placeholder="Did this change your view? (short note, optional)"
+              disabled={reflectionSubmitting}
+            />
+            <div className="flex justify-end space-x-2">
+              <button onClick={handleSkipReflection} disabled={reflectionSubmitting} className="px-4 py-2 text-gray-600 hover:text-gray-800">Skip</button>
+              <button onClick={handleSubmitReflection} disabled={reflectionSubmitting || !reflectionParaphrase.trim()} className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50">{reflectionSubmitting ? 'Saving...' : 'Submit'}</button>
+            </div>
+          </div>
+        ) : showBeliefPrompt ? (
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-lg font-semibold text-gray-800">

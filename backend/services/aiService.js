@@ -38,9 +38,11 @@ class AIService {
     // Enforce respectful, evidence-based, and occasionally conciliatory responses
     finalPrompt += `
 AI response requirements:
+- CRITICAL: Directly engage with the opponent's specific argument(s). Reference what they said and address their actual points. Do NOT just restate your own position.
+- CRITICAL: End your response with ONE clear engagement point, question, or challenge for the user to respond to. This gives them something specific to address.
 - Use at least one brief concrete example, piece of evidence, or illustrative scenario to support your main claim (can be hypothetical if needed).
 - Keep tone respectful and non-adversarial; avoid insults, sarcasm, or dismissive language.
-- Where appropriate, include an acknowledgement or conciliatory phrase such as "I see why someone might disagree" or "I'd be okay with X compromise." This can be brief and should not undermine the main point.
+- Where appropriate, include an acknowledgement or conciliatory phrase such as "I can understand that" or "I'd be okay with X compromise." This can be brief and should not undermine the main point.
 - Prefer clear reasons over rhetoric; cite examples rather than vague claims. Do not invent verifiable facts.
 - Keep responses concise, focused, and helpful for understanding tradeoffs.
 `;
@@ -217,14 +219,39 @@ AI response requirements:
    */
   generateBasicFallback(context, personality) {
     const stancePhrase = context.STANCE_PHRASE;
+    const opponentArg = context.OPPONENT_ARGUMENT;
+    const hasOpponentArg = opponentArg && opponentArg !== 'No previous arguments yet.';
+
     const unsurePrefix = context.OPPONENT_STANCE_CHOICE === 'unsure'
       ? 'i get why you are unsure - lets weigh this carefully. '
       : '';
 
+    // If there's an opponent argument, respond to it directly and end with an engagement point
+    if (hasOpponentArg) {
+      const engagementQuestions = [
+        'But what about the cost impact?',
+        'How would that actually work in practice?',
+        'Have you considered the downside there?',
+        "That's interesting, but what if we looked at it from X angle?",
+        'Fair point. But then how do you address Y?'
+      ];
+
+      const engagement = engagementQuestions[Math.floor(Math.random() * engagementQuestions.length)];
+
+      const responseTemplates = [
+        `I hear what you're saying, but I still think ${stancePhrase}. For example, ${context.COUNTER_POINT}. ${engagement}`,
+        `You make a point about that, but the core issue is that ${stancePhrase}. Consider ${context.COUNTER_POINT}. ${engagement}`,
+        `That's fair, though I'd push back on that. The real reason ${stancePhrase} is because of cases like ${context.COUNTER_POINT}. ${engagement}`
+      ];
+
+      return responseTemplates[Math.floor(Math.random() * responseTemplates.length)];
+    }
+
+    // If no opponent argument yet, start the debate with engagement
     const basicArguments = [
-      `${unsurePrefix}I ${context.STANCE_VERB} ${context.TOPIC} because ${stancePhrase}. For example, ${context.COUNTER_POINT}. I understand some may disagree; I see why someone might feel that way.`,
-      `${unsurePrefix}My stance on ${context.TOPIC} is ${context.STANCE} because the benefits are significant. For instance, ${context.COUNTER_POINT}. I aim to be respectful and offer this as a reasoned view.`,
-      `${unsurePrefix}I maintain that ${stancePhrase} regarding ${context.TOPIC}. One brief example: ${context.COUNTER_POINT}. While I hold this view, I acknowledge tradeoffs and would be open to compromise on implementation.`
+      `${unsurePrefix}I ${context.STANCE_VERB} ${context.TOPIC} because ${stancePhrase}. For example, ${context.COUNTER_POINT}. What's your main concern here?`,
+      `${unsurePrefix}My take: ${stancePhrase} regarding ${context.TOPIC}. Here's why—${context.COUNTER_POINT}. How do you see it?`,
+      `${unsurePrefix}I maintain that ${stancePhrase} on this. One key reason: ${context.COUNTER_POINT}. What would change your mind?`
     ];
 
     return basicArguments[Math.floor(Math.random() * basicArguments.length)];
