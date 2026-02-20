@@ -176,6 +176,30 @@ const DebateRoom = () => {
     return Math.max(...completedRounds);
   };
 
+  // Check if a player has submitted belief for a round
+  const hasBeliefForRound = (roundNum, playerKey) => {
+    if (!debate?.beliefHistory) return false;
+    return debate.beliefHistory.some(
+      entry => entry.round === roundNum && entry.player === playerKey
+    );
+  };
+
+  // Show waiting animation if user is done with belief check but opponent isn't
+  const shouldShowWaitingAnimation = () => {
+    if (debate?.status !== 'active') return false;
+    const roundComplete = getLatestCompletedRound(debate) === debate.currentRound;
+    if (!roundComplete) return false;
+
+    // Both arguments submitted (round is complete), now waiting for belief checks
+    const playerKey = debate.isPlayer1 ? 'player1' : 'player2';
+    const opponentKey = debate.isPlayer1 ? 'player2' : 'player1';
+
+    const userDone = hasBeliefForRound(debate.currentRound, playerKey);
+    const opponentDone = hasBeliefForRound(debate.currentRound, opponentKey);
+
+    return userDone && !opponentDone;
+  };
+
   // Initial fetch
   useEffect(() => {
     fetchDebate();
@@ -1136,6 +1160,16 @@ const handleEarlyEndVote = (data) => {
                 {beliefSubmitting ? 'Saving...' : 'Submit'}
               </button>
             </div>
+          </div>
+        ) : shouldShowWaitingAnimation() ? (
+          <div className="bg-white rounded-lg shadow-md p-8 text-center">
+            <Loader2 className="animate-spin mx-auto mb-4 text-indigo-600" size={40} />
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
+              Waiting for opponent's belief check...
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Your opponent is completing their belief update. The next round will start soon.
+            </p>
           </div>
         ) : isYourTurn ? (
           <div className="bg-white rounded-lg shadow-md p-6">
