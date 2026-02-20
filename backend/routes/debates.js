@@ -387,7 +387,7 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
     }
   }
 
-  if (debate.status === 'active' && debate.player2Type === 'ai' && debate.aiEnabled) {
+  if (debate.status === 'active' && debate.player2Type === 'ai' && debate.aiEnabled && debate.nextTurn === debate.player2Stance) {
     setImmediate(async () => {
       try {
         await triggerAIResponse(debate._id, io);
@@ -937,7 +937,6 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     // If AI goes first, generate opening argument
     if (debate.firstPlayer === aiStance) {
       console.log('[Debate] AI goes first, generating opening argument...');
-      // ✅ REMOVE OLD DELAY LOGIC, USE NEW FUNCTION
       setImmediate(async () => {
         try {
           await triggerAIResponse(debate._id, io);
@@ -1068,8 +1067,8 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
       });
     }
 
-    // ✅ FIXED: Trigger AI response immediately after sending response
-    if (debate.player2Type === 'ai' && debate.status === 'active' && debate.aiEnabled) {
+    //Trigger AI response immediately after sending response
+    if (debate.player2Type === 'ai' && debate.status === 'active' && debate.aiEnabled && debate.nextTurn === debate.player2Stance) {
     const debateId = debate._id;
 
     console.log('[AI] Scheduling AI response for debate:', debateId);
