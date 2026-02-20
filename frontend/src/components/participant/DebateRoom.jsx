@@ -988,6 +988,16 @@ const handleEarlyEndVote = (data) => {
                 End Debate Early
               </h3>
 
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
+                <p className="text-sm text-blue-900 font-medium mb-2">
+                  💡 Important: Allow the discussion to reach a natural conclusion
+                </p>
+                <p className="text-xs text-blue-800">
+                  You can only end the debate after <strong>at least 5 rounds</strong> have been completed. 
+                  Please continue debating until the discussion naturally concludes or both participants feel their points have been thoroughly discussed.
+                </p>
+              </div>
+
               <p className="text-sm text-gray-600 mb-4">
                 Both participants must agree to conclude this debate early.
               </p>

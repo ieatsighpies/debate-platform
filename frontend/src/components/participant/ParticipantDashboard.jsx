@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { debateAPI } from '../../services/api';
-import { Loader2, MessageSquare, TrendingUp, User, LogOut } from 'lucide-react';
+import { Loader2, MessageSquare, AlertCircle, LogOut } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const ParticipantDashboard = () => {
@@ -132,26 +132,27 @@ const ParticipantDashboard = () => {
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="bg-white rounded-lg shadow-md p-6">
+          {/* Debate Guidelines */}
+          <div className="bg-blue-50 rounded-lg shadow-md p-6 border border-blue-200">
             <div className="flex items-center mb-4">
-              <div className="p-3 bg-green-100 rounded-lg mr-4">
-                <TrendingUp className="text-green-600" size={24} />
+              <div className="p-3 bg-blue-100 rounded-lg mr-4">
+                <AlertCircle className="text-blue-600" size={24} />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">Your Stats</h3>
-                <p className="text-sm text-gray-600">Track your debate history</p>
+                <h3 className="text-lg font-semibold text-gray-900">Early End Guidelines</h3>
+                <p className="text-sm text-gray-600">When to conclude a debate</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-gray-900">0</p>
-                <p className="text-sm text-gray-600">Debates</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-gray-900">0</p>
-                <p className="text-sm text-gray-600">Arguments</p>
-              </div>
+            <div className="space-y-3">
+              <p className="text-sm text-blue-900 font-medium">
+                💡 Allow the discussion to reach a natural conclusion
+              </p>
+              <p className="text-xs text-blue-800">
+                <strong>Minimum requirement:</strong> You can only end the debate after <strong>at least 5 rounds</strong> have been completed.
+              </p>
+              <p className="text-xs text-blue-800">
+                <strong>Best practice:</strong> Please continue debating until the discussion naturally concludes or both participants feel their points have been thoroughly discussed. Early ending should be mutual agreement when discussion feels complete, not a way to leave quickly.
+              </p>
             </div>
           </div>
         </div>
