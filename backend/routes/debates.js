@@ -367,12 +367,14 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
     io.to(`debate:${debate._id}`).emit('debate:roundAdvanced', {
       debateId: debate._id,
       currentRound: debate.currentRound,
-      status: debate.status
+      status: debate.status,
+      nextTurn: debate.nextTurn
     });
     io.to('admin').emit('debate:roundAdvanced', {
       debateId: debate._id,
       currentRound: debate.currentRound,
-      status: debate.status
+      status: debate.status,
+      nextTurn: debate.nextTurn
     });
 
     if (debate.status === 'completed') {
@@ -1057,13 +1059,15 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
         debateId: debate._id,
         argument: debate.arguments[debate.arguments.length - 1],
         status: debate.status,
-        currentRound: debate.currentRound
+        currentRound: debate.currentRound,
+        nextTurn: debate.nextTurn
       });
       io.to('admin').emit('debate:argumentAdded', {
         debateId: debate._id,
         argument: debate.arguments[debate.arguments.length - 1],
         status: debate.status,
-        currentRound: debate.currentRound
+        currentRound: debate.currentRound,
+        nextTurn: debate.nextTurn
       });
     }
 
@@ -2086,13 +2090,15 @@ async function triggerAIResponse(debateId, io) {
         debateId: debate._id,
         argument: latestArgument,
         status: debate.status,
-        currentRound: debate.currentRound
+        currentRound: debate.currentRound,
+        nextTurn: debate.nextTurn
       });
       io.to('admin').emit('debate:argumentAdded', {
         debateId: debate._id,
         argument: latestArgument,
         status: debate.status,
-        currentRound: debate.currentRound
+        currentRound: debate.currentRound,
+        nextTurn: debate.nextTurn
       });
     }
   } catch (error) {
