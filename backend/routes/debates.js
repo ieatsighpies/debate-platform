@@ -688,34 +688,75 @@ router.post('/join', authenticate, async (req, res) => {
       });
 
       if (match) {
-        const assignedStance = match.player1Stance === 'for' ? 'against' : 'for';
-        const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
-        joinedDebate = await Debate.findOneAndUpdate(
-          {
-            _id: match._id,
-            status: 'waiting',
-            player2UserId: null
-          },
-          {
-            $set: {
-              player2Type: 'human',
-              player2UserId: userId,
-              player2Stance: assignedStance,
-              player2StanceChoice: stanceChoice,
-              'currentBelief.player2': stanceChoice,
-              status: 'active',
-              startedAt: new Date(),
-              firstPlayer,
-              nextTurn: firstPlayer,
-              lastActivityAt: new Date(),
-              'preDebateSurvey.player2': preDebateSurvey.player1
-            }
-          },
-          {
-            new: true,
-            runValidators: true
+        // CASE: Both players pick "unsure" - force proper stance assignment
+        if (match.player1StanceChoice === 'unsure' && stanceChoice === 'unsure') {
+          console.log('[Debate] Both players picked unsure - assigning opposing stances');
+          // Re-randomize player1 stance if needed
+          let player1Stance = match.player1Stance;
+          if (!player1Stance || player1Stance === null) {
+            player1Stance = Math.random() < 0.5 ? 'for' : 'against';
           }
-        );
+          const player2Stance = player1Stance === 'for' ? 'against' : 'for';
+          const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+
+          joinedDebate = await Debate.findOneAndUpdate(
+            {
+              _id: match._id,
+              status: 'waiting',
+              player2UserId: null
+            },
+            {
+              $set: {
+                player1Stance: player1Stance,
+                player2Type: 'human',
+                player2UserId: userId,
+                player2Stance: player2Stance,
+                player2StanceChoice: stanceChoice,
+                'currentBelief.player2': stanceChoice,
+                status: 'active',
+                startedAt: new Date(),
+                firstPlayer,
+                nextTurn: firstPlayer,
+                lastActivityAt: new Date(),
+                'preDebateSurvey.player2': preDebateSurvey.player1
+              }
+            },
+            {
+              new: true,
+              runValidators: true
+            }
+          );
+        } else {
+          // NORMAL CASE: At least one player has definite stance
+          const assignedStance = match.player1Stance === 'for' ? 'against' : 'for';
+          const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+          joinedDebate = await Debate.findOneAndUpdate(
+            {
+              _id: match._id,
+              status: 'waiting',
+              player2UserId: null
+            },
+            {
+              $set: {
+                player2Type: 'human',
+                player2UserId: userId,
+                player2Stance: assignedStance,
+                player2StanceChoice: stanceChoice,
+                'currentBelief.player2': stanceChoice,
+                status: 'active',
+                startedAt: new Date(),
+                firstPlayer,
+                nextTurn: firstPlayer,
+                lastActivityAt: new Date(),
+                'preDebateSurvey.player2': preDebateSurvey.player1
+              }
+            },
+            {
+              new: true,
+              runValidators: true
+            }
+          );
+        }
       }
     } else {
       const oppositeStance = stanceChoice === 'for' ? 'against' : 'for';
@@ -1920,7 +1961,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;
       debate.postDebateSurvey.player2DetectionCues = detectionCues;
       if (detectionOther) {
-        debate.postDebateSurvey.player2DetectionOther = detectionOther;           
+        debate.postDebateSurvey.player2DetectionOther = detectionOther;
       }
       if (aiAwarenessEffect) {
         debate.postDebateSurvey.player2AiAwarenessEffect = aiAwarenessEffect;

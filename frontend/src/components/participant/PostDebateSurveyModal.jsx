@@ -282,7 +282,7 @@ return (
           {/* Question 1: Conviction Change */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              1. Overall, how did this debate affect your view on this topic?
+              1. Overall, how did this debate affect your original stance on this topic?
             </h3>
 
             <div className="space-y-3">
@@ -317,7 +317,7 @@ return (
           {/* Question 2: Stance Strength */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              2. How strong is your final stance on this topic?
+              2. How strong is your stance on this topic now?
             </h3>
 
             <div className="space-y-2">
@@ -353,7 +353,7 @@ return (
           {/* Question 3: Stance Confidence */}
           <div className="mb-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-3">
-              3. How confident are you in your final stance?
+              3. How confident are you in your stance now?
             </h3>
 
             <div className="space-y-2">

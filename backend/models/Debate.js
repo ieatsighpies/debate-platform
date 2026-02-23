@@ -46,7 +46,7 @@ const debateSchema = new mongoose.Schema({
   },
   player2AIModel: {
     type: String,
-    default: null // 'easy-bot', 'medium-bot', 'hard-bot', 'gpt-4'
+    default: null
   },
   player2AIPrompt: {
     type: String,
@@ -371,10 +371,6 @@ const debateSchema = new mongoose.Schema({
     acknowledgement: { type: String, maxlength: 500 },
     timestamp: { type: Date, default: Date.now }
   }],
-
-  // Closing statements
-  player1ClosingStatement: String,
-  player2ClosingStatement: String,
 
   // Timestamps
   createdAt: {
