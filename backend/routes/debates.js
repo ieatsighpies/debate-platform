@@ -171,7 +171,7 @@ function calculateAIResponseDelay(argumentLength, debate, personality) {
   const round = debate.currentRound;
 
   // Base typing speed: 40-70 chars per second (realistic human range)
-  const baseTypingSpeed = 40 + Math.random() * 30;
+  const baseTypingSpeed = 20 + Math.random() * 30;
 
   // Calculate typing time based on argument length
   const typingTime = (argumentLength / baseTypingSpeed) * 1000; // milliseconds
@@ -180,11 +180,11 @@ function calculateAIResponseDelay(argumentLength, debate, personality) {
   let thinkingTime;
 
   if (round <= 3) {
-    // Early rounds: more thinking (3-8 seconds)
-    thinkingTime = 3000 + Math.random() * 5000;
+    // Early rounds: more thinking (4-8 seconds)
+    thinkingTime = 4000 + Math.random() * 5000;
   } else if (round <= 10) {
-    // Middle rounds: less thinking (1-4 seconds)
-    thinkingTime = 1000 + Math.random() * 3000;
+    // Middle rounds: less thinking (2-5 seconds)
+    thinkingTime = 2000 + Math.random() * 5000;
   } else {
     // Late rounds: variable (quick or slow due to fatigue)
     thinkingTime = Math.random() > 0.6
@@ -204,7 +204,7 @@ function calculateAIResponseDelay(argumentLength, debate, personality) {
 
   // Apply personality modifier
   if (personality.personality === 'firm_on_stance') {
-    totalDelay *= 0.85; // Firm debaters respond faster
+    totalDelay *= 0.95; // Firm debaters respond faster
   } else if (personality.personality === 'open_to_change') {
     totalDelay *= 1.15; // Open debaters take longer
   }
@@ -215,7 +215,7 @@ function calculateAIResponseDelay(argumentLength, debate, personality) {
   }
 
   // Enforce bounds
-  const minDelay = 2000;  // 2 seconds minimum
+  const minDelay = 5000;  // 5 seconds minimum
   const maxDelay = 35000; // 35 seconds maximum
   totalDelay = Math.max(minDelay, Math.min(maxDelay, totalDelay));
 
