@@ -248,7 +248,7 @@ const ChatHistoryModal = () => {
 
   const isHumanAI = gameMode === 'human-ai' || player2Type === 'ai';
 
-  // ✅ Map AI model to personality name
+  // Map AI model to personality name
   const getAIPersonalityName = (aiModel) => {
     const personalityMap = {
       'firm-debater': 'Firm Debater',
@@ -657,6 +657,23 @@ const ChatHistoryModal = () => {
                           <span className="text-gray-500">After:</span>
                           <span className="text-purple-700 font-medium">
                             {postSurveyLabels[postDebateSurvey.player2]}
+                          </span>
+                        </div>
+                      )}
+
+                      {postDebateSurvey.player2StanceStrength && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Stance strength:</span>
+                          <span className="text-indigo-700 font-medium">
+                            {postDebateSurvey.player2StanceStrength}/7
+                          </span>
+                        </div>
+                      )}
+                      {postDebateSurvey.player2StanceConfidence && (
+                        <div className="flex justify-between">
+                          <span className="text-gray-500">Stance confidence:</span>
+                          <span className="text-indigo-700 font-medium">
+                            {postDebateSurvey.player2StanceConfidence}/7
                           </span>
                         </div>
                       )}

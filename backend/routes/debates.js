@@ -1893,13 +1893,13 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       }
       debate.postDebateSurvey.player1 = response;
       debate.postDebateSurvey.player1OpponentPerception = opponentPerception;
-      debate.postDebateSurvey.player1StanceStrength = stanceStrength;             // ✅ NEW Q2
-      debate.postDebateSurvey.player1StanceConfidence = stanceConfidence;         // ✅ NEW Q3
-      debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence; // ✅ Q5
-      debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;           // ✅ Q6
-      debate.postDebateSurvey.player1DetectionCues = detectionCues;               // ✅ Q7
+      debate.postDebateSurvey.player1StanceStrength = stanceStrength;
+      debate.postDebateSurvey.player1StanceConfidence = stanceConfidence;
+      debate.postDebateSurvey.player1PerceptionConfidence = perceptionConfidence;
+      debate.postDebateSurvey.player1SuspicionTiming = suspicionTiming;
+      debate.postDebateSurvey.player1DetectionCues = detectionCues;
       if (detectionOther) {
-        debate.postDebateSurvey.player1DetectionOther = detectionOther;           // ✅ Q5 other
+        debate.postDebateSurvey.player1DetectionOther = detectionOther;
       }
       if (aiAwarenessEffect) {
         debate.postDebateSurvey.player1AiAwarenessEffect = aiAwarenessEffect;
@@ -1914,15 +1914,21 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       }
       debate.postDebateSurvey.player2 = response;
       debate.postDebateSurvey.player2OpponentPerception = opponentPerception;
-      debate.postDebateSurvey.player2StanceStrength = stanceStrength;             // ✅ NEW Q2
-      debate.postDebateSurvey.player2StanceConfidence = stanceConfidence;         // ✅ NEW Q3
-      debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence; // ✅ Q5
-      debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;           // ✅ Q6
-      debate.postDebateSurvey.player2DetectionCues = detectionCues;               // ✅ Q7
+      debate.postDebateSurvey.player2StanceStrength = stanceStrength;
+      debate.postDebateSurvey.player2StanceConfidence = stanceConfidence;
+      debate.postDebateSurvey.player2PerceptionConfidence = perceptionConfidence;
+      debate.postDebateSurvey.player2SuspicionTiming = suspicionTiming;
+      debate.postDebateSurvey.player2DetectionCues = detectionCues;
       if (detectionOther) {
-        debate.postDebateSurvey.player2DetectionOther = detectionOther;           // ✅ Q5 other
+        debate.postDebateSurvey.player2DetectionOther = detectionOther;           
       }
-      console.log('[Post-Survey] ✅ Saved for player2');
+      if (aiAwarenessEffect) {
+        debate.postDebateSurvey.player2AiAwarenessEffect = aiAwarenessEffect;
+      }
+      if (aiAwarenessJustification) {
+        debate.postDebateSurvey.player2AiAwarenessJustification = aiAwarenessJustification;
+      }
+      console.log('[Post-Survey] ✅ Saved for player2', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
     }
 
     await debate.save();
