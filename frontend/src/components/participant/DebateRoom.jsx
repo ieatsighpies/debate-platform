@@ -73,6 +73,21 @@ const DebateRoom = () => {
     if (!Array.isArray(cues) || cues.length === 0) return false;
     if (cues.includes('other') && (!other || !other.trim())) return false;
 
+    // Check awareness effect fields based on opponent perception
+    if (perception === 'ai') {
+      const aiEffect = survey[`${playerKey}AiAwarenessEffect`];
+      const aiJustification = survey[`${playerKey}AiAwarenessJustification`];
+      if (!aiEffect || !aiJustification || !aiJustification.trim()) return false;
+    } else if (perception === 'human') {
+      const humanEffect = survey[`${playerKey}HumanAwarenessEffect`];
+      const humanJustification = survey[`${playerKey}HumanAwarenessJustification`];
+      if (!humanEffect || !humanJustification || !humanJustification.trim()) return false;
+    } else if (perception === 'unsure') {
+      const unsureEffect = survey[`${playerKey}UnsureAwarenessEffect`];
+      const unsureJustification = survey[`${playerKey}UnsureAwarenessJustification`];
+      if (!unsureEffect || !unsureJustification || !unsureJustification.trim()) return false;
+    }
+
     return true;
   };
 
@@ -857,7 +872,7 @@ const handleEarlyEndVote = (data) => {
         <PostDebateSurveyModal
           isOpen={showPostSurvey}
           onSubmit={handlePostSurveySubmit}
-          onClose={() => {}}
+          onClose={() => setShowPostSurvey(false)}
           isAIOpponent={isHumanAI}
         />
 
@@ -882,7 +897,7 @@ const handleEarlyEndVote = (data) => {
               <h1 className="text-2xl font-bold text-gray-800 mb-2">
                 {debate.topicQuestion}
               </h1>
-              <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
                 <span className={`px-3 py-1 rounded-full font-medium ${
                   debate.status === 'active' ? 'bg-green-100 text-green-800' :
                   debate.status === 'completed' ? 'bg-blue-100 text-blue-800' :
@@ -892,6 +907,16 @@ const handleEarlyEndVote = (data) => {
                 </span>
                 <span className="font-medium">Round {debate.currentRound} / {debate.maxRounds}</span>
               </div>
+
+              {/* Survey Completion Banner */}
+              {debate.status === 'completed' && !postSurveySubmitted && (
+                <button
+                  onClick={() => setShowPostSurvey(true)}
+                  className="px-4 py-2 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition font-medium text-sm"
+                >
+                  📋 Complete Post-Debate Survey
+                </button>
+              )}
             </div>
           </div>
 
@@ -993,7 +1018,7 @@ const handleEarlyEndVote = (data) => {
                   💡 Important: Allow the discussion to reach a natural conclusion
                 </p>
                 <p className="text-xs text-blue-800">
-                  You can only end the debate after <strong>at least 5 rounds</strong> have been completed. 
+                  You can only end the debate after <strong>at least 5 rounds</strong> have been completed.
                   Please continue debating until the discussion naturally concludes or both participants feel their points have been thoroughly discussed.
                 </p>
               </div>

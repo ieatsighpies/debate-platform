@@ -535,12 +535,13 @@ router.get('/my-status', authenticate, async (req, res) => {
   try {
     const userId = req.user.userId;
 
+    // Include 'completed' status so users can still access debates to fill out survey
     const existingDebate = await Debate.findOne({
       $or: [
         { player1UserId: userId },
         { player2UserId: userId }
       ],
-      status: { $in: ['waiting', 'active'] }
+      status: { $in: ['waiting', 'active', 'completed'] }
     })
     .populate('player1UserId', 'username')
     .populate('player2UserId', 'username');
@@ -1847,7 +1848,11 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       detectionCues,             // Q7
       detectionOther,            // Q7 - other
       aiAwarenessEffect,         // AI follow-up
-      aiAwarenessJustification   // AI follow-up textbox
+      aiAwarenessJustification,  // AI follow-up textbox
+      humanAwarenessEffect,      // Human follow-up
+      humanAwarenessJustification, // Human follow-up textbox
+      unsureAwarenessEffect,     // Unsure follow-up
+      unsureAwarenessJustification // Unsure follow-up textbox
      } = req.body;
     const userId = req.user.userId;
 
@@ -1860,6 +1865,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       ];
     const validPerceptions = ['human', 'ai', 'unsure'];
     const validTimings = ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'];
+    const validAwarenessEffects = ['no_difference', 'less_persuasive', 'more_persuasive', 'not_sure'];
 
     if (!response || !validResponses.includes(response)) {
       console.log('Invalid post-survey response:', response);
@@ -1908,6 +1914,42 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       });
     }
 
+    // ✅ Validate awareness effect fields based on perception
+    if (opponentPerception === 'ai') {
+      if (!aiAwarenessEffect || !validAwarenessEffects.includes(aiAwarenessEffect)) {
+        return res.status(400).json({
+          message: 'Invalid AI awareness effect'
+        });
+      }
+      if (!aiAwarenessJustification || !aiAwarenessJustification.trim()) {
+        return res.status(400).json({
+          message: 'AI awareness justification is required'
+        });
+      }
+    } else if (opponentPerception === 'human') {
+      if (!humanAwarenessEffect || !validAwarenessEffects.includes(humanAwarenessEffect)) {
+        return res.status(400).json({
+          message: 'Invalid human awareness effect'
+        });
+      }
+      if (!humanAwarenessJustification || !humanAwarenessJustification.trim()) {
+        return res.status(400).json({
+          message: 'Human awareness justification is required'
+        });
+      }
+    } else if (opponentPerception === 'unsure') {
+      if (!unsureAwarenessEffect || !validAwarenessEffects.includes(unsureAwarenessEffect)) {
+        return res.status(400).json({
+          message: 'Invalid uncertainty awareness effect'
+        });
+      }
+      if (!unsureAwarenessJustification || !unsureAwarenessJustification.trim()) {
+        return res.status(400).json({
+          message: 'Uncertainty awareness justification is required'
+        });
+      }
+    }
+
     const debate = await Debate.findById(debateId);
 
     if (!debate) {
@@ -1948,7 +1990,19 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       if (aiAwarenessJustification) {
         debate.postDebateSurvey.player1AiAwarenessJustification = aiAwarenessJustification;
       }
-      console.log('[Post-Survey] ✅ Saved for player1', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
+      if (humanAwarenessEffect) {
+        debate.postDebateSurvey.player1HumanAwarenessEffect = humanAwarenessEffect;
+      }
+      if (humanAwarenessJustification) {
+        debate.postDebateSurvey.player1HumanAwarenessJustification = humanAwarenessJustification;
+      }
+      if (unsureAwarenessEffect) {
+        debate.postDebateSurvey.player1UnsureAwarenessEffect = unsureAwarenessEffect;
+      }
+      if (unsureAwarenessJustification) {
+        debate.postDebateSurvey.player1UnsureAwarenessJustification = unsureAwarenessJustification;
+      }
+      console.log('[Post-Survey] ✅ Saved for player1', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
     } else if (isPlayer2) {
       if (debate.postDebateSurvey.player2) {
         return res.status(400).json({ message: 'Survey already submitted' });
@@ -1969,7 +2023,19 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       if (aiAwarenessJustification) {
         debate.postDebateSurvey.player2AiAwarenessJustification = aiAwarenessJustification;
       }
-      console.log('[Post-Survey] ✅ Saved for player2', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification });
+      if (humanAwarenessEffect) {
+        debate.postDebateSurvey.player2HumanAwarenessEffect = humanAwarenessEffect;
+      }
+      if (humanAwarenessJustification) {
+        debate.postDebateSurvey.player2HumanAwarenessJustification = humanAwarenessJustification;
+      }
+      if (unsureAwarenessEffect) {
+        debate.postDebateSurvey.player2UnsureAwarenessEffect = unsureAwarenessEffect;
+      }
+      if (unsureAwarenessJustification) {
+        debate.postDebateSurvey.player2UnsureAwarenessJustification = unsureAwarenessJustification;
+      }
+      console.log('[Post-Survey] ✅ Saved for player2', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
     }
 
     await debate.save();

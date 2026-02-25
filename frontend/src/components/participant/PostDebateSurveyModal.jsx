@@ -14,13 +14,35 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
   const [detectionOther, setDetectionOther] = useState('');               // ✅ Q5 other
   const [showOtherInput, setShowOtherInput] = useState(false);
   const dialogRef = useRef(null);
-  const [aiAwarenessJustification, setAiAwarenessJustification] = useState('');
+
+  // AI Awareness Effect
   const [aiAwarenessEffect, setAiAwarenessEffect] = useState('');
+  const [aiAwarenessJustification, setAiAwarenessJustification] = useState('');
   const aiAwarenessOptions = [
     { value: 'no_difference', label: 'No, I treated the arguments seriously regardless.' },
     { value: 'less_persuasive', label: 'Yes, knowing it was AI made the arguments less persuasive.' },
     { value: 'more_persuasive', label: 'Yes, knowing it was AI made the arguments more persuasive.' },
-    { value: 'not_sure', label: 'Not sure / can’t say.' }
+    { value: 'not_sure', label: `Not sure / can't say.` }
+  ];
+
+  // Human Awareness Effect
+  const [humanAwarenessEffect, setHumanAwarenessEffect] = useState('');
+  const [humanAwarenessJustification, setHumanAwarenessJustification] = useState('');
+  const humanAwarenessOptions = [
+    { value: 'no_difference', label: 'No, I treated the arguments seriously regardless.' },
+    { value: 'less_persuasive', label: 'Yes, knowing it was human made the arguments less persuasive.' },
+    { value: 'more_persuasive', label: 'Yes, knowing it was human made the arguments more persuasive.' },
+    { value: 'not_sure', label: `Not sure / can't say.` }
+  ];
+
+  // Unsure Awareness Effect
+  const [unsureAwarenessEffect, setUnsureAwarenessEffect] = useState('');
+  const [unsureAwarenessJustification, setUnsureAwarenessJustification] = useState('');
+  const unsureAwarenessOptions = [
+    { value: 'no_difference', label: 'No, I treated the arguments seriously regardless.' },
+    { value: 'less_persuasive', label: 'Yes, the uncertainty made the arguments less persuasive.' },
+    { value: 'more_persuasive', label: 'Yes, the uncertainty made the arguments more persuasive.' },
+    { value: 'not_sure', label: `Not sure / can't say.` }
   ];
 
   const surveyOptions = [
@@ -196,6 +218,26 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
       return;
     }
 
+    // Require human awareness effect if opponentPerception is 'human'
+    if (opponentPerception === 'human' && !humanAwarenessEffect) {
+      toast.error('Please answer how knowing your opponent was human affected your stance change');
+      return;
+    }
+    if (opponentPerception === 'human' && !humanAwarenessJustification.trim()) {
+      toast.error('Please provide a brief justification or description for your answer about human awareness.');
+      return;
+    }
+
+    // Require unsure awareness effect if opponentPerception is 'unsure'
+    if (opponentPerception === 'unsure' && !unsureAwarenessEffect) {
+      toast.error('Please answer how the uncertainty affected your stance change');
+      return;
+    }
+    if (opponentPerception === 'unsure' && !unsureAwarenessJustification.trim()) {
+      toast.error('Please provide a brief justification or description for your answer about uncertainty.');
+      return;
+    }
+
     if (!stanceStrength) {
       toast.error('Please rate your current stance strength');
       return;
@@ -243,7 +285,11 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
         detectionCues: detectionCues,
         detectionOther: detectionOther.trim(),
         aiAwarenessEffect: opponentPerception === 'ai' ? aiAwarenessEffect : undefined,
-        aiAwarenessJustification: opponentPerception === 'ai' ? aiAwarenessJustification.trim() : undefined
+        aiAwarenessJustification: opponentPerception === 'ai' ? aiAwarenessJustification.trim() : undefined,
+        humanAwarenessEffect: opponentPerception === 'human' ? humanAwarenessEffect : undefined,
+        humanAwarenessJustification: opponentPerception === 'human' ? humanAwarenessJustification.trim() : undefined,
+        unsureAwarenessEffect: opponentPerception === 'unsure' ? unsureAwarenessEffect : undefined,
+        unsureAwarenessJustification: opponentPerception === 'unsure' ? unsureAwarenessJustification.trim() : undefined
       });
     } finally {
       setSubmitting(false);
@@ -251,9 +297,9 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
   };
 
   const handleBackdropClick = (e) => {
-    // Prevent closing when clicking backdrop - make it mandatory
+    // Allow closing via backdrop
     if (e.target === dialogRef.current) {
-      e.preventDefault();
+      onClose();
     }
   };
 return (
@@ -270,6 +316,13 @@ return (
               <CheckCircle className="mr-3" size={28} />
               <h2 className="text-xl font-bold">Debate Completed!</h2>
             </div>
+            <button
+              onClick={() => onClose()}
+              className="text-white hover:text-gray-200 transition"
+              title="Close survey (you can reopen it later)"
+            >
+              <X size={24} />
+            </button>
           </div>
         </div>
 
@@ -544,14 +597,14 @@ return (
               </div>
             </div>
           )}
-          {/* Follow-up: Did knowing it was AI affect your stance change? */}
+          {/* Question 8: AI Awareness Effect */}
           {opponentPerception === 'ai' && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
-                Did knowing your opponent was AI affect your stance change?
+                8. Did knowing your opponent was AI affect your stance change?
               </h3>
               <p className="text-sm text-gray-600 mb-3">
-                This helps us analyze whether knowing an argument comes from AI changes how persuasive it feels, compared to treating arguments on their own merits. (Good survey design: ask about confounds, avoid leading language, and offer a neutral option.)
+                This helps us analyze whether knowing an argument comes from AI changes how persuasive it feels, compared to treating arguments on their own merits.
               </p>
               <div className="space-y-2 mb-4">
                 {aiAwarenessOptions.map((option) => (
@@ -594,6 +647,108 @@ return (
               </div>
             </div>
           )}
+
+          {/* Question 8: Human Awareness Effect */}
+          {opponentPerception === 'human' && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                8. Did knowing your opponent was human affect your stance change?
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                This helps us analyze whether knowing an argument comes from a real person changes how persuasive it feels, compared to treating arguments on their own merits.
+              </p>
+              <div className="space-y-2 mb-4">
+                {humanAwarenessOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`block p-3 border-2 rounded-lg cursor-pointer transition ${
+                      humanAwarenessEffect === option.value
+                        ? 'border-cyan-600 bg-cyan-50'
+                        : 'border-gray-200 hover:border-cyan-300'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        name="humanAwarenessEffect"
+                        value={option.value}
+                        checked={humanAwarenessEffect === option.value}
+                        onChange={(e) => setHumanAwarenessEffect(e.target.value)}
+                        className="mr-3"
+                        disabled={submitting}
+                      />
+                      <span className="font-medium text-gray-800">{option.label}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1" htmlFor="humanAwarenessJustification">
+                  Please briefly explain your answer:
+                </label>
+                <textarea
+                  id="humanAwarenessJustification"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent min-h-[60px]"
+                  value={humanAwarenessJustification}
+                  onChange={e => setHumanAwarenessJustification(e.target.value)}
+                  placeholder="Describe how (if at all) knowing your opponent was human influenced your reaction to their arguments..."
+                  disabled={submitting}
+                  required
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Question 8: Unsure Awareness Effect */}
+          {opponentPerception === 'unsure' && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-gray-800 mb-3">
+                8. Did your uncertainty about your opponent's nature affect your stance change?
+              </h3>
+              <p className="text-sm text-gray-600 mb-3">
+                This helps us analyze whether the uncertainty itself changes how persuasive the arguments feel, compared to treating arguments on their own merits.
+              </p>
+              <div className="space-y-2 mb-4">
+                {unsureAwarenessOptions.map((option) => (
+                  <label
+                    key={option.value}
+                    className={`block p-3 border-2 rounded-lg cursor-pointer transition ${
+                      unsureAwarenessEffect === option.value
+                        ? 'border-amber-600 bg-amber-50'
+                        : 'border-gray-200 hover:border-amber-300'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        name="unsureAwarenessEffect"
+                        value={option.value}
+                        checked={unsureAwarenessEffect === option.value}
+                        onChange={(e) => setUnsureAwarenessEffect(e.target.value)}
+                        className="mr-3"
+                        disabled={submitting}
+                      />
+                      <span className="font-medium text-gray-800">{option.label}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+              <div>
+                <label className="block text-gray-700 font-medium mb-1" htmlFor="unsureAwarenessJustification">
+                  Please briefly explain your answer:
+                </label>
+                <textarea
+                  id="unsureAwarenessJustification"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent min-h-[60px]"
+                  value={unsureAwarenessJustification}
+                  onChange={e => setUnsureAwarenessJustification(e.target.value)}
+                  placeholder="Describe how (if at all) the uncertainty influenced your reaction to their arguments..."
+                  disabled={submitting}
+                  required
+                />
+              </div>
+            </div>
+          )}
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
             <p className="text-sm text-amber-800">
               <strong>Note:</strong> All responses are required. Your answers are anonymous and used only for research purposes.
@@ -604,11 +759,19 @@ return (
             onClick={handleSubmit}
             disabled={
               !selectedResponse ||
+              !stanceStrength ||
+              !stanceConfidence ||
               !opponentPerception ||
               !perceptionConfidence ||
               !suspicionTiming ||
               detectionCues.length === 0 ||
               (detectionCues.includes('other') && !detectionOther.trim()) ||
+              (opponentPerception === 'ai' && !aiAwarenessEffect) ||
+              (opponentPerception === 'ai' && !aiAwarenessJustification.trim()) ||
+              (opponentPerception === 'human' && !humanAwarenessEffect) ||
+              (opponentPerception === 'human' && !humanAwarenessJustification.trim()) ||
+              (opponentPerception === 'unsure' && !unsureAwarenessEffect) ||
+              (opponentPerception === 'unsure' && !unsureAwarenessJustification.trim()) ||
               submitting
             }
             className="w-full mt-6 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed font-medium text-lg"
