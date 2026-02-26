@@ -44,7 +44,9 @@ const DebateRoom = () => {
 
   const debateIdRef = useRef(debateId);
   const debateRef = useRef(null);
+  const earlyEndVotesRef = useRef(earlyEndVotes);
   const normsShownOnceRef = useRef(false);
+  const lastSurveyRoundShownRef = useRef(null);
 
   useEffect(() => {
     debateIdRef.current = debateId;
@@ -54,7 +56,11 @@ const DebateRoom = () => {
     debateRef.current = debate;
   }, [debate]);
 
-  // ✅ HIDDEN from user - internal only
+  useEffect(() => {
+    earlyEndVotesRef.current = earlyEndVotes;
+  }, [earlyEndVotes]);
+
+  //  HIDDEN from user - internal only
   const isHumanAI = debate?.gameMode === 'human-ai' || debate?.isAIOpponent === true;
 
   const isPostSurveyCompleteForPlayer = (survey, playerKey) => {
@@ -108,7 +114,7 @@ const DebateRoom = () => {
       debateRef.current = debateData;
       setDebate(debateData);
 
-      // ✅ Update vote state
+      //  Update vote state
       if (debateData.earlyEndVotes) {
         const isPlayer1 = debateData.isPlayer1;
         const votes = debateData.earlyEndVotes;
@@ -133,7 +139,8 @@ const DebateRoom = () => {
       }
 
       // Check if we need to show post-debate survey
-      if (debateData.status === 'completed') {
+      // BUT: Delay if belief/reflection prompts need to be shown first (early end vote scenario)
+      if (['survey_pending', 'completed'].includes(debateData.status)) {
         const isPlayer1 = debateData.isPlayer1;
         const isPlayer2 = debateData.isPlayer2;
         const survey = debateData.postDebateSurvey || {};
@@ -144,16 +151,44 @@ const DebateRoom = () => {
             ? isPostSurveyCompleteForPlayer(survey, 'player2')
             : false;
 
+        // Check if belief/reflection for latest round still need to be submitted (early end scenario)
+        const latestRound = getLatestCompletedRound(debateData);
+        const isEarlyEnd = debateData.earlyEndVotes?.player1Voted && debateData.earlyEndVotes?.player2Voted;
+        const playerKey = isPlayer1 ? 'player1' : 'player2';
+
+        const beliefAlreadySubmitted = (debateData.beliefHistory || []).some(
+          entry => entry.round === latestRound && entry.player === playerKey
+        );
+
+        const reflectionAlreadySubmitted = (debateData.reflections || []).some(
+          r => r.round === latestRound && r.player === playerKey
+        );
+
+        const needsBelief = isEarlyEnd && latestRound && !beliefAlreadySubmitted;
+        const needsReflection = isEarlyEnd && latestRound && !reflectionAlreadySubmitted;
+
         console.log('[Survey] Check:', {
           isPlayer1,
           isPlayer2,
           hasSubmitted,
           postSurveySubmitted,
-          showPostSurvey
+          showPostSurvey,
+          isEarlyEnd,
+          needsBelief,
+          needsReflection
         });
 
+        // Only show post-survey if:
+        // 1. Survey not already submitted AND
+        // 2. No pending belief/reflection prompts OR belief/reflection are already submitted
         if (!hasSubmitted && !postSurveySubmitted && !showPostSurvey) {
-          setShowPostSurvey(true);
+          if (!needsBelief && !needsReflection) {
+            // Safe to show survey - no pending prompts
+            setShowPostSurvey(true);
+          } else {
+            // Belief/reflection still pending - let the effects handle showing those first
+            console.log('[Survey] Delaying post-survey, showing belief/reflection first');
+          }
         } else if (hasSubmitted) {
           setPostSurveySubmitted(true);
           setShowPostSurvey(false);
@@ -201,7 +236,11 @@ const DebateRoom = () => {
 
   // Show waiting animation if user is done with belief check but opponent isn't
   const shouldShowWaitingAnimation = () => {
-    if (debate?.status !== 'active') return false;
+    if (!['active', 'survey_pending', 'completed'].includes(debate?.status)) return false;
+
+    // For completed debates, only show waiting if it's an early end scenario
+    if (debate?.status === 'completed' && !(debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted)) return false;
+
     const roundComplete = getLatestCompletedRound(debate) === debate.currentRound;
     if (!roundComplete) return false;
 
@@ -221,12 +260,24 @@ const DebateRoom = () => {
   }, [debateId]);
 
   useEffect(() => {
-    if (!debate || debate.status !== 'active') return;
+    if (!debate) return;
+
+    // Allow belief prompt during active debate OR when debate just completed via early end vote
+    const isActive = debate.status === 'active';
+    const isEarlyEnd = ['survey_pending', 'completed'].includes(debate.status) && (debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted);
+
+    if (!isActive && !isEarlyEnd) return;
 
     const latestCompletedRound = getLatestCompletedRound(debate);
     if (!latestCompletedRound) return;
 
     if (skippedBeliefRounds.includes(latestCompletedRound)) return;
+
+    //  ONLY show belief prompt AFTER reflection is submitted/handled for this round
+    if (!reflectionHandledRounds.includes(latestCompletedRound)) {
+      console.log('[BeliefDebug] Waiting for reflection to complete first', { debateId, round: latestCompletedRound });
+      return;
+    }
 
     const alreadySubmitted = (debate.beliefHistory || []).some((entry) =>
       entry.round === latestCompletedRound &&
@@ -237,13 +288,20 @@ const DebateRoom = () => {
       setBeliefRound(latestCompletedRound);
       setBeliefValue(50);
       setInfluenceValue(0);
-      console.log('[BeliefDebug] Showing belief prompt', { debateId, round: latestCompletedRound, userId: user?.userId });
+      console.log('[BeliefDebug] Showing belief prompt (after reflection)', { debateId, round: latestCompletedRound, userId: user?.userId, earlyEnd: isEarlyEnd });
       setShowBeliefPrompt(true);
     }
-  }, [debate, skippedBeliefRounds, showBeliefPrompt, user?.userId]);
+  }, [debate?.status, debate?.arguments.length, debate?.beliefHistory.length, debate?.earlyEndVotes, showBeliefPrompt, user?.userId]);
 
   useEffect(() => {
-    if (!debate || debate.status !== 'active') return;
+    if (!debate) return;
+
+    // Allow reflection prompt during active debate OR when debate just completed via early end vote
+    const isActive = debate.status === 'active';
+    const isEarlyEnd = ['survey_pending', 'completed'].includes(debate.status) && (debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted);
+
+    if (!isActive && !isEarlyEnd) return;
+
     const latestCompletedRound = getLatestCompletedRound(debate);
     if (!latestCompletedRound) return;
 
@@ -251,7 +309,12 @@ const DebateRoom = () => {
       r => r.round === latestCompletedRound && r.userId?.toString() === user?.userId
     );
     if (alreadyReflected) {
-      setReflectionHandledRounds((prev) => [...new Set([...prev, latestCompletedRound])]);
+      setReflectionHandledRounds((prev) => {
+        if (!prev.includes(latestCompletedRound)) {
+          return [...new Set([...prev, latestCompletedRound])];
+        }
+        return prev;
+      });
       return;
     }
 
@@ -261,19 +324,81 @@ const DebateRoom = () => {
       console.log('[Reflection] Showing reflection prompt', {
         debateId,
         round: latestCompletedRound,
-        userId: user?.userId
+        userId: user?.userId,
+        earlyEnd: isEarlyEnd
       });
       setShowReflectionPrompt(true);
     }
-  }, [debate, showReflectionPrompt, user?.userId, reflectionHandledRounds]);
+  }, [debate?.status, debate?.arguments.length, debate?.reflections.length, debate?.earlyEndVotes, user?.userId, showReflectionPrompt]);
 
   useEffect(() => {
-    if (debate && debate.status !== 'active' && showBeliefPrompt) {
-      console.log('[BeliefDebug] Hiding prompt because debate is not active', { debateId, status: debate?.status });
+    if (!debate || !showBeliefPrompt) return;
+
+    // Only hide belief prompt if debate is truly complete (not an early end scenario waiting for submission)
+    const isEarlyEndWaitingForSubmission = ['survey_pending', 'completed'].includes(debate.status) &&
+      (debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted);
+
+    if (debate.status !== 'active' && !isEarlyEndWaitingForSubmission) {
+      console.log('[BeliefDebug] Hiding prompt because debate ended', { debateId, status: debate?.status });
       setShowBeliefPrompt(false);
       setBeliefValue(50);
     }
-  }, [debate?.status, showBeliefPrompt]);
+  }, [debate?.status, debate?.earlyEndVotes, showBeliefPrompt]);
+
+  // Show post-survey after belief/reflection are submitted during early end scenario
+  useEffect(() => {
+    if (!debate || !['survey_pending', 'completed'].includes(debate.status) || showPostSurvey || postSurveySubmitted) return;
+
+    const isPlayer1 = debate.isPlayer1;
+    const isPlayer2 = debate.isPlayer2;
+    const survey = debate.postDebateSurvey || {};
+
+    // Check if survey already submitted in the debate object (for guest re-login scenarios)
+    const hasSubmitted = isPlayer1
+      ? isPostSurveyCompleteForPlayer(survey, 'player1')
+      : isPlayer2
+        ? isPostSurveyCompleteForPlayer(survey, 'player2')
+        : false;
+
+    if (hasSubmitted) {
+      setPostSurveySubmitted(true);
+      return;
+    }
+
+    const isEarlyEnd = debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted;
+    if (!isEarlyEnd) return;
+
+    const latestRound = getLatestCompletedRound(debate);
+
+    // Skip if we already tried to show survey for this round (prevents re-triggering on debate updates)
+    if (lastSurveyRoundShownRef.current === latestRound) return;
+
+    const playerKey = isPlayer1 ? 'player1' : 'player2';
+
+    // Check if belief/reflection have been submitted
+    const beliefSubmitted = (debate.beliefHistory || []).some(
+      entry => entry.round === latestRound && entry.player === playerKey
+    );
+
+    const reflectionSubmitted = (debate.reflections || []).some(
+      r => r.round === latestRound && r.player === playerKey
+    );
+
+    // Check if they were skipped (order: reflection THEN belief)
+    const reflectionSkipped = reflectionHandledRounds.includes(latestRound);
+    const beliefSkipped = skippedBeliefRounds.includes(latestRound);
+
+    // Show post-survey only if BOTH reflection and belief have been handled
+    // Don't rely on visibility states - rely on completion tracking instead
+    const reflectionComplete = reflectionSubmitted || reflectionSkipped;
+    const beliefComplete = beliefSubmitted || beliefSkipped;
+
+    if (reflectionComplete && beliefComplete) {
+      console.log('[Survey] Showing post-survey after reflection/belief complete', { latestRound, reflectionComplete, beliefComplete });
+      lastSurveyRoundShownRef.current = latestRound;
+      setShowPostSurvey(true);
+    }
+  }, [debate?.status, debate?.arguments.length, debate?.reflections.length, debate?.beliefHistory.length, debate?.earlyEndVotes, showPostSurvey, postSurveySubmitted, user?.userId]);
 
   // Socket setup
   useEffect(() => {
@@ -325,7 +450,7 @@ const DebateRoom = () => {
     };
 
     const handleDebateStarted = (data) => {
-      console.log('[DebateRoom] ✅ Debate started event received!', data);
+      console.log('[DebateRoom]  Debate started event received!', data);
       if (data.debateId === debateIdRef.current) {
         toast.success('Opponent joined! Debate starting...');
         fetchDebate();
@@ -368,7 +493,7 @@ const handleEarlyEndVote = (data) => {
     return;
   }
 
-  // ✅ Get current debate state to determine player position
+  //  Get current debate state to determine player position
   const currentDebate = debateRef.current;
   if (!currentDebate) {
     console.error('[Vote] ❌ No debate state available');
@@ -386,18 +511,18 @@ const handleEarlyEndVote = (data) => {
     yourVote: yourVoteStatus
   };
 
-  console.log('[Vote] ✅ Updating state:', {
+  console.log('[Vote]  Updating state:', {
     isPlayer1,
     received: data.votes,
     newState: newVoteState,
     yourVote: yourVoteStatus
   });
 
-  // ✅ Update vote state
+  //  Update vote state
   setEarlyEndVotes(newVoteState);
   setVotingInProgress(false);
 
-  // ✅ Update debate object
+  //  Update debate object
   setDebate(prev => {
     if (!prev) return prev;
     return {
@@ -415,14 +540,14 @@ const handleEarlyEndVote = (data) => {
     setTimeout(() => fetchDebate(), 1000);
   } else if (yourVoteStatus) {
     // Only show this if YOUR status just changed to true
-    const wasYourVote = earlyEndVotes.yourVote;
+    const wasYourVote = earlyEndVotesRef.current.yourVote;
     if (!wasYourVote) {
       toast.success('Your vote recorded. Waiting for opponent...');
     }
   } else {
     // Opponent voted
     const opponentVoted = isPlayer1 ? newVoteState.player2Voted : newVoteState.player1Voted;
-    const wasOpponentVoted = isPlayer1 ? earlyEndVotes.player2Voted : earlyEndVotes.player1Voted;
+    const wasOpponentVoted = isPlayer1 ? earlyEndVotesRef.current.player2Voted : earlyEndVotesRef.current.player1Voted;
 
     if (opponentVoted && !wasOpponentVoted) {
       toast('Opponent voted to end debate early.', {
@@ -460,7 +585,7 @@ const handleEarlyEndVote = (data) => {
       socket.off('connect', handleConnect);
       leaveDebateRoom(debateId);
     };
-  }, [socket, connected, debateId, debate?.isPlayer1, navigate, joinDebateRoom, leaveDebateRoom]);
+  }, [socket, connected, debateId, navigate, joinDebateRoom, leaveDebateRoom]);
 
   // Polling for waiting room
   useEffect(() => {
@@ -482,21 +607,23 @@ const handleEarlyEndVote = (data) => {
   const handlePostSurveySubmit = async (response) => {
   try {
     console.log('[Survey] Submitting:', response);
+    console.log('[Survey] Current debate status:', debate?.status);
     await debateAPI.submitPostSurvey(debateId, response);
 
-    // ✅ Set state FIRST before fetching
+    //  Set state FIRST before fetching
     setPostSurveySubmitted(true);
     setShowPostSurvey(false);
 
     toast.success('Thank you for your feedback!');
 
-    // ✅ Fetch after a small delay to ensure state is set
+    //  Fetch after a small delay to ensure state is set
     setTimeout(() => {
       fetchDebate();
     }, 100);
 
   } catch (error) {
     console.error('[Survey] Submission error:', error);
+    console.error('[Survey] Error response:', error.response?.data);
     toast.error(error.response?.data?.message || 'Failed to submit survey');
     throw error;
   }
@@ -658,14 +785,7 @@ const handleEarlyEndVote = (data) => {
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      if (argument.trim() && !submitting) {
-        handleSubmitArgument();
-      }
-    }
-  };
+
 
   const handleVoteEarlyEnd = async () => {
     if (votingInProgress || earlyEndVotes.yourVote) {
@@ -680,7 +800,7 @@ const handleEarlyEndVote = (data) => {
       const response = await debateAPI.voteEarlyEnd(debateId);
       console.log('🔵 [Vote] API response:', response);
 
-      // ✅ Always show same message (hide AI mode)
+      //  Always show same message (hide AI mode)
       toast.success('Vote recorded. Waiting for opponent...');
 
       if (!connected) {
@@ -705,7 +825,7 @@ const handleEarlyEndVote = (data) => {
     }
   };
 
-  // ✅ Get opponent vote status - Always show for consistency
+  //  Get opponent vote status - Always show for consistency
   const getOpponentVoteStatus = () => {
     if (!debate || !debate.earlyEndVotes) return false;
 
@@ -713,7 +833,7 @@ const handleEarlyEndVote = (data) => {
     return isPlayer1 ? earlyEndVotes.player2Voted : earlyEndVotes.player1Voted;
   };
 
-  // ✅ Calculate vote progress - Always 2 votes required
+  //  Calculate vote progress - Always 2 votes required
   const getVoteProgress = () => {
     if (!debate || !debate.earlyEndVotes) {
       return {
@@ -874,6 +994,7 @@ const handleEarlyEndVote = (data) => {
           onSubmit={handlePostSurveySubmit}
           onClose={() => setShowPostSurvey(false)}
           isAIOpponent={isHumanAI}
+          debate={debate}
         />
 
         {/* Norms modal shown once before round 1 */}
@@ -900,7 +1021,7 @@ const handleEarlyEndVote = (data) => {
               <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
                 <span className={`px-3 py-1 rounded-full font-medium ${
                   debate.status === 'active' ? 'bg-green-100 text-green-800' :
-                  debate.status === 'completed' ? 'bg-blue-100 text-blue-800' :
+                  debate.status === 'survey_pending' || debate.status === 'completed' ? 'bg-blue-100 text-blue-800' :
                   'bg-gray-100 text-gray-800'
                 }`}>
                   {debate.status.toUpperCase()}
@@ -909,7 +1030,7 @@ const handleEarlyEndVote = (data) => {
               </div>
 
               {/* Survey Completion Banner */}
-              {debate.status === 'completed' && !postSurveySubmitted && (
+              {(debate.status === 'survey_pending' || debate.status === 'completed') && !postSurveySubmitted && (
                 <button
                   onClick={() => setShowPostSurvey(true)}
                   className="px-4 py-2 bg-amber-100 text-amber-800 rounded-lg hover:bg-amber-200 transition font-medium text-sm"
@@ -920,7 +1041,7 @@ const handleEarlyEndVote = (data) => {
             </div>
           </div>
 
-          {/* Players - ✅ No AI indicator shown */}
+          {/* Players -  No AI indicator shown */}
           <div className="grid grid-cols-1 gap-4">
             <div className="border-2 border-indigo-500 rounded-lg p-4 bg-indigo-50">
               <div className="flex items-center justify-between mb-2">
@@ -1005,7 +1126,7 @@ const handleEarlyEndVote = (data) => {
           )}
         </div>
 
-        {/* ✅ Early End Voting - Always shows 2 players required */}
+        {/*  Early End Voting - Always shows 2 players required */}
         {debate.status === 'active' && debate.currentRound >= 5 && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="border-t pt-4">
@@ -1027,7 +1148,7 @@ const handleEarlyEndVote = (data) => {
                 Both participants must agree to conclude this debate early.
               </p>
 
-              {/* ✅ Always show both players */}
+              {/*  Always show both players */}
               <div className="flex items-center space-x-4 mb-4">
                 <div className="flex items-center">
                   <div className={`w-3 h-3 rounded-full mr-2 ${
@@ -1222,17 +1343,12 @@ const handleEarlyEndVote = (data) => {
             <textarea
               value={argument}
               onChange={(e) => setArgument(e.target.value)}
-              onKeyDown={handleKeyPress}
               placeholder="Enter your argument (max 500 characters)..."
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
               rows={6}
               maxLength={500}
               disabled={submitting}
             />
-            <div className="text-xs text-gray-500 mt-1">
-              Press <kbd className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">Enter</kbd> to submit,
-              <kbd className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">Shift+Enter</kbd> for new line
-            </div>
             <div className="flex justify-between items-center mt-4">
               <span className={`text-sm ${argument.length > 450 ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
                 {argument.length}/500 characters
@@ -1266,7 +1382,7 @@ const handleEarlyEndVote = (data) => {
         ) : null}
 
         {/* Completed */}
-        {debate.status === 'completed' && postSurveySubmitted && (
+        {(debate.status === 'survey_pending' || debate.status === 'completed') && postSurveySubmitted && (
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-4">
               <CheckCircle className="text-blue-600" size={40} />

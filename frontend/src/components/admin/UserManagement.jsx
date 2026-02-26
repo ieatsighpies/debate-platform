@@ -60,7 +60,7 @@ const UserManagement = () => {
 
       const response = await authAPI.createUser(formData);
 
-      console.log('[UserManagement] ✅ User created:', response.data);
+      console.log('[UserManagement]  User created:', response.data);
 
       toast.success('User created successfully!');
       setFormData({ username: '', password: '', role: 'participant' });

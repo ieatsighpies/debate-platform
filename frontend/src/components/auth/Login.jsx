@@ -31,7 +31,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // ✅ Call context login directly - it handles everything
+      //  Call context login directly - it handles everything
       const response = await authAPI.login(credentials.username, credentials.password);
       const { token, user: userData } = response.data;
       login(token, userData);
@@ -58,7 +58,7 @@ const Login = () => {
 
   const handleGuestLogin = async () => {
     setError('');
-// ✅ Check if there's already a guest logged in
+//  Check if there's already a guest logged in
   const existingToken = localStorage.getItem('token');
   const existingUser = localStorage.getItem('user');
 

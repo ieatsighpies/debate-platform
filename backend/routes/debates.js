@@ -29,7 +29,7 @@ const completeDebateEarly = async (debateId, reason, io) => {
       console.log('[EarlyEnd] AI post-survey:', aiResponse);
     }
 
-    debate.status = 'completed';
+    debate.status = 'survey_pending';
     debate.completedAt = new Date();
     debate.completionReason = reason;
     debate.earlyEndVotes.expired = true;
@@ -39,7 +39,7 @@ const completeDebateEarly = async (debateId, reason, io) => {
 
     cleanupAITimeout(debateId);
 
-    console.log('[EarlyEnd] ✅ Debate completed early:', {
+    console.log('[EarlyEnd]  Debate completed early:', {
       debateId,
       reason,
       round: debate.currentRound,
@@ -94,6 +94,73 @@ const generateAIPostSurvey = async (debate) => {
   }
 };
 
+// Helper: Calculate Round 0 belief value from pre-survey response and stance
+const calculateRound0BeliefValue = (preSurveyResponse, stance) => {
+  // preSurveyResponse: 'firm_on_stance', 'convinced_of_stance', 'open_to_change'
+  // stance: 'for' or 'against'
+
+  if (preSurveyResponse === 'firm_on_stance') {
+    return stance === 'for' ? 100 : 0;
+  } else if (preSurveyResponse === 'convinced_of_stance') {
+    return stance === 'for' ? 75 : 25;
+  } else if (preSurveyResponse === 'open_to_change') {
+    return 50;
+  }
+
+  // Default fallback
+  return 50;
+};
+
+// Helper: Initialize Round 0 belief entries when debate becomes active
+const initializeRound0Beliefs = async (debate, user1Id, user2Id) => {
+  try {
+    console.log('[Round0] Initializing Round 0 belief values for debate:', debate._id);
+
+    // Player1 belief - only create if doesn't exist
+    const existingPlayer1Round0 = debate.beliefHistory.find(b => b.player === 'player1');
+    if (!existingPlayer1Round0) {
+      const player1Belief = {
+        round: 0,
+        userId: user1Id,
+        player: 'player1',
+        beliefValue: calculateRound0BeliefValue(debate.preDebateSurvey.player1, debate.player1Stance),
+        influence: 0,
+        confidence: 0
+      };
+      debate.beliefHistory.push(player1Belief);
+      console.log('[Round0] Created Round 0 belief for player1:', player1Belief.beliefValue);
+    } else {
+      console.log('[Round0] Player1 Round 0 belief already exists, skipping');
+    }
+
+    // Player2 belief - only create if doesn't exist AND player2 has been assigned
+    const existingPlayer2Round0 = debate.beliefHistory.find(b => b.player === 'player2');
+    if (!existingPlayer2Round0 && debate.player2Stance) {
+      const player2Belief = {
+        round: 0,
+        userId: user2Id || null, // null for AI players
+        player: 'player2',
+        beliefValue: calculateRound0BeliefValue(debate.preDebateSurvey.player2, debate.player2Stance),
+        influence: 0,
+        confidence: 0
+      };
+      debate.beliefHistory.push(player2Belief);
+      console.log('[Round0] Created Round 0 belief for player2:', player2Belief.beliefValue);
+    } else if (existingPlayer2Round0) {
+      console.log('[Round0] Player2 Round 0 belief already exists, skipping');
+    } else {
+      console.log('[Round0] Player2 not yet assigned, skipping belief creation');
+    }
+
+    await debate.save();
+
+    console.log('[Round0]  Initialized Round 0 beliefs');
+  } catch (error) {
+    console.error('[Round0] ❌ Error initializing Round 0 beliefs:', error);
+    throw error;
+  }
+};
+
 // ============================================
 // CLEANUP SINGLE AI TIMEOUT
 // ============================================
@@ -130,7 +197,7 @@ const cleanupAllAITimeouts = () => {
 
   aiVoteTimeouts.clear();
 
-  console.log('[AI EarlyEnd] ✅ All timeouts cleaned up successfully');
+  console.log('[AI EarlyEnd]  All timeouts cleaned up successfully');
 
   return count;
 };
@@ -347,7 +414,7 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
       debate.postDebateSurvey.player2 = aiResponse;
     }
 
-    debate.status = 'completed';
+    debate.status = 'survey_pending';
     debate.completedAt = new Date();
     debate.completionReason = 'natural_completion';
     debate.earlyEndVotes.expired = true;
@@ -409,7 +476,7 @@ const handleAIEarlyEndVote = async (debate, io) => {
   try {
     console.log('[AI EarlyEnd] Human voted, calculating AI response...');
 
-    // ✅ Calculate AI strategy
+    //  Calculate AI strategy
     const strategy = calculateAIVoteStrategy(debate);
 
     console.log('[AI EarlyEnd] Strategy calculated:', {
@@ -419,7 +486,7 @@ const handleAIEarlyEndVote = async (debate, io) => {
     });
 
     if (strategy.shouldAgree) {
-      // ✅ Determine which player is AI
+      //  Determine which player is AI
       const isPlayer1AI = debate.player1Type === 'ai';
       const aiVoteField = isPlayer1AI ? 'player1Voted' : 'player2Voted';
       const aiTimestampField = isPlayer1AI ? 'player1Timestamp' : 'player2Timestamp';
@@ -442,7 +509,7 @@ const handleAIEarlyEndVote = async (debate, io) => {
           freshDebate.earlyEndVotes[aiTimestampField] = new Date();
           await freshDebate.save();
 
-          console.log('[AI EarlyEnd] ✅ AI voted to end debate');
+          console.log('[AI EarlyEnd]  AI voted to end debate');
 
           // Emit update to all clients
           if (io) {
@@ -535,13 +602,14 @@ router.get('/my-status', authenticate, async (req, res) => {
   try {
     const userId = req.user.userId;
 
-    // Include 'completed' status so users can still access debates to fill out survey
+    // Check for debates that still need action - don't include 'completed' debates
+    // survey_pending means awaiting survey submission and should block new debates
     const existingDebate = await Debate.findOne({
       $or: [
         { player1UserId: userId },
         { player2UserId: userId }
       ],
-      status: { $in: ['waiting', 'active', 'completed'] }
+      status: { $in: ['waiting', 'active', 'survey_pending'] }
     })
     .populate('player1UserId', 'username')
     .populate('player2UserId', 'username');
@@ -794,8 +862,16 @@ router.post('/join', authenticate, async (req, res) => {
     }
 
     if (joinedDebate) {
-      console.log('[Debate] ✅ Joined existing debate:', joinedDebate._id);
+      console.log('[Debate]  Joined existing debate:', joinedDebate._id);
       console.log('[Debate] Player2 pre-survey:', preDebateSurvey.player1);
+
+      // Initialize Round 0 beliefs from pre-debate survey
+      try {
+        await initializeRound0Beliefs(joinedDebate, joinedDebate.player1UserId, joinedDebate.player2UserId);
+      } catch (error) {
+        console.error('[Debate] Error initializing Round 0 beliefs:', error);
+        // Don't fail the debate start, just log the error
+      }
 
       const io = req.app.get('io');
       if (io) {
@@ -848,8 +924,16 @@ router.post('/join', authenticate, async (req, res) => {
 
     await newDebate.save();
 
-    console.log('[Debate] ✅ Created new debate:', newDebate._id);
+    console.log('[Debate]  Created new debate:', newDebate._id);
     console.log('[Debate] Player1 pre-survey:', preDebateSurvey.player1);
+
+    // Initialize Round 0 beliefs for player1
+    try {
+      await initializeRound0Beliefs(newDebate, newDebate.player1UserId, null);
+    } catch (error) {
+      console.error('[Debate] Error initializing Round 0 beliefs:', error);
+      // Don't fail debate creation, just log the error
+    }
 
     const io = req.app.get('io');
     if (io) {
@@ -958,13 +1042,21 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
 
     await debate.save();
 
-    console.log('[Debate] ✅ AI opponent matched:', {
+    console.log('[Debate]  AI opponent matched:', {
       debateId: debate._id,
       aiModel: aiModel,
       aiStance,
       aiPersonality: selectedPersonality,
       firstPlayer: debate.firstPlayer
     });
+
+    // Initialize Round 0 beliefs from pre-debate survey
+    try {
+      await initializeRound0Beliefs(debate, debate.player1UserId, null);
+    } catch (error) {
+      console.error('[Debate] Error initializing Round 0 beliefs:', error);
+      // Don't fail the debate start, just log the error
+    }
 
     const io = req.app.get('io');
     if (io) {
@@ -1533,15 +1625,29 @@ router.put('/:debateId/end-early', authenticate, async (req, res) => {
       return res.status(404).json({ message: 'Debate not found' });
     }
 
+    console.log('[Admin] Ending debate early:', {
+      debateId: debate._id,
+      currentStatus: debate.status,
+      player2Type: debate.player2Type
+    });
+
     // Auto-fill AI post-survey if needed
     if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
-      console.log('[Debate] Generating AI post-survey response (admin end early)...');
-      const aiResponse = await generateAIPostSurvey(debate);
-      debate.postDebateSurvey.player2 = aiResponse;
-      console.log('[Debate] AI post-survey:', aiResponse);
+      try {
+        console.log('[Admin] Generating AI post-survey for debate:', debate._id);
+        const aiResponse = await generateAIPostSurvey(debate);
+        if (!debate.postDebateSurvey) {
+          debate.postDebateSurvey = {};
+        }
+        debate.postDebateSurvey.player2 = aiResponse;
+        console.log('[Admin] AI post-survey set:', aiResponse);
+      } catch (aiError) {
+        console.error('[Admin] Error generating AI post-survey:', aiError);
+        // Continue anyway - post-survey generation failure shouldn't block debate ending
+      }
     }
 
-    debate.status = 'completed';
+    debate.status = 'survey_pending';
     debate.completedAt = new Date();
     debate.completionReason = 'admin_end_early';
     debate.earlyEndVotes.expired = true;
@@ -1549,22 +1655,27 @@ router.put('/:debateId/end-early', authenticate, async (req, res) => {
 
     await debate.save();
 
+    console.log('[Admin]  Debate ended successfully:', debate._id);
+
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:completed', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         reason: 'Admin ended debate early'
       });
       io.to('admin').emit('debate:completed', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         reason: 'Admin ended debate early'
       });
     }
 
     res.json({ message: 'Debate ended', debate });
   } catch (error) {
-    console.error('[Debate] Error ending debate:', error);
-    res.status(500).json({ message: 'Failed to end debate' });
+    console.error('[Admin] ❌ Error ending debate:', error);
+    res.status(500).json({
+      message: 'Failed to end debate',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 
@@ -1631,7 +1742,7 @@ router.post('/:debateId/vote-end', authenticate, async (req, res) => {
       });
     }
 
-    // ✅ Check if both voted (human-human mode)
+    //  Check if both voted (human-human mode)
     if (debate.gameMode === 'human-human') {
       const player1Voted = debate.earlyEndVotes.player1Voted || false;
       const player2Voted = debate.earlyEndVotes.player2Voted || false;
@@ -1647,7 +1758,7 @@ router.post('/:debateId/vote-end', authenticate, async (req, res) => {
       }
     }
 
-    // ✅ Trigger AI response in human-AI mode
+    //  Trigger AI response in human-AI mode
     if (debate.gameMode === 'human-ai') {
       console.log('[EarlyEnd] Human voted in AI mode - triggering AI handler');
       handleAIEarlyEndVote(debate, io);
@@ -1763,7 +1874,7 @@ router.delete('/:debateId/cancel', authenticate, async (req, res) => {
     // Delete the debate
     await Debate.findByIdAndDelete(req.params.debateId);
 
-    console.log('[Debate] ✅ Debate cancelled:', req.params.debateId, 'by', req.user.username);
+    console.log('[Debate]  Debate cancelled:', req.params.debateId, 'by', req.user.username);
 
     const io = req.app.get('io');
     if (io) {
@@ -1820,8 +1931,38 @@ router.post('/:debateId/pre-survey', authenticate, async (req, res) => {
     // Save response
     if (isPlayer1) {
       debate.preDebateSurvey.player1 = response;
+
+      // Register Round 0 belief for player1 immediately
+      const existingPlayer1Round0 = debate.beliefHistory.find(b => b.round === 0 && b.userId?.toString() === userId);
+      if (!existingPlayer1Round0) {
+        const beliefValue = calculateRound0BeliefValue(response, debate.player1Stance);
+        debate.beliefHistory.push({
+          round: 0,
+          userId: debate.player1UserId,
+          player: 'player1',
+          beliefValue,
+          influence: 0,
+          confidence: 0
+        });
+        console.log('[Pre-Survey]  Registered Round 0 belief for player1:', { beliefValue, response, stance: debate.player1Stance });
+      }
     } else if (isPlayer2) {
       debate.preDebateSurvey.player2 = response;
+
+      // Register Round 0 belief for player2 immediately
+      const existingPlayer2Round0 = debate.beliefHistory.find(b => b.round === 0 && b.userId?.toString() === userId);
+      if (!existingPlayer2Round0) {
+        const beliefValue = calculateRound0BeliefValue(response, debate.player2Stance);
+        debate.beliefHistory.push({
+          round: 0,
+          userId: debate.player2UserId,
+          player: 'player2',
+          beliefValue,
+          influence: 0,
+          confidence: 0
+        });
+        console.log('[Pre-Survey]  Registered Round 0 belief for player2:', { beliefValue, response, stance: debate.player2Stance });
+      }
     }
 
     await debate.save();
@@ -1856,6 +1997,18 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
      } = req.body;
     const userId = req.user.userId;
 
+    console.log('[Post-Survey] Submission attempt:', {
+      debateId,
+      userId,
+      response,
+      stanceStrength,
+      stanceConfidence,
+      opponentPerception,
+      perceptionConfidence,
+      suspicionTiming,
+      detectionCuesCount: detectionCues?.length
+    });
+
     const validResponses = [
         'strengthened',
         'slightly_strengthened',
@@ -1874,7 +2027,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       });
     }
 
-    // ✅ Validate stance strength/confidence (1-7)
+    //  Validate stance strength/confidence (1-7)
     if (!stanceStrength || stanceStrength < 1 || stanceStrength > 7) {
       return res.status(400).json({
         message: 'Invalid stance strength. Must be between 1 and 7'
@@ -1887,34 +2040,34 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       });
     }
 
-    // ✅ Validate opponent perception
+    //  Validate opponent perception
     if (opponentPerception && !validPerceptions.includes(opponentPerception)) {
       return res.status(400).json({
         message: 'Invalid opponent perception. Must be one of: human, ai, unsure'
       });
     }
-    // ✅ Validate confidence (1-5)
+    //  Validate confidence (1-5)
     if (!perceptionConfidence || perceptionConfidence < 1 || perceptionConfidence > 5) {
       return res.status(400).json({
         message: 'Invalid confidence level. Must be between 1 and 5'
       });
     }
 
-    // ✅ Validate timing
+    //  Validate timing
     if (!suspicionTiming || !validTimings.includes(suspicionTiming)) {
       return res.status(400).json({
         message: 'Invalid suspicion timing'
       });
     }
 
-    // ✅ Validate detection cues (array)
+    //  Validate detection cues (array)
     if (!detectionCues || !Array.isArray(detectionCues) || detectionCues.length === 0) {
       return res.status(400).json({
         message: 'Please select at least one detection cue'
       });
     }
 
-    // ✅ Validate awareness effect fields based on perception
+    //  Validate awareness effect fields based on perception
     if (opponentPerception === 'ai') {
       if (!aiAwarenessEffect || !validAwarenessEffects.includes(aiAwarenessEffect)) {
         return res.status(400).json({
@@ -1956,8 +2109,15 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       return res.status(404).json({ message: 'Debate not found' });
     }
 
-    // Check if debate is completed
-    if (debate.status !== 'completed') {
+    console.log('[Post-Survey] Debate status check:', {
+      debateId,
+      status: debate.status,
+      requiredStatus: 'survey_pending'
+    });
+
+    // Check if debate is in survey_pending state
+    if (debate.status !== 'survey_pending') {
+      console.log('[Post-Survey] ❌ Status mismatch - survey blocked');
       return res.status(400).json({ message: 'Survey can only be submitted after debate completes' });
     }
 
@@ -1971,6 +2131,7 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
 
     // Save response
     if (isPlayer1) {
+      // Player1 is always human - check if they already submitted
       if (debate.postDebateSurvey.player1) {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
@@ -2002,9 +2163,12 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       if (unsureAwarenessJustification) {
         debate.postDebateSurvey.player1UnsureAwarenessJustification = unsureAwarenessJustification;
       }
-      console.log('[Post-Survey] ✅ Saved for player1', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
+      console.log('[Post-Survey]  Saved for player1', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
     } else if (isPlayer2) {
-      if (debate.postDebateSurvey.player2) {
+      // Player2 can be human or AI
+      // For human player2: check if they already submitted
+      // For AI player2: they're auto-filled, but humans shouldn't re-submit
+      if (debate.player2Type === 'human' && debate.postDebateSurvey.player2 !== undefined && debate.postDebateSurvey.player2 !== null) {
         return res.status(400).json({ message: 'Survey already submitted' });
       }
       debate.postDebateSurvey.player2 = response;
@@ -2035,18 +2199,54 @@ router.post('/:debateId/post-survey', authenticate, async (req, res) => {
       if (unsureAwarenessJustification) {
         debate.postDebateSurvey.player2UnsureAwarenessJustification = unsureAwarenessJustification;
       }
-      console.log('[Post-Survey] ✅ Saved for player2', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
+      console.log('[Post-Survey]  Saved for player2', { response, opponentPerception, perceptionConfidence, suspicionTiming, detectionCues, detectionOther, aiAwarenessEffect, aiAwarenessJustification, humanAwarenessEffect, humanAwarenessJustification, unsureAwarenessEffect, unsureAwarenessJustification });
     }
 
+    // Check if surveys are ready to mark as complete
+    // For AI players: just check if the survey exists (partial OK)
+    // For human players: check if survey has the main 'response' field (be strict)
+    const player1IsAI = debate.player1Type === 'ai';
+    const player2IsAI = debate.player2Type === 'ai';
+
+    const player1Submitted = debate.postDebateSurvey.player1 !== undefined && debate.postDebateSurvey.player1 !== null;
+    const player2Submitted = debate.postDebateSurvey.player2 !== undefined && debate.postDebateSurvey.player2 !== null;
+
+    // Only mark as completed when both players have properly submitted
+    if (player1Submitted && player2Submitted) {
+      debate.status = 'completed';
+      console.log('[Post-Survey] ✅ Both surveys submitted - transitioning to completed');
+    } else {
+      console.log('[Post-Survey] ✅ Survey saved, waiting for other player:', {
+        player1Submitted,
+        player2Submitted
+      });
+    }
+
+    console.log('[Post-Survey] About to save debate...', {
+      debateId,
+      player1HasSurvey: !!debate.postDebateSurvey.player1,
+      player2HasSurvey: !!debate.postDebateSurvey.player2
+    });
+
     await debate.save();
+
+    console.log('[Post-Survey] ✅ Successfully saved survey and updated debate');
 
     res.json({
       message: 'Post-debate survey submitted',
       debate
     });
   } catch (error) {
-    console.error('Error submitting post-debate survey:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('[Post-Survey] ❌ Error submitting post-debate survey:', error);
+    console.error('[Post-Survey] Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack
+    });
+    res.status(500).json({
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 });
 
@@ -2196,7 +2396,7 @@ async function triggerAIResponse(debateId, io) {
     }
 
     const latestArgument = debate.arguments[debate.arguments.length - 1];
-    console.log('[AI] ✅ AI argument submitted');
+    console.log('[AI]  AI argument submitted');
 
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:argumentAdded', {

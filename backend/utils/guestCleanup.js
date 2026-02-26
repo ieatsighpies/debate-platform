@@ -27,7 +27,7 @@ async function cleanupStaleGuests() {
       }
     }
 
-    console.log(`[Cleanup] ✅ Cleaned up ${staleGuests.length} stale guest accounts`);
+    console.log(`[Cleanup]  Cleaned up ${staleGuests.length} stale guest accounts`);
   } catch (error) {
     console.error('[Cleanup] Error:', error);
   }

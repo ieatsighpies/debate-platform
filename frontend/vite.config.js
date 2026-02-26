@@ -22,10 +22,10 @@ export default ({ mode }) => {
         }
       }
     },
-    // ✅ Production build optimizations
+    //  Production build optimizations
     build: {
       outDir: 'dist',
-      sourcemap: mode !== 'development',  // ✅ Only dev
+      sourcemap: mode !== 'development',  //  Only dev
       rollupOptions: {
         output: {
           manualChunks: {
@@ -33,10 +33,10 @@ export default ({ mode }) => {
           }
         }
       },
-      chunkSizeWarningLimit: 1000  // ✅ Bigger chunks OK for prod
+      chunkSizeWarningLimit: 1000  //  Bigger chunks OK for prod
     },
 
-    // ✅ Preview uses prod-like proxy (test before deploy)
+    //  Preview uses prod-like proxy (test before deploy)
     preview: {
       port: 4173,
       proxy: {

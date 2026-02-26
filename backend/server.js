@@ -17,12 +17,12 @@ const envPath = path.join(__dirname, '..', envFile);
 
 console.log(`[Env] Loading ${envFile} from ${envPath}...`);
 
-// ✅ FIXED: Load .env in ALL environments (platform vars override)
+//  FIXED: Load .env in ALL environments (platform vars override)
 require('dotenv').config({
   path: envPath
 });
 
-// ✅ Log loaded vars (debug)
+//  Log loaded vars (debug)
 console.log('[Env] MONGODB_URI:', process.env.MONGODB_URI ? 'Set ✓' : 'Missing ❌');
 
 // Validate environment variables
@@ -147,7 +147,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 
 mongoose.connect(MONGODB_URI)
   .then(() => {
-    console.log('[MongoDB] ✅ Connected to MongoDB');
+    console.log('[MongoDB]  Connected to MongoDB');
     console.log('[MongoDB] Database:', mongoose.connection.name);
     startAutoMatchJob(io);
     startCleanupJob(io, 5);

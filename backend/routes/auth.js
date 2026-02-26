@@ -58,7 +58,7 @@ router.post('/login', async (req, res) => {
 router.post('/guest-login', guestLoginLimiter, async (req, res) => {
   try {
 
-    // ✅ Step 2: Generate unique guest username with retry
+    //  Step 2: Generate unique guest username with retry
     let guestUsername;
     let attempts = 0;
     const maxAttempts = 10;
@@ -73,7 +73,7 @@ router.post('/guest-login', guestLoginLimiter, async (req, res) => {
 
       const existingUser = await User.findOne({ username: guestUsername });
       if (!existingUser) {
-        break; // ✅ Username is unique
+        break; //  Username is unique
       }
 
       attempts++;
@@ -87,7 +87,7 @@ router.post('/guest-login', guestLoginLimiter, async (req, res) => {
       console.log(`[Guest] Using fallback username: ${guestUsername}`);
     }
 
-    // ✅ Step 3: Create guest user WITHOUT password
+    //  Step 3: Create guest user WITHOUT password
     const guestUser = new User({
       username: guestUsername,
       // ❌ DO NOT SET passwordHash for guests
@@ -97,9 +97,9 @@ router.post('/guest-login', guestLoginLimiter, async (req, res) => {
     });
 
     await guestUser.save();
-    console.log(`[Guest] ✅ Created new guest: ${guestUsername} (${guestUser._id})`);
+    console.log(`[Guest]  Created new guest: ${guestUsername} (${guestUser._id})`);
 
-    // ✅ Step 4: Generate JWT token
+    //  Step 4: Generate JWT token
     const token = jwt.sign(
       { userId: guestUser._id, username: guestUser.username, role: guestUser.role },
       process.env.JWT_SECRET,
@@ -121,7 +121,7 @@ router.post('/guest-login', guestLoginLimiter, async (req, res) => {
   } catch (error) {
     console.error('[Guest] ❌ Error:', error);
 
-    // ✅ Better error handling
+    //  Better error handling
     if (error.code === 11000) {
       // Duplicate username - retry once with timestamp
       return res.status(409).json({
@@ -145,7 +145,7 @@ router.post('/guest-resume', async (req, res) => {
       return res.status(400).json({ message: 'Username is required' });
     }
 
-    // ✅ Find SPECIFIC guest by username
+    //  Find SPECIFIC guest by username
     const guestUser = await User.findOne({
       username: username.trim(),
       isGuest: true
@@ -187,7 +187,7 @@ router.post('/guest-resume', async (req, res) => {
 // Backend: routes/auth.js
 router.get('/guest-list-recent', async (req, res) => {
   try {
-    // ✅ Only show guests active in last 7 days
+    //  Only show guests active in last 7 days
     const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
     const recentGuests = await User.find({
@@ -220,7 +220,7 @@ router.post('/logout', authenticate, async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // ✅ If guest, check for debates
+    //  If guest, check for debates
     if (user.isGuest) {
       const debates = await Debate.find({
         $or: [
@@ -295,7 +295,7 @@ router.post('/register', authenticate, async (req, res) => {
 
     await user.save();
 
-    console.log('[Auth] ✅ User created successfully:', username);
+    console.log('[Auth]  User created successfully:', username);
 
     res.status(201).json({
       message: 'User created successfully',
@@ -353,7 +353,7 @@ router.delete('/users/:userId', authenticate, async (req, res) => {
 
     await User.findByIdAndDelete(req.params.userId);
 
-    console.log('[Auth] ✅ User deleted:', user.username);
+    console.log('[Auth]  User deleted:', user.username);
 
     res.json({ message: 'User deleted successfully' });
   } catch (error) {

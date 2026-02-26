@@ -22,9 +22,9 @@ function validateEnv() {
     process.exit(1);
   }
 
-  console.log('✅ Required variables: OK');
+  console.log(' Required variables: OK');
 
-  // ✅ NEW: Validate production MongoDB Atlas URI
+  //  NEW: Validate production MongoDB Atlas URI
   if (process.env.NODE_ENV === 'production') {
     const prodUriRegex = /^mongodb\+srv:\/\/[a-zA-Z0-9_-]+:[^@]+@cluster[0-9]+\.[a-z0-9]+\.mongodb\.net/i;
     if (!prodUriRegex.test(process.env.MONGODB_URI)) {
@@ -33,7 +33,7 @@ function validateEnv() {
       console.error('❌ Got:', process.env.MONGODB_URI?.substring(0, 50) + '...');
       process.exit(1);
     }
-    console.log('✅ Production MongoDB Atlas URI: Valid');
+    console.log(' Production MongoDB Atlas URI: Valid');
   } else {
     // Development: allow localhost or Atlas
     const devUriRegex = /(mongodb:\/\/localhost|mongodb\+srv:\/\/.*mongodb\.net)/i;
@@ -41,7 +41,7 @@ function validateEnv() {
       console.warn('⚠️  Development MONGODB_URI looks suspicious - not localhost or Atlas');
       console.log('   Current:', process.env.MONGODB_URI?.substring(0, 30) + '...');
     } else {
-      console.log('✅ Development MongoDB URI: OK')
+      console.log(' Development MongoDB URI: OK')
       console.log("MongoDB connection:", process.env.MONGODB_URI);
     }
   }
@@ -50,7 +50,7 @@ function validateEnv() {
   let hasAIKey = false;
   Object.entries(optional).forEach(([key, warning]) => {
     if (process.env[key]) {
-      console.log(`✅ ${key}: Set`);
+      console.log(` ${key}: Set`);
       hasAIKey = true;
     } else {
       console.warn(`⚠️  ${key}: Not set - ${warning}`);
@@ -61,7 +61,7 @@ function validateEnv() {
     console.warn('⚠️  No AI API keys configured. Only rule-based bots will be available.');
   }
 
-  console.log('✅ Environment validation complete\n');
+  console.log(' Environment validation complete\n');
 }
 
 module.exports = validateEnv;

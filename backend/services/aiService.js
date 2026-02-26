@@ -151,7 +151,7 @@ AI response requirements:
 
       const aiArgument = response.data.choices[0].message.content.trim();
 
-      console.log('[AI Service] ✅ OpenAI response received (model:', personality.model || this.openaiModel + ')');
+      console.log('[AI Service]  OpenAI response received (model:', personality.model || this.openaiModel + ')');
       console.log('[AI Service] 📊 Token usage:', response.data.usage);
 
       return aiArgument;
@@ -265,7 +265,7 @@ generateCounterPoint(debate) {
   const stance = debate.player2Stance;
   const round = debate.currentRound;
 
-  // ✅ Multiple angles for each topic - randomly selected
+  //  Multiple angles for each topic - randomly selected
   const topicAngles = {
     'ai': {
       for: [
@@ -323,7 +323,7 @@ generateCounterPoint(debate) {
     }
   };
 
-  // ✅ Detect topic category
+  //  Detect topic category
   let category = null;
   if (topic.includes('chatgpt') || topic.includes('ai') || topic.includes('gpt')) {
     category = 'ai';
@@ -333,7 +333,7 @@ generateCounterPoint(debate) {
     category = 'work_life';
   }
 
-  // ✅ Get angles for this topic and stance
+  //  Get angles for this topic and stance
   if (category && topicAngles[category]) {
     const angles = topicAngles[category][stance];
 
@@ -356,7 +356,7 @@ generateCounterPoint(debate) {
     return angles[Math.floor(Math.random() * angles.length)];
   }
 
-  // ✅ Generic fallback - also with variation
+  //  Generic fallback - also with variation
   const genericAngles = {
     for: [
       'the benefits clearly outweigh any potential drawbacks',
@@ -394,7 +394,7 @@ generateStrategicNotes(debate) {
   const myArgs = args.filter(a => a.stance === debate.player2Stance);
   const theirArgs = args.filter(a => a.stance !== debate.player2Stance);
 
-  // ✅ Round-specific strategic guidance
+  //  Round-specific strategic guidance
   let strategy = '';
 
   // Early rounds (1-5): Establish position

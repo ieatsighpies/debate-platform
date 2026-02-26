@@ -1,17 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, CheckCircle } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
+const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose, debate }) => {
   const [selectedResponse, setSelectedResponse] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [opponentPerception, setOpponentPerception] = useState('');
   const [stanceStrength, setStanceStrength] = useState(null);
   const [stanceConfidence, setStanceConfidence] = useState(null);
-  const [perceptionConfidence, setPerceptionConfidence] = useState(null); // ✅ Q3
-  const [suspicionTiming, setSuspicionTiming] = useState('');             // ✅ Q4
-  const [detectionCues, setDetectionCues] = useState([]);                 // ✅ Q5
-  const [detectionOther, setDetectionOther] = useState('');               // ✅ Q5 other
+  const [perceptionConfidence, setPerceptionConfidence] = useState(null);
+  const [suspicionTiming, setSuspicionTiming] = useState('');
+  const [detectionCues, setDetectionCues] = useState([]);
+  const [detectionOther, setDetectionOther] = useState('');
   const [showOtherInput, setShowOtherInput] = useState(false);
   const dialogRef = useRef(null);
 
@@ -44,6 +45,32 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     { value: 'more_persuasive', label: 'Yes, the uncertainty made the arguments more persuasive.' },
     { value: 'not_sure', label: `Not sure / can't say.` }
   ];
+
+  // Process belief history for chart
+  const getBeliefChartData = () => {
+    if (!debate || !debate.beliefHistory || debate.beliefHistory.length === 0) {
+      return null;
+    }
+
+    // Determine current player
+    const playerKey = debate.isPlayer1 ? 'player1' : 'player2';
+
+    // Filter belief history for current player and sort by round
+    const playerBeliefs = debate.beliefHistory
+      .filter(b => b.player === playerKey)
+      .sort((a, b) => a.round - b.round);
+
+    if (playerBeliefs.length === 0) return null;
+
+    // Prepare data for chart
+    return playerBeliefs.map(b => ({
+      round: b.round,
+      belief: b.beliefValue !== undefined ? b.beliefValue : null,
+      influence: b.influence
+    }));
+  };
+
+  const beliefChartData = getBeliefChartData();
 
   const surveyOptions = [
     {
@@ -113,7 +140,7 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     { value: 6, label: 'Very confident' },
     { value: 7, label: 'Extremely confident' }
   ];
-  // ✅ Q3: Confidence levels
+  //  Q3: Confidence levels
   const confidenceLevels = [
     { value: 1, label: 'Not confident at all' },
     { value: 2, label: 'Slightly confident' },
@@ -122,7 +149,7 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     { value: 5, label: 'Extremely confident' }
   ];
 
-  // ✅ Q4: Suspicion timing
+  //  Q4: Suspicion timing
   const timingOptions = [
   { value: 'round_1_2', label: 'Round 1-2 (immediately)' },
   { value: 'round_3_4', label: 'Round 3-4 (early)' },
@@ -134,7 +161,7 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
 ];
 
 
-  // ✅ Q5: Detection cues (dynamic based on perception)
+  // Q5: Detection cues (dynamic based on perception)
   const aiDetectionCues = [
     { value: 'perfect_grammar', label: 'Perfect grammar / no typos' },
     { value: 'repetitive_phrases', label: 'Repetitive word use or phrases' },
@@ -187,7 +214,7 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
     };
   }, [isOpen]);
 
-  // ✅ Handle detection cue checkbox toggle
+  // Handle detection cue checkbox toggle
   const handleCueToggle = (value) => {
     if (value === 'other') {
       setShowOtherInput(!showOtherInput);
@@ -248,7 +275,7 @@ const PostDebateSurveyModal = ({ isOpen, onSubmit, onClose }) => {
       return;
     }
 
-    // ✅ Require opponent perception response
+    //  Require opponent perception response
     if (!opponentPerception) {
       toast.error('Please indicate whether you think your opponent was AI, human, or unsure');
       return;
@@ -311,18 +338,9 @@ return (
       <div className="bg-white rounded-lg">
         {/* Header */}
         <div className="bg-indigo-600 text-white px-6 py-4 rounded-t-lg sticky top-0 z-10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <CheckCircle className="mr-3" size={28} />
-              <h2 className="text-xl font-bold">Debate Completed!</h2>
-            </div>
-            <button
-              onClick={() => onClose()}
-              className="text-white hover:text-gray-200 transition"
-              title="Close survey (you can reopen it later)"
-            >
-              <X size={24} />
-            </button>
+          <div className="flex items-center">
+            <CheckCircle className="mr-3" size={28} />
+            <h2 className="text-xl font-bold">Debate Completed!</h2>
           </div>
         </div>
 
@@ -331,6 +349,65 @@ return (
           <p className="text-gray-700 mb-6">
             Thank you for participating in this debate. Before you go, please answer these questions:
           </p>
+
+          {/* Belief Progression Chart */}
+          {beliefChartData && beliefChartData.length > 0 && (
+            <div className="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-6 border border-blue-200">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                📊 Your Belief Journey Across Rounds
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                This chart shows how your belief shifted during the debate (0 = strongly against, 50 = unsure, 100 = strongly for). <strong>Round 0</strong> shows your pre-debate stance:
+              </p>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={beliefChartData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                  <XAxis
+                    dataKey="round"
+                    label={{ value: 'Round', position: 'insideBottomRight', offset: -5 }}
+                    stroke="#6b7280"
+                  />
+                  <YAxis
+                    domain={[0, 100]}
+                    label={{ value: 'Belief Value', angle: -90, position: 'insideLeft' }}
+                    stroke="#6b7280"
+                  />
+                  <Tooltip
+                    formatter={(value) => [
+                      value !== null ? `${value.toFixed(1)}` : 'N/A',
+                      'Belief'
+                    ]}
+                    labelFormatter={(label) => label === 0 ? 'Round 0 (Pre-debate)' : `Round ${label}`}
+                    contentStyle={{ backgroundColor: '#fff', border: '1px solid #d1d5db' }}
+                  />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="belief"
+                    stroke="#4f46e5"
+                    dot={{ fill: '#4f46e5', r: 4 }}
+                    activeDot={{ r: 6 }}
+                    strokeWidth={2}
+                    name="Belief Value"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+              <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
+                <div className="bg-white rounded p-2">
+                  <div className="font-semibold text-red-600">0</div>
+                  <div className="text-gray-600">Strongly Against</div>
+                </div>
+                <div className="bg-white rounded p-2">
+                  <div className="font-semibold text-gray-600">50</div>
+                  <div className="text-gray-600">Unsure</div>
+                </div>
+                <div className="bg-white rounded p-2">
+                  <div className="font-semibold text-green-600">100</div>
+                  <div className="text-gray-600">Strongly For</div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Question 1: Conviction Change */}
           <div className="mb-8">
@@ -369,9 +446,12 @@ return (
           </div>
           {/* Question 2: Stance Strength */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               2. How strong is your stance on this topic now?
             </h3>
+            <p className="text-sm text-gray-600 mb-3 italic">
+              This measures the intensity of your final position — how firmly you hold your view regardless of certainty.
+            </p>
 
             <div className="space-y-2">
               {stanceStrengthLevels.map((level) => (
@@ -405,9 +485,12 @@ return (
 
           {/* Question 3: Stance Confidence */}
           <div className="mb-8">
-            <h3 className="text-lg font-semibold text-gray-800 mb-3">
+            <h3 className="text-lg font-semibold text-gray-800 mb-2">
               3. How confident are you in your stance now?
             </h3>
+            <p className="text-sm text-gray-600 mb-3 italic">
+              This measures your certainty — how sure you are that your final stance is correct, based on evidence and reasoning.
+            </p>
 
             <div className="space-y-2">
               {stanceConfidenceLevels.map((level) => (
@@ -473,7 +556,7 @@ return (
               ))}
             </div>
           </div>
-          {/* ✅ Q5: Confidence Level */}
+          {/*  Q5: Confidence Level */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
@@ -511,7 +594,7 @@ return (
             </div>
           )}
 
-          {/* ✅ Q6: When Suspected */}
+          {/*  Q6: When Suspected */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">
@@ -546,7 +629,7 @@ return (
             </div>
           )}
 
-          {/* ✅ Q7: Detection Cues */}
+          {/*  Q7: Detection Cues */}
           {opponentPerception && (
             <div className="mb-8">
               <h3 className="text-lg font-semibold text-gray-800 mb-3">

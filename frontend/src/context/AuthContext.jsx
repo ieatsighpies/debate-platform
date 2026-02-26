@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       return true;
     }
-  }, []); // ✅ Wrap in useCallback to make it stable
+  }, []); //  Wrap in useCallback to make it stable
 
   // Load saved auth on mount
   useEffect(() => {
@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
     setLoading(false);
-  }, [isTokenExpired]); // ✅ Add isTokenExpired
+  }, [isTokenExpired]); //  Add isTokenExpired
 
   const logout = useCallback(async () => {
     console.log('[Auth] Logging out...');
@@ -68,12 +68,12 @@ export const AuthProvider = ({ children }) => {
     const interval = setInterval(() => {
       if (isTokenExpired(token)) {
         console.log('[Auth] Token expired, logging out...');
-        logout(); // ✅ Just logout, interceptor handles redirect
+        logout(); //  Just logout, interceptor handles redirect
       }
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [token, logout, isTokenExpired]); // ✅ Add all dependencies
+  }, [token, logout, isTokenExpired]); //  Add all dependencies
 
   const refreshAuth = useCallback(() => {
     const savedToken = localStorage.getItem('token');
@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     }
     return false;
-  }, [isTokenExpired]); // ✅ Add isTokenExpired
+  }, [isTokenExpired]); //  Add isTokenExpired
 
   const login = useCallback((token, user) => {
     console.log('[Auth] Storing credentials:', { user });

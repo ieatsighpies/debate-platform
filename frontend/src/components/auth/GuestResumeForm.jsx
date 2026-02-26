@@ -8,7 +8,7 @@ const GuestResumeForm = ({ onSuccess }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Fetch recent guests on mount
+  //  Fetch recent guests on mount
   useEffect(() => {
     fetchRecentGuests();
   }, []);
@@ -22,7 +22,7 @@ const GuestResumeForm = ({ onSuccess }) => {
     }
   };
 
-  // ✅ Filter guests based on input
+  //  Filter guests based on input
   const filteredGuests = recentGuests.filter(guest =>
     guest.username.toLowerCase().includes(username.toLowerCase())
   );
@@ -81,7 +81,7 @@ const GuestResumeForm = ({ onSuccess }) => {
           Resume Guest Session
         </label>
 
-        {/* ✅ Input with autocomplete */}
+        {/*  Input with autocomplete */}
         <input
           type="text"
           value={username}
@@ -96,7 +96,7 @@ const GuestResumeForm = ({ onSuccess }) => {
           autoComplete="off"
         />
 
-        {/* ✅ Dropdown with filtered results */}
+        {/*  Dropdown with filtered results */}
         {showDropdown && filteredGuests.length > 0 && (
           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
             {filteredGuests.map((guest, index) => (
@@ -117,7 +117,7 @@ const GuestResumeForm = ({ onSuccess }) => {
           </div>
         )}
 
-        {/* ✅ Show message if no matches */}
+        {/*  Show message if no matches */}
         {showDropdown && username && filteredGuests.length === 0 && (
           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg p-4">
             <p className="text-sm text-gray-500 text-center">
@@ -131,7 +131,7 @@ const GuestResumeForm = ({ onSuccess }) => {
         </p>
       </div>
 
-      {/* ✅ Close dropdown when clicking outside */}
+      {/*  Close dropdown when clicking outside */}
       {showDropdown && (
         <div
           className="fixed inset-0 z-0"

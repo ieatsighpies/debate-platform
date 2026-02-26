@@ -60,7 +60,7 @@ export const SocketProvider = ({ children }) => {
 
     // Connection handlers
     newSocket.on('connect', () => {
-      console.log('[Socket] ✅ Connected:', newSocket.id);
+      console.log('[Socket]  Connected:', newSocket.id);
       setConnected(true);
     });
 

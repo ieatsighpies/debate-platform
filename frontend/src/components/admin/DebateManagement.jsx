@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { debateAPI } from '../../services/api';
 import { useSocket } from '../../context/socketContext';
 import toast from 'react-hot-toast';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import {
   Pause,
   Play,
@@ -26,11 +27,12 @@ const DebateManagement = () => {
   const [selectedDebate, setSelectedDebate] = useState(null);
   const [showChatModal, setShowChatModal] = useState(false);
   const [showSurveyDetails, setShowSurveyDetails] = useState(false);
+  const [showBeliefChart, setShowBeliefChart] = useState(false);
   const [gameMode, setGameMode] = useState('all');
   const [aiPersonality, setAiPersonality] = useState(null);
   const { socket, connected } = useSocket();
 
-  // ✅ Memoize fetchDebates so it's stable across renders
+  //  Memoize fetchDebates so it's stable across renders
   const fetchDebates = useCallback(async () => {
     try {
       const response = await debateAPI.getAllDebates();
@@ -82,7 +84,8 @@ const DebateManagement = () => {
       toast.success('Debate ended');
       fetchDebates();
     } catch (error) {
-      toast.error('Failed to end debate');
+      console.error('[Admin] Error ending debate:', error);
+      toast.error(error.response?.data?.message || error.message || 'Failed to end debate');
     }
   };
 
@@ -388,6 +391,33 @@ const ChatHistoryModal = () => {
     }
   };
 
+  const getBeliefChartData = () => {
+    if (!selectedDebate.beliefHistory || selectedDebate.beliefHistory.length === 0) {
+      return { player1Data: null, player2Data: null };
+    }
+
+    const player1Beliefs = selectedDebate.beliefHistory
+      .filter(b => b.player === 'player1')
+      .sort((a, b) => a.round - b.round)
+      .map(b => ({
+        round: b.round,
+        belief: b.beliefValue !== undefined ? b.beliefValue : null
+      }));
+
+    const player2Beliefs = selectedDebate.beliefHistory
+      .filter(b => b.player === 'player2')
+      .sort((a, b) => a.round - b.round)
+      .map(b => ({
+        round: b.round,
+        belief: b.beliefValue !== undefined ? b.beliefValue : null
+      }));
+
+    return {
+      player1Data: player1Beliefs.length > 0 ? player1Beliefs : null,
+      player2Data: player2Beliefs.length > 0 ? player2Beliefs : null
+    };
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
@@ -437,7 +467,7 @@ const ChatHistoryModal = () => {
         </div>
 
         {/* Survey Responses Section - COMPACT */}
-        {status === 'completed' && (
+        {(status === 'survey_pending' || status === 'completed') && (
           <div className="px-6 py-3 bg-gray-50 border-b">
             <button
               onClick={() => setShowSurveyDetails(!showSurveyDetails)}
@@ -729,6 +759,103 @@ const ChatHistoryModal = () => {
           </div>
         )}
 
+        {/* Belief Chart Section */}
+        {(() => {
+          const { player1Data, player2Data } = getBeliefChartData();
+          const hasBeliefData = player1Data || player2Data;
+
+          if (!hasBeliefData) return null;
+
+          return (
+            <div className="px-6 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200">
+              <button
+                onClick={() => setShowBeliefChart(!showBeliefChart)}
+                className="flex items-center justify-between w-full"
+              >
+                <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide flex items-center">
+                  📊 Belief Progression
+                  <ChevronDown
+                    size={16}
+                    className={`ml-2 transition-transform ${showBeliefChart ? 'rotate-180' : ''}`}
+                  />
+                </h3>
+                <span className="text-xs text-gray-500">
+                  {showBeliefChart ? 'Hide' : 'Show'} charts
+                </span>
+              </button>
+
+              {showBeliefChart && (
+                <div className="mt-4 max-h-[500px] overflow-y-auto pr-2">
+                  {/* Charts side by side */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {/* Player 1 Belief Chart */}
+                    {player1Data && (
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 overflow-x-auto">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                          {player1UserId?.username || 'Player 1'} Belief Trajectory
+                        </h4>
+                        <div style={{ minWidth: '300px' }}>
+                          <ResponsiveContainer width="100%" height={200}>
+                            <LineChart data={player1Data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                              <XAxis dataKey="round" stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <YAxis domain={[0, 100]} stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <Tooltip
+                                formatter={(value) => [value !== null ? `${value.toFixed(1)}` : 'N/A', 'Belief']}
+                                contentStyle={{ backgroundColor: '#fff', border: '1px solid #d1d5db' }}
+                              />
+                              <Line
+                                type="monotone"
+                                dataKey="belief"
+                                stroke="#3b82f6"
+                                dot={{ fill: '#3b82f6', r: 3 }}
+                                strokeWidth={2}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Player 2 Belief Chart */}
+                    {player2Data && (
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-indigo-100 overflow-x-auto">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                          {isHumanAI ? aiPersonalityName : (player2UserId?.username || 'Player 2')} Belief Trajectory
+                        </h4>
+                        <div style={{ minWidth: '300px' }}>
+                          <ResponsiveContainer width="100%" height={200}>
+                            <LineChart data={player2Data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                              <XAxis dataKey="round" stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <YAxis domain={[0, 100]} stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <Tooltip
+                                formatter={(value) => [value !== null ? `${value.toFixed(1)}` : 'N/A', 'Belief']}
+                                contentStyle={{ backgroundColor: '#fff', border: '1px solid #d1d5db' }}
+                              />
+                              <Line
+                                type="monotone"
+                                dataKey="belief"
+                                stroke={isHumanAI ? '#a855f7' : '#6366f1'}
+                                dot={{ fill: isHumanAI ? '#a855f7' : '#6366f1', r: 3 }}
+                                strokeWidth={2}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="text-xs text-gray-500 bg-white rounded p-2">
+                    Scale: 0 = strongly against | 50 = unsure | 100 = strongly for
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })()}
+
         {/* Arguments List */}
         <div className="flex-1 overflow-y-auto p-6">
           {debateArgs.length === 0 ? (
@@ -852,7 +979,7 @@ const ChatHistoryModal = () => {
         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
           debate.status === 'waiting' ? 'bg-yellow-100 text-yellow-800' :
           debate.status === 'active' ? 'bg-green-100 text-green-800' :
-          debate.status === 'completed' ? 'bg-blue-100 text-blue-800' :
+          debate.status === 'survey_pending' || debate.status === 'completed' ? 'bg-blue-100 text-blue-800' :
           'bg-gray-100 text-gray-800'
         }`}>
           {debate.status.toUpperCase()}
@@ -942,7 +1069,7 @@ const ChatHistoryModal = () => {
         )}
 
         {/* View Chat History - For completed debates */}
-        {(debate.status === 'completed' || debate.status === 'abandoned') &&
+        {(debate.status === 'survey_pending' || debate.status === 'completed' || debate.status === 'abandoned') &&
          debate.arguments && debate.arguments.length > 0 && (
           <button
             onClick={() => handleViewChatHistory(debate._id)}

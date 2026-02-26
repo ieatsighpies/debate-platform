@@ -126,7 +126,7 @@ const MatchmakingDashboard = () => {
         responseDelay
       });
 
-      toast.success('✅ AI opponent matched!');
+      toast.success(' AI opponent matched!');
       setShowPromptEditor(false);
       setSelectedDebate(null);
       setCustomPrompt('');

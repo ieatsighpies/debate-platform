@@ -95,7 +95,7 @@ const debateSchema = new mongoose.Schema({
   // Status
   status: {
     type: String,
-    enum: ['waiting', 'active', 'completed', 'abandoned'],
+    enum: ['waiting', 'active', 'survey_pending', 'completed', 'abandoned'],
     default: 'waiting',
     index: true
   },
@@ -241,7 +241,7 @@ const debateSchema = new mongoose.Schema({
       enum: ['human', 'ai', 'unsure'],
       default: null
     },
-    // ✅ NEW: Stance strength & confidence (post)
+    //  NEW: Stance strength & confidence (post)
     player1StanceStrength: {
       type: Number,
       min: 1,
@@ -266,7 +266,7 @@ const debateSchema = new mongoose.Schema({
       max: 7,
       default: null
     },
-    // ✅ NEW: Q3 - Confidence level
+    //  NEW: Q3 - Confidence level
     player1PerceptionConfidence: {
       type: Number,
       min: 1,
@@ -279,7 +279,7 @@ const debateSchema = new mongoose.Schema({
       max: 5,
       default: null
     },
-    // ✅ NEW: Q4 - When suspected
+    //  NEW: Q4 - When suspected
     player1SuspicionTiming: {
       type: String,
       enum: ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'],
@@ -290,7 +290,7 @@ const debateSchema = new mongoose.Schema({
       enum: ['round_1_2','round_3_4','round_5_7','round_8_12','round_13_17','round_18_20','never_suspected'],
       default: null
     },
-    // ✅ NEW: Q5 - Detection cues
+    //  NEW: Q5 - Detection cues
     player1DetectionCues: {
       type: [String],
       default: []
@@ -299,7 +299,7 @@ const debateSchema = new mongoose.Schema({
       type: [String],
       default: []
     },
-    // ✅ NEW: Q5 - Other reason (if specified)
+    //  NEW: Q5 - Other reason (if specified)
     player1DetectionOther: {
       type: String,
       default: null

@@ -91,7 +91,7 @@ async function autoMatchWaitingDebates(io, options = {}) {
       });
     }
 
-    console.log('[AutoMatch] ✅ Matched waiting debate with AI:', {
+    console.log('[AutoMatch]  Matched waiting debate with AI:', {
       debateId: updated._id,
       aiModel,
       aiStance,
