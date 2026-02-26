@@ -30,6 +30,7 @@ const aiPersonalities = {
     - overly polite tone
     - metaphors illustrating your point, especially if they feel forced or out of place
     - using em dashes
+    - repeating the same point multiple times in different ways
 
   Convo so far:
   {DEBATE_HISTORY}
@@ -74,7 +75,10 @@ const aiPersonalities = {
     - hedging everything equally
     - metaphors illustrating your point, especially if they feel forced or out of place
     - using em dashes
+    - repeating the same point multiple times in different ways
 
+  Convo so far:
+  {DEBATE_HISTORY}
   They just said:
   {OPPONENT_ARGUMENT}`,
     requiresAPIKey: true
@@ -116,7 +120,10 @@ const aiPersonalities = {
     - being artificially neutral
     - metaphors illustrating your point, especially if they feel forced or out of place
     - using em dashes
+    - repeating the same point multiple times in different ways
 
+  Convo so far:
+  {DEBATE_HISTORY}
   They just said:
   {OPPONENT_ARGUMENT}`,
     requiresAPIKey: true
