@@ -37,6 +37,7 @@ export const debateAPI = {
   getAIPersonalityDetails: (id) => api.get(`/api/debates/ai-personalities/${id}`),
   matchDebateWithAI: (id, data) => api.post(`/api/debates/${id}/match-ai`, data),
   updateAIControl: (id, aiEnabled) => api.put(`/api/debates/${id}/ai-control`, { aiEnabled }),
+  updateFirstPlayerPreference: (id, firstPlayerPreference) => api.put(`/api/debates/${id}/first-player`, { firstPlayerPreference }),
   triggerAIResponse: (id) => api.post(`/api/debates/${id}/trigger-ai`),
   endDebateEarly: (id) => api.put(`/api/debates/${id}/end-early`),
   cancelDebate: (debateId) => api.delete(`/api/debates/${debateId}/cancel`),

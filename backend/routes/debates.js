@@ -6,6 +6,18 @@ const aiService = require('../services/aiService');
 const turnValidator = require('../utils/turnValidator');
 
 // ============================================
+// HELPER: DETERMINE FIRST PLAYER
+// ============================================
+const determineFirstPlayer = (debate) => {
+  // If admin has set a preference, use it (unless it's 'random')
+  if (debate.firstPlayerPreference && debate.firstPlayerPreference !== 'random') {
+    return debate.firstPlayerPreference;
+  }
+  // Otherwise, random selection
+  return Math.random() < 0.5 ? 'for' : 'against';
+};
+
+// ============================================
 // GLOBAL TIMEOUT TRACKING
 // ============================================
 const aiVoteTimeouts = new Map();
@@ -766,7 +778,7 @@ router.post('/join', authenticate, async (req, res) => {
             player1Stance = Math.random() < 0.5 ? 'for' : 'against';
           }
           const player2Stance = player1Stance === 'for' ? 'against' : 'for';
-          const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+          const firstPlayer = determineFirstPlayer(match);
 
           joinedDebate = await Debate.findOneAndUpdate(
             {
@@ -798,7 +810,7 @@ router.post('/join', authenticate, async (req, res) => {
         } else {
           // NORMAL CASE: At least one player has definite stance
           const assignedStance = match.player1Stance === 'for' ? 'against' : 'for';
-          const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+          const firstPlayer = determineFirstPlayer(match);
           joinedDebate = await Debate.findOneAndUpdate(
             {
               _id: match._id,
@@ -829,7 +841,17 @@ router.post('/join', authenticate, async (req, res) => {
       }
     } else {
       const oppositeStance = stanceChoice === 'for' ? 'against' : 'for';
-      const firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+      // Find the match first to get its firstPlayerPreference
+      const potentialMatch = await Debate.findOne({
+        gameMode,
+        topicId: topicIdNum,
+        status: 'waiting',
+        player1Stance: oppositeStance,
+        player2UserId: null,
+        player1UserId: { $ne: userId }
+      });
+
+      const firstPlayer = potentialMatch ? determineFirstPlayer(potentialMatch) : Math.random() < 0.5 ? 'for' : 'against';
       joinedDebate = await Debate.findOneAndUpdate(
         {
           gameMode,
@@ -1031,7 +1053,7 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     debate.gameMode = 'human-ai';
     debate.status = 'active';
     debate.startedAt = new Date();
-    debate.firstPlayer = Math.random() < 0.5 ? 'for' : 'against';
+    debate.firstPlayer = determineFirstPlayer(debate);
     debate.nextTurn = debate.firstPlayer;
     debate.matchedBy = req.user.userId;
     debate.aiEnabled = true;
@@ -1586,6 +1608,44 @@ router.put('/:debateId/ai-control', authenticate, async (req, res) => {
   } catch (error) {
     console.error('[Debate] Error updating AI control:', error);
     res.status(500).json({ message: 'Failed to update AI control' });
+  }
+});
+
+// Admin: Set first player preference
+router.put('/:debateId/first-player', authenticate, async (req, res) => {
+  try {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Admin access required' });
+    }
+
+    const { firstPlayerPreference } = req.body;
+
+    if (!['for', 'against', 'random'].includes(firstPlayerPreference)) {
+      return res.status(400).json({ message: 'Invalid firstPlayerPreference value' });
+    }
+
+    const debate = await Debate.findByIdAndUpdate(
+      req.params.debateId,
+      { firstPlayerPreference },
+      { new: true }
+    );
+
+    if (!debate) {
+      return res.status(404).json({ message: 'Debate not found' });
+    }
+
+    console.log('[Debate] First player preference updated:', {
+      debateId: debate._id,
+      firstPlayerPreference
+    });
+
+    res.json({
+      message: `First player preference set to ${firstPlayerPreference}`,
+      firstPlayerPreference: debate.firstPlayerPreference
+    });
+  } catch (error) {
+    console.error('[Debate] Error updating first player preference:', error);
+    res.status(500).json({ message: 'Failed to update first player preference' });
   }
 });
 

@@ -114,6 +114,11 @@ const debateSchema = new mongoose.Schema({
     enum: ['for', 'against'],
     default: null
   },
+  firstPlayerPreference: {
+    type: String,
+    enum: ['for', 'against', 'random'],
+    default: 'random' // Admin can override to force who starts first
+  },
   nextTurn: {
     type: String,
     enum: ['for', 'against'],

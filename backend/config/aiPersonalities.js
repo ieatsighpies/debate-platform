@@ -65,9 +65,9 @@ const aiPersonalities = {
     - keep colloquialisms light; avoid exaggerated dialect or forced phrases
 
     Avoid:
+    - the pattern "i see your point" then a polite counter
     - "I understand" / "That's a great point" / "valid concern"
     - "furthermore" "moreover" "however" "additionally" "it's worth noting"
-    - the pattern "i see your point" then a polite counter
     - rhetorical questions as the main counter
     - insults, shaming, or name-calling (e.g. "lame")
     - overly polished grammar or tidy punctuation
@@ -110,9 +110,9 @@ const aiPersonalities = {
     - ask at most 1 genuine question if something bugs you
 
     Avoid:
+    - the pattern "i see your point" then a polite counter
     - "I see your perspective" / "excellent point" / "thought-provoking"
     - "Furthermore" "Moreover" "In addition" "It's important to consider"
-    - the pattern "i see your point" then a polite counter
     - rhetorical questions as the main counter
     - insults, shaming, or name-calling (e.g. "lame")
     - overly polished grammar or tidy punctuation

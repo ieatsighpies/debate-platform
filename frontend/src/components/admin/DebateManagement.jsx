@@ -99,6 +99,16 @@ const DebateManagement = () => {
     }
   };
 
+  const handleSetFirstPlayer = async (debateId, firstPlayerPreference) => {
+    try {
+      await debateAPI.updateFirstPlayerPreference(debateId, firstPlayerPreference);
+      toast.success(`First player set to: ${firstPlayerPreference}`);
+      fetchDebates();
+    } catch (error) {
+      toast.error('Failed to update first player preference');
+    }
+  };
+
   const filterDebates = (debatesList) => {
     return debatesList.filter(debate => {
       if (gameMode === 'human-human') {
@@ -1034,6 +1044,45 @@ const ChatHistoryModal = () => {
 
       {/* Action Buttons */}
       <div className="space-y-3">
+        {/* First Player Control - For waiting debates */}
+        {debate.status === 'waiting' && (
+          <div className="flex flex-col space-y-2">
+            <p className="text-xs text-gray-600 font-medium">First Player Preference:</p>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => handleSetFirstPlayer(debate._id, 'for')}
+                className={`flex-1 px-3 py-2 rounded-lg transition text-xs font-medium ${
+                  debate.firstPlayerPreference === 'for'
+                    ? 'bg-green-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                FOR starts
+              </button>
+              <button
+                onClick={() => handleSetFirstPlayer(debate._id, 'against')}
+                className={`flex-1 px-3 py-2 rounded-lg transition text-xs font-medium ${
+                  debate.firstPlayerPreference === 'against'
+                    ? 'bg-red-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                AGAINST starts
+              </button>
+              <button
+                onClick={() => handleSetFirstPlayer(debate._id, 'random')}
+                className={`flex-1 px-3 py-2 rounded-lg transition text-xs font-medium ${
+                  debate.firstPlayerPreference === 'random' || !debate.firstPlayerPreference
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                }`}
+              >
+                Random
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* AI Controls - Only for active AI debates */}
         {debate.status === 'active' && debate.player2Type === 'ai' && (
           <div className="flex items-center space-x-3">

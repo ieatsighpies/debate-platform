@@ -134,7 +134,14 @@ AI response requirements:
       };
 
       if (process.env.DEBUG_AI === 'true') {
-        console.log('[AI Service] 📤 Request payload:', JSON.stringify(requestPayload, null, 2));
+        // Log summary instead of full payload to avoid cluttering logs
+        console.log('[AI Service] 📤 Request summary:', {
+          model: requestPayload.model,
+          messageCount: messages.length,
+          lastUserMsg: messages.filter(m => m.role === 'user').slice(-1)[0]?.content.substring(0, 100) + '...',
+          systemPromptLength: messages[0]?.content.length,
+          max_tokens: requestPayload.max_tokens
+        });
       }
 
       const response = await axios.post(
