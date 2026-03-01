@@ -49,7 +49,7 @@ const DebateInterface = () => {
     // Listen for new arguments
     newSocket.on('debate:argumentAdded', (data) => {
       console.log('[Debate Socket] Received argument:', data);
-      if (data.debateId === debateId) {
+      if (String(data?.debateId) === String(debateId)) {
         fetchDebate();
       }
     });
@@ -57,7 +57,7 @@ const DebateInterface = () => {
     // Listen for debate completion
     newSocket.on('debate:completed', (data) => {
       console.log('[Debate Socket] Debate completed:', data);
-      if (data.debateId === debateId) {
+      if (String(data?.debateId) === String(debateId)) {
         toast.success('Debate completed!');
         fetchDebate();
       }

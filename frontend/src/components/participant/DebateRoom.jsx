@@ -161,7 +161,7 @@ const DebateRoom = () => {
         );
 
         const reflectionAlreadySubmitted = (debateData.reflections || []).some(
-          r => r.round === latestRound && r.player === playerKey
+          r => r.round === latestRound && r.userId && String(r.userId) === String(user?.userId)
         );
 
         const needsBelief = isEarlyEnd && latestRound && !beliefAlreadySubmitted;
@@ -226,17 +226,96 @@ const DebateRoom = () => {
     return Math.max(...completedRounds);
   };
 
-  // Check if a player has submitted belief for a round
-  const hasBeliefForRound = (roundNum, playerKey) => {
-    if (!debate?.beliefHistory) return false;
-    return debate.beliefHistory.some(
-      entry => entry.round === roundNum && entry.player === playerKey
+  const getRoundArgumentCount = (debateData, roundNum) => {
+    if (!debateData?.arguments?.length || !roundNum) return 0;
+    return debateData.arguments.filter((arg) => arg.round === roundNum).length;
+  };
+
+  const getPlayerUserId = (debateData, playerKey) => {
+    const user = playerKey === 'player1' ? debateData?.player1UserId : debateData?.player2UserId;
+    if (!user) return null;
+    if (typeof user === 'string') return user;
+    return user._id || null;
+  };
+
+  const isBeliefCompleteForRound = (debateData, roundNum) => {
+    if (!debateData || !roundNum || roundNum < 1) return true;
+
+    const roundArgCount = getRoundArgumentCount(debateData, roundNum);
+    if (roundArgCount < 2) return true;
+
+    const player1Done = (debateData.beliefHistory || []).some(
+      (entry) => entry.round === roundNum && entry.player === 'player1'
+    );
+
+    // Human-human mode requires both humans to submit belief updates.
+    if (debateData.player2Type === 'human') {
+      const player2Done = (debateData.beliefHistory || []).some(
+        (entry) => entry.round === roundNum && entry.player === 'player2'
+      );
+      return player1Done && player2Done;
+    }
+
+    return player1Done;
+  };
+
+  const hasReflectionForRound = (debateData, roundNum, playerKey) => {
+    const targetUserId = getPlayerUserId(debateData, playerKey);
+    if (!targetUserId) return false;
+
+    return (debateData?.reflections || []).some(
+      (entry) => entry.round === roundNum && entry.userId && String(entry.userId) === String(targetUserId)
     );
   };
 
-  // Show waiting animation if user is done with belief check but opponent isn't
+  const isReflectionCompleteForRound = (debateData, roundNum) => {
+    if (!debateData || !roundNum || roundNum < 1) return true;
+
+    const roundArgCount = getRoundArgumentCount(debateData, roundNum);
+    if (roundArgCount < 2) return true;
+
+    const player1Done = hasReflectionForRound(debateData, roundNum, 'player1');
+
+    // In human-human mode, both human players must complete reflection.
+    if (debateData.player2Type === 'human') {
+      const player2Done = hasReflectionForRound(debateData, roundNum, 'player2');
+      return player1Done && player2Done;
+    }
+
+    return player1Done;
+  };
+
+  const isReadyForCurrentRoundArgument = (debateData) => {
+    if (!debateData || debateData.status !== 'active') return false;
+    if (debateData.nextTurn !== debateData.yourStance) return false;
+
+    const currentRoundArgCount = getRoundArgumentCount(debateData, debateData.currentRound);
+    if (currentRoundArgCount >= 2) return false;
+
+    const previousRound = debateData.currentRound - 1;
+    return (
+      isBeliefCompleteForRound(debateData, previousRound) &&
+      isReflectionCompleteForRound(debateData, previousRound)
+    );
+  };
+
+  const hasRoundChecksForPlayer = (debateData, roundNum, playerKey) => {
+    const beliefDone = (debateData?.beliefHistory || []).some(
+      (entry) => entry.round === roundNum && entry.player === playerKey
+    );
+
+    const reflectionDone =
+      playerKey === 'player2' && debateData?.player2Type !== 'human'
+        ? true
+        : hasReflectionForRound(debateData, roundNum, playerKey);
+
+    return beliefDone && reflectionDone;
+  };
+
+  // Show waiting animation if user is done with round checks but opponent isn't
   const shouldShowWaitingAnimation = () => {
     if (!['active', 'survey_pending', 'completed'].includes(debate?.status)) return false;
+    if (debate?.player2Type !== 'human') return false;
 
     // For completed debates, only show waiting if it's an early end scenario
     if (debate?.status === 'completed' && !(debate.earlyEndVotes?.player1Voted && debate.earlyEndVotes?.player2Voted)) return false;
@@ -244,12 +323,12 @@ const DebateRoom = () => {
     const roundComplete = getLatestCompletedRound(debate) === debate.currentRound;
     if (!roundComplete) return false;
 
-    // Both arguments submitted (round is complete), now waiting for belief checks
+    // Both arguments submitted (round is complete), now waiting for checks
     const playerKey = debate.isPlayer1 ? 'player1' : 'player2';
     const opponentKey = debate.isPlayer1 ? 'player2' : 'player1';
 
-    const userDone = hasBeliefForRound(debate.currentRound, playerKey);
-    const opponentDone = hasBeliefForRound(debate.currentRound, opponentKey);
+    const userDone = hasRoundChecksForPlayer(debate, debate.currentRound, playerKey);
+    const opponentDone = hasRoundChecksForPlayer(debate, debate.currentRound, opponentKey);
 
     return userDone && !opponentDone;
   };
@@ -381,7 +460,7 @@ const DebateRoom = () => {
     );
 
     const reflectionSubmitted = (debate.reflections || []).some(
-      r => r.round === latestRound && r.player === playerKey
+      r => r.round === latestRound && r.userId && String(r.userId) === String(user?.userId)
     );
 
     // Check if they were skipped (order: reflection THEN belief)
@@ -410,9 +489,16 @@ const DebateRoom = () => {
     console.log('[DebateRoom] Setting up socket listeners for:', debateId);
     joinDebateRoom(debateId);
 
+    const isCurrentDebateEvent = (data) => {
+      if (!data || typeof data.debateId === 'undefined' || data.debateId === null) {
+        return false;
+      }
+      return String(data.debateId) === String(debateIdRef.current);
+    };
+
     const handleArgumentAdded = (data) => {
       console.log('[DebateRoom] Argument added event:', data);
-      if (data.debateId !== debateIdRef.current) {
+      if (!isCurrentDebateEvent(data)) {
         return;
       }
 
@@ -451,7 +537,7 @@ const DebateRoom = () => {
 
     const handleDebateStarted = (data) => {
       console.log('[DebateRoom]  Debate started event received!', data);
-      if (data.debateId === debateIdRef.current) {
+      if (isCurrentDebateEvent(data)) {
         toast.success('Opponent joined! Debate starting...');
         fetchDebate();
       }
@@ -459,21 +545,21 @@ const DebateRoom = () => {
 
     const handleDebateCompleted = (data) => {
       console.log('[DebateRoom] Debate completed:', data);
-      if (data.debateId === debateIdRef.current) {
+      if (isCurrentDebateEvent(data)) {
         fetchDebate();
       }
     };
 
     const handleRoundAdvanced = (data) => {
       console.log('[DebateRoom] Round advanced:', data);
-      if (data.debateId === debateIdRef.current) {
+      if (isCurrentDebateEvent(data)) {
         fetchDebate();
       }
     };
 
     const handleDebateCancelled = (data) => {
       console.log('[DebateRoom] Debate cancelled:', data);
-      if (data.debateId === debateIdRef.current) {
+      if (isCurrentDebateEvent(data)) {
         toast.error('This debate was cancelled');
         navigate('/participant');
       }
@@ -483,7 +569,7 @@ const DebateRoom = () => {
 const handleEarlyEndVote = (data) => {
   console.log('[DebateRoom] 📥 Early end vote update received:', data);
 
-  if (!data || data.debateId !== debateIdRef.current) {
+  if (!isCurrentDebateEvent(data)) {
     console.log('[DebateRoom] ❌ Event not for this debate');
     return;
   }
@@ -632,6 +718,15 @@ const handleEarlyEndVote = (data) => {
   const handleSubmitBeliefUpdate = async () => {
     if (!beliefRound || beliefSubmitting) return;
 
+    if (
+      Number.isNaN(Number(beliefValue)) ||
+      Number.isNaN(Number(influenceValue)) ||
+      Number.isNaN(Number(confidenceValue))
+    ) {
+      toast.error('Please complete all belief check inputs');
+      return;
+    }
+
     try {
       setBeliefSubmitting(true);
       console.log('[BeliefDebug] Submitting belief update', {
@@ -669,34 +764,14 @@ const handleEarlyEndVote = (data) => {
     }
   };
 
-  const handleSkipBeliefUpdate = async () => {
-    if (!beliefRound || beliefSubmitting) return;
-
-    try {
-      setBeliefSubmitting(true);
-      console.log('[BeliefDebug] Skipping belief update', { debateId, round: beliefRound, userId: user?.userId });
-
-      setShowBeliefPrompt(false);
-      setSkippedBeliefRounds((prev) => [...new Set([...prev, beliefRound])]);
-
-      await debateAPI.submitBeliefSkip(debateId, { round: beliefRound });
-
-      toast.success('Belief check skipped');
-      setBeliefValue(50);
-      fetchDebate();
-    } catch (error) {
-      console.error('[BeliefDebug] Error skipping belief update', error.response?.data || error.message || error);
-      toast.error(error.response?.data?.message || 'Failed to skip belief update');
-      setShowBeliefPrompt(true);
-      setSkippedBeliefRounds((prev) => prev.filter((r) => r !== beliefRound));
-    } finally {
-      setBeliefSubmitting(false);
-    }
-  };
-
   const handleSubmitReflection = async () => {
     if (!debate || !getLatestCompletedRound(debate) || reflectionSubmitting) return;
     const round = getLatestCompletedRound(debate);
+
+    if (!reflectionParaphrase.trim() || !reflectionAcknowledgement.trim()) {
+      toast.error('Please complete all reflection inputs');
+      return;
+    }
 
     try {
       setReflectionSubmitting(true);
@@ -717,14 +792,6 @@ const handleEarlyEndVote = (data) => {
     } finally {
       setReflectionSubmitting(false);
     }
-  };
-
-  const handleSkipReflection = () => {
-    const round = getLatestCompletedRound(debate);
-    if (!round) return;
-    console.log('[Reflection] Skipping for round', { debateId, round, userId: user?.userId });
-    setShowReflectionPrompt(false);
-    setReflectionHandledRounds((prev) => [...new Set([...prev, round])]);
   };
 
   const handleCancelDebate = async () => {
@@ -980,8 +1047,12 @@ const handleEarlyEndVote = (data) => {
 
   // Active/Completed debate view
   const canSubmitArgument = debate.status === 'active' && debate.arguments;
-  const isYourTurn = canSubmitArgument && debate.nextTurn === debate.yourStance;
-  const isOpponentTurn = canSubmitArgument && !!debate.nextTurn && debate.nextTurn !== debate.yourStance;
+  const isYourTurn = canSubmitArgument && isReadyForCurrentRoundArgument(debate);
+  const isOpponentTurn =
+    canSubmitArgument &&
+    !!debate.nextTurn &&
+    debate.nextTurn !== debate.yourStance &&
+    isBeliefCompleteForRound(debate, debate.currentRound - 1);
 
   const voteProgress = getVoteProgress();
 
@@ -1127,7 +1198,7 @@ const handleEarlyEndVote = (data) => {
         </div>
 
         {/*  Early End Voting - Always shows 2 players required */}
-        {debate.status === 'active' && debate.currentRound >= 5 && (
+        {debate.status === 'active' && debate.currentRound >= 5 && !showReflectionPrompt && !showBeliefPrompt && (
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="border-t pt-4">
               <h3 className="text-sm font-medium text-gray-700 mb-2">
@@ -1232,12 +1303,11 @@ const handleEarlyEndVote = (data) => {
               value={reflectionAcknowledgement}
               onChange={(e) => setReflectionAcknowledgement(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded mb-4 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              placeholder="Did this change your view? (short note, optional)"
+              placeholder="Did this change your view? (short note)"
               disabled={reflectionSubmitting}
             />
             <div className="flex justify-end space-x-2">
-              <button onClick={handleSkipReflection} disabled={reflectionSubmitting} className="px-4 py-2 text-gray-600 hover:text-gray-800">Skip</button>
-              <button onClick={handleSubmitReflection} disabled={reflectionSubmitting || !reflectionParaphrase.trim()} className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50">{reflectionSubmitting ? 'Saving...' : 'Submit'}</button>
+              <button onClick={handleSubmitReflection} disabled={reflectionSubmitting || !reflectionParaphrase.trim() || !reflectionAcknowledgement.trim()} className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-50">{reflectionSubmitting ? 'Saving...' : 'Submit'}</button>
             </div>
           </div>
         ) : showBeliefPrompt ? (
@@ -1302,13 +1372,6 @@ const handleEarlyEndVote = (data) => {
 
             <div className="flex items-center justify-end mt-4 space-x-2">
               <button
-                onClick={handleSkipBeliefUpdate}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800"
-                disabled={beliefSubmitting}
-              >
-                Skip for now
-              </button>
-              <button
                 onClick={handleSubmitBeliefUpdate}
                 className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50"
                 disabled={beliefSubmitting}
@@ -1321,10 +1384,10 @@ const handleEarlyEndVote = (data) => {
           <div className="bg-white rounded-lg shadow-md p-8 text-center">
             <Loader2 className="animate-spin mx-auto mb-4 text-indigo-600" size={40} />
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              Waiting for opponent's belief check...
+              Waiting for opponent to complete round checks...
             </h3>
             <p className="text-gray-600 text-sm">
-              Your opponent is completing their belief update. The next round will start soon.
+              Your opponent is completing reflection and belief check. The next round will start soon.
             </p>
           </div>
         ) : isYourTurn ? (

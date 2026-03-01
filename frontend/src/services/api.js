@@ -50,8 +50,6 @@ export const debateAPI = {
     api.post(`/api/debates/${debateId}/post-survey`, response ),
   submitBeliefUpdate: (debateId, payload) =>
     api.post(`/api/debates/${debateId}/belief-update`, payload),
-  submitBeliefSkip: (debateId, payload) =>
-    api.post(`/api/debates/${debateId}/belief-skip`, payload),
   submitReflection: (debateId, payload) =>
     api.post(`/api/debates/${debateId}/reflection`, payload),
 };

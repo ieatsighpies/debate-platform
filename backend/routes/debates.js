@@ -63,13 +63,13 @@ const completeDebateEarly = async (debateId, reason, io) => {
     // Emit completion event
     if (io) {
       io.to(`debate:${debateId}`).emit('debate:completed', {
-        debateId,
+        debateId: debateId.toString(),
         reason: reason === 'mutual_consent' || reason === 'mutual_consent_ai'
           ? 'Both participants agreed to end early'
           : 'Debate completed'
       });
       io.to('admin').emit('debate:completed', {
-        debateId,
+        debateId: debateId.toString(),
         reason: reason === 'mutual_consent' || reason === 'mutual_consent_ai'
           ? 'Both participants agreed to end early'
           : 'Debate completed'
@@ -406,6 +406,17 @@ const hasBeliefEntryForRound = (debate, roundNumber, playerKey) => {
   );
 };
 
+const hasReflectionEntryForRound = (debate, roundNumber, playerKey) => {
+  if (!debate || !roundNumber || !playerKey) return false;
+
+  const targetUserId = playerKey === 'player1' ? debate.player1UserId : debate.player2UserId;
+  if (!targetUserId) return false;
+
+  return (debate.reflections || []).some(entry =>
+    entry.round === roundNumber && entry.userId && entry.userId.toString() === targetUserId.toString()
+  );
+};
+
 const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
   if (!debate || debate.status !== 'active') return false;
 
@@ -418,6 +429,15 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
   const player2Done = requirePlayer2 ? hasBeliefEntryForRound(debate, roundNumber, 'player2') : true;
 
   if (!player1Done || !player2Done) return false;
+
+  // In human-human debates, both players must complete round reflections
+  const requirePlayer2Reflection = debate.player2Type === 'human';
+  const player1ReflectionDone = hasReflectionEntryForRound(debate, roundNumber, 'player1');
+  const player2ReflectionDone = requirePlayer2Reflection
+    ? hasReflectionEntryForRound(debate, roundNumber, 'player2')
+    : true;
+
+  if (!player1ReflectionDone || !player2ReflectionDone) return false;
 
   if (debate.currentRound >= debate.maxRounds) {
     if (debate.player2Type === 'ai' && debate.preDebateSurvey.player2) {
@@ -444,13 +464,13 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
 
   if (io) {
     io.to(`debate:${debate._id}`).emit('debate:roundAdvanced', {
-      debateId: debate._id,
+      debateId: debate._id.toString(),
       currentRound: debate.currentRound,
       status: debate.status,
       nextTurn: debate.nextTurn
     });
     io.to('admin').emit('debate:roundAdvanced', {
-      debateId: debate._id,
+      debateId: debate._id.toString(),
       currentRound: debate.currentRound,
       status: debate.status,
       nextTurn: debate.nextTurn
@@ -458,11 +478,11 @@ const maybeAdvanceRoundAfterBeliefs = async (debate, io) => {
 
     if (debate.status === 'completed') {
       io.to(`debate:${debate._id}`).emit('debate:completed', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         reason: 'Debate completed'
       });
       io.to('admin').emit('debate:completed', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         reason: 'Debate completed'
       });
     }
@@ -898,11 +918,11 @@ router.post('/join', authenticate, async (req, res) => {
       const io = req.app.get('io');
       if (io) {
         io.to(`debate:${joinedDebate._id}`).emit('debate:started', {
-          debateId: joinedDebate._id,
+          debateId: joinedDebate._id.toString(),
           firstPlayer: joinedDebate.firstPlayer
         });
         io.to('admin').emit('debate:started', {
-          debateId: joinedDebate._id,
+          debateId: joinedDebate._id.toString(),
           firstPlayer: joinedDebate.firstPlayer
         });
       }
@@ -960,7 +980,7 @@ router.post('/join', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.emit('debate:created', {
-        debateId: newDebate._id,
+        debateId: newDebate._id.toString(),
         gameMode: newDebate.gameMode,
         topicId: newDebate.topicId
       });
@@ -1083,11 +1103,11 @@ router.post('/:debateId/match-ai', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:started', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         firstPlayer: debate.firstPlayer
       });
       io.to('admin').emit('debate:started', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         firstPlayer: debate.firstPlayer
       });
     }
@@ -1212,14 +1232,14 @@ router.post('/:debateId/argument', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:argumentAdded', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         argument: debate.arguments[debate.arguments.length - 1],
         status: debate.status,
         currentRound: debate.currentRound,
         nextTurn: debate.nextTurn
       });
       io.to('admin').emit('debate:argumentAdded', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         argument: debate.arguments[debate.arguments.length - 1],
         status: debate.status,
         currentRound: debate.currentRound,
@@ -1274,13 +1294,10 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
       return res.status(400).json({ message: 'Invalid influence score (0-100)' });
     }
 
-    // Validate optional confidence
-    let confidenceScore = null;
-    if (typeof confidence !== 'undefined' && confidence !== null) {
-      confidenceScore = parseInt(confidence, 10);
-      if (Number.isNaN(confidenceScore) || confidenceScore < 0 || confidenceScore > 100) {
-        return res.status(400).json({ message: 'Invalid confidence score (0-100)' });
-      }
+    // Validate required confidence
+    const confidenceScore = parseInt(confidence, 10);
+    if (Number.isNaN(confidenceScore) || confidenceScore < 0 || confidenceScore > 100) {
+      return res.status(400).json({ message: 'Confidence score is required (0-100)' });
     }
 
     // Validate belief / beliefValue
@@ -1380,74 +1397,7 @@ router.post('/:debateId/belief-update', authenticate, async (req, res) => {
 
 // Skip round belief update
 router.post('/:debateId/belief-skip', authenticate, async (req, res) => {
-  try {
-    const { debateId } = req.params;
-    const { round } = req.body;
-    const userId = req.user.userId;
-
-    const roundNumber = parseInt(round, 10);
-    if (!roundNumber || roundNumber < 1) {
-      return res.status(400).json({ message: 'Invalid round number' });
-    }
-
-    const debate = await Debate.findById(debateId);
-    if (!debate) {
-      return res.status(404).json({ message: 'Debate not found' });
-    }
-
-    if (!['active', 'completed'].includes(debate.status)) {
-      return res.status(400).json({ message: 'Debate is not active or completed' });
-    }
-
-    const isPlayer1 = debate.player1UserId.toString() === userId;
-    const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
-    const playerKey = isPlayer1 ? 'player1' : 'player2';
-
-    if (!isPlayer1 && !isPlayer2) {
-      return res.status(403).json({ message: 'You are not part of this debate' });
-    }
-
-    const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
-    if (roundArgs.length < 2) {
-      console.log('[Belief] Skip blocked - round not complete', { debateId, round: roundNumber, player: playerKey, foundArgs: roundArgs.length });
-      return res.status(400).json({ message: 'Round is not complete yet' });
-    }
-
-    const alreadySubmitted = (debate.beliefHistory || []).some(entry =>
-      entry.round === roundNumber && entry.userId && entry.userId.toString() === userId
-    );
-
-    if (alreadySubmitted) {
-      console.log('[Belief] Duplicate skip', { debateId, round: roundNumber, player: playerKey });
-      return res.status(400).json({ message: 'Belief update already submitted for this round' });
-    }
-
-    debate.beliefHistory = debate.beliefHistory || [];
-    debate.beliefHistory.push({
-      round: roundNumber,
-      userId,
-      player: isPlayer1 ? 'player1' : 'player2',
-      belief: null,
-      beliefValue: null,
-      influence: 0,
-      confidence: null,
-      skipped: true
-    });
-
-    await debate.save();
-
-    console.log('[Belief] Skip saved', { debateId, round: roundNumber, player: playerKey });
-
-    if (roundNumber === debate.currentRound) {
-      const io = req.app.get('io');
-      await maybeAdvanceRoundAfterBeliefs(debate, io);
-    }
-
-    res.json({ message: 'Belief update skipped' });
-  } catch (error) {
-    console.error('[Debate] Error skipping belief update:', error);
-    res.status(500).json({ message: 'Failed to skip belief update' });
-  }
+  return res.status(410).json({ message: 'Belief skip is disabled. Please submit all belief check inputs.' });
 });
 
 // Submit reflection / paraphrase after a completed round
@@ -1464,6 +1414,10 @@ router.post('/:debateId/reflection', authenticate, async (req, res) => {
 
     if (!paraphrase || typeof paraphrase !== 'string' || paraphrase.trim().length === 0) {
       return res.status(400).json({ message: 'Paraphrase is required' });
+    }
+
+    if (!acknowledgement || typeof acknowledgement !== 'string' || acknowledgement.trim().length === 0) {
+      return res.status(400).json({ message: 'Acknowledgement is required' });
     }
 
     const debate = await Debate.findById(debateId);
@@ -1484,9 +1438,14 @@ router.post('/:debateId/reflection', authenticate, async (req, res) => {
     if (already) return res.status(400).json({ message: 'Reflection already submitted for this round' });
 
     debate.reflections = debate.reflections || [];
-    debate.reflections.push({ round: roundNumber, userId, paraphrase: paraphrase.trim(), acknowledgement: acknowledgement ? acknowledgement.trim() : '' });
+    debate.reflections.push({ round: roundNumber, userId, paraphrase: paraphrase.trim(), acknowledgement: acknowledgement.trim() });
 
     await debate.save();
+
+    if (roundNumber === debate.currentRound && debate.status === 'active') {
+      const io = req.app.get('io');
+      await maybeAdvanceRoundAfterBeliefs(debate, io);
+    }
 
     console.log('[Reflection] Saved', { debateId, round: roundNumber, userId });
 
@@ -1888,7 +1847,7 @@ router.post('/:debateId/revoke-vote', authenticate, async (req, res) => {
     const io = req.app.get('io');
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:earlyEndVote', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         votes: {
           player1Voted: debate.earlyEndVotes.player1Voted,
           player2Voted: debate.earlyEndVotes.player2Voted,
@@ -2460,14 +2419,14 @@ async function triggerAIResponse(debateId, io) {
 
     if (io) {
       io.to(`debate:${debate._id}`).emit('debate:argumentAdded', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         argument: latestArgument,
         status: debate.status,
         currentRound: debate.currentRound,
         nextTurn: debate.nextTurn
       });
       io.to('admin').emit('debate:argumentAdded', {
-        debateId: debate._id,
+        debateId: debate._id.toString(),
         argument: latestArgument,
         status: debate.status,
         currentRound: debate.currentRound,

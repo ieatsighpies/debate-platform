@@ -108,19 +108,6 @@ export const SocketProvider = ({ children }) => {
     }
   };
 
-  const handleEarlyEndVote = (data) => {
-  if (data.debateId === debate._id) {
-    console.log('[DebateRoom] Early end vote update');
-    setEarlyEndVotes(data.votes);
-
-    // Check if both voted
-    if (data.votes.player1Voted && data.votes.player2Voted) {
-      toast.success('Both players agreed - debate ending early!');
-      fetchDebate();
-    }
-  }
-};
-
   const value = {
     socket: socketRef.current,
     connected,
