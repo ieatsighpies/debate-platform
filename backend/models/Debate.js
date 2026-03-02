@@ -372,6 +372,7 @@ const debateSchema = new mongoose.Schema({
   reflections: [{
     round: { type: Number, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    player: { type: String, enum: ['player1', 'player2'], default: null },
     paraphrase: { type: String, maxlength: 1000 },
     acknowledgement: { type: String, maxlength: 500 },
     timestamp: { type: Date, default: Date.now }

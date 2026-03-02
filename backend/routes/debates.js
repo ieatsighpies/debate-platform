@@ -409,6 +409,11 @@ const hasBeliefEntryForRound = (debate, roundNumber, playerKey) => {
 const hasReflectionEntryForRound = (debate, roundNumber, playerKey) => {
   if (!debate || !roundNumber || !playerKey) return false;
 
+  const hasPlayerTaggedEntry = (debate.reflections || []).some(entry =>
+    entry.round === roundNumber && entry.player === playerKey
+  );
+  if (hasPlayerTaggedEntry) return true;
+
   const targetUserId = playerKey === 'player1' ? debate.player1UserId : debate.player2UserId;
   if (!targetUserId) return false;
 
@@ -1430,6 +1435,7 @@ router.post('/:debateId/reflection', authenticate, async (req, res) => {
     const isPlayer1 = debate.player1UserId.toString() === userId;
     const isPlayer2 = debate.player2UserId && debate.player2UserId.toString() === userId;
     if (!isPlayer1 && !isPlayer2) return res.status(403).json({ message: 'You are not part of this debate' });
+    const playerKey = isPlayer1 ? 'player1' : 'player2';
 
     const roundArgs = debate.arguments.filter(arg => arg.round === roundNumber);
     if (roundArgs.length < 2) return res.status(400).json({ message: 'Round is not complete yet' });
@@ -1438,7 +1444,7 @@ router.post('/:debateId/reflection', authenticate, async (req, res) => {
     if (already) return res.status(400).json({ message: 'Reflection already submitted for this round' });
 
     debate.reflections = debate.reflections || [];
-    debate.reflections.push({ round: roundNumber, userId, paraphrase: paraphrase.trim(), acknowledgement: acknowledgement.trim() });
+    debate.reflections.push({ round: roundNumber, userId, player: playerKey, paraphrase: paraphrase.trim(), acknowledgement: acknowledgement.trim() });
 
     await debate.save();
 

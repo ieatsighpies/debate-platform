@@ -161,7 +161,10 @@ const DebateRoom = () => {
         );
 
         const reflectionAlreadySubmitted = (debateData.reflections || []).some(
-          r => r.round === latestRound && r.userId && String(r.userId) === String(user?.userId)
+          r => r.round === latestRound && (
+            (r.player && r.player === playerKey) ||
+            (r.userId && String(r.userId) === String(user?.userId))
+          )
         );
 
         const needsBelief = isEarlyEnd && latestRound && !beliefAlreadySubmitted;
