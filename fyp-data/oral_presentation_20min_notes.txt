@@ -1,0 +1,137 @@
+Debate Platform FYP - 20 Minute Oral Presentation Notes
+
+Title
+- Bidirectional Persuasion in Human-AI Debates: Experimental Platform, Inference Pipeline, and Governance Relevance
+
+0) Presentation Goal (30-45 sec)
+- Explain what was built, what was measured, what was learned, and why it matters for AI governance and agentic systems.
+
+1) Problem and Motivation (2 min)
+- Core question: Do AI debate personalities (firm, balanced, open-minded) produce different belief-change patterns compared with human-human debates?
+- Broader motivation: Move from anecdotal "AI is persuasive" claims to measurable, auditable influence dynamics.
+- Positioning: Platform is both an intervention environment and a data-generation environment.
+
+2) Research Objectives and Contributions (2 min)
+- Objectives:
+  - Build full-stack controlled debate platform for human-AI and human-human debates.
+  - Enforce information hiding to reduce source-bias confounding.
+  - Capture rich round-level data for bidirectional persuasion analysis.
+- Main contributions:
+  - Methodologically controlled debate system.
+  - Fine-grained dataset (arguments, belief trajectories, confidence, influence, reflections, attribution).
+  - Comparative evidence across AI personalities and human baseline.
+
+3) System and Experimental Design (3 min)
+- Conditions:
+  - human-human (control)
+  - firm AI
+  - balanced AI
+  - open AI
+- Procedure per debate:
+  - Initial stance/openness
+  - Turn-based arguments
+  - Per-round belief + confidence + influence
+  - Reflection/paraphrase and acknowledgement
+  - Post-debate attribution and awareness effect
+- Architecture highlights:
+  - React + Express + MongoDB + Socket.IO
+  - OpenAI GPT-4o mini for AI arguments and quality scoring
+  - Role-based access and operational controls for experiments
+
+4) Data and Measures (3 min)
+- Key variables:
+  - belief_value (0-100), delta_belief, belief_shift
+  - confidence, influence
+  - arg_quality and reflection_quality (multi-dimensional GPT rubric)
+  - attribution and attribution confidence
+- Important engineering decision:
+  - arg_player_role (player1/player2) derived and preserved across all conditions.
+  - Rationale: submitted_by is insufficient in human-human because both are "human".
+- Data quality:
+  - completed-only filtering, sequence checks, transparent exclusions
+  - round-0 baseline imputation with documented mapping
+
+5) Statistical Analysis and Why It Is Defensible (3.5 min)
+- Primary models:
+  - 2-level human-vs-AI contrast
+  - 4-level condition x round mixed-effects model
+- Covariates:
+  - n_rounds (exposure control), first_player_p1 (primacy confound), pre-survey openness, topic fixed effects
+- Why mixed effects:
+  - repeated rounds are clustered; avoids inflated significance from naive independence assumptions
+- Mechanism tests:
+  - moderation via opponent attribution
+  - mediation via reflection quality (human side)
+
+6) ML Pipeline and Purpose (3.5 min)
+- Purpose:
+  - predictive estimation for expected belief movement
+  - feature signal discovery for policy design
+- No-leakage design:
+  - features restricted to information available at or before round r
+- Core vs exploratory workflow:
+  - stable core feature set
+  - staged exploratory blocks with review gate before inclusion
+- Evaluation:
+  - GroupKFold by debate_id to prevent within-debate leakage
+  - ElasticNet baseline + XGBoost comparison
+
+7) Findings-to-Impact Framing (1.5 min)
+- Practical implication:
+  - Not "maximize persuasion at all costs"; optimize constrained dialogue quality.
+- Agentic use cases:
+  - software engineering/system-design facilitation
+  - Sales Enablement Copilots
+  - Product Onboarding & Activation
+- Generalization strategy:
+  - domain-invariant backbone (turn dynamics, confidence, reflection fidelity)
+  - domain-specific adapters (norms, constraints, evidence standards)
+
+8) AI Governance Relevance (2 min)
+- This work operationalizes influence risk with measurable indicators:
+  - belief shift magnitude/persistence
+  - stance-flip rates
+  - attribution and awareness effects
+  - reflection fidelity signals
+- Governance utility:
+  - audit-ready metrics
+  - policy guardrails (non-coercion, transparency, user agency)
+  - ex-ante constraints and ex-post accountability
+
+9) Limitations and Future Work (1.5 min)
+- Current limits:
+  - sample size constraints and condition imbalance
+  - no longitudinal re-contact for persistence of change
+  - persuasion quality metrics still evolving
+- Future work from report:
+  - model forecasting of stance change timing
+  - semantic drift analysis for AI adaptation to human arguments
+  - 48-72 hour follow-up to measure durability of persuasion
+
+10) Strong Closing (30 sec)
+- Closing line:
+  - This project converts conversational persuasion from a black-box concern into a
+    measurable, governable, and optimizable human-AI interaction process.
+
+
+Q&A Cheat Sheet
+- Why n_rounds?
+  - Exposure control: 14-round debate has much more persuasion opportunity than 3-round.
+- Why first_player_p1?
+  - Primacy confound; known assignment imbalance in balanced condition.
+- Why no-leakage emphasis?
+  - Prevents inflated performance and invalid policy conclusions.
+- Why arg_player_role?
+  - Consistent speaker attribution across AI and human-human conditions.
+- Why GroupKFold by debate?
+  - Avoids train-test contamination from same debate rounds.
+
+
+Suggested Slide Timing (20 minutes)
+- Slides 1-2: Problem + objectives (2.5 min)
+- Slides 3-4: Platform + protocol (3 min)
+- Slides 5-6: Data + variables + quality controls (3 min)
+- Slides 7-8: Statistical models + mechanism tests (3.5 min)
+- Slides 9-10: ML pipeline + no leakage + evaluation (3.5 min)
+- Slides 11: Governance and domain generalization (2 min)
+- Slides 12: Limitations + future work + close (2.5 min)

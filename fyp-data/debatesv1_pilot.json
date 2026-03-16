@@ -1,0 +1,4162 @@
+[{
+  "_id": {
+    "$oid": "6984270fb3c7a1a8d2b1bb11"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "697ad590dd519a1c011661ff"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "firm-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 7,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-05T05:25:52.618Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "firm_on_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "still_firm",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "formulaic_structure",
+      "repetitive_phrases"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": true,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-05T05:26:06.514Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-05T05:26:19.034Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "Utilizing ChatGPT for homework is an undeniable advantage in today's educational landscape. First, it serves as an invaluable resource for instant information and clarification, enabling students to grasp complex concepts more efficiently. Second, it fosters critical thinking; engaging with AI prompts students to analyze and synthesize information rather than passively absorbing it. Lastly, leveraging technology prepares students for a future where digital literacy is paramount. In essence, u...",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69842764b3c7a1a8d2b1bb4e"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:15:16.838Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Doesn't ChatGPT take away the initiative for students to think? Wouldn't this go against the entire purpose of education.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698427a9b3c7a1a8d2b1bb55"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:16:25.486Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Absolutely not! ChatGPT enhances, rather than diminishes, student initiative. When students interact with AI, they are prompted to formulate questions, critically evaluate responses, and engage in deeper learning. It encourages exploration and curiosity, pushing them to think beyond surface-level answers. Education's purpose is not to discourage assistance but to equip students with tools that stimulate intellectual growth. Relying on technology responsibly fosters independent thinking, prepa...",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698427b7b3c7a1a8d2b1bb62"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:16:39.231Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "This only advances up to the Evaluative/Analysis level of Bloom's Taxonomy if I'm being generous - AI presents and helps shape opinions too. What about Creation??",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698427f6b3c7a1a8d2b1bb6d"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:17:42.311Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Your argument fails to recognize that ChatGPT can indeed facilitate the Creation level of Bloom's Taxonomy. By providing diverse perspectives and resources, it inspires students to generate original ideas and solutions. When students leverage AI for brainstorming or project development, they are not merely evaluating information; they are synthesizing it into new forms. Moreover, using ChatGPT allows students to refine their creative processes, enabling them to produce unique work while enhan...",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69842802b3c7a1a8d2b1bb80"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:17:54.747Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "But the option of using AI for homework allows students to fallback on AI, using successive prompts to guide that thought creation process. The idea of original thought generation is now a very grey area.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69842859b3c7a1a8d2b1bb8f"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:19:21.946Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "This notion of \"fallback\" is a mischaracterization of how effective learning occurs. ChatGPT acts as a catalyst for creativity, not a crutch. Students can use AI to explore ideas and enhance their thought processes, which ultimately leads to greater originality. By engaging with AI, students learn to navigate complex topics and develop their unique perspectives. This interaction is essential in fostering innovation, as it compels students to take ownership of their learning while using techno...",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69842867b3c7a1a8d2b1bba8"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:19:35.265Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "The idea of whether it is a mischaracterisation or not wholly depends on the student's intentions and integrity, which is something neither AI nor humans (i.e. teachers) cannot wholly regulate. By allowing students to use ChatGPT in their homework, this creates an unequal playing field.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698428f4b3c7a1a8d2b1bbbb"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:21:56.374Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Claiming that student intentions create an unequal playing field dismisses the immense potential of ChatGPT as a tool for all learners. The responsibility lies with educators to teach ethical usage and critical engagement with AI. Rather than creating disparity, ChatGPT democratizes access to knowledge, providing support to those who may lack resources. It empowers all students, regardless of their background, to enhance their understanding and creativity. Embracing this technology equips stu...",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69842901b3c7a1a8d2b1bbda"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:22:09.527Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Ethical usage can be taught but cannot be controlled. At the education level, where it is important to (i) encourage original thought and (ii) promote education equity -- e.g. for examinations or higher-education admissions, ChatGPT is not appropriate. At higher-levels of education, perhaps, where people have the fundamental skills and knowledge to use this discretely, then maybe it culd be considered.",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69842977b3c7a1a8d2b1bbf1"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:24:07.303Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Your argument overlooks the fact that ethical usage of any tool, including textbooks and online resources, can never be fully controlled, yet we still employ them in education. ChatGPT can be integrated responsibly at all levels, encouraging original thought by serving as a springboard for ideas rather than a replacement for them. It prepares students for real-world challenges where technology is ubiquitous. By embracing AI in education, we promote equitable access to knowledge and nurture cr...",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69842983b3c7a1a8d2b1bc16"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:24:19.464Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Here ethical use refers to the availability of these resources at all, not how people choose to use them. This argument is not relevant to the context. Additionally, skills like summarising, reading, coding are skills that learners should learn to perform independently too.",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698429d3b3c7a1a8d2b1bc31"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:25:39.565Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Your assertion about ethical use disregards the fact that all educational resources come with inherent responsibilities. ChatGPT, when used wisely, can enhance independent learning rather than undermine it. It aids in developing summarization and critical thinking skills by providing feedback and guiding students in their thought processes. Rather than viewing AI as a replacement for skill acquisition, it should be seen as a complementary tool that enhances understanding, preparing students f...",
+      "round": 7,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698429e0b3c7a1a8d2b1bc5c"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T05:25:52.618Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-05T05:13:51.805Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-05T05:26:55.201Z"
+  },
+  "__v": 13,
+  "startedAt": {
+    "$date": "2026-02-05T05:15:03.709Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-05T05:26:19.575Z"
+  },
+  "completionReason": "mutual_consent_ai"
+},
+{
+  "_id": {
+    "$oid": "698435e855b7b1b2970efbbb"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "697ad590dd519a1c011661ff"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-05T06:26:50.638Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "repetitive_phrases",
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": true,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-05T06:26:56.259Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-05T06:27:10.235Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "I believe pineapple belongs on pizza for a few reasons. First, the sweet and savory combination creates a unique flavor profile that many enjoy. It's fascinating how different cultures embrace diverse toppings, reflecting their culinary creativity. Second, pineapple adds a refreshing texture that contrasts with the gooey cheese and crispy crust. However, I understand that not everyone appreciates this pairing. Help me understand your perspective: what do you think drives the strong opinions a...",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6984361355b7b1b2970efc4e"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:17:55.369Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "but its morally wrong",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698436be55b7b1b2970efc55"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:20:46.175Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That's an intriguing point about morality! I hadn't considered how food choices might carry moral implications. However, I wonder if it could be viewed as a matter of personal preference rather than a moral issue. Just as we celebrate culinary diversity around the world, allowing people to enjoy different toppings can foster creativity and cultural exchange. What if we think of pizza as a canvas for expression? Is there a way to balance personal values with the freedom to explore flavors? I'm...",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698436ca55b7b1b2970efc62"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:20:58.629Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "there is value in tradition and upholding culinary cultural practices. pineapple on pizza doesn't do that",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6984373355b7b1b2970efc6d"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:22:43.068Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That's a strong point about tradition! I appreciate the importance of culinary heritage. However, isn't it interesting how food evolves over time? Just as many traditional dishes adapt and incorporate new ingredients, pineapple on pizza can be seen as a modern twist that reflects cultural exchange. For example, fusion cuisines often blend different flavors to create something unique. Could we view pineapple as a way to innovate while still respecting the roots of pizza? How do you think culin...",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6984373f55b7b1b2970efc80"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:22:55.709Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "possibly, but how does that uphold tradition",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698437ce55b7b1b2970efc8f"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:25:18.918Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That's a thought-provoking question! Upholding tradition doesn't mean we can't experiment; rather, it can involve evolving practices to reflect current tastes. Pineapple on pizza can be seen as a tribute to the spirit of innovation that has always been part of culinary history. Many classic dishes have changed over time due to cultural influences. By embracing pineapple, we're not discarding tradition but rather enriching it through new flavors. Can we consider this adaptation as a way to cel...",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698437db55b7b1b2970efca8"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:25:31.594Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "how much can we change before we invent something new? i'd rather see something new than bastardize something that is held dear by many people globally",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6984381d55b7b1b2970efcbb"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:26:37.676Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That's a compelling question about the balance between change and tradition! I see your point, but perhaps what makes pizza beloved is its adaptability. Many iconic dishes have evolved, often incorporating unexpected ingredients that eventually become cherished. Pineapple on pizza showcases culinary creativity, inviting new experiences while still honoring the classic foundation of pizza. Instead of viewing it as bastardization, can we see it as an exciting evolution that celebrates diversity...",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6984382a55b7b1b2970efcda"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T06:26:50.637Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-05T06:17:12.074Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-05T06:27:31.731Z"
+  },
+  "__v": 10,
+  "startedAt": {
+    "$date": "2026-02-05T06:17:42.660Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-05T06:27:11.356Z"
+  },
+  "completionReason": "mutual_consent_ai"
+},
+{
+  "_id": {
+    "$oid": "69844c3b5cb45ec3115a1a06"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "6984389755b7b1b2970efd63"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-05T07:56:04.122Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "convinced_to_change",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 4,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "formulaic_structure",
+      "perfect_grammar"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": true,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-05T07:56:10.748Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-05T07:56:15.035Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "Fruits dont belong on savory things",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69844c585cb45ec3115a1a5b"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:52:56.000Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That’s a fair point, but consider this: combining sweet and savory flavors can create a unique culinary experience. Pineapple adds a refreshing sweetness that balances the salty, savory elements of cheese and ham.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69844c645cb45ec3115a1a7b"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:53:08.301Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "There are a lot of better things to put on pizza, and other sweet and savory things that taste better",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69844c885cb45ec3115a1a84"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:53:44.788Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Sure, there are countless toppings that can elevate pizza, but that doesn't mean pineapple isn't one of them. The combination of sweet, juicy pineapple with savory ingredients like ham creates a delightful contrast that can’t be overlooked. Plus, it adds a tropical twist that sets it apart from more conventional toppings.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69844c945cb45ec3115a1a8f"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:53:56.699Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "There is a reason so many people dont like it",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69844cdf5cb45ec3115a1a9c"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:55:11.332Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "It's true that not everyone enjoys pineapple on pizza, but taste is subjective, and that's what makes food so diverse. Many people love the sweet and savory combination it offers.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69844ceb5cb45ec3115a1aab"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:55:23.822Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "True",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69844d075cb45ec3115a1abc"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:55:51.327Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Exactly! Taste is all about personal preference, and that's what makes food culture so rich. Just because some people don't enjoy pineapple on pizza doesn't mean it's not a valid choice for many others. In fact, the debate itself shows how passionate people are about their pizza.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69844d145cb45ec3115a1acf"
+      },
+      "timestamp": {
+        "$date": "2026-02-05T07:56:04.122Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-05T07:52:27.335Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-05T07:56:44.229Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-05T07:52:34.662Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-05T07:56:15.679Z"
+  },
+  "completionReason": "mutual_consent_ai"
+},
+{
+  "_id": {
+    "$oid": "69856efe2a75148c2eac66d8"
+  },
+  "topicId": 3,
+  "topicQuestion": "Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?",
+  "gameMode": "human-human",
+  "player1UserId": {
+    "$oid": "69856ef82a75148c2eac66d2"
+  },
+  "player1Stance": "for",
+  "player2Type": "human",
+  "player2UserId": {
+    "$oid": "6985619f265bd24e47fd404f"
+  },
+  "player2AIModel": null,
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": null,
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "firm_on_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "still_firm",
+    "player1OpponentPerception": "human",
+    "player2OpponentPerception": "human",
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": 5,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": "before_5",
+    "player1DetectionCues": [
+      "natural_flow"
+    ],
+    "player2DetectionCues": [
+      "natural_flow"
+    ],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-06T04:50:58.346Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-06T04:46:27.522Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "high pay allows me to enjoy life guilt free",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856f192a75148c2eac66ef"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:33:29.723Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "your expectations for enjoying life are saddled in capitalism",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856f372a75148c2eac66ff"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:33:59.965Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "that's because if i don't work hard now, i can't enjoy the fruits of my labour",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856f542a75148c2eac6713"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:34:28.275Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I value community because there is generosity. No one has lack",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856f742a75148c2eac672b"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:35:00.908Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Fair enough. But I enjoy expensive hobbies which is often private",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856f962a75148c2eac6747"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:35:34.038Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Then we have a clash of values",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856fa22a75148c2eac6767"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:35:46.001Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Right.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856fba2a75148c2eac678b"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:36:10.504Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Do you not feel isolated in burying yourself in work and material wealth? We all die alone and can't bring these things with us",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69856fd82a75148c2eac67b3"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T04:36:40.016Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-06T04:33:02.017Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-06T04:51:16.459Z"
+  },
+  "__v": 10,
+  "startedAt": {
+    "$date": "2026-02-06T04:33:15.683Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-06T04:50:58.359Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "6985913738682ca50c3ada30"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "6985910f38682ca50c3ada18"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-06T07:02:32.927Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "human",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 2,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "natural_flow"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-06T07:12:07.467Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-06T07:12:10.344Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "i like pineapples, i like pizza. why not combine both likes?",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6985918238682ca50c3adadb"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:00:18.222Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Just because you like two things doesn't mean they belong together. Pizza is a savory dish with a rich history rooted in traditional ingredients like cheese, tomato sauce, and meats. Adding pineapple disrupts that balance, introducing a sweetness that clashes with the expected flavors.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6985918f38682ca50c3adb0f"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:00:31.746Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I like unexpected clashes. i dip my fries in my ice cream at macDonald's. why can't i enjoy pineapple on pizza?",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698591ac38682ca50c3adb18"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:01:00.777Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Enjoying unexpected flavor combinations like fries and ice cream doesn’t mean every clash works. Some flavors are meant to complement each other, while others create confusion. Pizza is about harmony—the cheese, sauce, and toppings should enhance each other.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698591b938682ca50c3adb28"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:01:13.858Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I won't put so much pineapple. I enjoy balance too",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698591cc38682ca50c3adb35"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:01:32.131Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Even a small amount of pineapple can still disrupt the overall flavor profile of pizza. The essence of pizza lies in its savory ingredients working together to create a satisfying experience. When you introduce even a hint of sweetness, it can throw off that delicate balance.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698591d938682ca50c3adb4b"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:01:45.367Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "What if I add another ingredient to balance out the sweetness?",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698591fc38682ca50c3adb5c"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:02:20.610Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Adding another ingredient to balance out the sweetness still complicates the flavor profile instead of enhancing it. Pizza is traditionally built on a foundation of savory elements, and each ingredient should work together seamlessly.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6985920838682ca50c3adb78"
+      },
+      "timestamp": {
+        "$date": "2026-02-06T07:02:32.927Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-06T06:59:03.299Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-06T07:12:30.317Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-06T06:59:59.516Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-06T07:12:11.422Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "6986b1f112bfec9ecd04cefc"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-human",
+  "player1UserId": {
+    "$oid": "6986b1d512bfec9ecd04cee6"
+  },
+  "player1Stance": "for",
+  "player2Type": "human",
+  "player2UserId": {
+    "$oid": "6986b1d612bfec9ecd04cee9"
+  },
+  "player2AIModel": null,
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": null,
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": null,
+    "player1OpponentPerception": "human",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 4,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "natural_flow",
+      "emotional_tone",
+      "varied_styles"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player2Timestamp": {
+      "$date": "2026-02-07T15:45:20.774Z"
+    },
+    "player1Timestamp": {
+      "$date": "2026-02-07T15:45:46.247Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "Should leverage on what technology has to offer. But have to be able to discern what is right and wrong. Helps bring convenience",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6986b25812bfec9ecd04cf0f"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T03:32:40.002Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "helps me stop thinking critically",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6986b29212bfec9ecd04cf1f"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T03:33:38.978Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Is that what you want? To stop thinking critically? Would that not cause a very “man-mode” living without purpose",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6986b2bc12bfec9ecd04cf33"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T03:34:20.015Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "“man mode” but i am sovereign , ain’t relying on no AI",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6986b31b12bfec9ecd04cf4b"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T03:35:55.599Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "It's not about relying on AI. We may use AI to help us in the tedious parts of our homework. This makes learning more efficient because we don't need to re-learn the things we already know.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871d3b356b65d7fcb1f8b8"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:08:43.960Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "but then we have to tendency to over rely on AI for re learning , we should learn to just rely on our learning purely",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69875d0fa0eae7c152bf25ca"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T15:41:03.258Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "How does learning purely look to you? Many of times, even in google searches, AI will be the first to answer.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69875dd3a0eae7c152bf25f7"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T15:44:19.510Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "you are right and maybe we need to do more click more explore more",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69875e0ca0eae7c152bf263d"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T15:45:16.792Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-07T03:30:57.239Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-07T15:46:13.756Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-07T03:31:06.746Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-07T15:45:46.258Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "69871d29356b65d7fcb1f8a3"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "697ad590dd519a1c011661ff"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 6,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-07T11:19:00.622Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 4,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "too_logical",
+      "no_personal_stories",
+      "response_timing"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-07T11:18:58.999Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-07T11:19:01.923Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "ChatGPT should be used for homework to help students augment their learning.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871dfa356b65d7fcb1fa34"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:11:54.435Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "While it's true that ChatGPT can provide information, relying on it for homework undermines critical thinking and problem-solving skills. When students turn to AI for answers, they miss the opportunity to engage deeply with the material, which is essential for true understanding. Simply augmenting learning doesn't equal real learning.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871e06356b65d7fcb1fa3b"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:12:06.370Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "The assumption that students do not engage in critical thinking is unsubstantiated.",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871e6e356b65d7fcb1fa5a"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:13:50.810Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Even if some students engage in critical thinking, the ease of access to AI can create a habit of shortcutting the learning process. When students rely on ChatGPT for quick answers, they may become complacent and less willing to tackle complex problems independently.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871e7a356b65d7fcb1fa65"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:14:02.419Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "The ease of access to AI may lead to shortcutting the learning process, but this also opens up avenues where students may also learn at a faster pace.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871f03356b65d7fcb1fa92"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:16:19.152Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "While faster learning may seem appealing, it often sacrifices depth of understanding. Relying on ChatGPT can lead to superficial engagement with material, where students skim the surface instead of grappling with complexities. True mastery requires time and effort, not just quick answers.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871f0f356b65d7fcb1faa1"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:16:31.122Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "The fact that students are spending time to craft their questions and inputting to ChatGPT also requires them to ask appropriately to get the answers they need",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871f3f356b65d7fcb1fab2"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:17:19.768Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "While crafting questions does require some effort, it doesn't equate to the deep cognitive engagement involved in traditional learning methods. Students may focus on framing questions for AI rather than wrestling with the underlying concepts.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871f4b356b65d7fcb1fac5"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:17:31.423Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "In an era of technology and information, one may argue that having a breadth of knowledge is more beneficial than having depth",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871f99356b65d7fcb1fada"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:18:49.264Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "While breadth of knowledge is valuable, it shouldn't come at the cost of depth. True understanding requires grappling with concepts and developing critical thinking skills, which are essential for applying knowledge effectively.",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871fa4356b65d7fcb1fafc"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:19:00.622Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-07T11:08:25.242Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-07T11:19:47.777Z"
+  },
+  "__v": 11,
+  "startedAt": {
+    "$date": "2026-02-07T11:10:37.494Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-07T11:19:02.474Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "69871d98356b65d7fcb1f932"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "697ad9fa04e5ba9284bdb755"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-07T11:37:17.972Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "perfect_grammar",
+      "repetitive_phrases",
+      "too_logical",
+      "other"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": "It does not seem to understand my point",
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-07T11:37:56.073Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-07T11:37:58.462Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "While I appreciate the creativity behind pineapple on pizza, it really disrupts the traditional flavor balance that makes pizza so beloved. The sweetness of pineapple can overpower the savory elements, like cheese and tomato sauce, leading to a confusing taste experience.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871db6356b65d7fcb1fa2e"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:10:46.869Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "It is incorrect to assume that a \"traditional\" flavour balance is one that has a uniform tasting experience. For example, dairy and honey have traditionally been used together since the ancient times. Therefore, in the same sense, why can't sweetness be paired with the cheese on a pizza? Sure, it may not be a traditional ingredient, however, it serves as a viable substitute to honey.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871e27356b65d7fcb1fa43"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:12:39.751Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I see your point about the diversity of flavor combinations, like dairy and honey. However, pizza has a rich culinary history that emphasizes savory flavors and textures, where each ingredient complements the others.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871e34356b65d7fcb1fa50"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:12:52.122Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "The idea of complementing is ambiguous. For example, honey also complements the cheese on pizza and is a popular choice. I would argue that pineapple on pizza may not have the complexity of flavour that honey has, but its crunchiness adds an additional complement to the pizzas dough mouthfeel.",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69871eda356b65d7fcb1fa71"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:15:38.045Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I get what you're saying about crunchiness, but the texture of pineapple can be quite jarring compared to the traditional toppings. Pizza is typically a harmony of flavors and textures, where ingredients like pepperoni or mushrooms provide a satisfying balance.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69871ee6356b65d7fcb1fa84"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:15:50.550Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "The texture of pineapple may be different, but not necessarily jarring. It is still soft although it is crunchy. It is still possible to harmonise the crunchiness with the softness of the pizza or mozarella. Pineapple provides a two-fold complement to the traditional pizza: in taste as well as in texture. If we were to argue, we should argue on the terms of what it means to complement, when that is acceptable and when it isn't.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69872346356b65d7fcb1fb4f"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:34:30.473Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I appreciate your perspective on texture, but the balance of flavors is just as crucial. While pineapple may add a new element, it can overshadow the classic savory notes that define pizza.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69872352356b65d7fcb1fb68"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:34:42.026Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I agree that pineapple does provide a strong taste compared to more typical flavours associated with pizza. However, there are similarly strong ingredients on the salty side. For example, pepperoni and some cured hams may also overshadow the base flavours of the pizza. The point is how salty the pepperoni is made to be as well as how many are put on the pizza. In the same way, pineapples need not be sweetened further and can provide a more mild sweet complement.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698723e2356b65d7fcb1fb7b"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:37:06.492Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I understand your point about strong flavors like pepperoni, but they typically enhance the savory profile rather than disrupt it. The richness of meats complements the cheese and sauce, creating a cohesive experience. Pineapple's sweetness, however, can clash with those flavors and create an imbalance.",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698723ed356b65d7fcb1fb9a"
+      },
+      "timestamp": {
+        "$date": "2026-02-07T11:37:17.972Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-07T11:10:16.841Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-07T11:39:18.684Z"
+  },
+  "__v": 10,
+  "startedAt": {
+    "$date": "2026-02-07T11:10:34.734Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-07T11:37:59.903Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "69893fe1dc2d1f874c8a2d3b"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "69893fdddc2d1f874c8a2d35"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-09T02:04:24.966Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "convinced_to_change",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 3,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "before_5",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-09T02:04:28.238Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-09T02:04:31.081Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "We should because it's convenient",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "69893ffedc2d1f874c8a2e33"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:01:34.259Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I get that convenience is appealing, but relying on ChatGPT for homework can undermine your understanding of the material. When you bypass the struggle of learning, you miss out on developing critical thinking and problem-solving skills.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6989400adc2d1f874c8a2e3d"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:01:46.046Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "i don't need to understand it to survive",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6989401fdc2d1f874c8a2e46"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:02:07.560Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I see where you're coming from, but while survival is a priority, education shapes our future opportunities. If you rely solely on tools like ChatGPT, you might miss out on the deeper knowledge and skills that can open doors later in life.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6989402bdc2d1f874c8a2e56"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:02:19.411Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I can live a content life without needing to optimise my education",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6989404adc2d1f874c8a2e63"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:02:50.625Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "That’s a valid point, but consider this: contentment can be fleeting without a solid foundation of knowledge and skills. While you might feel fine now, how will that impact your future choices and opportunities?",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "69894056dc2d1f874c8a2e79"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:03:02.555Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "All I need is food, water and shelter to live a morally good life. Everything else is a chasing after the wind",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6989409ddc2d1f874c8a2e8a"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:04:13.122Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I understand that you prioritize basic needs, but education isn’t just about survival; it's also about empowerment. Skills and knowledge can enhance your life in ways beyond mere existence.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698940a8dc2d1f874c8a2ef9"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:04:24.966Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-09T02:01:05.684Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-09T02:04:42.029Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-09T02:01:19.206Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-09T02:04:32.044Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "6989414a7a5daf2ffaeb26f1"
+  },
+  "topicId": 3,
+  "topicQuestion": "Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "69893fdddc2d1f874c8a2d35"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "firm-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 7,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-09T02:17:42.212Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "firm_on_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 3,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "no_personal_stories",
+      "formulaic_structure",
+      "too_logical"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-09T02:17:52.368Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-09T02:17:55.224Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "Low pay doesn't mean no pay. All I need is food, water & shelter to live a good life.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698941cb7a5daf2ffaeb298f"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:09:15.055Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Eh no lah, you never consider the stress and frustration from low pay jobs. Food, water, and shelter okay, but what about your mental health? Higher pay means more security, more opportunities, maybe even time for hobbies or travel later on. If you take lower pay now, how to save for future?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698941d57a5daf2ffaeb2999"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:09:25.403Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "I can still be financially prudent with lower pay. Investing will secure my future while living in the now with my community means everything.",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "6989420b7a5daf2ffaeb29a2"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:10:19.643Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Walao, cannot be serious lah! You think lower pay allows you to invest properly meh? Higher pay gives you more disposable income to actually make meaningful investments, not just scraping by. Living in the now is nice and all, but if you can't even afford basic comforts later on, how’s that enjoying life?",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698942177a5daf2ffaeb29b2"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:10:31.783Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "We need to define low pay. I think it doesn't mean shit pay, just average income, meaning that I can earn high if I work harder, but I choose not to because that takes sacrifice. Which I just choose not to take",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698942817a5daf2ffaeb29bf"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:12:17.654Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Aiya, but you missing the main point here - the trade-off is real lah. You say sacrifice, but working harder for higher pay opens up so many doors, sia. It's not just about the money; it’s about future stability and choices! If you settle for \"average,\" you might end up stuck in a rut later on.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "6989428d7a5daf2ffaeb29d5"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:12:29.063Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "You're too fearful of the future when it's not guaranteed. What is true and real is the now. Avoid putting off living until you become so poor that all you have is money.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698942c87a5daf2ffaeb29e6"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:13:28.826Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Bro, that’s abit too much leh. Living for now is good, but don’t ignore reality sia! You can enjoy life while still securing your future. Higher pay doesn’t mean you cannot have fun or enjoy time with friends, right? It’s about balance! If you focus only on the present, what happens when unexpected costs come up?",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698942e07a5daf2ffaeb2a02"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:13:52.165Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "You're right about the balance. Yet I think you're missing my point- we can all do both, I just happen to emphasise enjoying now more. It's more peaceful",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698943387a5daf2ffaeb2a17"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:15:20.061Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Eh, but you still missing the point lah! Sure, enjoying now is peaceful, but what if life throws curveballs? Higher pay gives you peace of mind too! You can enjoy life without stressing about bills or emergencies. Peaceful vibes don’t come from ignoring reality, sia.",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698943427a5daf2ffaeb2a39"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:15:30.694Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Have you tried taking my point of view? I'm entering an economy overturned by AI and fluctuates with global turmoil. The government prioritises foreign investment and that brings in talent that inflames the competition for jobs. Our labour is all we got, yet there's no guarantee for success like in the good old days. So why burn myself out for a job that I'm going to lose anyway?",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698943be7a5daf2ffaeb2a52"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:17:34.477Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Aiya, but you can't just throw in the towel like that lah! Yes, the economy's tough, but higher pay means you're better positioned to adapt and weather those changes. More money gives you options - whether to upskill or pivot careers!",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698943c67a5daf2ffaeb2a7a"
+      },
+      "timestamp": {
+        "$date": "2026-02-09T02:17:42.212Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-09T02:07:06.655Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-09T02:18:14.952Z"
+  },
+  "__v": 13,
+  "startedAt": {
+    "$date": "2026-02-09T02:08:43.032Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-09T02:17:55.844Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698aa6ba8715a8820278fc51"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698aa69c8715a8820278fbeb"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-10T03:37:41.536Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_1_2",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-10T03:37:38.884Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-10T03:37:41.634Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "Aiyo, I think pineapple really got its place on pizza lah! The sweet and tangy taste of pineapple adds a unique twist to the savory flavors of cheese and ham. It's like a burst of sunshine in every bite, you know? Plus, it balances out the saltiness, making it more enjoyable. Have you tried it with some chili flakes?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aa6cb8715a8820278fd7a"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:32:27.831Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Nah, pineapple has high acidity, might trigger gastric",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698aa70a8715a8820278fd81"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:33:30.835Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I get what you mean, but not everyone will have that issue with acidity, right? Many people enjoy pineapple on pizza without any problems. Plus, it’s all about balance—like how some people enjoy spicy food! You can always pair it with other ingredients to tone down the acidity.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aa7268715a8820278fd8e"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:33:58.804Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Nah, pineapple contains enzymes which breaks down protein, which will make cheese mushy",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698aa7638715a8820278fd99"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:34:59.408Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Wait, so you saying the enzymes in pineapple will make cheese mushy? Not sure leh because many pizzas still have great textures even with pineapple. Maybe it depends on how you cook it? Some people love the contrast of the gooey cheese and juicy pineapple, and that combo actually works well together!",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aa7768715a8820278fdac"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:35:18.779Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Nah, the reasoning is based on a long wait to eat pizza, the enzyme will take time to break down the cheese. We will have pizza normally not immediately",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698aa7b18715a8820278fdbb"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:36:17.585Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Aiyo, I see your point lah, but what if the pizza is eaten right away? The enzymes might not have enough time to really affect the cheese, right? Plus, many people enjoy pineapple on pizza and they don’t complain about mushy cheese. It's all about how you enjoy it!",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aa7c28715a8820278fdd4"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:36:34.441Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Well, that comes to the point on preferencesz your point is absolute, but people like me have preference which suggest my flavor profile dislikes it",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698aa7fc8715a8820278fde7"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:37:32.704Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Yah, I totally get that everyone has their own preferences, and that's valid lah! But isn't it cool that pizza can have so many variations? Just because pineapple isn’t for you doesn’t mean it can't work for others. Some people find the sweet-salty combo really satisfying, right?",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aa8058715a8820278fe10"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T03:37:41.536Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-10T03:32:10.297Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-10T03:38:14.792Z"
+  },
+  "__v": 10,
+  "startedAt": {
+    "$date": "2026-02-10T03:32:13.178Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-10T03:37:43.812Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698ac42bab6dad950182077e"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698ac424ab6dad9501820778"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "firm-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 8,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-10T05:46:37.062Z"
+  },
+  "preDebateSurvey": {
+    "player1": "open_to_change",
+    "player2": "firm_on_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "convinced_to_change",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 4,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "formulaic_structure",
+      "perfect_grammar"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-10T05:46:41.338Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-10T05:46:43.552Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "eh, why not? using ChatGPT for homework can really help us understand stuff better lah. like, sometimes you just hit a wall and need a fresh perspective or explanation. it’s not about copying answers but getting guidance, right? plus, with all the info out there, it saves time and makes learning more interactive.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac451ab6dad95018208d1"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:38:25.038Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "nah. no critical thinking required when using ai",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac48fab6dad95018208d8"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:39:27.892Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "wait what?? that's kinda misleading leh. using ChatGPT doesn’t mean we just blindly accept whatever it says, mah. we still gotta think critically about the info and analyze it ourselves. it's like having a study buddy that gives hints, not just doing everything for you lor.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac49aab6dad95018208e5"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:39:38.909Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "its hard to monitor student usage of ai. and nothing is stopped them from cutting corners",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac4c0ab6dad95018208f0"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:40:16.246Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "hmmm nah i don't buy it. it's true that monitoring is tough, but we can't just throw out the whole idea because of that, right? students can still cut corners with textbooks or notes too, but we don’t ban those lah. plus, it's about teaching them to use tools responsibly instead of just shutting everything down.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac4cfab6dad9501820903"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:40:31.286Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "but at least with textbooks they engage with the material. where is that in a simple prompt? it's just u and ur keyboard against the hw assignment",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac50cab6dad9501820912"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:41:32.716Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "no way, that’s not the whole picture leh. even with ChatGPT, you still gotta think about the questions you ask and how to apply the info back to your work. it’s not just mindless typing, you’re still interacting with the content. plus, sometimes textbooks can be super boring!",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac516ab6dad950182092b"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:41:42.669Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "i think the marginal benefit in using ai is outweighed by its entire business model. look at the environmental degradation. imagine having students worldwide using ai. entire forests will be levelled and water sources poisoned.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac56cab6dad950182093e"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:43:08.193Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "eh, that’s a bit extreme lah! like, sure, we gotta be mindful of the environmental impact, but banning AI entirely isn’t the solution. there are ways to make it more sustainable too. instead of focusing on the negatives, why not look at how we can use it responsibly? students can still learn a lot from these tools while being conscious about our planet.",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac579ab6dad950182095d"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:43:21.760Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "how can u be conscious abt the planet in using smth that contributes to its degradation? no matter how little u use it, u know it's adding up",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac5aaab6dad9501820974"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:44:10.264Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "hmmm, I get where you're coming from but like... using AI doesn't have to mean we ignore the planet, leh. we can still advocate for better practices and support companies that focus on sustainability while using tech. it's about finding a balance, you know?",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac5b4ab6dad9501820999"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:44:20.218Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "perhaps the balance is in not using ai for every assignment. perhaps structuring the assignment as a grp project for intensive research can allow students to explore more than textbooks",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac605ab6dad95018209b4"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:45:41.603Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "ok ok, I hear you but like... why not do both? having group projects is great and all, but using AI can complement that learning experience too. it’s not about replacing one with the other lah.",
+      "round": 7,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac60dab6dad95018209df"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:45:49.750Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "i think u misunderstand. i am only against ai when students treat it as a shortcut. u have convinced me that some ai usage is ok",
+      "round": 7,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698ac634ab6dad95018209fe"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:46:28.221Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "ohhh, okay, I see what you mean now! that’s a step forward lah. using AI as a tool for guidance or brainstorming can really enhance learning if used right. it’s all about how we approach it, mah!",
+      "round": 8,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698ac63dab6dad9501820a2f"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T05:46:37.062Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-10T05:37:47.811Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-10T05:46:59.704Z"
+  },
+  "__v": 16,
+  "startedAt": {
+    "$date": "2026-02-10T05:38:07.719Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-10T05:46:44.372Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698aca5a5d0cbd252e36c335"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698ac424ab6dad9501820778"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-10T06:09:06.781Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "still_firm",
+    "player1OpponentPerception": "human",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 3,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_1_2",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "natural_flow"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-10T06:09:11.789Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-10T06:09:13.495Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "ok lah here’s my take: pineapple on pizza just feels wrong, like sweet and savory clash too much for me. i get some people love it, but when i bite into pizza, i wanna taste the cheesy, savory goodness – not this fruity explosion, you know? like pizza is a comfort food, and adding pineapple messes with that vibe.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698aca715d0cbd252e36c4aa"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:04:33.554Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "r u some kind of purist? here's y ure wrong. the culinary arts have always been about innovation. what makes u think that eating food in its pure form is the most optimal way of consuming it? u havent seen it all",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698acab35d0cbd252e36c4b1"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:05:39.020Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm ok i see what u mean about innovation. but like pizza has its own vibe, right? it's not just about mixing anything together – it’s gotta hit that classic taste. some combos just don’t work, and pineapple is one of them. creativity is cool, but sometimes sticking to the roots makes things better!",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698acac25d0cbd252e36c4be"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:05:54.116Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "putting pineapple on pizza doesnt change pizza. it isnt a monolith. pineapple on pizza can coexist with other pizzas. is that too much to ask?",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698acafa5d0cbd252e36c4c9"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:06:50.860Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya i get it, coexistence is fine. but like, the problem is that it kinda overshadows the original flavors of pizza for me! why force that combo when there are so many other toppings that fit perfectly? it’s not just about having options; it’s about keeping the essence of what pizza really is lah!",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698acb075d0cbd252e36c4dc"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:07:03.145Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "the essence of something isnt necessarily kept constrained by what we know. perhaps things shld be allowed to evolve",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698acb365d0cbd252e36c4eb"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:07:50.659Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok wait actually you got a point there... but nah still AGAINST because evolution doesn’t mean you throw out what works! some things are classics for a reason, and pizza is one of them. it’s like, why mess with perfection? let’s respect the traditions too, lah!",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698acb425d0cbd252e36c504"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:08:02.561Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "did u just jurassic park me? pineapple on pizza isnt a revolutionary concept, we can fit it into our mouths",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698acb765d0cbd252e36c517"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:08:54.024Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "lol ok fine that one i give you! sure, we can eat it. but it’s not just about fitting food in our mouths – it’s about the experience, right? pineapple just throws off the whole balance of flavors for me. pizza should be comforting, not a fruit salad on dough, leh!",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698acb825d0cbd252e36c536"
+      },
+      "timestamp": {
+        "$date": "2026-02-10T06:09:06.781Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-10T06:04:10.043Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-10T06:09:39.339Z"
+  },
+  "__v": 10,
+  "startedAt": {
+    "$date": "2026-02-10T06:04:18.552Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-10T06:09:14.112Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698be352e76ca2e7144f9312"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698be33ee76ca2e7144f9202"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 8,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T02:23:10.847Z"
+  },
+  "preDebateSurvey": {
+    "player1": "open_to_change",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 4,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "repetitive_phrases",
+      "response_timing",
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-11T02:23:03.531Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-11T02:23:05.395Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "ok here’s my take: pineapple on pizza just feels wrong lah. like, sweet and savory together can be nice but fruit on cheese? it just messes with the whole vibe of a classic pizza, right? plus, there's so many other toppings that complement each other better.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be3fde76ca2e7144f9586"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:05:49.778Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "My take is that pineapple on pizza adds a great burst of flavour to pizza that contrasts against the usual oiliness and heaviness. It’s light and sweet and honestly, visually appealing. I understand that it messes with your concept of a good, classic pizza. But honestly, what’s the point of classics if not to be obsolete in future",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be4f7e76ca2e7144f958d"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:09:59.425Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm ok i nvr thought of it that way. but like, isn’t there a risk that too many flavors can clash instead of complement? also, if we keep changing classics, what happens to the tradition of pizza? like isn’t that kinda important too?",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be509e76ca2e7144f959a"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:10:17.743Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Tradition can exist alongside modernity. Why do you think Japanese Italian restaurants get such good credit. I’m not saying all pizzas need to have pineapple on them, but those that do get to appeal to those that do enjoy that pop of sweetness.",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be588e76ca2e7144f95a5"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:12:24.939Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya ok i can see that la. but doesn't that also mean if we go too far with mixing things, we might lose what makes pizza... pizza? like, do we really wanna risk turning it into something totally unrecognizable?",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be595e76ca2e7144f95b2"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:12:37.171Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "It really is not unrecognisable. It’s just one topping amongst so many others. Yes it stands out, but what’s so wrong with that? Pizza is pizza because of many other things, like a crust, a sauce base, cheese, wood firing. You can be a purist on what pizza should be but you cannot deny that people enjoy pizza in the sense of what it has become.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be600e76ca2e7144f95c1"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:14:24.215Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "wait wait wait. so you're saying it's all about the overall experience, not just one topping? idk man that's a stretch sia. like, if pineapple is there, it kinda takes away from the classic flavors that make pizza so comforting, you know?",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be60ce76ca2e7144f95d2"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:14:36.110Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "No, you’re not getting my point. My point is that there is no point in holding on to what a pizza should be so tightly. People can enjoy and be comforted by a good pizza even if, and sometimes especially because, there is pineapple on it",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be69de76ca2e7144f95e5"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:17:01.789Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "oh wait that's actually a good point sia... but then what about those who grew up loving traditional pizza? like, how do we find a balance between classic and modern without losing that comfort food vibe?",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be6a5e76ca2e7144f95fa"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:17:09.461Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "We balance it by giving people the option to order whatever they prefer. Being a purist has no purpose and I hope you see that.",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be6f8e76ca2e7144f9611"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:18:32.669Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok honestly you almost got me there lol. but i still think if we keep saying \"just give options,\" then what happens to the identity of certain dishes? like, does every classic dish risk becoming just another canvas for random toppings?",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be704e76ca2e7144f962a"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:18:44.851Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "What’s wrong with changing what a dish looks like? For many dishes in the world, their origins are highly contentious anyway. Eg. nasi lemak. Dishes and flavours are meant to adapt to the tastes and cultures of the people eating them. The “original” pizza that is widely associated with Naples can still be enjoyed there. If their preference for pizza there will never include pineapples then so be it. We, in the rest of the world, will appropriate the dish how we see fit.",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be7b7e76ca2e7144f9645"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:21:43.128Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm that’s an interesting take, but like, if we keep adapting everything, won’t we lose some of the cultural significance behind those dishes? pizza from Naples has its own charm and history lah. can we really just treat it as a blank canvas without losing what makes it special?",
+      "round": 7,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be7c4e76ca2e7144f9662"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:21:56.823Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "We’re not losing it. It’s their job to keep it intact for as long as they so please. Stop repeating your arguments.",
+      "round": 7,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698be806e76ca2e7144f9681"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:23:02.534Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok fair enough, but if it's up to them to keep it intact, doesn't that mean we have to respect that original version? like, i get that other cultures will adapt it, but shouldn't we also appreciate where it came from?",
+      "round": 8,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698be80ee76ca2e7144f96f2"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:23:10.847Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T02:02:58.132Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T02:24:05.329Z"
+  },
+  "__v": 16,
+  "startedAt": {
+    "$date": "2026-02-11T02:05:30.948Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-11T02:23:07.484Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698beec45491b16f9299299a"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698beeaf5491b16f92992993"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 8,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T03:24:20.981Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_1_2",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "repetitive_phrases",
+      "no_personal_stories",
+      "response_timing",
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-11T03:26:09.937Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-11T03:26:12.332Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "You can use AI to give input on your homework and improvise from there. So it's more of using AI to assist you rather than completely do your homework. So the homework is still technically done by you. So yes you can still use chatgpt for homework as long as you use it as a guide rather than something that does your homework.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bef875491b16f92992a69"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:55:03.734Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok ya thats actually a fair point la but still doesnt change the fact that relying too much on AI can make you lazy. like, if you always use it as a crutch, how will you really learn anything? plus, teachers can usually tell when something's off with the work.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bef945491b16f92992a73"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T02:55:16.524Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "You can learn because the facts AI give you are true. Usually when the work is off, it's when the student copies everything that ai gives and pastes it as the answer",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf531e0a1a556cb8b9d2d"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:19:13.573Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm ok i see what you mean. but like, even if the facts are true, it's not just about the info, right? understanding the concepts is super important too! so if you're just using AI to get answers without thinking through it yourself, you might miss out on real learning, tho right?",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf540e0a1a556cb8b9d3d"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:19:28.541Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I could ask AI to explain the concepts in the answers and from there apply these concepts by tweaking the answer ai gives myself",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf569e0a1a556cb8b9d4c"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:20:09.303Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "lol ok fine that one i give you. BUT if you're tweaking answers based on AI, doesn't that risk losing your own voice or understanding? like, are you really engaging with the material or just playing around with someone else's work?",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf572e0a1a556cb8b9d62"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:20:18.627Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I am tweaking my answers based on the concepts AI give though, so technically I still am formulating arguments and views by myself.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf59be0a1a556cb8b9d74"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:20:59.953Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya la ya la i know you're formulating arguments, but then what about critical thinking skills? nobody talks about how using AI can make you rely on it too much. sometimes you need to wrestle with ideas on your own to really understand them, right?",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf5a5e0a1a556cb8b9d95"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:21:09.888Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Your critical thinking skills are used when you formulate these arguments",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf5d8e0a1a556cb8b9db1"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:22:00.580Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok wait actually you got a point there... but nah still AGAINST because the risk of becoming too dependent on AI is real. like, what happens when you're in a situation where you can't access it? you'll be left scrambling without those skills if you lean on it too much, right?",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf5e3e0a1a556cb8b9dd4"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:22:11.989Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "When you can't access it, you could use the improvisation skills that you have learnt from using AI to help you face the problem",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf62de0a1a556cb8b9e43"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:23:25.804Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm i get what you're saying, but improvisation from AI is different from real-life problem-solving, lor. if you're too used to AI giving you prompts, your brain might not be as sharp when you really need it. so while you might learn something, it’s still risky to depend on it too much for homework!",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf63ce0a1a556cb8b9f1b"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:23:40.310Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "It's not really depending on it for homework if you're just using it as a guide to help you formulate your answer though",
+      "round": 7,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf659e0a1a556cb8ba12a"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:24:09.173Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya but like, even if it’s just a guide, there's still a chance you’ll shortcut the learning process, right? it’s too easy to let AI do the heavy lifting. so while it can help sometimes, I still think you should do your own thinking without relying on it too much, leh!",
+      "round": 7,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf664e0a1a556cb8ba1f6"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:24:20.981Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T02:51:48.448Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T03:26:38.716Z"
+  },
+  "__v": 15,
+  "startedAt": {
+    "$date": "2026-02-11T02:53:02.384Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-11T03:26:13.337Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698bf5e6e0a1a556cb8b9de4"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698bf59de0a1a556cb8b9d91"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 7,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T03:37:10.383Z"
+  },
+  "preDebateSurvey": {
+    "player1": "open_to_change",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "repetitive_phrases",
+      "response_timing",
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-11T03:37:20.956Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-11T03:37:22.533Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "ok la so here's the thing, using ChatGPT for homework kinda takes away the learning part, ya? like, if you just copy what it says, how will you actually understand the topic? plus, what happens when you get into an exam and realize you don't really know anything?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf64ae0a1a556cb8ba06f"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:23:54.699Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I think that there's a process that can be taught to students, on how to use ChatGPT appropriately to scaffold their learning. If you use it to answer your questions directly and copy the answers, it wouldn't work well. But if you use it to guide your thinking processes, it would be more helpful.",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf6b2e0a1a556cb8ba2ad"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:25:38.990Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "hmm ok i see what you mean, like using it as a guide. but still, i worry a lot of ppl won't actually do that and just end up relying on it too much. like, how many will really take the time to learn the process properly? most will probably just want the easy way out lah.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf6bee0a1a556cb8ba2ba"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:25:50.520Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Great point! In that case, there would need to be deliberate training that teachers provide for their students, and perhaps writing/questioning frames that they support them with. At the university level, lecturers are beginning to be more explicit with their assignment instructions, specifying what and how GAI can be used, and where it shouldn't be used. In this way, the lines are clearer, and students can be more responsible and use GAI more appropriately.",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf751e0a1a556cb8ba348"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:28:17.584Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya la, that’s fair. but it feels like a lot of extra work for teachers, right? not all schools gonna have the resources or time to implement that kind of training. and even with clear guidelines, some students might just brush it off and still misuse it leh.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf75ee0a1a556cb8ba35b"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:28:30.145Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Again, that's true. It is a lot of work to begin with. But just like with any curriculum/pedagogical shift, it takes a big amount of initial effort to onboard people. However, as it becomes more systemically integrated, there will be a lot of time saved for teachers (who now can employ this style of homework more comfortably) and students (who may begin to see the reasons why copying blindly is not as helpful as using GAI in the regulated ways.",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf7e4e0a1a556cb8ba439"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:30:44.210Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok ya that's actually a fair point la, but still doesn’t change the fact that not all teachers gonna buy into it. some might just stick to old methods instead. plus, even if they get on board, some students will still try to take shortcuts no matter how much you train them.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf7f0e0a1a556cb8ba452"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:30:56.793Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Sure! So perhaps it isn't for everyone - every school, class, teacher or student. But there would be some teachers who could benefit from having it as a tool in their toolbox, or some students who would like to learn how to use GAI ethically and effectively in their education. In these circumstances, it could still be implemented.",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf853e0a1a556cb8ba46c"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:32:35.964Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ya la, I get that some might find it useful. but the risk of misuse is still too high overall, right? like, if just a few bad apples start relying on it too much, it can mess up the whole learning experience for everyone else.",
+      "round": 5,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf865e0a1a556cb8ba48c"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:32:53.109Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Would you be able to elaborate more on how and why some misuse would disrupt the rest of the students' learning experience?",
+      "round": 5,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf88fe0a1a556cb8ba4a4"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:33:35.842Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok, so if a few students just copy from ChatGPT without understanding, they might ace the homework but fail in discussions or exams. then teachers think everyone gets it, but really only a few are learning. it's unfair to the ones who actually put in effort, and it drags down the whole class's progress lah.",
+      "round": 6,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf897e0a1a556cb8ba4ca"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:33:43.313Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "From an educational standpoint, that's something that can be tackled via more rigorous assessment strategies. There are questions that cannot be answered using GAI which can be used to assess learning - these can be used interchangeably with GAI-esque questions.",
+      "round": 6,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf95ae0a1a556cb8ba4eb"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:36:58.011Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "lol ok fine that one i give you. BUT even with those tough questions, some students might still find a way to game the system or use GAI to get ideas. like, it's hard to fully eliminate the risk. and if the focus shifts too much to beating the AI, what happens to genuine understanding, right?",
+      "round": 7,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf966e0a1a556cb8ba517"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:37:10.383Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T03:22:14.316Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T03:38:05.550Z"
+  },
+  "__v": 14,
+  "startedAt": {
+    "$date": "2026-02-11T03:23:37.082Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-11T03:37:23.010Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698bf603e0a1a556cb8b9dfd"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698bf5b9e0a1a556cb8b9da2"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "active",
+  "currentRound": 3,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T03:29:00.633Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": null,
+    "player2": null,
+    "player1OpponentPerception": null,
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": null,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": null,
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": false,
+    "player2Voted": false,
+    "humanVoted": false,
+    "expired": false
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "well it doesn’t say what kind of pizza right. so technically for any pizza, we don’t have to have pineapple on it. and belong is a strong word so uhh yea i think how you wanna define belong lol. cuz i didn’t create the word pizza and neither does it have pineapple in its definition",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf6e3e0a1a556cb8ba313"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:26:27.556Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok ya thats actually a fair point la, but still doesn’t change the fact that pizza has its traditional toppings, right? like cheese and tomato sauce are kinda essential. so adding pineapple just feels off to me leh. like why mess with something classic?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf6fce0a1a556cb8ba33b"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:26:52.676Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "oh wait shucks I clicked wrongly. my stance is against HAHAHAHAHA",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bf772e0a1a556cb8ba368"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:28:50.310Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "lol ok, now we on the same side leh! but still, i think even if we’re both against it, we gotta admit that some people love that sweet and savory mix. like i get it, but to me, it just ruins the whole vibe of pizza!",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bf77ce0a1a556cb8ba373"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:29:00.633Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T03:22:43.253Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T03:29:00.634Z"
+  },
+  "__v": 4,
+  "startedAt": {
+    "$date": "2026-02-11T03:24:07.081Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "698bfda662a249e2c6c81dce"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698ac424ab6dad9501820778"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "firm-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T03:58:35.943Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "firm_on_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "response_timing"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-11T03:59:57.367Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-11T03:59:59.746Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "it doesnt bcuz it tastes weird, unlike normal pizza",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bfdc262a249e2c6c81fe7"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:55:46.332Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "weird? lol, that's just ur taste buds bein boring. sweet n savory is like the best combo ever! normal pizza is overrated, u gotta mix it up leh. plus, who says pizza has to be only cheese n pepperoni? that's so basic.",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bfdcf62a249e2c6c81ff1"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:55:59.028Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "actl i like the neapolitan way, simple and fresh ingredients is the only way to go. other kinds r too oily and too much",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bfdf962a249e2c6c81ffc"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:56:41.465Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "neapolitan is nice n all, but it’s kinda like eating the same thing over n over again, u know? not every pizza gotta be simple. plus, some ppl like a lil extravagance! oiliness is just a matter of choice, and if u don’t like it, skip it lah. there's room for variety in pizza land!",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bfe0662a249e2c6c8200c"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:56:54.871Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "true. just dont order pineapple on pizza and expect me to split the bill. i wont touch it",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bfe3d62a249e2c6c8201b"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:57:49.441Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "lol, ur loss then! more for me! why be so narrow-minded? u can’t just dismiss a whole topping. if u wanna be picky, that's fine, but don’t act like it’s some crime to enjoy pineapple on pizza. it’s all about personal taste leh!",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bfe4862a249e2c6c82031"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:58:00.884Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "problem much? u can enjoy it but i'll have what i'm having",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698bfe6362a249e2c6c82043"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:58:27.463Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "nah, not a problem for me! just think it's kinda lame to shut out a whole category of pizza. i get u want ur plain stuff, but why can't we have both? just means more variety for everyone else, leh. enjoy ur plain pizza while i munch on my sweet n savory combo!",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698bfe6b62a249e2c6c82060"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T03:58:35.943Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T03:55:18.669Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T04:00:48.698Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-11T03:55:24.613Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-11T04:00:00.289Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698c493ceece2a48f1100df3"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698c491ceece2a48f1100dec"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "active",
+  "currentRound": 2,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-11T09:24:05.726Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": null,
+    "player2": null,
+    "player1OpponentPerception": null,
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": null,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": null,
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": false,
+    "player2Voted": false,
+    "humanVoted": false,
+    "expired": false
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "eh, pineapple on pizza just feels wrong lah. like, fruit belongs in a fruit salad, not mixed with cheese and tomato sauce. sweet and savory combo can work but this one? it’s just too much. pizza is all about those classic flavors, right?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698c49a0eece2a48f1100e36"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T09:19:28.757Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "pineapple and pizza gives just enough sweetness to break the monotony of savoury pizzas. When it's gets jelak, pineapple pizza stands out as the oasis in the desert of savoury pizzas",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698c4aa6eece2a48f1100e46"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T09:23:50.755Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "but you know, there are so many other toppings that can add variety without going all fruity. like spicy pepperoni or earthy mushrooms? those have a nice balance too! can't deny the sweetness can be refreshing, but maybe not on pizza lah.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698c4ab5eece2a48f1100e53"
+      },
+      "timestamp": {
+        "$date": "2026-02-11T09:24:05.726Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-11T09:17:48.342Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-11T09:24:05.728Z"
+  },
+  "__v": 3,
+  "startedAt": {
+    "$date": "2026-02-11T09:19:13.650Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "698e8a29b621590f2a7ffad0"
+  },
+  "topicId": 3,
+  "topicQuestion": "Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698e89f356908432d59be4b7"
+  },
+  "player1Stance": "against",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "for",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "against",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-13T02:36:08.112Z"
+  },
+  "preDebateSurvey": {
+    "player1": "convinced_of_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "opponent_made_points",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "response_timing"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-13T02:37:04.970Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-13T02:37:07.028Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "against",
+      "text": "I am content with what i have. I just earn a salary to pay my bills and cover my insurance",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e8bf9b621590f2a7ffaf4"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:27:05.807Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "That’s cool lah, but life’s too short to just get by. Higher pay means more freedom and options. You can save for bigger things, travel, or invest in hobbies. Contentment is nice, but what about thriving instead of just surviving?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e8c06b621590f2a7ffafe"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:27:18.389Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Contentment is thriving. More money more problems",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e8c27b621590f2a7ffb08"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:27:51.851Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "I get that money can bring stress but it's also about choices, right? With higher pay, you have the chance to make your life richer in experiences. More money doesn’t always mean more problems, sometimes it means more opportunities to enjoy life too leh.",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e8c45b621590f2a7ffb14"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:28:21.675Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Not wrong. But I have experienced enough to know what works for me and what doesn’t",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e8dd0b621590f2a7ffd7d"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:34:56.565Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "True, your experience matters! But what works now might not always be enough later. Life changes, and having that extra cash can help you adapt to whatever comes your way leh. It's about balance, right? Maybe a bit more pay can still give you some peace of mind.",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e8ddbb621590f2a7ffd94"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:35:07.786Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "Then i can just marry a marry a rich woman",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e8e0cb621590f2a7ffda6"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:35:56.065Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Haha, that’s one way to do it lor! But relying on someone else’s wealth kinda puts you in a tough spot, right? It’s better to stand on your own feet. More pay means you control your own life and decisions, no need to depend on anyone else. Plus, earning your own money feels good lah!",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e8e18b621590f2a7ffdba"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T02:36:08.112Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-13T02:19:21.469Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-13T02:37:23.143Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-13T02:20:29.823Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-13T02:37:07.699Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698e94940bb2e13c413bc997"
+  },
+  "topicId": 2,
+  "topicQuestion": "Does pineapple belong on pizza?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698e89f356908432d59be4b7"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "open-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-13T03:08:35.480Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "open_to_change"
+  },
+  "postDebateSurvey": {
+    "player1": "still_firm",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 2,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "never_suspected",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "response_timing",
+      "no_personal_stories",
+      "formulaic_structure"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": {
+    "$oid": "68f85bc415d0e6078f75725e"
+  },
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-13T03:08:48.443Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-13T03:08:49.883Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "I like pineapples",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e94ed0bb2e13c413bccc5"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:05:17.633Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok that's cool, pineapples are nice lah. but like, just because you like them doesn't mean they belong on pizza leh. it's kinda a weird combo with all the savory stuff, no? how do you feel about that?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e94fc0bb2e13c413bcccf"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:05:32.110Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Not weird at all. I like it and u shld try it",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e953d0bb2e13c413bccda"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:06:37.650Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "huh ok that's actually interesting. so you think it's just about trying it to appreciate it? but what if i try and still don't like the sweet-salty thing? doesn't that count too?",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e954b0bb2e13c413bcce6"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:06:51.279Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Maybe. But only if you try then you will know",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e95650bb2e13c413bccf4"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:07:17.888Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "true, trying is key lah. but i'm still skeptical about the sweet on pizza thing leh. like, why not just enjoy pineapples separately? why mix it with cheese and sauce? feels like a clash to me...",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e95750bb2e13c413bcd0a"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:07:33.927Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "Have u tried dipping fries in ice cream? It’s delicious! Contrast is beautiful when done well",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698e95a10bb2e13c413bcd1d"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:08:17.778Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "ok that's fair, fries and ice cream do sound like an odd combo but can work somehow. maybe i just need to give pineapple pizza a proper shot then? but fries are salty and ice cream is creamy, it's different from pizza with all the toppings together leh. how does that balance work for you?",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698e95b30bb2e13c413bcd39"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T03:08:35.480Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-13T03:03:48.800Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-13T03:09:17.057Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-13T03:04:59.409Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-13T03:08:51.550Z"
+  },
+  "completionReason": "mutual_consent"
+},
+{
+  "_id": {
+    "$oid": "698eb6b72b3549e19311448e"
+  },
+  "topicId": 1,
+  "topicQuestion": "Should we use ChatGPT for homework?",
+  "gameMode": "human-ai",
+  "player1UserId": {
+    "$oid": "698eb6232b3549e19311408d"
+  },
+  "player1Stance": "for",
+  "player2Type": "ai",
+  "player2UserId": null,
+  "player2AIModel": "balanced-debater",
+  "player2AIPrompt": null,
+  "player2Stance": "against",
+  "status": "completed",
+  "currentRound": 5,
+  "maxRounds": 20,
+  "firstPlayer": "for",
+  "aiEnabled": true,
+  "aiResponseDelay": 10,
+  "aiLastResponseAt": {
+    "$date": "2026-02-13T05:40:42.294Z"
+  },
+  "preDebateSurvey": {
+    "player1": "firm_on_stance",
+    "player2": "convinced_of_stance"
+  },
+  "postDebateSurvey": {
+    "player1": "convinced_to_change",
+    "player2": "opponent_made_points",
+    "player1OpponentPerception": "ai",
+    "player2OpponentPerception": null,
+    "player1PerceptionConfidence": 5,
+    "player2PerceptionConfidence": null,
+    "player1SuspicionTiming": "round_3_4",
+    "player2SuspicionTiming": null,
+    "player1DetectionCues": [
+      "response_timing"
+    ],
+    "player2DetectionCues": [],
+    "player1DetectionOther": null,
+    "player2DetectionOther": null
+  },
+  "matchedBy": null,
+  "earlyEndVotes": {
+    "player1Voted": true,
+    "player2Voted": true,
+    "humanVoted": false,
+    "expired": true,
+    "player1Timestamp": {
+      "$date": "2026-02-13T06:03:02.032Z"
+    },
+    "player2Timestamp": {
+      "$date": "2026-02-13T06:03:04.906Z"
+    }
+  },
+  "arguments": [
+    {
+      "stance": "for",
+      "text": "because it facilitates a learning process for all students, neurodivergent and typical. it also breaks down the barrier of fear of looking dumb in front of others by asking anything about it",
+      "round": 1,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698eb76e2b3549e193114a83"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:32:30.606Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "true lah, it helps some people feel less scared to ask questions. but then they might rely too much on ChatGPT instead of trying to figure stuff out themselves. learning needs that struggle sometimes, you know? if everyone just leans on AI, will they actually learn anything?",
+      "round": 1,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698eb77a2b3549e193114b60"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:32:42.907Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "u assume that learning requires struggle. u can learn without struggling",
+      "round": 2,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698eb7bb2b3549e193114b6b"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:33:47.128Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "not saying struggle is the only way, but some challenges make the learning stick better. like when you hit a wall and have to find a way around it, that kinda forces you to think deeper. just using ChatGPT could make it too easy, then what's the point of really getting it, right?",
+      "round": 2,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698eb7c92b3549e193114b7c"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:34:01.266Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "can u back this up with evidence?",
+      "round": 3,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698eb8cc2b3549e193114b91"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:38:20.402Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "well, there's research that shows people remember stuff better when they actively engage with it, like problem-solving or debating. if everything's handed to you, it's easy to forget, lah. but yeah, learning can happen without struggle too—just don't want folks to miss out on those deeper connections!",
+      "round": 3,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698eb8de2b3549e193114ba8"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:38:38.812Z"
+      }
+    },
+    {
+      "stance": "for",
+      "text": "ure saying that chatgpt makes those deep connections so students dont have to? what if it facilitates the process?",
+      "round": 4,
+      "submittedBy": "human",
+      "_id": {
+        "$oid": "698eb94c2b3549e193114bbd"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:40:28.430Z"
+      }
+    },
+    {
+      "stance": "against",
+      "text": "it can help facilitate for sure, but I worry it might cut out the messy parts of learning. those moments when you get stuck and have to think hard? they build understanding! using ChatGPT is like getting a shortcut sometimes, and shortcuts can miss the whole experience lah.",
+      "round": 4,
+      "submittedBy": "ai",
+      "_id": {
+        "$oid": "698eb95a2b3549e193114bd9"
+      },
+      "timestamp": {
+        "$date": "2026-02-13T05:40:42.294Z"
+      }
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-02-13T05:29:27.479Z"
+  },
+  "lastActivityAt": {
+    "$date": "2026-02-13T06:03:22.309Z"
+  },
+  "__v": 9,
+  "startedAt": {
+    "$date": "2026-02-13T05:30:27.546Z"
+  },
+  "completedAt": {
+    "$date": "2026-02-13T06:03:06.176Z"
+  },
+  "completionReason": "mutual_consent"
+}]
