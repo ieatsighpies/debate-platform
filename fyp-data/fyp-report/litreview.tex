@@ -1,0 +1,174 @@
+\chapter{Literature Review}
+
+
+\section{LLMs, debate, and persuasive performance}
+
+Recent work indicates that large language models (LLMs) can match or
+exceed human performance in online debates. \textcite{salvi2025_chatgpt_debates} report that
+when GPT\mbox{-}4 was provided with basic sociodemographic information about its
+opponents, it outperformed human debaters in approximately 64\% of
+online debates, achieving a 64.4\% higher success rate in producing
+greater post-debate agreement \cite{salvi2025_chatgpt_debates}.
+When neither human nor AI debaters had access to such personal information,
+GPT\mbox{-}4's persuasive performance was statistically indistinguishable from
+that of human opponents, indicating that personalization is a key amplifier
+of the model's persuasive advantage \cite{salvi2025_chatgpt_debates}.
+
+This line of research complements earlier work on persuasive
+dialogue systems and chatbots. \textcite{shi2020_effects_persuasive_dialogues_bots}
+investigate persuasive dialogues for charity donations and report that
+intelligent conversational agents can significantly influence donation
+behaviour, with different bot identities and inquiry strategies producing
+systematic differences in persuasive success and perceived traits such as
+competence, confidence, warmth, and sincerity
+\cite{shi2020_effects_persuasive_dialogues_bots}. Together, these
+studies support the view that LLMs and conversational agents are capable
+of substantive persuasive impact in interactive, debate-like settings,
+rather than merely in one-shot message framing tasks
+\cite{salvi2025_chatgpt_debates,shi2020_effects_persuasive_dialogues_bots}.
+
+\section{Measuring attitude and confidence change}
+
+Persuasion studies involving AI systems commonly operationalize persuasiveness as the change
+in self-reported attitudes before and after exposure to an argument or conversation.
+Large-scale experiments on AI-driven political persuasion measure participants' positions on
+policy issues on continuous or Likert-type scales prior to treatment, expose them to messages
+generated or curated with the help of language models, and then re-measure attitudes to quantify
+within-subject change \cite{argyle2025_testing_political_persuasion}.
+\textcite{durmus2024_measuring_persuasiveness}'s framework for "measuring the persuasiveness of
+language models" adopts a similar pre--post design: participants state their views on a claim,
+read an argument produced by a model or a human, and then provide a new rating; the difference
+is interpreted as the model's persuasive effect \cite{durmus2024_measuring_persuasiveness}.
+
+Beyond immediate attitude shifts, recent work examines the durability of attitude change
+following conversational interactions with language models.
+\textcite{sheen2025_durable_attitude_change} reports that attitude changes measured immediately
+after GPT\mbox{-}3.5-based conversations about controversial public policies often persisted at
+follow-up points ranging from one to several weeks, with narrative or story-like arguments associated
+with especially durable effects \cite{sheen2025_durable_attitude_change}. Notably, vivid memory of the
+AI interaction, rather than precise recall of specific arguments, emerged as an important predictor of
+lasting change, highlighting the role of experiential and relational factors in model-mediated
+persuasion \cite{sheen2025_durable_attitude_change}.
+
+\section{Source identity, AI disclosure, and trust}
+
+A separate but related body of research investigates how beliefs about the source of a
+message---in particular, whether it is human- or AI-generated---shape trust and evaluations of
+content. \textcite{schilke2025_transparency_dilemma} document a "transparency dilemma": across
+thirteen preregistered studies in domains such as grading, hiring, investment advice, design,
+and routine communication, actors who disclosed using generative AI were trusted less than those
+who did not, even when the objective quality of the work was held constant
+\cite{schilke2025_transparency_dilemma}. The trust penalty is partly explained by reduced
+perceptions of legitimacy, as AI-assisted work is seen as deviating from appropriate
+professional norms \cite{schilke2025_transparency_dilemma}.
+
+These findings interact with broader work on trust in humans versus artificial agents.
+Research on trust toward humans and AI systems suggests that trust in AI is related to, but not
+reducible to, dispositional trust in humans, and that people differentiate between human and
+machine sources when forming expectations about reliability and responsibility
+\cite{montag2023_trust_humans_vs_ai}. Studies of persuasive chatbots likewise show that bot
+"identity" and framing (for example, as an expert advisor versus a peer) influence both
+persuasion outcomes and interpersonal perceptions such as warmth, competence, and sincerity
+\cite{shi2020_effects_persuasive_dialogues_bots}. Collectively, this literature implies that
+perceived source identity (human vs.\ AI) and disclosure practices can alter trust, perceived
+legitimacy, and openness to influence, even when message content is held constant
+\cite{schilke2025_transparency_dilemma,montag2023_trust_humans_vs_ai,shi2020_effects_persuasive_dialogues_bots}.
+
+\section{Conversational style and AI debater personality}
+
+Beyond source identity, a growing literature examines how the conversational style or personality
+of a chatbot shapes user perceptions and persuasive impact. Drawing on the warmth--competence
+framework from social psychology, \textcite{deng2022_ambivalent_stereotypes_persuasion} and
+related work argue that communicators can be located along two primary dimensions---perceived
+warmth (friendliness, care) and competence (ability, expertise)---which jointly influence persuasion
+by affecting both source evaluations and message processing
+\cite{deng2022_ambivalent_stereotypes_persuasion}. In the context of text-based chatbots,
+\textcite{schwede2023_can_chatbots_be_persuasive} show that warmth and competence perceptions can
+be systematically manipulated through communication style, such as humanizing language and social
+cues \cite{schwede2023_can_chatbots_be_persuasive}.
+
+Experimental evidence supports the idea that distinct chatbot styles have differential persuasive
+effects. In a 2 (one- vs.\ two-sided message) $\times$ 3 (warm vs.\ competent vs.\ neutral
+communication style) experiment on purchase recommendations, a two-sided message increased purchase
+intention only when delivered by a warm or competent chatbot, not by a neutral one; warm style
+primarily enhanced source persuasiveness, whereas competent style primarily enhanced message
+persuasiveness \cite{schwede2023_can_chatbots_be_persuasive}. Further work on conveying chatbot
+personality through conversational cues finds that simple lexical and structural choices (e.g.,
+social-oriented versus responsive cues) induce distinct personality impressions and shifts in
+perceived warmth, competence, and trust, indicating that traits akin to "firm" versus "balanced
+and open-minded" debaters can be realized through style alone \cite{heppner2024_chatbot_personality_cues}.
+
+\section{Source attribution and within-debate stance dynamics}
+
+While the literature establishes that pre--post stance measurement is standard, an emerging and
+underexplored dimension is how participants' beliefs about opponent identity evolve *during* a
+debate, and whether real-time stance tracking across debate rounds reveals persuasion dynamics
+masked in summary measures. Research on source attribution indicates that people actively infer
+source characteristics from message content, and that misattribution—for instance, believing an
+AI-generated argument is human-authored or vice versa—shapes both immediate receptivity and
+post-hoc rationalization \cite{schilke2025_transparency_dilemma,montag2023_trust_humans_vs_ai}.
+Moreover, rounds of back-and-forth debate create dynamic conditions under which participants
+may revise their opponent beliefs and simultaneously adjust their stance; tracking both processes
+in parallel can illuminate how perceived source identity moderates incremental persuasion.
+Per-round measurement of stance, confidence, and evolving opponent perception—combined with
+post-debate justification of those inferences—provides a novel data layer for understanding
+how AI versus human argumentation shapes persuasion trajectories over an extended interaction.
+
+\section{Comprehension checks and between-round belief measurement}
+
+While per-round stance tracking captures \textit{when} persuasion occurs, complementary measurement
+approaches help validate \textit{what} drove that persuasion. Research on argument comprehension
+and learning demonstrates that checking whether individuals can accurately reiterate an opponent's
+position reveals depth of engagement and argument processing
+\cite{sternberg2013_cognitive_psychology_book}. When combined with contemporaneous belief measurement,
+comprehension-checking prevents conflating genuine persuasion (actual change in conviction) with
+superficial agreement or inattention. In educational contexts, elaborative retrieval tasks—where
+learners restate material in their own words—correlate strongly with durability of attitude change
+and reduced susceptibility to backsliding \cite{craik_lockhart_1972_levels_of_processing}.
+
+Similarly, research on metacognitive monitoring shows that explicit, prompted reflection on one's
+own beliefs during an ongoing interaction strengthens the connection between argument exposure and
+attitude change, because reflection amplifies awareness of the reasoning that supports current beliefs
+\cite{schommer1990_effects_reflection_critical_thinking}.
+Critically, between-round belief measurement—capturing stance shifts relative to specific AI arguments
+rather than relying on gross pre-post change—allows detection of which argument types and rhetorical
+strategies more effectively persuade, rather than attributing persuasion to opponent source or
+background variables alone \cite{durmus2024_measuring_persuasiveness}.
+
+When applied to interactive debate, between-round belief checks paired with argument comprehension
+assessment provide a research-grounded mechanism to (1) validate that participants engaged
+substantively with opponent arguments, (2) isolate persuasion to specific argument exchanges rather
+than systemic factors, and (3) generate fine-grained data on how AI versus human argumentation
+strategies differentially prompt belief revision. These measurements do not themselves constitute
+persuasion mechanisms; rather, they serve as methodological tools to isolate and quantify the
+persuasive impact of the opponent's argumentation.
+
+\section{Implications for debate-format studies of LLM persuasiveness}
+
+Synthesizing these streams of research highlights several design-relevant points for debate-format
+investigations of LLM persuasiveness. First, randomized trials of GPT\mbox{-}4 in online debates
+demonstrate that LLMs can be as persuasive as, and under personalization more persuasive than,
+human opponents, establishing debates as a realistic and informative testbed for AI persuasion
+\cite{salvi2025_chatgpt_debates}. Second, pre--post measurement of self-reported stance and
+confidence is an established method for quantifying persuasive impact in both AI-mediated political
+communication and model-centric evaluation studies, and can be extended to interactive debate
+scenarios \cite{argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,sheen2025_durable_attitude_change}.
+Extending this approach to between-round belief measurement enables detection of persuasion
+dynamics at finer granularity: tracking which specific argument exchanges correlate with stance
+shifts, and validating that observed changes reflect genuine processing of AI arguments rather
+than noise or inattention.
+
+Third, evidence on the transparency dilemma and on trust in AI indicates that whether debaters are
+believed to be human or AI, and whether AI use is disclosed, can meaningfully alter trust and
+perceived legitimacy, potentially moderating attitude change even when arguments are identical
+\cite{schilke2025_transparency_dilemma,montag2023_trust_humans_vs_ai}. Finally, findings on
+chatbot personality and communication style suggest that systematically varying an AI debater's
+style along warmth and competence dimensions---for example, contrasting a firm, highly assertive
+debater with a more balanced and open-minded counterpart---is likely to affect perceived source
+qualities and, in turn, persuasiveness
+\cite{schwede2023_can_chatbots_be_persuasive,heppner2024_chatbot_personality_cues}. Taken
+together, existing work provides a strong empirical and theoretical foundation for studying
+LLM-mediated persuasion in debate formats that employ between-round belief measurement to
+isolate AI persuasive effects, track stance change relative to specific argument exchanges,
+and validate genuine argument processing, while manipulating perceived source identity and
+conversational style \cite{salvi2025_chatgpt_debates,argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,schilke2025_transparency_dilemma,schwede2023_can_chatbots_be_persuasive}.

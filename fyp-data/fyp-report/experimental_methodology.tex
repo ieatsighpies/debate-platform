@@ -1,0 +1,343 @@
+\section{Overview}
+
+This chapter describes the experimental methodology used to analyze bidirectional persuasion.
+The debate platform serves as the data collection instrument, while the analysis focuses on
+how AI personalities influence human belief change and how human arguments influence the
+recorded belief values of AI agents across rounds.
+There will be a control group of human--human debates to benchmark the AI's persuasive impact.
+
+A key structural asymmetry in the dataset is that human participants complete between-round
+reflections (paraphrases of the opponent's argument), whereas AI agents do not. This means
+reflection quality is analyzable only on the human side and cannot be used as a predictor
+in human-to-AI models.
+
+
+\section{Study Design}
+
+The study uses a controlled, between-conditions design with repeated measures over debate rounds.
+Participants are assigned to debates with either AI opponents configured with distinct personalities
+(firm, balanced, open-minded) or human opponents, depending on the experimental condition.
+Each debate follows the same round structure, with arguments submitted in alternating turns and
+belief checks collected after each round.
+
+
+\section{Participants and Recruitment}
+
+Participants are recruited according to institutional guidelines and provided with an informed
+consent statement describing the debate task and data usage.
+Inclusion criteria require completion of the full debate protocol, including per-round belief
+checks and the post-debate survey.
+
+
+\section{Conditions and Randomization}
+
+Participants are assigned to AI personality conditions with an operational goal of
+maintaining an even spread across the three AI personalities and the human-only
+control mode. In practice, assignment is monitored and adjusted through the
+administrative matchmaking workflow to keep condition counts as balanced as
+feasible during data collection.
+To prevent source bias, opponent identity is hidden during the debate.
+Topic selection and initial stance are not strictly balanced across conditions;
+participants select topics and initial stances freely,
+so some imbalance may remain across conditions.
+
+
+\section{Procedure}
+
+\begin{enumerate}
+    \item Participant selects a debate topic and indicates initial stance and confidence.
+    \item The platform assigns an opponent and starts the structured debate.
+    \item After each round, the participant records belief, confidence, perceived influence,
+    and submits a short reflection paraphrasing the opponent's argument.
+    \item After the final round, the participant completes the post-debate survey, including
+    opponent attribution and confidence in that attribution.
+\end{enumerate}
+
+\section{Measures}
+
+\subsection{Pre-Debate Openness}
+
+Before the debate begins, each participant completes a single-item pre-debate survey
+(\texttt{preDebateSurvey.player1}) selecting one of three options:
+\textit{firm on my stance}, \textit{convinced of my stance}, or \textit{open to changing my
+mind}. This variable is treated as a baseline openness-to-persuasion covariate in all
+persuasion models and is expected to moderate the size of within-debate belief shifts.
+
+\subsection{Human Belief Change}
+
+Human belief is captured on a continuous scale (0--100) where 0 indicates "for" and 100 indicates
+"against". This value is recorded before the debate and after each round. Confidence is measured on
+a 0--100 scale. Per-round belief change is computed as $\Delta belief_{r} = belief_{r} - belief_{r-1}$.
+
+\subsection{AI Belief Change}
+
+The platform records a \texttt{beliefValue} per round for all debate participants, including AI
+agents. This value is available for \texttt{player2} in all conditions---both the AI opponent in
+AI-condition debates and the human opponent in human--human debates---enabling direct measurement
+of per-round belief change on the same 0--100 scale as human participants.
+
+The key asymmetry between human and AI participants is the absence of reflections: human
+participants complete a between-round paraphrase task (reflection) after each round, whereas AI
+agents produce no corresponding reflection. This means reflection quality is analyzable only as
+a human mediator variable and cannot be computed for the AI side.
+
+AI \texttt{beliefValue} should be interpreted with care: because the AI is a prompted language model
+rather than an agent with genuine psychological attitudes, the recorded value reflects the model's
+conditioned response rather than an authentic belief state. Nonetheless, it provides a consistent,
+quantitative indicator of how the AI's expressed position shifts in response to human arguments
+across rounds, and is treated as such in the analysis.
+
+As a supplementary measure, AI arguments are scored per round for concession language (e.g.\
+explicit acknowledgement of the opponent's point, hedged claims, modified positions) during
+data preprocessing, prior to statistical analysis. Concession scores are derived from argument
+text using a lightweight rubric via GPT-4o mini or pattern matching on concessive markers, and
+stored as a per-round feature alongside the belief-value trajectory.
+
+\subsection{Reflection and Acknowledgement}
+
+Between-round reflections comprise two components captured in separate fields:
+
+\begin{itemize}
+    \item \textbf{Paraphrase} (\texttt{reflections.paraphrase}): a short free-text summary of the
+    opponent's most recent argument. Reflection quality is operationalized as a GPT-4o-mini rubric score (1--5 integer scale)
+    across five dimensions---
+    \textit{faithfulness} (accuracy of the paraphrase relative to the original argument),
+    \textit{specificity} (presence of concrete, substantive claims over generic filler),
+    \textit{engagement} (capture of reasoning, tradeoffs, or mechanisms beyond surface conclusions), and
+    \textit{clarity} (coherence and clear attribution to the opponent), and
+    \textit{charity} (fair representation of the opponent's position without strawmanning)---plus
+    a holistic \textit{overall} score (\texttt{reflection\_quality}).
+    It is used to test whether comprehension mediates persuasion.
+    \item \textbf{Acknowledgement} (\texttt{reflections.acknowledgement}): a separate free-text or
+    binary response indicating whether the participant conceded any validity in the opponent's
+    argument. In analysis this is binarized as \texttt{acknowledged} (yes/no) and treated as a
+    behavioural persuasion-adjacent outcome: a participant who acknowledges the opponent's point
+    mid-debate may be further along the persuasion pathway than belief-value change alone captures.
+\end{itemize}
+
+
+\subsection{Argument Persuasiveness Analysis}
+
+Argument persuasiveness is assessed by linking argument features to observed belief change. Each
+argument is scored on a 1--5 integer scale across five dimensions by GPT-4o mini using a
+structured rubric, plus a holistic overall score:
+
+\begin{itemize}
+    \item \textbf{Evidence Quality}: concrete evidence, examples, citations, or detailed explanation supporting the claim
+    \item \textbf{Logical Coherence}: clear claim-reason-support structure, internal consistency, and sound reasoning
+    \item \textbf{Responsiveness}: directly engages with the opponent's prior argument rather than talking past it
+    \item \textbf{Nuance and Concession}: acknowledges counterpoints, limitations, or conditions; avoids false absolutes
+    \item \textbf{Clarity}: readable, unambiguous, and well-organised; meaning is immediately clear
+    \item \textbf{Overall} (\texttt{arg\_quality}): holistic composite integrating all five dimensions above
+\end{itemize}
+
+Automated features (used as exploratory controls) may include argument length, certainty or hedging
+markers, and sentiment intensity. A composite persuasiveness score can be constructed from rubric
+dimensions and validated by testing whether higher scores predict larger per-round belief shifts.
+
+\subsection{Opponent Attribution and AI Awareness Effect}
+
+The post-debate survey records several related variables:
+
+\begin{itemize}
+    \item \textbf{Opponent perception} (\texttt{postDebateSurvey.*OpponentPerception}): whether the
+    participant believed their opponent was human, AI, or unsure.
+    \item \textbf{Perception confidence} (\texttt{postDebateSurvey.*PerceptionConfidence}): confidence
+    in that attribution on a 1--5 scale.
+    \item \textbf{Suspicion timing} (\texttt{postDebateSurvey.*SuspicionTiming}): which round range
+    the participant first suspected they were debating an AI.
+    \item \textbf{Detection cues} (\texttt{postDebateSurvey.*DetectionCues}): which features of the
+    opponent's behaviour triggered that suspicion (multi-select).
+    \item \textbf{AI awareness effect} (\texttt{postDebateSurvey.*AiAwarenessEffect}): whether knowing
+    or suspecting the opponent was an AI made the participant feel the arguments were more persuasive,
+    less persuasive, or made no difference. This is the primary source-credibility measure; a
+    \textit{less persuasive} response would indicate that AI disclosure reduces persuasive impact,
+    consistent with source-derogation theory, while \textit{more persuasive} would suggest participants
+    attribute superior knowledge or objectivity to AI.
+    \item \textbf{AI awareness justification} (\texttt{postDebateSurvey.*AiAwarenessJustification}):
+    free-text elaboration of the above response, used for qualitative coding.
+\end{itemize}
+
+Opponent attribution and AI awareness effect are both tested as moderators of persuasion in the
+statistical models.
+
+
+\section{Data Quality and Exclusion Criteria}
+
+Debates are excluded if they are incomplete, missing per-round belief checks, or contain inconsistent
+round sequencing.
+Additional exclusions may be applied for implausible response times or repeated non-responses.
+All exclusions are reported transparently.
+
+
+\section{Statistical Analysis}
+
+\subsection{AI to Human Persuasion}
+
+Human belief change is modeled with linear mixed-effects regression to account for repeated measures.
+A typical model uses per-round belief change as the dependent variable, with fixed effects for AI
+personality, round number, and their interaction, and random intercepts for participant and topic.
+
+
+\subsection{Human to AI Persuasion}
+
+AI per-round belief change ($\Delta belief^{AI}_{r} = beliefValue_r - beliefValue_{r-1}$) is
+modeled symmetrically with the human model: linear mixed-effects regression with human argument
+quality indicators as fixed-effect predictors and random intercepts by debate and topic.
+A significant positive association indicates that stronger human arguments elicit larger shifts
+in the AI's recorded belief value.
+
+Reflection quality is not included as a predictor for this direction because AI agents do not
+complete reflections. As a supplementary analysis, per-round AI concession scores (derived from
+argument text) are regressed on the same human argument quality indicators to assess whether
+concession language and belief-value change covary as expected.
+
+\subsection{Moderation and Mediation}
+
+Opponent attribution and AI awareness effect (whether suspecting an AI opponent increased or
+decreased perceived persuasiveness) are both tested as moderators by including interaction terms
+with personality condition. Pre-debate openness is included as a covariate.
+
+Reflection quality and acknowledgement are each tested as mediators of \emph{human} belief change.
+
+\subsection{Robustness Checks}
+
+Robustness checks include re-estimating models after removing participants who always select
+"unsure", re-running models on debates with complete timing logs, and testing alternative
+operationalizations of belief change (absolute change vs.\ directional change).
+
+
+\section{Reporting}
+
+Results are reported with effect sizes, confidence intervals, and appropriate corrections for
+multiple comparisons when applicable. Visualizations include belief trajectories by personality
+condition and distributions of per-round belief change.
+
+\section{ML Modeling Plan}
+
+This section outlines a machine learning-oriented approach to modeling persuasion outcomes.
+The objective is predictive accuracy with controlled interpretability, while avoiding leakage
+across rounds and participants.
+
+\subsection{Prediction Targets}
+
+Two predictive tasks are defined:
+\begin{itemize}
+    \item \textbf{AI-to-Human Persuasion}: Predict per-round belief change $\Delta belief_r$ (regression)
+    or the probability of a stance flip (classification).
+    \item \textbf{Human-to-AI Persuasion}: Predict per-round AI belief change $\Delta belief^{AI}_{r}$ (regression) from human argument quality features. Note that reflection features are excluded from this model because AI agents do not complete between-round reflections; reflection quality is a human-only mediator variable.
+\end{itemize}
+
+\subsection{Feature Construction}
+
+Features are computed only from information available up to the current round to avoid leakage:
+
+\begin{itemize}
+    \item \textbf{Structured features}: topic (\texttt{topic\_id}), round number, condition
+    (\texttt{condition\_enc}), initial stance (\texttt{stance\_enc}), debate length
+    (\texttt{n\_rounds}), first-player indicator (\texttt{first\_player\_p1}),
+    confidence, perceived influence, own and opponent argument length and quality
+    (\texttt{own\_arg\_quality}, \texttt{opponent\_arg\_quality}), reflection
+    presence indicator (\texttt{has\_reflection}), reflection length and quality,
+    acknowledgement (\texttt{acknowledged}), and pre-debate openness
+    (\texttt{presurvey\_enc}).
+    \item \textbf{Pre-debate openness}: \texttt{preDebateSurvey.player1} label-encoded as a debate-level
+    covariate indicating baseline openness to persuasion.
+    \item \textbf{Reflection features}: rubric score or embedding similarity for reflection quality;
+    binary acknowledgement flag (\texttt{acknowledged}).
+    \item \textbf{Text-derived features}: sentence embeddings of arguments, certainty/hedging markers,
+    concession markers, and sentiment intensity (exploratory).
+\end{itemize}
+
+\subsection{Data Dictionary (Analysis Variables)}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Variable} & \textbf{Source Field} & \textbf{Notes} \\
+\midrule
+Topic ID & \texttt{topicId} & Debate topic index \\
+Topic text & \texttt{topicQuestion} & Used for topic labeling \\
+Round number & \texttt{currentRound} / \texttt{beliefHistory.round} & Per-round analysis \\
+Pre-debate openness & \texttt{preDebateSurvey.player1} & firm / convinced / open (3-class) \\
+Argument text & \texttt{arguments.text} & Feature extraction input \\
+Argument stance & \texttt{arguments.stance} & For/against indicator \\
+Argument author (raw) & \texttt{arguments.submittedBy} & Raw submitter identity (human / ai) \\
+AI model name & \texttt{player2AIModel} & Stored model identifier for AI opponents (e.g., firm-debater) \\
+Arg.~player role & \texttt{arg\_player\_role} & Derived: player1 / player2 (consistent across all conditions) \\
+Belief value & \texttt{beliefHistory.beliefValue} & 0--100 scale \\
+Belief label & \texttt{beliefHistory.belief} & for/against/unsure \\
+Confidence & \texttt{beliefHistory.confidence} & 0--100 scale \\
+Perceived influence & \texttt{beliefHistory.influence} & 0--100 scale \\
+Reflection paraphrase & \texttt{reflections.paraphrase} & Free-text paraphrase of opponent \\
+Acknowledgement & \texttt{reflections.acknowledgement} & Binarized yes/no \\
+Opponent type & \texttt{player2Type} & human or ai \\
+AI personality & \texttt{gameMode} / condition label & firm / balanced / open-minded (derived) \\
+Initial stance & \texttt{player1StanceChoice} & for/against/unsure \\
+Post-debate attribution & \texttt{postDebateSurvey.*OpponentPerception} & human/ai/unsure \\
+Attribution confidence & \texttt{postDebateSurvey.*PerceptionConfidence} & 1--5 scale \\
+Suspicion timing & \texttt{postDebateSurvey.*SuspicionTiming} & Round range of first suspicion \\
+AI awareness effect & \texttt{postDebateSurvey.*AiAwarenessEffect} & more/less/no\_difference/not\_sure \\
+Post-debate stance strength & \texttt{postDebateSurvey.*StanceStrength} & 1--7 scale \\
+Post-debate stance confidence & \texttt{postDebateSurvey.*StanceConfidence} & 1--7 scale \\
+\bottomrule
+\end{tabular}
+\caption{Data dictionary linking analysis variables to debate schema fields.}
+\end{table}
+
+\subsection{Model Families}
+
+Models are compared in increasing capacity:
+\begin{itemize}
+    \item \textbf{Elastic Net Regression}: strong baseline with interpretability and regularization.
+    \item \textbf{Gradient-Boosted Trees (XGBoost/LightGBM)}: captures nonlinear interactions across
+    topic, personality, and round.
+    \item \textbf{Embedding-Based Models}: sentence embeddings of arguments combined with regression or
+    tree models to incorporate semantic content.
+    \item \textbf{LLM-Based Modeling}: use GPT-4o mini to generate embedding features or
+    classify per-round belief change from argument text with structured metadata; use as an exploratory,
+    higher-capacity benchmark rather than the primary inference model. GPT-4o nano is typically cheaper
+    per token than GPT-4o mini, with modest losses in quality; GPT-4o mini offers better semantic fidelity
+    at higher cost and may be preferred if the dataset is small.
+\end{itemize}
+
+\subsection{Training and Validation}
+
+All completed debates are retained for analysis; no balanced sub-sampling is applied.
+The dataset comprises approximately 90 debates (20--28 per condition), yielding roughly
+300--400 per-round observations after flattening belief histories.
+
+To preserve independence across repeated measures, model evaluation uses 5-fold
+\texttt{GroupKFold} cross-validation grouped by \texttt{debate\_id}, ensuring that all
+rounds from the same debate appear in either the training or test fold but never both.
+Condition imbalance across groups is handled natively: the LME treats condition as a
+categorical fixed effect, and for ML models the group-stratified folds preserve the
+condition distribution within each split. Hyperparameter tuning for Elastic Net uses a
+nested inner 3-fold CV on the training portion of each outer fold.
+
+Topics are included as a fixed covariate rather than a grouped splitting criterion;
+with fewer than five distinct topics and 90 debates, topic-stratified splits would
+produce cells too small to estimate reliably.
+
+\subsection{Evaluation Metrics}
+
+\begin{itemize}
+    \item \textbf{Regression}: MAE, RMSE, and $R^2$ for predicting $\Delta belief_r$.
+    \item \textbf{Classification}: AUC-ROC and F1-score for stance-flip prediction.
+\end{itemize}
+
+\subsection{Interpretability}
+
+Interpretation is provided using:
+\begin{itemize}
+    \item Elastic Net coefficients for directional effects.
+    \item Feature importance and SHAP values for tree models.
+    \item Partial dependence plots for personality $\times$ round interactions.
+\end{itemize}
+
+\subsection{Robustness Checks}
+
+Models are re-estimated after excluding participants who consistently select "unsure" in belief checks and after
+removing debates with incomplete timing logs. Alternative operationalizations of belief change
+(absolute vs. directional) are also tested to validate stability.

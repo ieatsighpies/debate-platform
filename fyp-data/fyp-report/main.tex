@@ -1,0 +1,77 @@
+% The FYP template is designed according to NTU SCSE FYP guidelines on https://www3.ntu.edu.sg/scse/fyp/UsefulInfo/Report%20Guide.pdf.
+
+% Credit
+% Original version by Vincent Ribli
+% https://www.overleaf.com/latex/templates/ntu-scse-fyp-template/kwdtcbqmjctk
+
+% Revised by Prof Loy Chen Change
+% 23 Aug 2024 - Replace SCSE with CCDS
+
+\documentclass[pdflatex, 12pt, a4paper]{report}
+\usepackage[top=3cm, bottom=3cm, left=3.5cm, right=3cm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{parskip}
+\usepackage{amsfonts}
+\usepackage[sorting=none]{biblatex}
+
+\addbibresource{bib.bib}
+\setstretch{1.5}
+\setlength{\cftfigindent}{0pt}
+\setlength{\cfttabindent}{0pt}
+\renewcommand{\cftdotsep}{1}
+
+% change the following
+\title{\uppercase{Exploring Persuasiveness of AI Chatbots in a Debate Format}}
+\newcommand\fypcode{CCDS}
+\author{Asher Lim Guojun}
+\date{2026}
+\newcommand\degree{Bachelor of Computing in Data Science and Artificial Intelligence}
+
+\begin{document}
+\input{cover.tex}
+\input{title.tex}
+
+\setcounter{page}{1}
+\pagenumbering{roman}
+
+
+\pagebreak
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+
+\pagebreak
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+\pagebreak
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{abstract.tex}
+\input{acknowledgements.tex}
+\input{introduction.tex}
+\input{litreview.tex}
+\chapter{System Design and Architecture}
+\input{system_design_architecture.tex}
+\chapter{Experimental Methodology}
+\input{experimental_methodology.tex}
+\chapter{Conclusion and Future Work}
+\input{conclusion_future_work.tex}
+
+
+\cleardoublepage
+\printbibliography
+
+% If you have appendices
+\appendix
+\input{appendix_implementation_details.tex}
+
+\end{document}

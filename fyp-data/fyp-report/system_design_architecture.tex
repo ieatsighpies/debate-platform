@@ -1,0 +1,684 @@
+%% System Design & Architecture Chapter
+%% This file is included in main.tex as a chapter
+%% The chapter heading should be defined in main.tex before including this file
+
+\section{Introduction}
+
+This chapter provides comprehensive technical documentation of the Debate Platform's system design
+and implementation. Chapter 1 (Introduction) outlines the core research objectives, system requirements,
+and technology stack. Here, the focus is on how specific design choices enable rigorous, unbiased data
+collection for empirical analysis:
+
+\begin{itemize}
+    \item \textbf{Information hiding} to prevent source bias and preserve experimental validity
+    \item \textbf{WebSocket architecture} to capture real-time belief updates and debate events
+    \item \textbf{Between-round reflection} as a methodological tool for measuring AI persuasion
+    \item \textbf{Database schema design} to record what data is collected and why it matters
+\end{itemize}
+
+For overall system architecture, refer to the appendix (Appendix A) for detailed implementation-level documentation,
+including code structure, API endpoints, WebSocket event flows, and database schema definitions.
+
+\subsection{Architecture Summary}
+
+The Debate Platform employs a client-server architecture:
+React 18.2 frontend (with WebSocket client) communicates with Node.js/Express backend (with WebSocket server),
+persisting to MongoDB. Authentication is JWT-based for stateless scaling.
+AI opponents are powered by OpenAI GPT-4o mini with configurable personalities (firm, balanced, open-minded)
+that modulate rhetorical strategies. Real-time communication via WebSocket enables instant argument visibility
+and per-round belief tracking required for bidirectional persuasion analysis.
+Information hiding is enforced client-side to prevent source bias.
+
+\subsubsection{Design Principles}
+
+The architecture prioritizes experimental integrity and real-time data collection:
+
+\begin{itemize}
+    \item \textbf{Real-Time Responsiveness}: WebSocket for instant argument visibility and belief tracking
+    \item \textbf{Data Integrity}: Complete debate records persisted with stance evolution tracked per round
+    \item \textbf{Information Hiding}: Strict client-side enforcement of source anonymity (human vs. AI)
+    \item \textbf{Stateless Backend}: JWT tokens enable scaling without session persistence
+    \item \textbf{Asynchronous Processing}: Non-blocking AI generation preserves UI responsiveness
+\end{itemize}
+
+\subsection{Frontend Architecture}
+
+\subsubsection{Overview}
+
+The frontend is a React 18.2 SPA built with Vite. It communicates with the backend via REST API for
+data persistence and WebSocket for real-time debate events.
+UI state is managed via two primary React Context providers:
+\texttt{AuthContext} (authentication and role-based access) and
+\texttt{SocketContext} (WebSocket connection and room subscriptions).
+Components are organized by user role: participant (debate interaction, surveys)
+ and admin (monitoring, matchmaking, user management).
+ The UI is designed to enforce the experimental protocol by gating argument submission,
+ prompting between-round belief checks, and capturing reflection responses in a consistent format
+ that maps directly to analysis variables.
+
+\subsubsection{Data Collection Interface}
+
+The participant UI is structured to enforce the experimental protocol and capture analysis-ready data:
+\begin{itemize}
+    \item Argument submission is gated by turn order to preserve round structure
+    \item Between-round prompts capture belief, confidence, and perceived influence
+    \item Reflection prompts elicit short paraphrases of the opponent's argument
+    \item Post-debate surveys record opponent attribution and perception confidence
+\end{itemize}
+Admin views emphasize monitoring and data completeness (matchmaking status, debate lifecycle, and
+survey completion), ensuring each debate yields a full record for analysis.
+
+\subsection{Backend Architecture}
+
+\subsubsection{Overview}
+
+The backend is a Node.js/Express server implementing stateless JWT authentication for horizontal scaling.
+It follows modular separation: routes (REST endpoints and WebSocket handlers),
+middleware (auth, rate limiting), models (Mongoose schemas),
+services (OpenAI integration, AI argument generation), and utilities (matchmaking, cleanup jobs).
+Socket.io provides real-time event streaming to debate participants and admins with room-based isolation.
+These services are organized to preserve data integrity: every argument, belief update, and reflection is
+validated, timestamped, and persisted as part of a complete debate record suitable for empirical analysis.
+Background jobs enforce experimental integrity: debate cleanup (stale entries),
+guest session cleanup (session expiration), and auto-matching based on availability.
+
+\subsubsection{Data Collection Pipeline}
+
+The backend is organized around reliable capture of debate interactions:
+routes validate and accept arguments, belief updates, and reflections; models enforce schema-level
+constraints; services generate AI responses under controlled personalities; and utilities maintain
+debate lifecycle integrity (matching, cleanup, turn validation). This pipeline ensures each debate
+produces a complete, timestamped record suitable for downstream analysis.
+\subsection{Database Design}
+\subsubsection{Overview}
+
+MongoDB's document-based model aligns with the nested structure of debate data.
+Unlike relational databases, MongoDB allows flexible schemas that evolve with feature development.
+Each Debate document is self-contained with all arguments, surveys, and metadata embedded,
+enabling fast single-query loads of complete debate data. This design directly supports the analysis
+pipeline: all variables required for persuasion measurement (arguments, per-round belief updates,
+reflection text, and opponent perception) are co-located and can be exported without expensive joins.
+\subsubsection{Data Models}
+
+\paragraph{User Schema}
+
+\textbf{User Model Fields}
+\begin{verbatim}
+{
+  _id: ObjectId,
+  username: String (unique, required. Autogenerated for guests),
+  passwordHash: String (required only for non-guests),
+  role: String (admin|participant, default: participant),
+  isGuest: Boolean (default: false),
+  createdBy: ObjectId (reference to User who created this account),
+  createdAt: Date (default: now),
+  lastLogin: Date (default: null)
+}
+\end{verbatim}
+
+\paragraph{Debate Schema}
+
+\textbf{Debate Model Fields}
+\begin{verbatim}
+{
+  _id: ObjectId,
+  topicId: Number,
+  topicQuestion: String,
+  gameMode: String (human-human|human-ai),
+  player1UserId: ObjectId,
+  player1Stance: String (for|against),
+  player1StanceChoice: String(for|against|unsure) (if user chooses unsure, they will be randomly assigned for/against),
+  player2Type: String (human|ai),
+  player2UserId: ObjectId,
+  player2AIModel: String,
+  player2AIPrompt: String,
+  player2Stance: String (for|against),
+  player2StanceChoice: String(for|against|unsure) (AI/unsure human opponents will be assigned opposite of player1Stance),
+  currentBelief: {
+    player1: String (for|against|unsure),
+    player2: String (for|against|unsure)
+  }
+  currentBeliefValue: {
+    player1: Number (0-100) (0: for, 100: against, 50: unsure),
+    player2: Number (0-100) (0: for, 100: against, 50: unsure)
+  },
+    status: String (waiting|active|survey_pending|completed|abandoned),
+  currentRound: Number,
+  maxRounds: Number,
+  firstPlayer: String (for|against),
+  nextTurn: String (for|against),
+  aiEnabled: Boolean,
+  aiResponseDelay: Number (seconds),
+  aiLastResponseAt: Date,
+  arguments: [{
+    stance: String(for|against),
+    text: String,
+    round: Number,
+    submittedBy: String(human|ai),
+    timestamp: Date
+  }],
+  preDebateSurvey: {
+    player1: String(firm_on_stance|convinced_of_stance|open_to_change),
+    player2: String(firm_on_stance|convinced_of_stance|open_to_change),
+  },
+  postDebateSurvey: {
+    player1: String(strengthened|slightly_strengthened|no_effect|slightly_weakened|weakened),
+    player2: String(strengthened|slightly_strengthened|no_effect|slightly_weakened|weakened),
+    player1StanceStrength: Number(1-7),
+    player2StanceStrength: Number(1-7),
+    player1StanceConfidence: Number(1-7),
+    player2StanceConfidence: Number(1-7),
+    player1OpponentPerception: String(human|ai|unsure),
+    player2OpponentPerception: String(human|ai|unsure),
+    player1PerceptionConfidence: Number(1-5),
+    player2PerceptionConfidence: Number(1-5),
+    player1SuspicionTiming: String(round_1_2|round_3_4|round_5_7|round_8_12|round_13_17|round_18_20|never_suspected),
+    player2SuspicionTiming: String(round_1_2|round_3_4|round_5_7|round_8_12|round_13_17|round_18_20|never_suspected),
+    player1DetectionCues: [String],
+    player2DetectionCues: [String],
+    player1DetectionOther: String,
+    player2DetectionOther: String,
+    player1AiAwarenessEffect: String(no_difference|less_persuasive|more_persuasive|not_sure),
+    player2AiAwarenessEffect: String(no_difference|less_persuasive|more_persuasive|not_sure),
+    player1AiAwarenessJustification: String,
+    player2AiAwarenessJustification: String,
+    beliefHistory: [{
+        round: Number,
+        userId: ObjectId,
+        player: String(player1|player2),
+        belief: String(for|against|unsure),
+        beliefValue: Number(0-100),
+        influence: Number(0-100),
+        confidence: Number(0-100),
+        skipped: Boolean,
+        createdAt: Date
+    }],
+    reflections: [{
+        round: Number,
+        userId: ObjectId,
+        paraphrase: String,
+        acknowledgement: String,
+        timestamp: Date
+    }]
+  },
+  createdAt: Date,
+  startedAt: Date,
+  completedAt: Date,
+  lastActivityAt: Date,
+  matchedBy: ObjectId,
+  earlyEndVotes: {
+    player1Voted: Boolean,
+    player2Voted: Boolean,
+    humanVoted: Boolean,
+    player1Timestamp: Date,
+    player2Timestamp: Date,
+    expired: Boolean
+  },
+  completionReason: String
+}
+\end{verbatim}
+
+\subsubsection{Indexing Strategy}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Collection} & \textbf{Index} & \textbf{Rationale} \\
+\midrule
+User & username & Guest/user lookup \\
+User & isGuest & Filter guest users \\
+Debate & player1UserId & User debate history \\
+Debate & player2UserId & Opponent debate history \\
+Debate & status & Active debate queries \\
+Debate & createdAt & Sorting by date \\
+\bottomrule
+\end{tabular}
+\caption{Database Indexes}
+\end{table}
+
+\subsection{Real-Time Communication}
+
+\subsubsection{Overview}
+
+Real-time communication is critical for the debate experience and for data fidelity.
+Users expect immediate feedback when they submit arguments and instant visibility
+when opponents respond, while the study requires low-latency belief capture tied
+to specific argument exchanges. Socket.io provides bidirectional communication over WebSocket,
+with automatic fallback to polling for incompatible clients.
+
+The communication model is event-based: clients emit events to the server
+(e.g., submitArgument), the server processes them and broadcasts updates to
+all participants (e.g., argumentAdded). This decouples UI logic from network concerns.
+
+\subsubsection{WebSocket Events}
+
+The platform uses Socket.IO for real-time bidirectional communication.
+All events are namespace-scoped to prevent conflicts.
+Security is enforced via JWT token validation on connection.
+
+\paragraph{Client to Server Events (Client Emits)}
+
+\begin{enumerate}
+    \item \textbf{join:admin}
+    \begin{itemize}
+        \item Triggered: Admin user connects to dashboard
+        \item Payload: None (token passed in handshake auth)
+        \item Effect: Validates JWT, verifies admin role, joins socket to \texttt{'admin'} room
+        \item Logs: \texttt{[Socket] Client joined admin room: \{socket.id\}}
+    \end{itemize}
+
+    \item \textbf{join:debate}
+    \begin{itemize}
+        \item Triggered: Participant enters active debate session
+        \item Payload: \texttt{debateId} (ObjectId string)
+        \item Effect: Joins socket to room \texttt{debate:\{debateId\}}, enables debate-specific event delivery
+        \item Logs: \texttt{[Socket] Client joined debate room: \{debateId\}}
+    \end{itemize}
+
+    \item \textbf{leave:debate}
+    \begin{itemize}
+        \item Triggered: Participant exits debate or navigates away
+        \item Payload: \texttt{debateId} (ObjectId string)
+        \item Effect: Removes socket from room \texttt{debate:\{debateId\}}
+        \item Logs: \texttt{[Socket] Client left debate room: \{debateId\}}
+    \end{itemize}
+\end{enumerate}
+
+\paragraph{Server to Client Events (Server Broadcasts)}
+
+\begin{enumerate}
+    \item \textbf{debate:created}
+    \begin{itemize}
+        \item Recipient: \texttt{admin} room
+        \item Trigger: New waiting debate created via \texttt{POST /api/debates/join}
+        \item Payload: \texttt{\{debateId, gameMode, topicId\}}
+        \item Effect: Admin dashboards see new debate in queue
+    \end{itemize}
+
+    \item \textbf{debate:started}
+    \begin{itemize}
+        \item Recipients: Room \texttt{debate:\{debateId\}}, \texttt{admin} room
+        \item Trigger: Player2 joins (human-human) or admin matches AI (human-ai)
+        \item Payload: \texttt{\{debateId, firstPlayer: 'for' | 'against'\}}
+        \item Effect: Both participants notified debate is active; first player announced;
+        if AI goes first, opening argument generated
+    \end{itemize}
+
+    \item \textbf{debate:argumentAdded}
+    \begin{itemize}
+        \item Recipients: Room \texttt{debate:\{debateId\}}, \texttt{admin} room
+        \item Trigger: Player submits argument via \texttt{POST /api/debates/\{debateId\}/argument}
+        \item Payload: \texttt{\{debateId, argument: \{stance, text, round, submittedBy\},
+        status, currentRound, nextTurn\}}
+        \item Effect: Real-time argument visibility for opponent; turn passes; if opponent
+        is AI, response auto-triggered after contextual delay
+    \end{itemize}
+
+    \item \textbf{debate:roundAdvanced}
+    \begin{itemize}
+        \item Recipients: Room \texttt{debate:\{debateId\}}, \texttt{admin} room
+        \item Trigger: Both players submit belief updates for current round
+        \item Payload: \texttt{\{debateId, currentRound, status, nextTurn\}}
+        \item Effect: Round counter increments; if max rounds reached, status
+        becomes \texttt{completed}; otherwise next round begins
+    \end{itemize}
+
+    \item \textbf{debate:completed}
+    \begin{itemize}
+        \item Recipients: Room \texttt{debate:\{debateId\}}, \texttt{admin} room
+        \item Trigger: Natural completion (20 rounds), mutual early-end agreement,
+        admin force-end, or AI vote timeout
+        \item Payload: \texttt{\{debateId, reason: String\}}
+        \item Effect: UI transitions to post-debate survey; results finalized; admin
+        sees debate moved to completed list
+    \end{itemize}
+
+    \item \textbf{debate:cancelled}
+    \begin{itemize}
+        \item Recipients: All connected sockets (global broadcast)
+        \item Trigger: Debate creator cancels waiting debate via
+        \texttt{DELETE /api/debates/\{debateId\}/cancel}
+        \item Payload: \texttt{\{debateId\}}
+        \item Effect: Waiting debate removed from all client queues
+    \end{itemize}
+
+    \item \textbf{debate:earlyEndVote}
+    \begin{itemize}
+        \item Recipients: Room \texttt{debate:\{debateId\}}, admin room
+        \item Trigger: Player votes to end via \texttt{POST /api/debates/\{debateId\}/vote-end},
+        revokes vote, or AI decides to vote
+        \item Payload: \texttt{\{debateId, votes: \{player1Voted: Boolean, player2Voted: Boolean\}\}}
+        \item Effect: Both players see vote status; if both true in human-human mode,
+        debate auto-completes; in human-AI mode, triggers AI handler
+    \end{itemize}
+
+    \item \textbf{debates:cleanup}
+    \begin{itemize}
+        \item Recipients: \texttt{admin} room
+        \item Trigger: Scheduled cleanup job detects stale debates (no activity for threshold period)
+        \item Payload: \texttt{\{reason: String, cleanedCount: Number\}}
+        \item Effect: Admin dashboards refresh to reflect cleaned-up debates
+    \end{itemize}
+
+    \item \textbf{Connection/Disconnection Events}
+    \begin{itemize}
+        \item \texttt{connect}: Socket successfully connected to server
+        \item \texttt{disconnect}: Socket disconnected (network, logout, server restart)
+        \item \texttt{reconnect}: Socket automatically reconnected after disconnection
+        \item \texttt{connect\_error}: Connection failed (token expired, auth denied)
+        \item Reconnection: Automatic with exponential backoff (max 5 attempts, 1-5s delay)
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Room Architecture}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Room} & \textbf{Members} & \textbf{Events Received} \\
+\midrule
+\texttt{admin} & All connected admin sockets & All admin-level events \\
+\texttt{debate:\{id\}} & Participants + admin observers & Debate-specific events \\
+Global (no room) & N/A & \texttt{debate:cancelled} \\
+\bottomrule
+\end{tabular}
+\caption{WebSocket Room Structure}
+\end{table}
+
+\subsubsection{Event Broadcasting Pattern}
+
+Most debate events follow a dual-broadcast pattern for transparency:
+\begin{itemize}
+    \item \textbf{Debate room broadcast}: Participants in debate receive real-time event
+    \item \textbf{Admin room broadcast}: All connected admins receive event for monitoring
+    \item \textbf{Exception}: \texttt{debate:created} → \texttt{admin} only;
+    \texttt{debate:cancelled} → global broadcast
+\end{itemize}
+
+\subsubsection{Event Flow Example: Argument Submission}
+
+\begin{enumerate}
+    \item Participant submits argument text via UI
+    \item Frontend posts to \texttt{POST /api/debates/\{debateId\}/argument}
+    \item Backend validates argument length and turn state
+    \item Backend saves argument to debate record in MongoDB
+    \item Backend determines next player's turn and stance
+    \item Server broadcasts \texttt{debate:argumentAdded} to \texttt{debate:\{debateId\}} room
+    \item Opponent's client receives event in real-time, UI updates with new argument
+    \item If opponent is AI: Backend schedules AI response generation with contextual delay
+    \item When AI response ready: Backend saves and broadcasts another \texttt{debate:argumentAdded}
+    \item Round belief check displayed when both arguments submitted
+    \item Belief update and reflection captured, timestamped, and persisted to debate record
+\end{enumerate}
+
+\subsubsection{Between-Round Belief and Reflection Flow}
+
+\begin{enumerate}
+    \item After both arguments in a round, the UI prompts the participant to update stance
+    strength, confidence, and perceived influence
+    \item Participant provides a brief reflection paraphrasing the opponent's argument
+    \item Backend validates input ranges and associates entries with round number and user
+    \item Belief and reflection data are stored in \texttt{beliefHistory} and \texttt{reflections}
+    \item Completion triggers \texttt{debate:roundAdvanced}, starting the next exchange
+\end{enumerate}
+
+\subsubsection{Connection Lifecycle}
+
+\begin{enumerate}
+    \item User logs in: Frontend creates socket with JWT token in handshake \texttt{auth}
+    \item \texttt{connect} event: Connection successful
+    \item Admin user: Emits \texttt{join:admin}; admin room listeners registered
+    \item Participant enters debate: Emits \texttt{join:debate} with debateId;
+    debate-specific listeners registered
+    \item During debate: Receives all events for that debate room
+    \item Debate ends: Transitions to post-survey; optionally emits \texttt{leave:debate}
+    \item User logs out: Socket disconnects; all rooms automatically cleared
+\end{enumerate}
+
+\subsubsection{Transport Configuration}
+
+\begin{itemize}
+    \item Primary: \texttt{websocket} (native bidirectional protocol)
+    \item Fallback: \texttt{polling} (for environments/proxies blocking WebSocket)
+    \item Connection timeout: 20 seconds
+    \item Reconnection: Automatic with exponential backoff
+    \item EIO3 support: Enabled for legacy client compatibility
+\end{itemize}
+
+\subsection{Security Architecture}
+
+Security measures are designed to protect participant anonymity and prevent manipulation of
+experimental outcomes while preserving data integrity.
+
+\subsubsection{Authentication}
+
+\begin{itemize}
+    \item JWT (JSON Web Tokens) for stateless authentication
+    \item Regular user login with username/password via POST /auth/login
+    \item Guest user auto-generated usernames via POST /auth/guest-login
+    \item Guest session resumption via POST /auth/guest-resume
+    \item Token expiration: 24 hours (regular users), 7 days (guests)
+    \item No database session records - authentication is purely token-based
+\subsection{Turn State Management \& Validation}
+
+Turn validation ensures the protocol is followed and that data are captured at the correct time.
+By enforcing turn order and requiring belief checks after each argument pair, the system prevents
+missing or misaligned data entries that would compromise round-level persuasion analysis.
+
+\begin{itemize}
+    \item Enforces correct alternation of arguments and round boundaries
+    \item Blocks progression until belief and reflection data are recorded
+    \item Auto-corrects inconsistent state and logs anomalies for auditability
+\end{itemize}
+    \item User clicks guest login
+    \item Backend generates unique username (e.g., "AdorableWolf")
+    \item User document created with isGuest=true flag
+    \item JWT token generated (7d expiration)
+    \item Frontend returns guests list from last 7 days
+    \item Returning guest can resume session via POST /auth/guest-resume
+\end{enumerate}
+
+\subsection{Scalability Considerations}
+
+\subsubsection{Overview}
+
+The platform's architectural choices prioritize scalability as user load and concurrent debates grow.
+Key design decisions—stateless authentication, event-driven real-time updates,
+horizontal scaling patterns—ensure we can add more servers without architectural redesign.
+
+This section outlines how the current system can grow, performance bottlenecks to monitor,
+and future infrastructure improvements.
+
+\subsubsection{Horizontal Scaling}
+
+\begin{itemize}
+    \item Stateless API servers allow load balancing
+    \item WebSocket servers require sticky sessions or message queue
+    \item Database replication for read scalability
+\end{itemize}
+
+\subsection{Error Handling \& Resilience}
+    \begin{itemize}
+        \item Waiting debates: nextTurn must be null
+        \item Active debates (0 args): nextTurn must equal firstPlayer
+        \item Active debates (1 arg): nextTurn must be opposite of argument stance
+        \item Active debates (2 args): nextTurn must be null (awaiting belief check)
+        \item Completed/abandoned debates: nextTurn must be null
+    \end{itemize}
+\end{itemize}
+
+\textbf{calculateExpectedNextTurn(debate)}
+\begin{itemize}
+    \item Computes expected nextTurn value from debate state
+    \item Uses current round argument count and stances
+    \item Returns 'for', 'against', or null
+\end{itemize}
+
+\textbf{autoFixTurnState(debate)}
+\begin{itemize}
+    \item Automatically corrects nextTurn if inconsistent
+    \item Modifies debate object in-place
+    \item Logs corrections for debugging
+    \item Returns true if changes were made
+\end{itemize}
+
+\textbf{logTurnStateReport(debate)}
+\begin{itemize}
+    \item Generates detailed diagnostic report
+    \item Logs current vs. expected turn state
+    \item Lists validation errors if any
+\end{itemize}
+
+\textbf{saveWithValidation(debate, context)}
+\begin{itemize}
+    \item Safe save wrapper with post-save validation
+    \item Logs warnings if validation fails after save
+    \item Context parameter for debugging where save occurred
+\end{itemize}
+
+\subsubsection{Validation Integration Points}
+
+\paragraph{Debate Model Pre-Save Hook}
+
+The Debate schema includes a pre-save middleware that:
+\begin{enumerate}
+    \item Updates lastActivityAt timestamp
+    \item Validates turn state before database write
+    \item Auto-fixes turn state if validation fails
+    \item Logs warnings with debate ID and error details
+\end{enumerate}
+
+This ensures \textit{all} debate modifications undergo validation, regardless of where
+the save originates in the codebase.
+
+\paragraph{AI Response Generation (triggerAIResponse)}
+
+Before generating AI responses:
+\begin{enumerate}
+    \item Validate current turn state
+    \item Auto-fix if inconsistencies detected
+    \item Save corrected state before proceeding
+    \item Verify it's actually the AI's turn
+\end{enumerate}
+
+This prevents the "Turn state mismatch" errors that previously occurred when
+automatch failed to initialize nextTurn properly.
+
+\paragraph{Argument Submission}
+
+After human or AI argument submission:
+\begin{enumerate}
+    \item Debate saved with updated arguments and nextTurn
+    \item Post-save validation confirms consistency
+    \item Warnings logged if issues detected
+\end{enumerate}
+
+\paragraph{AutoMatch AI Assignment}
+
+When automatch assigns AI opponent to waiting debate:
+\begin{enumerate}
+    \item Update debate status to 'active'
+    \item Set firstPlayer randomly ('for' or 'against')
+    \item \textbf{Critical:} Initialize nextTurn to firstPlayer
+    \item Validate turn state after update
+    \item Log warnings if validation fails
+\end{enumerate}
+
+This fix resolves the original bug where nextTurn was null after automatch,
+causing AI response generation to fail.
+
+\subsubsection{Error Recovery Strategy}
+
+The turn validation system employs a defensive, self-correcting approach:
+
+\begin{enumerate}
+    \item \textbf{Detection}: Validation runs at multiple checkpoints (pre-save hook, before AI response, after argument submission)
+    \item \textbf{Correction}: auto-fix immediately repairs inconsistent state
+    \item \textbf{Logging}: All corrections logged with debate ID and error details for post-mortem analysis
+    \item \textbf{Non-blocking}: Validation warnings do not halt operations, allowing system to self-heal
+\end{enumerate}
+
+This prevents cascading failures while maintaining audit trail for debugging.
+
+\subsection{Error Handling \& Resilience}
+
+\subsubsection{API Error Handling}
+
+\begin{itemize}
+    \item Standardized error response format
+    \item HTTP status codes for error classification
+    \item Error logging to centralized system
+    \item User-friendly error messages in frontend
+    \item Turn state validation and auto-correction
+\end{itemize}
+
+\subsubsection{Network Resilience}
+
+\begin{itemize}
+    \item WebSocket reconnection with exponential backoff
+    \item Fallback to polling if WebSocket unavailable
+    \item Request retry logic with circuit breaker
+    \item Graceful degradation of features
+\end{itemize}
+
+\subsubsection{Database Resilience}
+
+\begin{itemize}
+    \item Connection pooling and reconnection logic
+    \item Automatic retry on transient failures
+    \item Transaction support for critical operations
+\end{itemize}
+
+\subsection{Operational Considerations for Data Quality}
+
+The study relies on complete, reliable data capture. Operational safeguards focus on
+preserving data integrity rather than infrastructure breadth:
+\begin{itemize}
+    \item Resilient WebSocket reconnection to avoid missing real-time events
+    \item Defensive validation and logging for all belief and reflection entries
+    \item Rate limits to prevent spam that could contaminate data
+    \item Consistent error handling to avoid partial or corrupted debate records
+\end{itemize}
+
+\subsection{Conclusion}
+
+\subsubsection{Design Summary}
+
+The Debate Platform architecture successfully balances several competing concerns:
+
+\begin{itemize}
+    \item \textbf{Real-time Responsiveness}: WebSocket communication provides instant
+    debate updates and low-latency argument exchange
+    \item \textbf{Experimental Validity}: Information hiding and structured belief capture
+    reduce source bias and enable round-level persuasion measurement
+    \item \textbf{Scalability}: Stateless authentication and horizontal scaling
+    strategies enable growth without architectural redesign
+    \item \textbf{Simplicity}: Event-driven design and modular backend keep code maintainable and testable
+    \item \textbf{Flexibility}: MongoDB's document model and JWT tokens reduce rigid schema constraints
+    \item \textbf{Robustness}: Multi-layered turn validation with automatic correction
+    prevents logic loss and ensures debate flow integrity
+    \item \textbf{User Experience}: Both registered and guest users supported seamlessly;
+    pre/post-debate surveys capture feedback
+\end{itemize}
+
+\subsubsection{Key Achievements}
+
+This architecture successfully integrates:
+\begin{itemize}
+    \item RESTful API for CRUD operations (debate creation, user queries)
+    \item WebSocket for real-time debate interactions (arguments, AI responses)
+    \item MongoDB for flexible document storage with indexed queries and analysis-ready records
+    \item OpenAI integration for dynamic AI opponent responses
+    \item JWT-based stateless authentication enabling horizontal scaling
+    \item Automated cleanup jobs for data maintenance
+    \item Defensive turn validation system with automatic state correction
+    \item Pre-save model hooks preventing database inconsistencies
+    \item Enhanced automatch with proper turn state initialization
+    \item Between-round belief and reflection capture for fine-grained persuasion analysis
+\end{itemize}
+
+The system design supports core functionality while maintaining flexibility for future enhancements,
+performance optimizations, and infrastructure scaling. The turn validation architecture demonstrates
+defensive programming principles, preventing edge cases from cascading into system failures.
