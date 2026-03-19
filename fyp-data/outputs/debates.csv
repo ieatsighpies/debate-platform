@@ -1,0 +1,90 @@
+debate_id,condition,topic_id,topicQuestion,gameMode,player1Stance,player2Stance,player2AIModel,preDebateSurvey.player1,postDebateSurvey.player1OpponentPerception,postDebateSurvey.player1SuspicionTiming,n_rounds,first_player_p1
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,open_to_change,human,round_1_2,4,True
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,firm_on_stance,human,round_1_2,4,True
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,human-human,against,for,,open_to_change,human,round_1_2,4,True
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,firm_on_stance,human,round_3_4,4,True
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-human,for,against,,convinced_of_stance,human,round_1_2,4,True
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,open_to_change,human,round_1_2,4,True
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,human-human,for,against,,open_to_change,human,round_1_2,4,True
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-human,against,for,,firm_on_stance,human,round_1_2,4,True
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,convinced_of_stance,human,round_3_4,4,True
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,open_to_change,human,round_1_2,4,True
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-human,against,for,,firm_on_stance,human,round_1_2,4,True
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,convinced_of_stance,human,round_1_2,4,True
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,firm_on_stance,human,round_1_2,5,True
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-human,for,against,,open_to_change,human,round_3_4,6,True
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,human-human,for,against,,convinced_of_stance,human,round_1_2,4,True
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,convinced_of_stance,human,round_3_4,5,True
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,open_to_change,human,round_1_2,4,True
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-human,for,against,,firm_on_stance,human,round_3_4,4,True
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,human-human,against,for,,open_to_change,human,round_1_2,4,True
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,human-human,against,for,,convinced_of_stance,ai,round_1_2,4,True
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,human-human,for,against,,open_to_change,human,round_1_2,4,True
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,for,against,firm-debater,open_to_change,human,round_3_4,4,True
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,convinced_of_stance,ai,round_1_2,5,True
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_1_2,4,True
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_3_4,2,True
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,open_to_change,ai,round_3_4,5,True
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_3_4,4,True
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,convinced_of_stance,ai,round_1_2,5,True
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_3_4,4,True
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,convinced_of_stance,ai,round_1_2,4,True
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_1_2,4,True
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_1_2,4,True
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,open_to_change,unsure,round_3_4,4,True
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,open_to_change,ai,round_3_4,7,True
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_1_2,4,True
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_3_4,5,True
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,convinced_of_stance,ai,round_3_4,6,True
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,human-ai,for,against,firm-debater,convinced_of_stance,,,5,True
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,convinced_of_stance,ai,round_3_4,4,True
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,for,against,firm-debater,convinced_of_stance,,,4,True
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,human-ai,for,against,firm-debater,convinced_of_stance,ai,round_1_2,4,True
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_5_7,4,True
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,human-ai,for,against,firm-debater,open_to_change,ai,round_1_2,4,True
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,open_to_change,ai,round_3_4,5,True
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_3_4,4,True
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,human-ai,for,against,firm-debater,firm_on_stance,ai,round_1_2,4,True
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_3_4,5,True
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,human-ai,for,against,firm-debater,convinced_of_stance,ai,round_3_4,4,True
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,human-ai,against,for,firm-debater,firm_on_stance,ai,round_1_2,4,True
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,human-ai,for,against,balanced-debater,convinced_of_stance,ai,round_1_2,5,True
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,open_to_change,unsure,round_1_2,4,True
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,convinced_of_stance,unsure,round_1_2,4,True
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_1_2,5,True
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,human-ai,against,for,balanced-debater,firm_on_stance,ai,round_1_2,4,True
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,open_to_change,ai,round_1_2,5,True
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,firm_on_stance,ai,round_3_4,5,True
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,human-ai,for,against,balanced-debater,firm_on_stance,ai,round_3_4,4,True
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_3_4,4,True
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_1_2,5,True
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,human-ai,against,for,balanced-debater,firm_on_stance,ai,round_3_4,6,True
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,firm_on_stance,ai,round_3_4,7,True
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,human-ai,for,against,balanced-debater,open_to_change,ai,round_1_2,6,True
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_3_4,8,True
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,human-ai,against,for,balanced-debater,firm_on_stance,ai,round_1_2,11,True
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_1_2,4,True
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_1_2,4,True
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_3_4,13,True
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,balanced-debater,firm_on_stance,ai,round_1_2,7,True
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,balanced-debater,convinced_of_stance,ai,round_3_4,5,True
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,human-ai,against,for,open-debater,firm_on_stance,ai,round_1_2,4,True
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,human-ai,for,against,open-debater,open_to_change,ai,round_3_4,4,True
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,human-ai,for,against,open-debater,open_to_change,ai,round_5_7,7,True
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,human-ai,against,for,open-debater,convinced_of_stance,ai,round_1_2,4,True
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,human-ai,for,against,open-debater,convinced_of_stance,ai,round_3_4,4,True
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,human-ai,for,against,open-debater,convinced_of_stance,ai,round_1_2,5,True
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,human-ai,for,against,open-debater,open_to_change,ai,round_1_2,7,True
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,open-debater,firm_on_stance,ai,round_3_4,4,True
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,human-ai,against,for,open-debater,firm_on_stance,ai,round_3_4,5,True
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,open-debater,convinced_of_stance,human,round_3_4,5,True
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,human-ai,for,against,open-debater,open_to_change,ai,round_1_2,4,True
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,human-ai,for,against,open-debater,convinced_of_stance,ai,round_1_2,4,True
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,human-ai,against,for,open-debater,firm_on_stance,ai,round_3_4,4,True
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,human-ai,against,for,open-debater,convinced_of_stance,ai,round_1_2,4,True
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,human-ai,against,for,open-debater,open_to_change,ai,round_1_2,7,True
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,for,against,open-debater,open_to_change,ai,round_3_4,4,True
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,human-ai,against,for,open-debater,convinced_of_stance,ai,round_1_2,4,True
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,human-ai,for,against,open-debater,firm_on_stance,ai,round_3_4,8,True
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,human-ai,against,for,open-debater,firm_on_stance,ai,round_3_4,6,True
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,human-ai,for,against,open-debater,firm_on_stance,ai,round_1_2,7,True

@@ -1,0 +1,183 @@
+%% Results and Analysis Chapter
+
+\section{Overview}
+
+This chapter reports the final empirical results from the debate platform analysis.
+The confirmatory core tests whether AI opponents (pooled across firm, balanced, open-minded)
+change participant beliefs relative to human-human control.
+When the primary belief models are null, confidence is tested as a co-primary outcome.
+Exploratory mechanism analyses are explicitly labeled.
+
+The final participant-level dataset includes $n=89$ participants across four conditions.
+All regression models are OLS with HC3 robust standard errors.
+
+\section{At-a-Glance Findings}
+
+Table~\ref{tab:key_findings} provides a concise summary of the final inferential outcomes.
+
+\begin{table}[h]
+\centering
+\caption{Examiner Summary of Final Results}
+\label{tab:key_findings}
+\begin{tabular}{p{4.0cm}p{6.8cm}p{3.0cm}}
+\toprule
+Question & Evidence & Decision \\
+\midrule
+Does AI change belief? & M1--M4 all non-significant; CIs cross 0; $d=0.312$ & No reliable effect \\
+Does AI affect confidence? & Conf-M1/Conf-M2 significant after Bonferroni ($p_{Bonf}=0.0199, 0.0241$) & Yes, robust \\
+Are AI personalities different? & ANOVA among firm/balanced/open-minded: $F=0.065$, $p=0.937$ & No, pooling justified \\
+Is mechanism stable? & AI pushback-confidence $r=-0.733$, $p=0.0067$; jackknife range $[-0.798,-0.731]$ & Robust negative association \\
+Any critical data caveat? & Confidence pre-debate = 0 for 100\% participants & Interpret as post-debate confidence difference \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Participant Overview and Data Quality}
+
+\subsection{Condition Composition}
+
+The participant distribution is:
+\begin{itemize}
+    \item Human-human: $n=21$
+    \item Firm AI: $n=28$
+    \item Balanced AI: $n=20$
+    \item Open-minded AI: $n=20$
+\end{itemize}
+
+Condition means for belief change are:
+\begin{itemize}
+    \item Human-human: $\bar{x}=-7.90$
+    \item Firm AI: $\bar{x}=1.71$
+    \item Balanced AI: $\bar{x}=-0.20$
+    \item Open-minded AI: $\bar{x}=3.00$
+\end{itemize}
+
+\subsection{Floor/Ceiling and Baseline Audit}
+
+Data quality checks show:
+\begin{itemize}
+    \item Belief pre-debate at 0: $20.2\%$
+    \item Belief pre-debate at 100: $16.9\%$
+    \item Confidence pre-debate at 0: $100.0\%$
+\end{itemize}
+
+Thus, confidence ``change'' is numerically equivalent to post-debate confidence level.
+Inference remains valid for between-condition differences, but interpretation must be stated as
+post-debate confidence differences rather than true change from measured baseline.
+
+\section{Primary Outcome: Belief Change (Confirmatory)}
+
+\subsection{Model Family (M1--M4)}
+
+Table~\ref{tab:primary_models} reports the AI treatment coefficient for the four pre-specified models.
+
+\begin{table}[h]
+\centering
+\caption{Primary Belief Models (AI pooled vs. human-human)}
+\label{tab:primary_models}
+\begin{tabular}{lrrrr}
+\toprule
+Model & $n$ & $\beta_{AI}$ & 95\% CI & $p$ \\
+\midrule
+M1 & 89 & 9.434 & $[-8.258, 27.127]$ & 0.296 \\
+M2 & 88 & 5.474 & $[-14.468, 25.416]$ & 0.591 \\
+M3 & 88 & 21.507 & $[-36.489, 79.502]$ & 0.467 \\
+M4 & 88 & 6.760 & $[-12.770, 26.290]$ & 0.498 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Multiplicity-adjusted values remain non-significant (Bonferroni $p=1.0$ for all primary models).
+The pooled effect size is small ($d=0.312$).
+
+\textbf{Primary conclusion:} no statistically reliable AI effect on belief change.
+
+\section{Co-Primary Outcome: Confidence (Post-Debate Confidence Difference)}
+
+Because the belief family is null, confidence is tested as co-primary in two models.
+Bonferroni correction is applied across the confidence family.
+
+\begin{table}[h]
+\centering
+\caption{Co-Primary Confidence Models}
+\label{tab:confidence_models}
+\begin{tabular}{lrrrrr}
+\toprule
+Model & $n$ & $\beta_{AI}$ & 95\% CI & $p$ & $p_{Bonf}$ \\
+\midrule
+Conf-M1 & 89 & 12.405 & $[2.972, 21.839]$ & 0.0100 & 0.0199 \\
+Conf-M2 & 88 & 13.594 & $[2.982, 24.207]$ & 0.0121 & 0.0241 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Co-primary conclusion:} participants in AI conditions end with significantly higher confidence,
+with corrected $p$-values below 0.05.
+
+\section{Robustness Checks}
+
+\subsection{AI Personality Homogeneity}
+
+Pooling of AI personalities is supported by ANOVA among firm, balanced, and open-minded:
+\begin{align}
+F=0.065,\quad p=0.937
+\end{align}
+
+No evidence of differential belief outcomes across the three AI personalities.
+
+\subsection{Leave-One-Condition-Out (LOO)}
+
+For the M2 specification, AI coefficients remain non-significant across exclusions:
+\begin{itemize}
+    \item Drop firm: $\beta_{AI}=7.068$, $p=0.487$
+    \item Drop balanced: $\beta_{AI}=7.234$, $p=0.517$
+    \item Drop open-minded: $\beta_{AI}=3.290$, $p=0.756$
+\end{itemize}
+
+\subsection{Outlier-Trim Sensitivity (1\% tails)}
+
+Trimmed M2 remains non-significant:
+\begin{align}
+\beta_{AI}=6.669,\quad 95\%\text{ CI }[-12.654, 25.993],\quad p=0.499
+\end{align}
+
+\textbf{Robustness conclusion:} primary null belief result is stable.
+
+\section{Exploratory Mechanism Analysis}
+
+A stratified qualitative subsample ($n=24$, AI $n=12$, human $n=12$) was coded for pushback.
+Within the AI subsample:
+\begin{align}
+r=-0.733,\quad p=0.0067,\quad 95\%\text{ CI }[-0.920, -0.274],\quad n=12
+\end{align}
+
+Jackknife sensitivity shows the correlation remains negative when removing any single AI participant:
+\begin{align}
+r_{jackknife} \in [-0.798, -0.731]
+\end{align}
+
+This falsifies a ``defensive confidence'' mechanism (which predicted positive association).
+A more plausible interpretation is that stronger pushback tracks lower confidence gain.
+
+\subsection{Representativeness Caveat}
+
+The qualitative subsample is not condition-representative:
+\begin{align}
+\chi^2=18.201,\quad p=0.0004
+\end{align}
+
+It overrepresents human-human debates (50\% in sample vs. 21\% in full dataset),
+so mechanism findings remain exploratory.
+
+\section{Synthesis}
+
+The final result pattern is:
+\begin{enumerate}
+    \item \textbf{Belief change:} null across all confirmatory models.
+    \item \textbf{Confidence:} robust positive AI effect after Bonferroni correction.
+    \item \textbf{Mechanism:} pushback-confidence relation is negative (exploratory), not positive.
+    \item \textbf{Data audit:} baseline confidence recorded as 0 for all participants, requiring careful interpretation.
+\end{enumerate}
+
+The principal contribution is therefore a confidence-belief dissociation in AI-mediated debate:
+AI debate is associated with higher post-debate confidence without reliable belief shift.

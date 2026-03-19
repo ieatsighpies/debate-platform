@@ -596,7 +596,7 @@
       },
       {
         "stance": "for",
-        "text": "But in the age of AI, embracing AI and preparing students for the working world with AI is just as important. The critical aspect about using AI is the prompt and generating answers through \"intelligent\" prompt will help the students through their critical thinking process. How to craft out appropriate prompts are important. It's like a critical part od learning too! To ask intelligent questions.",
+        "text": "But in the age of AI, embracing AI and preparing students for the working world with AI is just as important. The critical aspect about using AI is the prompt and generating answers through \"intelligent\" prompt will help the students through their critical thinking process. How to craft out appropriate prompts are important. It’s like a critical part od learning too! To ask intelligent questions.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -620,7 +620,7 @@
       },
       {
         "stance": "for",
-        "text": "Sure, maturity is certainly important. That's why I believe our educational system should also change, the way homework is structured should also allow the complementary use of AI to improve learning. I certainly agree that it may be age appropriate.",
+        "text": "Sure, maturity is certainly important. That’s why I believe our educational system should also change, the way homework is structured should also allow the complementary use of AI to improve learning. I certainly agree that it may be age appropriate.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -644,7 +644,7 @@
       },
       {
         "stance": "for",
-        "text": "Influence on a country's DNA stems from having strong institutions working their way through the system. Take for example, why we can exist as a multi-cultural society starts with NS, social cohesion program, racial quota, etc. So similarly, to prepare students for the real world with the inaugural new era of AI would have to start with educating them. What I'm advocating is embracing AI into student's way of learning and homework will have to change from content heavy to thinking with AI.",
+        "text": "Influence on a country’s DNA stems from having strong institutions working their way through the system. Take for example, why we can exist as a multi-cultural society starts with NS, social cohesion program, racial quota, etc. So similarly, to prepare students for the real world with the inaugural new era of AI would have to start with educating them. What I’m advocating is embracing AI into student’s way of learning and homework will have to change from content heavy to thinking with AI.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -1656,7 +1656,7 @@
       },
       {
         "stance": "for",
-        "text": "That's fair, I think we can agree to limit the usage of chatgpt at higher education levels. Chatgpt maybe shouldn't be used for homework but it should still be used to help students understand and learn.",
+        "text": "That’s fair, I think we can agree to limit the usage of chatgpt at higher education levels. Chatgpt maybe shouldn’t be used for homework but it should still be used to help students understand and learn.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -1928,7 +1928,7 @@
           "$oid": "69aeeb623b45fc551e0f5f8a"
         },
         "player": "player1",
-        "paraphrase": "Education tools are only used at higher levels. Hence chatgpt shouldn't be allowed for lower education",
+        "paraphrase": "Education tools are only used at higher levels. Hence chatgpt shouldn’t be allowed for lower education",
         "acknowledgement": "No",
         "_id": {
           "$oid": "69aeede43b45fc551e0f61ab"
@@ -2084,7 +2084,7 @@
     "arguments": [
       {
         "stance": "for",
-        "text": "A higher pay enables a higher income. A higher income is an enabler for many factors in a high quality of living. These include providing good healthcare for your family, being able to provide for children's education needs, freedom to travel to places you want to and live a lifestyle that you want. Further, less social life doesn't mean no social life. It is very possible to have an enriching social life with a tighter circle of friends, even with less time overall.",
+        "text": "A higher pay enables a higher income. A higher income is an enabler for many factors in a high quality of living. These include providing good healthcare for your family, being able to provide for children’s education needs, freedom to travel to places you want to and live a lifestyle that you want. Further, less social life doesn’t mean no social life. It is very possible to have an enriching social life with a tighter circle of friends, even with less time overall.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -2096,7 +2096,7 @@
       },
       {
         "stance": "against",
-        "text": "I can think of families where your argument would make sense, especially where there that higher income could help meet some basic needs. However, I think there are many intangible (and priceless) goods in life, that can't be bought, like the joy of spending time with family and friends, artistic and creative pursuits, and serving others, that make up a full and flourishing life. If taking a higher pay means having less time, this might mean less time available for these other important areas.",
+        "text": "I can think of families where your argument would make sense, especially where there that higher income could help meet some basic needs. However, I think there are many intangible (and priceless) goods in life, that can’t be bought, like the joy of spending time with family and friends, artistic and creative pursuits, and serving others, that make up a full and flourishing life. If taking a higher pay means having less time, this might mean less time available for these other important areas.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -2120,7 +2120,7 @@
       },
       {
         "stance": "against",
-        "text": "I agree that there are some situations where a higher income would enable a higher quality of life overall, even at some expense to one's social life. To move this forward — what do you think are the kinds of situations where making this tradeoff is worthwhile? For example, perhaps the duration of earning more with less time could be a factor, and one's other responsibilities. I wonder if even just the experience of working an earning more could be formative (and not in a good way).",
+        "text": "I agree that there are some situations where a higher income would enable a higher quality of life overall, even at some expense to one’s social life. To move this forward \u2014 what do you think are the kinds of situations where making this tradeoff is worthwhile? For example, perhaps the duration of earning more with less time could be a factor, and one’s other responsibilities. I wonder if even just the experience of working an earning more could be formative (and not in a good way).",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -2144,7 +2144,7 @@
       },
       {
         "stance": "against",
-        "text": "That's a great heuristic, and the scenario you describe is one where (to me) it would be worth considering being more involved at work. At the same time, I wonder if an alternative response to that scenario might not be to 'pare down' relationships through the matrix of \"what's good for me\", but to explore other ways to get engaged. Often, accepting more responsibilities at work — even with a higher pay — is a decision that might be hard to reverse; for one, because of lifestyle inflation.",
+        "text": "That’s a great heuristic, and the scenario you describe is one where (to me) it would be worth considering being more involved at work. At the same time, I wonder if an alternative response to that scenario might not be to ’pare down’ relationships through the matrix of \"what’s good for me\", but to explore other ways to get engaged. Often, accepting more responsibilities at work \u2014 even with a higher pay \u2014 is a decision that might be hard to reverse; for one, because of lifestyle inflation.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -2156,7 +2156,7 @@
       },
       {
         "stance": "for",
-        "text": "True, I have taken a rational, personal utility-maximizing argument so far. However, I think no matter what new ways you find to engage, both social life and an elevated lifestyle eventually saturate or reach diminishing marginal returns. And this is true for yourself and your loved ones. True that the decision may be hard to reverse, I'll give that. However I would say that the alternative of more time does not guarantee a more fulfilling social life if your loved ones are not on the same page.",
+        "text": "True, I have taken a rational, personal utility-maximizing argument so far. However, I think no matter what new ways you find to engage, both social life and an elevated lifestyle eventually saturate or reach diminishing marginal returns. And this is true for yourself and your loved ones. True that the decision may be hard to reverse, I’ll give that. However I would say that the alternative of more time does not guarantee a more fulfilling social life if your loved ones are not on the same page.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -2168,7 +2168,7 @@
       },
       {
         "stance": "against",
-        "text": "I think that, while one can burn out at work, one can always fill one's remaining time with a combination of personal challenges, hobbies, strengthening meaningful relationships, and otherwise. It's true that one can definitely swing too far to one side, and be under-employed to the point of not providing for one's family and other personal responsibilities.",
+        "text": "I think that, while one can burn out at work, one can always fill one’s remaining time with a combination of personal challenges, hobbies, strengthening meaningful relationships, and otherwise. It’s true that one can definitely swing too far to one side, and be under-employed to the point of not providing for one’s family and other personal responsibilities.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -2368,7 +2368,7 @@
           "$oid": "69ae0dfbd0514b89ec60ad33"
         },
         "player": "player1",
-        "paraphrase": "Tangible, priceless goods that can't be bought.",
+        "paraphrase": "Tangible, priceless goods that can’t be bought.",
         "acknowledgement": "Somewhat",
         "_id": {
           "$oid": "69ae10a3d0514b89ec60ae2f"
@@ -2383,7 +2383,7 @@
           "$oid": "69ae0df1d0514b89ec60ad2e"
         },
         "player": "player2",
-        "paraphrase": "One: a higher income can purchase many goods that improve one's (and one's family's) standard of living.\nTwo: how much 'social life' is needed is subjective — one can earn more and still have a social life.",
+        "paraphrase": "One: a higher income can purchase many goods that improve one’s (and one’s family’s) standard of living.\nTwo: how much ’social life’ is needed is subjective \u2014 one can earn more and still have a social life.",
         "acknowledgement": "Somewhat.",
         "_id": {
           "$oid": "69ae10a9d0514b89ec60ae3f"
@@ -2443,7 +2443,7 @@
           "$oid": "69ae0df1d0514b89ec60ad2e"
         },
         "player": "player2",
-        "paraphrase": "My opponent advocates a framework of deciding if one's social life is already saturated (e.g. an introvert with too many interactions, or many superficial ones) in deciding if one can reasonably take on more work (and more pay).",
+        "paraphrase": "My opponent advocates a framework of deciding if one’s social life is already saturated (e.g. an introvert with too many interactions, or many superficial ones) in deciding if one can reasonably take on more work (and more pay).",
         "acknowledgement": "Yes, some of that seemed reasonable to me.",
         "_id": {
           "$oid": "69ae168fd0514b89ec60b2c6"
@@ -2596,7 +2596,7 @@
       },
       {
         "stance": "against",
-        "text": "I agree that generative AI is an essential skill for the future and is worth learning, but I don't think the students should use it in homework because of that. I think the purpose of (some types) of homework is to develop students' ability to think, and using ChatGPT (to devise an algorithm, to write a paper) would short-circuit that process — just like handing children a calculator would do the same for learning arithmetic.",
+        "text": "I agree that generative AI is an essential skill for the future and is worth learning, but I don’t think the students should use it in homework because of that. I think the purpose of (some types) of homework is to develop students’ ability to think, and using ChatGPT (to devise an algorithm, to write a paper) would short-circuit that process \u2014 just like handing children a calculator would do the same for learning arithmetic.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -2620,7 +2620,7 @@
       },
       {
         "stance": "against",
-        "text": "Definitely, ChatGPT can let students access varied ideas, and more rapidly. And I agree they should be given the freedom to eventually experiment how to use them. But I think using ChatGPT (and other technologies) could not only short-circuit their learning to think, but also social and relational skills — as children who would have otherwise consulted teachers and peers for help now just ask an LLM. I think the risks outweigh the benefits, since it happens at a developmentally crucial stage.",
+        "text": "Definitely, ChatGPT can let students access varied ideas, and more rapidly. And I agree they should be given the freedom to eventually experiment how to use them. But I think using ChatGPT (and other technologies) could not only short-circuit their learning to think, but also social and relational skills \u2014 as children who would have otherwise consulted teachers and peers for help now just ask an LLM. I think the risks outweigh the benefits, since it happens at a developmentally crucial stage.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -2644,7 +2644,7 @@
       },
       {
         "stance": "against",
-        "text": "I agree that human-machine collaboration is an essential for anyone entering the workforce today. I think that even then, there are benefits to limiting AI use for a time to learn effective collaboration between humans, before learning to collaborate with machines (instead of trying to do both).\n\nI think one larger question that lies behind what we've discussed so far is, What is education for? I think that beyond preparing students for work, it has a large developmental and formative role too.",
+        "text": "I agree that human-machine collaboration is an essential for anyone entering the workforce today. I think that even then, there are benefits to limiting AI use for a time to learn effective collaboration between humans, before learning to collaborate with machines (instead of trying to do both).\n\nI think one larger question that lies behind what we’ve discussed so far is, What is education for? I think that beyond preparing students for work, it has a large developmental and formative role too.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -2656,7 +2656,7 @@
       },
       {
         "stance": "for",
-        "text": "If we are talking about collaboration skills for the workforce, we are (maybe unfortunately) in a time where the bulk of collaboration is not AI-free. So the bulk of training should be preparing for such a dynamic. It is true that education does have a role beyond preparation for work. But I don't think this comes from the homeworks themselves. A lot of it may be through informal conversations, participation in student life activities, working in groups (which doesn't go away).",
+        "text": "If we are talking about collaboration skills for the workforce, we are (maybe unfortunately) in a time where the bulk of collaboration is not AI-free. So the bulk of training should be preparing for such a dynamic. It is true that education does have a role beyond preparation for work. But I don’t think this comes from the homeworks themselves. A lot of it may be through informal conversations, participation in student life activities, working in groups (which doesn’t go away).",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -2668,7 +2668,7 @@
       },
       {
         "stance": "against",
-        "text": "I think it's fair to say most collaboration will involve AI of some kind, and that it's worth training for. Ijust think the place to do it is once people have entered the workforce, where they will be able to pick them up just as quickly.\n\nAnd, even if students are disadvantaged in the workforce for lack of practice: I think it's worthwhile, since using AI in homework irreversibly changes the tenor of many social interactions that happen only in school, e.g. asking for their friends' help less.",
+        "text": "I think it’s fair to say most collaboration will involve AI of some kind, and that it’s worth training for. Ijust think the place to do it is once people have entered the workforce, where they will be able to pick them up just as quickly.\n\nAnd, even if students are disadvantaged in the workforce for lack of practice: I think it’s worthwhile, since using AI in homework irreversibly changes the tenor of many social interactions that happen only in school, e.g. asking for their friends’ help less.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -2944,7 +2944,7 @@
         },
         "player": "player2",
         "paraphrase": "Learning to collaborate with machines (not just outsourcing thought to AI) is an essential skill, and is worth practicing to be done well.",
-        "acknowledgement": "Not really, because I think there's a larger purpose to education beyond just learning to do jobs well.",
+        "acknowledgement": "Not really, because I think there’s a larger purpose to education beyond just learning to do jobs well.",
         "_id": {
           "$oid": "69ae1528d0514b89ec60b162"
         },
@@ -2973,7 +2973,7 @@
           "$oid": "69ae0cb4d0514b89ec60ace1"
         },
         "player": "player2",
-        "paraphrase": "Most future collaboration will involve some kind of AI, so it's worth training for that in school, too.",
+        "paraphrase": "Most future collaboration will involve some kind of AI, so it’s worth training for that in school, too.",
         "acknowledgement": "Not really, because I think even if students are disadvantaged in the workforce, they retain something of more value.",
         "_id": {
           "$oid": "69ae1811d0514b89ec60bd7e"
@@ -3129,7 +3129,7 @@
       },
       {
         "stance": "for",
-        "text": "the margherita sauce is more savoury than sweet and so it should not replace the pineapples but instead be used together with the pineapples. tomatoes don't cut through the fat and salt of cheese in the pizza as well as pineapples because they are less sharp and distinct in flavour.",
+        "text": "the margherita sauce is more savoury than sweet and so it should not replace the pineapples but instead be used together with the pineapples. tomatoes don’t cut through the fat and salt of cheese in the pizza as well as pineapples because they are less sharp and distinct in flavour.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -3141,7 +3141,7 @@
       },
       {
         "stance": "against",
-        "text": "Margherita sauce is indeed more savoury than sweet, but perhaps we do not need a sweet flavour profile to begin with -- tanginess/savouriness is enough. The combination of tomatoes and cheese is also quite well-known; we see it in dishes like bolognese with parmesan, or in a caprese salad. In those dishes, we don't need added sweetness from anything so likewise we should not need it for pizzas.",
+        "text": "Margherita sauce is indeed more savoury than sweet, but perhaps we do not need a sweet flavour profile to begin with -- tanginess/savouriness is enough. The combination of tomatoes and cheese is also quite well-known; we see it in dishes like bolognese with parmesan, or in a caprese salad. In those dishes, we don’t need added sweetness from anything so likewise we should not need it for pizzas.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -3425,7 +3425,7 @@
           "$oid": "69ada1de3d2b5eba5a91e28e"
         },
         "player": "player1",
-        "paraphrase": "if dishes like bolognese with parmesan don't require anything sweet, then there is no need for pizzas to contain anything sweet like pineapples",
+        "paraphrase": "if dishes like bolognese with parmesan don’t require anything sweet, then there is no need for pizzas to contain anything sweet like pineapples",
         "acknowledgement": "no",
         "_id": {
           "$oid": "69adabb33d2b5eba5a91e4f6"
@@ -3641,7 +3641,7 @@
       },
       {
         "stance": "for",
-        "text": "Okay that’s also true… time can never be earned back… especially in our youth",
+        "text": "Okay that’s also true\u2026 time can never be earned back\u2026 especially in our youth",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -3665,7 +3665,7 @@
       },
       {
         "stance": "for",
-        "text": "Okay… I am slowly aligning myself with you. Although I still think it’s important for a stable income, need to truly balance and prioritise what’s important",
+        "text": "Okay\u2026 I am slowly aligning myself with you. Although I still think it’s important for a stable income, need to truly balance and prioritise what’s important",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -3895,7 +3895,7 @@
           "$oid": "69aadbeb47d9025cf07aef71"
         },
         "player": "player2",
-        "paraphrase": "Money but no one to spend it with…",
+        "paraphrase": "Money but no one to spend it with\u2026",
         "acknowledgement": "Still thinking",
         "_id": {
           "$oid": "69aaddd947d9025cf07b0a1b"
@@ -3940,8 +3940,8 @@
           "$oid": "69aadbeb47d9025cf07aef71"
         },
         "player": "player2",
-        "paraphrase": "I see why time may be more important than money… the true value",
-        "acknowledgement": "Actually yes….",
+        "paraphrase": "I see why time may be more important than money\u2026 the true value",
+        "acknowledgement": "Actually yes\u2026.",
         "_id": {
           "$oid": "69aade4147d9025cf07b0b80"
         },
@@ -4093,7 +4093,7 @@
       },
       {
         "stance": "for",
-        "text": "So your definition of pineapple belonging on pizza means that wherever pizza is served, they should also put pineapple on it. I am quite loose on whether it is a universal application though. I definitely disagree with that premise. I imagine sitting in Pizza Hut or ordering delivery and among the pepperoni and margherita is hawaiian. That's the best way to enjoy it.",
+        "text": "So your definition of pineapple belonging on pizza means that wherever pizza is served, they should also put pineapple on it. I am quite loose on whether it is a universal application though. I definitely disagree with that premise. I imagine sitting in Pizza Hut or ordering delivery and among the pepperoni and margherita is hawaiian. That’s the best way to enjoy it.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -4117,7 +4117,7 @@
       },
       {
         "stance": "for",
-        "text": "That's a good point on fusion food. I would make the distinction that Hawaiian pizza wouldn't be a fusion of Italian pizza and Hawaiian food, but rather a cultural interpretation of pizza.",
+        "text": "That’s a good point on fusion food. I would make the distinction that Hawaiian pizza wouldn’t be a fusion of Italian pizza and Hawaiian food, but rather a cultural interpretation of pizza.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -4165,7 +4165,7 @@
       },
       {
         "stance": "for",
-        "text": "Okay so we can decide that whether a topping belongs on pizza is a matter of taste. So while it doesn't suit your taste, it's not wrong to say pineapple belongs on pizza for me.",
+        "text": "Okay so we can decide that whether a topping belongs on pizza is a matter of taste. So while it doesn’t suit your taste, it’s not wrong to say pineapple belongs on pizza for me.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -4594,7 +4594,7 @@
       },
       {
         "stance": "against",
-        "text": "i do agree that pizzas are unhealthy food but i don't think adding a few slices of pineapple on it will make more than a marginal difference in its health content. if you wanted to eat something healthy, you're better off not eating pizza altogether. and i disagree that pineapple tastes good on anything, it's a subjective opinion. in my opinion, pineapple doesn't taste good on pizzas so.",
+        "text": "i do agree that pizzas are unhealthy food but i don’t think adding a few slices of pineapple on it will make more than a marginal difference in its health content. if you wanted to eat something healthy, you’re better off not eating pizza altogether. and i disagree that pineapple tastes good on anything, it’s a subjective opinion. in my opinion, pineapple doesn’t taste good on pizzas so.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -4606,7 +4606,7 @@
       },
       {
         "stance": "for",
-        "text": "I agree that if i wanted something healthier, I would go for something other than pizza (e.g. a salad). However, pizza is almost always a group affair. So like if my friend group decides to eat pizza then I can't be the stick in the mud and go order something else. And given i'm going to have to have pizza anyways, why not have some healthy pineapple on top",
+        "text": "I agree that if i wanted something healthier, I would go for something other than pizza (e.g. a salad). However, pizza is almost always a group affair. So like if my friend group decides to eat pizza then I can’t be the stick in the mud and go order something else. And given i’m going to have to have pizza anyways, why not have some healthy pineapple on top",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -4630,7 +4630,7 @@
       },
       {
         "stance": "for",
-        "text": "I agree that there is always an option to include more vegetables. I also agree that in some places, people don't share pizza. However, in a Singapore context, I feel like most occasions where pizza is served, pizza is shared. Additionally the pineapple crunch and tanginess is a much welcomed flavour contrast with the savoury/salty pizza.",
+        "text": "I agree that there is always an option to include more vegetables. I also agree that in some places, people don’t share pizza. However, in a Singapore context, I feel like most occasions where pizza is served, pizza is shared. Additionally the pineapple crunch and tanginess is a much welcomed flavour contrast with the savoury/salty pizza.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -4642,7 +4642,7 @@
       },
       {
         "stance": "against",
-        "text": "ok i accept the parameters that singapore is the context of our debate. and pizza is indeed shared here more often than not. i don't accept however the argument that pineapples contrast well with the savouriness of pizzas. subjectively, i prefer consistency in my food's flavour profiles and the contrast pineapples offer with their sweetness is too great a contrast. food does well to have some contrast but not too much",
+        "text": "ok i accept the parameters that singapore is the context of our debate. and pizza is indeed shared here more often than not. i don’t accept however the argument that pineapples contrast well with the savouriness of pizzas. subjectively, i prefer consistency in my food’s flavour profiles and the contrast pineapples offer with their sweetness is too great a contrast. food does well to have some contrast but not too much",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -4654,7 +4654,7 @@
       },
       {
         "stance": "for",
-        "text": "I agree that that too much contrast is not good. However, there isn't that much pineapple included anyways. If you should dislike having them on your pizza, you can take easily them out or put them on another slice. But for someone who prefers pineapple on pizza, it's easier for the pineapple to be already there than to have a separate pineapple ready every time it's time for pizza.",
+        "text": "I agree that that too much contrast is not good. However, there isn’t that much pineapple included anyways. If you should dislike having them on your pizza, you can take easily them out or put them on another slice. But for someone who prefers pineapple on pizza, it’s easier for the pineapple to be already there than to have a separate pineapple ready every time it’s time for pizza.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -4666,7 +4666,7 @@
       },
       {
         "stance": "against",
-        "text": "if i could just take out the pinapples from my pizza, i would be wasting food. and i could just opt to not have any in the first place. i think it's not actually a fairer decision to order pineapple toppings just for the person who prefers because then the person who doesn't prefer has to adjust. while it may be easier to already have the pineapples there, it's not entirely reasonable or food-conscious to expect others to adjust to your tastes. either compromise or do without the unwanted extra.",
+        "text": "if i could just take out the pinapples from my pizza, i would be wasting food. and i could just opt to not have any in the first place. i think it’s not actually a fairer decision to order pineapple toppings just for the person who prefers because then the person who doesn’t prefer has to adjust. while it may be easier to already have the pineapples there, it’s not entirely reasonable or food-conscious to expect others to adjust to your tastes. either compromise or do without the unwanted extra.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -4896,7 +4896,7 @@
           "$oid": "69a91d30b1c3b3255791b171"
         },
         "player": "player1",
-        "paraphrase": "pineapples on pizzas are the \"healthier choice\" if getting pizza is the only option you have, eg in a group setting. if they're having pizza anyways, best to get pineapples with it for health reasons",
+        "paraphrase": "pineapples on pizzas are the \"healthier choice\" if getting pizza is the only option you have, eg in a group setting. if they’re having pizza anyways, best to get pineapples with it for health reasons",
         "acknowledgement": "no, there are still healthier options than pineapples",
         "_id": {
           "$oid": "69a937913e5a9a6ab07c0b9b"
@@ -4911,7 +4911,7 @@
           "$oid": "69a91d34b1c3b3255791b175"
         },
         "player": "player2",
-        "paraphrase": "My opponent posited that there's always a healthier vegetable pizza option. And in some places, pizza is not shared, so one gets to choose what kind of pizza he/she wants",
+        "paraphrase": "My opponent posited that there’s always a healthier vegetable pizza option. And in some places, pizza is not shared, so one gets to choose what kind of pizza he/she wants",
         "acknowledgement": "no",
         "_id": {
           "$oid": "69a937b83e5a9a6ab07c0bd9"
@@ -4956,7 +4956,7 @@
           "$oid": "69a91d30b1c3b3255791b171"
         },
         "player": "player1",
-        "paraphrase": "not much pineapple added to induce too great a flavour contrast and it's easier to remove pineapples than it is to add them after the fact",
+        "paraphrase": "not much pineapple added to induce too great a flavour contrast and it’s easier to remove pineapples than it is to add them after the fact",
         "acknowledgement": "nope",
         "_id": {
           "$oid": "69a93b8d3e5a9a6ab07c0fbe"
@@ -5079,7 +5079,7 @@
     "arguments": [
       {
         "stance": "against",
-        "text": "I believe that as humans, what we're searching for is happiness. If we do have higher pay, there isn't any point if we're not happy. If we have a very high pay but no time to spend, how will we enjoy life? That defeats the entire purpose of higher pay!",
+        "text": "I believe that as humans, what we’re searching for is happiness. If we do have higher pay, there isn’t any point if we’re not happy. If we have a very high pay but no time to spend, how will we enjoy life? That defeats the entire purpose of higher pay!",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -5163,7 +5163,7 @@
       },
       {
         "stance": "for",
-        "text": "where does the constant income to fund insurance comes from?\neven MHA is trying to put a curb to high insurance premiums:\n\"To address rising insurance premiums and private healthcare costs, the Ministry of Health (MOH) is putting a stop to health insurance plans that protect policyholders almost “to the last dollar”.",
+        "text": "where does the constant income to fund insurance comes from?\neven MHA is trying to put a curb to high insurance premiums:\n\"To address rising insurance premiums and private healthcare costs, the Ministry of Health (MOH) is putting a stop to health insurance plans that protect policyholders almost \u201cto the last dollar\u201d.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -5363,7 +5363,7 @@
           "$oid": "69a6d3a7076d1847b5a09474"
         },
         "player": "player1",
-        "paraphrase": "I agree that pay is important. But it is also important to manage our costs and expectations. Yes, with higher pay comes freedom, but it does not guarantee happiness. While low-middle incomed people do not have higher pay and may struggle to make ends meets, if they are still able to enjoy life, then it is still good. Lower pay does not necessarily equal to being poorer. And if you are in a position of being in need, then higher pay would make more sense, and you should focus your time to earn money so you could live to see tomorrow. But if you are already earning enough, then it's time to enjoy life, there is no point in pursuing something that is never ending.",
+        "paraphrase": "I agree that pay is important. But it is also important to manage our costs and expectations. Yes, with higher pay comes freedom, but it does not guarantee happiness. While low-middle incomed people do not have higher pay and may struggle to make ends meets, if they are still able to enjoy life, then it is still good. Lower pay does not necessarily equal to being poorer. And if you are in a position of being in need, then higher pay would make more sense, and you should focus your time to earn money so you could live to see tomorrow. But if you are already earning enough, then it’s time to enjoy life, there is no point in pursuing something that is never ending.",
         "acknowledgement": "No",
         "_id": {
           "$oid": "69a7d0fc811ecc132270fe96"
@@ -5393,7 +5393,7 @@
           "$oid": "69a6d3a7076d1847b5a09474"
         },
         "player": "player1",
-        "paraphrase": "Question states: Higher pay at the expense of social life. If you're gaining a ridiculous amount of money but have no time for relationships with friends/church/God, what is the point? There isn't any point in gaining so much money but not being able to use it to ENJOY life. Enjoy the life that God has given you!",
+        "paraphrase": "Question states: Higher pay at the expense of social life. If you’re gaining a ridiculous amount of money but have no time for relationships with friends/church/God, what is the point? There isn’t any point in gaining so much money but not being able to use it to ENJOY life. Enjoy the life that God has given you!",
         "acknowledgement": "not really",
         "_id": {
           "$oid": "69a7d2a7811ecc13227186b9"
@@ -5408,7 +5408,7 @@
           "$oid": "69a4f96c0611bade23ce56cf"
         },
         "player": "player2",
-        "paraphrase": "i agree with his point that the ultimate goal of our soul should not be corrupted by anything else but God's will for our life.",
+        "paraphrase": "i agree with his point that the ultimate goal of our soul should not be corrupted by anything else but God’s will for our life.",
         "acknowledgement": "nope",
         "_id": {
           "$oid": "69a7d304811ecc1322718fd3"
@@ -5438,7 +5438,7 @@
           "$oid": "69a6d3a7076d1847b5a09474"
         },
         "player": "player1",
-        "paraphrase": "you cannot enjoy life that way but isn't the point of life to enjoy it? id rather live a short enjoyable life than live a long life of misery",
+        "paraphrase": "you cannot enjoy life that way but isn’t the point of life to enjoy it? id rather live a short enjoyable life than live a long life of misery",
         "acknowledgement": "nah",
         "_id": {
           "$oid": "69a7d4a5811ecc132271f9a4"
@@ -5582,7 +5582,7 @@
       },
       {
         "stance": "for",
-        "text": "I believe that food 🥑 is not just for the Italians, but for everyone. It should not be the case that the Italians can insist that pineapple must not be put on pizza, in spite of or because of the fact that they invented it or that pizza is part of Italian culture. Non-Italians are free to make their own food as they please, that pineapple or any other food topping can be put on pizza if they wish",
+        "text": "I believe that food \ud83e\udd51 is not just for the Italians, but for everyone. It should not be the case that the Italians can insist that pineapple must not be put on pizza, in spite of or because of the fact that they invented it or that pizza is part of Italian culture. Non-Italians are free to make their own food as they please, that pineapple or any other food topping can be put on pizza if they wish",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -5606,7 +5606,7 @@
       },
       {
         "stance": "for",
-        "text": "Maybe the Italians had their reason to not put pineapple on pizza. But that does not mean that other people think it is wrong to put pineapple on pizza; in fact many people love Hawaiian pizza for it's tangy pineapple together with tender ham. If many other people think that pineapple on pizza tastes good while Italians and others think it's bad, the question of whether pineapple belongs on pizza may not have a definite answer that applies to everyone; one's own opinion can be correct either way",
+        "text": "Maybe the Italians had their reason to not put pineapple on pizza. But that does not mean that other people think it is wrong to put pineapple on pizza; in fact many people love Hawaiian pizza for it’s tangy pineapple together with tender ham. If many other people think that pineapple on pizza tastes good while Italians and others think it’s bad, the question of whether pineapple belongs on pizza may not have a definite answer that applies to everyone; one’s own opinion can be correct either way",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -5618,7 +5618,7 @@
       },
       {
         "stance": "against",
-        "text": "I agree with you that we can all have our own opinions and it might not apply to everyone. But if I told you spaghetti sauce belongs on rice, how would you respond? \n\nI think pineapple doesn't belong on pizza because it's tanginess overwhelms the taste of all other ingredients including the cheese. The worth of a pizza is in its cheese, therefore all toppings should do nothing more than complement the main flavor, not overwhelmed it.",
+        "text": "I agree with you that we can all have our own opinions and it might not apply to everyone. But if I told you spaghetti sauce belongs on rice, how would you respond? \n\nI think pineapple doesn’t belong on pizza because it’s tanginess overwhelms the taste of all other ingredients including the cheese. The worth of a pizza is in its cheese, therefore all toppings should do nothing more than complement the main flavor, not overwhelmed it.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -5630,7 +5630,7 @@
       },
       {
         "stance": "for",
-        "text": "I think that cheese shouldn't be the only thing that stands out in pizza with all other toppings enhancing the cheese flavour - then what would be the point in having multiple types of pizzas if they all mainly taste of cheese? Maybe pizzas can also showcase other toppings like mushrooms, or yes, pineapple, with cheese remaining in the background.  Surely there are other toppings that can enhance the tangy flavour of pineapple or blend well with it in pizza",
+        "text": "I think that cheese shouldn’t be the only thing that stands out in pizza with all other toppings enhancing the cheese flavour - then what would be the point in having multiple types of pizzas if they all mainly taste of cheese? Maybe pizzas can also showcase other toppings like mushrooms, or yes, pineapple, with cheese remaining in the background.  Surely there are other toppings that can enhance the tangy flavour of pineapple or blend well with it in pizza",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -5654,7 +5654,7 @@
       },
       {
         "stance": "for",
-        "text": "I haven't thought about other meat toppings other than ham, maybe bacon or thin fried strips of beef/chicken could give a crispy taste that pairs well with tangy pineapple. Whatever the other toppings I think we can agree that pineapple can belong on pizza to shine as the main taste",
+        "text": "I haven’t thought about other meat toppings other than ham, maybe bacon or thin fried strips of beef/chicken could give a crispy taste that pairs well with tangy pineapple. Whatever the other toppings I think we can agree that pineapple can belong on pizza to shine as the main taste",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -5854,7 +5854,7 @@
           "$oid": "69a598a94ee499b1d561c46e"
         },
         "player": "player1",
-        "paraphrase": "since food is not culturally or nationally exclusive, Italians' tastes should not prevent other cultures from enjoying the dish the way they want to",
+        "paraphrase": "since food is not culturally or nationally exclusive, Italians’ tastes should not prevent other cultures from enjoying the dish the way they want to",
         "acknowledgement": "Not really",
         "_id": {
           "$oid": "69a6d88f076d1847b5a0b35d"
@@ -5869,8 +5869,8 @@
           "$oid": "69a6cdd24c0d7c2b01361d02"
         },
         "player": "player2",
-        "paraphrase": "Pizza was invented by Italians is important to Italian culture, so Italians should get to insist that pineapple does not belong on pizza as they don't like pineapple on pizza",
-        "acknowledgement": "Nothing changed for me, my opponent's comments strengthened my opinion",
+        "paraphrase": "Pizza was invented by Italians is important to Italian culture, so Italians should get to insist that pineapple does not belong on pizza as they don’t like pineapple on pizza",
+        "acknowledgement": "Nothing changed for me, my opponent’s comments strengthened my opinion",
         "_id": {
           "$oid": "69a6d94a076d1847b5a0b387"
         },
@@ -5884,8 +5884,8 @@
           "$oid": "69a6cdd24c0d7c2b01361d02"
         },
         "player": "player2",
-        "paraphrase": "Italians though pineapple on pizza would taste bad, so they did not put pineapple on pizza initially, and we should take the Italians' view as the inventors of pizza that pineapple does not belong on pizza",
-        "acknowledgement": "Slightly, I see that some people think it's wrong but others think it correct",
+        "paraphrase": "Italians though pineapple on pizza would taste bad, so they did not put pineapple on pizza initially, and we should take the Italians’ view as the inventors of pizza that pineapple does not belong on pizza",
+        "acknowledgement": "Slightly, I see that some people think it’s wrong but others think it correct",
         "_id": {
           "$oid": "69a6de61076d1847b5a0c3b6"
         },
@@ -5899,7 +5899,7 @@
           "$oid": "69a598a94ee499b1d561c46e"
         },
         "player": "player1",
-        "paraphrase": "We can all have our own preferences. we are not bound by what someone says. An opinion doesn't mean it's correct, therefore he's not wrong to say that pineapple can be on pizza",
+        "paraphrase": "We can all have our own preferences. we are not bound by what someone says. An opinion doesn’t mean it’s correct, therefore he’s not wrong to say that pineapple can be on pizza",
         "acknowledgement": "A bit",
         "_id": {
           "$oid": "69a6df2f076d1847b5a0c3f8"
@@ -6067,7 +6067,7 @@
     "arguments": [
       {
         "stance": "for",
-        "text": "chatgpt makes for a great study buddy to bounce ideas off of. I'm not for cutting corners, but for facilitating critical thinking.",
+        "text": "chatgpt makes for a great study buddy to bounce ideas off of. I’m not for cutting corners, but for facilitating critical thinking.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -6079,7 +6079,7 @@
       },
       {
         "stance": "against",
-        "text": "I actually agree that it makes a good study buddy, but the question is how many of us use it purely as a study buddy? Humans often go for the path of least resistance. If ChatGPT can help them with the thinking portions of assignments, why wouldn't they use it for that? It is difficult for anyone to draw a clean boundary between discussion and delegation.",
+        "text": "I actually agree that it makes a good study buddy, but the question is how many of us use it purely as a study buddy? Humans often go for the path of least resistance. If ChatGPT can help them with the thinking portions of assignments, why wouldn’t they use it for that? It is difficult for anyone to draw a clean boundary between discussion and delegation.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -6091,7 +6091,7 @@
       },
       {
         "stance": "for",
-        "text": "Using AI helps speed through the process of learning, so more topics and subjects can be explored in the same amount of time. In the current age of information and big data, education should focus on filtering data on what's useful. Depth of knowledge will soon be delegated to AI.",
+        "text": "Using AI helps speed through the process of learning, so more topics and subjects can be explored in the same amount of time. In the current age of information and big data, education should focus on filtering data on what’s useful. Depth of knowledge will soon be delegated to AI.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -6115,7 +6115,7 @@
       },
       {
         "stance": "for",
-        "text": "Since AI is here to stay, why don't people learn to use it? I think it is wrong to rely on it to generate homework answers because it doesn't engage critical thinking, but there is some value in getting used to having it around. Many university graduates who were banned from using AI find it hard to adapt in the workplace that heavily relies on AI for day-to-day tasks.",
+        "text": "Since AI is here to stay, why don’t people learn to use it? I think it is wrong to rely on it to generate homework answers because it doesn’t engage critical thinking, but there is some value in getting used to having it around. Many university graduates who were banned from using AI find it hard to adapt in the workplace that heavily relies on AI for day-to-day tasks.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -6127,7 +6127,7 @@
       },
       {
         "stance": "against",
-        "text": "This is true. AI should be integrated into homework if and only if we overhaul what homework looks like. We need to design assignments that still challenge and train and hone students' critical thinking abilities. But yes, giving them fluency in AI tools could definitely be useful for the economy that we are living in now.",
+        "text": "This is true. AI should be integrated into homework if and only if we overhaul what homework looks like. We need to design assignments that still challenge and train and hone students’ critical thinking abilities. But yes, giving them fluency in AI tools could definitely be useful for the economy that we are living in now.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -6139,7 +6139,7 @@
       },
       {
         "stance": "for",
-        "text": "Great! So we agree that AI usage is useful for students as it is a useful tool. This allows for more interdisciplinary exploration, where previously STEM students can explore creative fields like visual art or cinema based on ideas they have, but no chance to realise them. Similarly, students in creative fields can have technical concepts broken down into terms that are personalised to them. This greatly enhances learning across the board wouldn't you agree?",
+        "text": "Great! So we agree that AI usage is useful for students as it is a useful tool. This allows for more interdisciplinary exploration, where previously STEM students can explore creative fields like visual art or cinema based on ideas they have, but no chance to realise them. Similarly, students in creative fields can have technical concepts broken down into terms that are personalised to them. This greatly enhances learning across the board wouldn’t you agree?",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -6163,7 +6163,7 @@
       },
       {
         "stance": "for",
-        "text": "Well yes. I'm very sure that the creative process is valuable, if not more than the result. What I am saying, however, is that AI usage reduces the accessibility to weaker fields of study.",
+        "text": "Well yes. I’m very sure that the creative process is valuable, if not more than the result. What I am saying, however, is that AI usage reduces the accessibility to weaker fields of study.",
         "round": 5,
         "submittedBy": "human",
         "_id": {
@@ -6187,7 +6187,7 @@
       },
       {
         "stance": "for",
-        "text": "But it does spark interest, wouldn't it? Hopefully students don't stop at just using AI. I'm satisfied with this compromise.",
+        "text": "But it does spark interest, wouldn’t it? Hopefully students don’t stop at just using AI. I’m satisfied with this compromise.",
         "round": 6,
         "submittedBy": "human",
         "_id": {
@@ -6423,7 +6423,7 @@
           "$oid": "69a290b4abf4bf42255c389b"
         },
         "player": "player1",
-        "paraphrase": "hard to enforce chatgpt's identity as a study buddy rather than asking it for answers",
+        "paraphrase": "hard to enforce chatgpt’s identity as a study buddy rather than asking it for answers",
         "acknowledgement": "maybe",
         "_id": {
           "$oid": "69a679d282bc1c66862af339"
@@ -6694,7 +6694,7 @@
       },
       {
         "stance": "for",
-        "text": "What I'm hearing is that social connection is similarly a factor in better standard of living, but also not a holistic measure. It is true that material wealth is not a holistic measure, but it is an important factor of happiness and quality of life. A rich person will not automatically be happy, but all things held equal someone with a higher income is likely to be able to make more choices that make them happier. Also, why does a higher income necessarily come at the expense of social life?",
+        "text": "What I’m hearing is that social connection is similarly a factor in better standard of living, but also not a holistic measure. It is true that material wealth is not a holistic measure, but it is an important factor of happiness and quality of life. A rich person will not automatically be happy, but all things held equal someone with a higher income is likely to be able to make more choices that make them happier. Also, why does a higher income necessarily come at the expense of social life?",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -6706,7 +6706,7 @@
       },
       {
         "stance": "against",
-        "text": "I think you are backtracking in your argument. Your previous claim was to minimise your social circle and to aim for higher pay. If I'm not mistaken, you are now saying that it isn't a matter of choosing one over the other, but striking a balance. Where do you find a balance between the two?",
+        "text": "I think you are backtracking in your argument. Your previous claim was to minimise your social circle and to aim for higher pay. If I’m not mistaken, you are now saying that it isn’t a matter of choosing one over the other, but striking a balance. Where do you find a balance between the two?",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -6742,7 +6742,7 @@
       },
       {
         "stance": "for",
-        "text": "Higher income is an external signal to for one's sense of self-worth and agency. A heavy dumbbell on the floor doesn't make you strong, but being able to lift a 30kg dumbbell vs a 15kg one can help you see yourself getting stronger. A higher income provides a similar signal for your competencies and skill. Your argument seems to assume that wealth is only for selfish gain. The example being about providing better for family already moots that point.",
+        "text": "Higher income is an external signal to for one’s sense of self-worth and agency. A heavy dumbbell on the floor doesn’t make you strong, but being able to lift a 30kg dumbbell vs a 15kg one can help you see yourself getting stronger. A higher income provides a similar signal for your competencies and skill. Your argument seems to assume that wealth is only for selfish gain. The example being about providing better for family already moots that point.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -6754,7 +6754,7 @@
       },
       {
         "stance": "against",
-        "text": "One can provide for family with average and low pay. Higher pay implies a discontentment with life and follows our society's capitalistic metanarrative that more money leads to happiness. With prudent financial management, one can lead a fuss free life without having to pay the opportunity cost of hustling more in career. AND spend time at home with the family and community too. On your point on competencies and skill, I disagree. There are many incompetent managers in the corporate world.",
+        "text": "One can provide for family with average and low pay. Higher pay implies a discontentment with life and follows our society’s capitalistic metanarrative that more money leads to happiness. With prudent financial management, one can lead a fuss free life without having to pay the opportunity cost of hustling more in career. AND spend time at home with the family and community too. On your point on competencies and skill, I disagree. There are many incompetent managers in the corporate world.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -6766,7 +6766,7 @@
       },
       {
         "stance": "for",
-        "text": "Let's look at the claims one by one.\n1) The idea that \"One can provide for family with average and low pay\" comes across as extraordinarily privileged. In which country or society can we actually assume that is true? And by provide do we mean the bare minimum?\n2) We have already established that more money doesn't by itself lead to more happiness (see round 3), but saying that someone only seeks a higher pay because they are discontent discounts some's healthy desire for growth.",
+        "text": "Let’s look at the claims one by one.\n1) The idea that \"One can provide for family with average and low pay\" comes across as extraordinarily privileged. In which country or society can we actually assume that is true? And by provide do we mean the bare minimum?\n2) We have already established that more money doesn’t by itself lead to more happiness (see round 3), but saying that someone only seeks a higher pay because they are discontent discounts some’s healthy desire for growth.",
         "round": 5,
         "submittedBy": "human",
         "_id": {
@@ -6778,7 +6778,7 @@
       },
       {
         "stance": "against",
-        "text": "1. Okay let's play ball. What do the happiest countries in the world value? Definitely not capitalism nor high pay. My contention is grounded in desiring to thrive in life; if money takes up too much of your goals, it creates unrest and anxiety and an inability to live in the present moment. Furthermore, if money really is the path to happiness, why aren't more first-world countries happier?\n2. Why grow your money? Where does it end? One million dollars? Two?",
+        "text": "1. Okay let’s play ball. What do the happiest countries in the world value? Definitely not capitalism nor high pay. My contention is grounded in desiring to thrive in life; if money takes up too much of your goals, it creates unrest and anxiety and an inability to live in the present moment. Furthermore, if money really is the path to happiness, why aren’t more first-world countries happier?\n2. Why grow your money? Where does it end? One million dollars? Two?",
         "round": 5,
         "submittedBy": "human",
         "_id": {
@@ -6802,7 +6802,7 @@
       },
       {
         "stance": "against",
-        "text": "1. stress la bro. 2. some things can't be bought with money. For example, time spent with elderly parents. No amount of money can bring them back.",
+        "text": "1. stress la bro. 2. some things can’t be bought with money. For example, time spent with elderly parents. No amount of money can bring them back.",
         "round": 6,
         "submittedBy": "human",
         "_id": {
@@ -6814,7 +6814,7 @@
       },
       {
         "stance": "for",
-        "text": "2. That is certainly true, but there are also many things that cannot be obtained with time. For instance, making sure your parents' medical needs are fully met with a good insurance plan. You may be content with buying them a basic policy until they end up in the hospital with a debilitating illness and rising medical bills. Seeing a high income as important is too often demonized and not seen as being a practical, significant factor in building quality of life.",
+        "text": "2. That is certainly true, but there are also many things that cannot be obtained with time. For instance, making sure your parents’ medical needs are fully met with a good insurance plan. You may be content with buying them a basic policy until they end up in the hospital with a debilitating illness and rising medical bills. Seeing a high income as important is too often demonized and not seen as being a practical, significant factor in building quality of life.",
         "round": 7,
         "submittedBy": "human",
         "_id": {
@@ -7176,7 +7176,7 @@
           "$oid": "69a290b4abf4bf42255c389b"
         },
         "player": "player2",
-        "paraphrase": "higher income means you have high competencies and skills and desiring wealth isn't individualistic if you use it to provide for your family",
+        "paraphrase": "higher income means you have high competencies and skills and desiring wealth isn’t individualistic if you use it to provide for your family",
         "acknowledgement": "not really",
         "_id": {
           "$oid": "69a670f182bc1c66862a02f3"
@@ -7206,7 +7206,7 @@
           "$oid": "69a290b4abf4bf42255c389b"
         },
         "player": "player2",
-        "paraphrase": "families can't be provided for with low pay, and people who desire high pay desire growth",
+        "paraphrase": "families can’t be provided for with low pay, and people who desire high pay desire growth",
         "acknowledgement": "not really",
         "_id": {
           "$oid": "69a674d882bc1c66862a3e4e"
@@ -7921,7 +7921,7 @@
       },
       {
         "stance": "for",
-        "text": "Why can't Italian pizza and pineapple on pizza co-exist? Definitions evolve over time in different cultures. As pizza is a globalised phenomenon, different people use what's available and what's in their native palates to build a pizza that is right for them.",
+        "text": "Why can’t Italian pizza and pineapple on pizza co-exist? Definitions evolve over time in different cultures. As pizza is a globalised phenomenon, different people use what’s available and what’s in their native palates to build a pizza that is right for them.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -7945,7 +7945,7 @@
       },
       {
         "stance": "for",
-        "text": "Thats not true. Both are definitely allowed to exist. Different cultures can have chilli on hotdogs or not, and that's fine. Chicago and New York still stand. This isn't the Wild West, this is food.",
+        "text": "Thats not true. Both are definitely allowed to exist. Different cultures can have chilli on hotdogs or not, and that’s fine. Chicago and New York still stand. This isn’t the Wild West, this is food.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -7957,7 +7957,7 @@
       },
       {
         "stance": "against",
-        "text": "I see your point that chili exists on hot dogs. But you don't eat hot dogs in restaurants. Hot dogs are universally known to be street food, whereas pizza is established as a culinary icon of Italy. This supports the sentiment I shared about accepting the definition of a pizza as a traditional Italian food.",
+        "text": "I see your point that chili exists on hot dogs. But you don’t eat hot dogs in restaurants. Hot dogs are universally known to be street food, whereas pizza is established as a culinary icon of Italy. This supports the sentiment I shared about accepting the definition of a pizza as a traditional Italian food.",
         "round": 5,
         "submittedBy": "human",
         "_id": {
@@ -7969,7 +7969,7 @@
       },
       {
         "stance": "for",
-        "text": "Pizza is more than tradition now. There is pizza in all parts of the world! Why should we have to submit to Italy? It's gone beyond them, and if it's Italy vs the world, the world will win. Italy will have to accept that the world will progress. Maybe they can keep the traditions alive, but the rest of us will be enjoying whatever toppings we want on our pizzas.",
+        "text": "Pizza is more than tradition now. There is pizza in all parts of the world! Why should we have to submit to Italy? It’s gone beyond them, and if it’s Italy vs the world, the world will win. Italy will have to accept that the world will progress. Maybe they can keep the traditions alive, but the rest of us will be enjoying whatever toppings we want on our pizzas.",
         "round": 5,
         "submittedBy": "human",
         "_id": {
@@ -8339,7 +8339,7 @@
         "userId": {
           "$oid": "69a062a6152ebd49f1682837"
         },
-        "paraphrase": "The world shouldn't submit to Italy's verdict of what pizza should be. But Italy can remain traditional if they don't cross the line for others",
+        "paraphrase": "The world shouldn’t submit to Italy’s verdict of what pizza should be. But Italy can remain traditional if they don’t cross the line for others",
         "acknowledgement": "yes",
         "_id": {
           "$oid": "69a3faa0c3f532453c5d0826"
@@ -8461,7 +8461,7 @@
       },
       {
         "stance": "against",
-        "text": "Chat Gbt being ubiquitous doesn't mean it is useful for education. Students need to start learning the fundamentals rather than skip to the answer. A student doing a math problem needs to know the steps that lead to the answer. If the answer is just fed by ChatGBT, the student will not develop the fundamentals properly. Also where is your survey from?",
+        "text": "Chat Gbt being ubiquitous doesn’t mean it is useful for education. Students need to start learning the fundamentals rather than skip to the answer. A student doing a math problem needs to know the steps that lead to the answer. If the answer is just fed by ChatGBT, the student will not develop the fundamentals properly. Also where is your survey from?",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -8473,7 +8473,7 @@
       },
       {
         "stance": "for",
-        "text": "ChatGPT being ubiquitous means its reversal in our lives is nearly impossible, if not very improbable. instead of eradicating it we should learn how to harness its power! It can help explain the steps to answering questions and has endless patience to do so over and over again. it is a teacher's learning aide and frees them up to do higher value work. the survey of 500 students was conducted for the CNA programme Talking Point - I used chatgpt for this!",
+        "text": "ChatGPT being ubiquitous means its reversal in our lives is nearly impossible, if not very improbable. instead of eradicating it we should learn how to harness its power! It can help explain the steps to answering questions and has endless patience to do so over and over again. it is a teacher’s learning aide and frees them up to do higher value work. the survey of 500 students was conducted for the CNA programme Talking Point - I used chatgpt for this!",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -8485,7 +8485,7 @@
       },
       {
         "stance": "against",
-        "text": "That's true that ChatGBT will continue to be present in our lives and that it can explain the steps to answering questions. However, doing the difficult task of understanding the fundamentals of things and figuring it out for themselves improves a student's ability to learn and understand, things that will be lost with the use of ChatGBT. Realistically, many students also will not look through the step taught by ChatGBT and skip straight to the answer.",
+        "text": "That’s true that ChatGBT will continue to be present in our lives and that it can explain the steps to answering questions. However, doing the difficult task of understanding the fundamentals of things and figuring it out for themselves improves a student’s ability to learn and understand, things that will be lost with the use of ChatGBT. Realistically, many students also will not look through the step taught by ChatGBT and skip straight to the answer.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -8762,7 +8762,7 @@
         "userId": {
           "$oid": "69a3dc5ea25dea5aded7a437"
         },
-        "paraphrase": "ChatGBT can help to explain the steps of thinking. ChatGBT is a useful teacher's aide",
+        "paraphrase": "ChatGBT can help to explain the steps of thinking. ChatGBT is a useful teacher’s aide",
         "acknowledgement": "",
         "_id": {
           "$oid": "69a3ebc83b5e46b10bfb4e83"
@@ -8777,7 +8777,7 @@
         "userId": {
           "$oid": "699dbdb37193bcbcb7baa2f6"
         },
-        "paraphrase": "the main point that chatgpt providing the answer will erode students' learning of the fundamentals bc they will skip all the way to the answer",
+        "paraphrase": "the main point that chatgpt providing the answer will erode students’ learning of the fundamentals bc they will skip all the way to the answer",
         "acknowledgement": "No",
         "_id": {
           "$oid": "69a3ec423b5e46b10bfb53f7"
@@ -8837,7 +8837,7 @@
         "userId": {
           "$oid": "699dbdb37193bcbcb7baa2f6"
         },
-        "paraphrase": "AI reduces students' ability to think",
+        "paraphrase": "AI reduces students’ ability to think",
         "acknowledgement": "No",
         "_id": {
           "$oid": "69a3fc1bc3f532453c5d1068"
@@ -8981,7 +8981,7 @@
       },
       {
         "stance": "for",
-        "text": "It depends on how much you can earn before you burn out. Also, isn't it worth it to push your limits? If you believe you can do it, you can get far in life.",
+        "text": "It depends on how much you can earn before you burn out. Also, isn’t it worth it to push your limits? If you believe you can do it, you can get far in life.",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -9005,7 +9005,7 @@
       },
       {
         "stance": "for",
-        "text": "Keeping mental wellness is one aspect of one's life. I argue that mental wellness is important, but sacrificing high pay may neglect other areas in life that can be affected by unforeseen circumstances. For example, a health crisis or economic recessions.",
+        "text": "Keeping mental wellness is one aspect of one’s life. I argue that mental wellness is important, but sacrificing high pay may neglect other areas in life that can be affected by unforeseen circumstances. For example, a health crisis or economic recessions.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -9029,7 +9029,7 @@
       },
       {
         "stance": "for",
-        "text": "Contentment serves you well in this consumeristic culture. My perspective is that if I can take care of my needs, I can take care of others as well so that I don't become a financial burden. Borrowing money between friends and family can place tensions on the relationships, which I want to avoid.",
+        "text": "Contentment serves you well in this consumeristic culture. My perspective is that if I can take care of my needs, I can take care of others as well so that I don’t become a financial burden. Borrowing money between friends and family can place tensions on the relationships, which I want to avoid.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -9041,6 +9041,19 @@
       }
     ],
     "beliefHistory": [
+      {
+        "round": 0,
+        "userId": {
+          "$oid": "699ec543f53d44e8e544cc4d"
+        },
+        "player": "player2",
+        "belief": null,
+        "beliefValue": 25,
+        "influence": 0,
+        "confidence": 0,
+        "skipped": false,
+        "imputed": true
+      },
       {
         "round": 0,
         "userId": {
@@ -9281,7 +9294,7 @@
           "$oid": "69996a5f0295a37cf0426545"
         },
         "paraphrase": "mental wellness helps earn me more money in the long run",
-        "acknowledgement": "no, it's a strawman argument",
+        "acknowledgement": "no, it’s a strawman argument",
         "_id": {
           "$oid": "699ec8e5f53d44e8e544d2a5"
         },
@@ -9432,7 +9445,7 @@
       },
       {
         "stance": "for",
-        "text": "ChatGPT can enhance a student's learning journey instead of inhibiting as it can convey lessons or concepts in a easier to understand manner for the student. Although it does provide shortcuts to their homework, a student can also learn from the solution itself.",
+        "text": "ChatGPT can enhance a student’s learning journey instead of inhibiting as it can convey lessons or concepts in a easier to understand manner for the student. Although it does provide shortcuts to their homework, a student can also learn from the solution itself.",
         "round": 1,
         "submittedBy": "human",
         "_id": {
@@ -9456,7 +9469,7 @@
       },
       {
         "stance": "for",
-        "text": "When ChatGPT is used as a tool alongside independent learning - it can help students develop their critical thinking by exposing them to other points of view other than their own. Similarly, it can help develop a student's existing ideas further. The assumption that homework questions being sufficiently clear to understand by themselves do not consider students who may be weaker at a certain subject or with learning disabilities.  ",
+        "text": "When ChatGPT is used as a tool alongside independent learning - it can help students develop their critical thinking by exposing them to other points of view other than their own. Similarly, it can help develop a student’s existing ideas further. The assumption that homework questions being sufficiently clear to understand by themselves do not consider students who may be weaker at a certain subject or with learning disabilities.  ",
         "round": 2,
         "submittedBy": "human",
         "_id": {
@@ -9468,7 +9481,7 @@
       },
       {
         "stance": "against",
-        "text": "I think it's a good point that ChatGPT may expose students to alternatives points of view and can help students them to develop their ideas further. However, this is limited to homework that may benefit from disussion. ChatGPT may offer alternative points of view in a convenient manner, however, it also removes group discussion and listening experiences from the student.",
+        "text": "I think it’s a good point that ChatGPT may expose students to alternatives points of view and can help students them to develop their ideas further. However, this is limited to homework that may benefit from disussion. ChatGPT may offer alternative points of view in a convenient manner, however, it also removes group discussion and listening experiences from the student.",
         "round": 3,
         "submittedBy": "human",
         "_id": {
@@ -9516,6 +9529,19 @@
       }
     ],
     "beliefHistory": [
+      {
+        "round": 0,
+        "userId": {
+          "$oid": "6998363ab47e0b6a903d96f7"
+        },
+        "player": "player2",
+        "belief": null,
+        "beliefValue": 75,
+        "influence": 0,
+        "confidence": 0,
+        "skipped": false,
+        "imputed": true
+      },
       {
         "round": 0,
         "userId": {
@@ -9710,7 +9736,7 @@
         "userId": {
           "$oid": "6998363ab47e0b6a903d96f7"
         },
-        "paraphrase": "ChatGPT can inhibit a student's proactiveness in their own learning and become lazy.",
+        "paraphrase": "ChatGPT can inhibit a student’s proactiveness in their own learning and become lazy.",
         "acknowledgement": "Yes, i do agree with the points - some independence is needed for learning",
         "_id": {
           "$oid": "699d531f41690257a47f6c3d"
@@ -9857,7 +9883,7 @@
       "player2": "no_effect",
       "player1AiAwarenessEffect": "less_persuasive",
       "player2AiAwarenessEffect": null,
-      "player1AiAwarenessJustification": "I don't feel like debating with AI",
+      "player1AiAwarenessJustification": "I don’t feel like debating with AI",
       "player2AiAwarenessJustification": null,
       "player1OpponentPerception": "ai",
       "player2OpponentPerception": "human",
@@ -9981,7 +10007,7 @@
       },
       {
         "stance": "against",
-        "text": "Nah I don't pineapples can be even be considered valid food.",
+        "text": "Nah I don’t pineapples can be even be considered valid food.",
         "round": 4,
         "submittedBy": "human",
         "_id": {
@@ -10005,6 +10031,19 @@
       }
     ],
     "beliefHistory": [
+      {
+        "round": 0,
+        "userId": {
+          "$oid": "699af5f29bfc0e83b4841264"
+        },
+        "player": "player2",
+        "belief": null,
+        "beliefValue": 75,
+        "influence": 0,
+        "confidence": 0,
+        "skipped": false,
+        "imputed": true
+      },
       {
         "round": 0,
         "userId": {
@@ -10070,7 +10109,7 @@
         "belief": "against",
         "beliefValue": 0,
         "confidence": 90,
-        "skipped:": false
+        "skipped": false
       },
       {
         "round": 2,
@@ -10393,6 +10432,19 @@
       {
         "round": 0,
         "userId": {
+          "$oid": "6996ed01967b343cf6357c11"
+        },
+        "player": "player2",
+        "belief": null,
+        "beliefValue": 50,
+        "influence": 0,
+        "confidence": 0,
+        "skipped": false,
+        "imputed": true
+      },
+      {
+        "round": 0,
+        "userId": {
           "$oid": "699701134bd396a55ecfa956"
         },
         "player": "player1",
@@ -10554,7 +10606,7 @@
         "userId": {
           "$oid": "699701134bd396a55ecfa956"
         },
-        "paraphrase": "chatgpt doesn't train our minds",
+        "paraphrase": "chatgpt doesn’t train our minds",
         "acknowledgement": "no",
         "_id": {
           "$oid": "699702834bd396a55ecfa999"

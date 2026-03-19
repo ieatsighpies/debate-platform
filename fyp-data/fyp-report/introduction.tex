@@ -91,15 +91,13 @@ The primary objectives of this project are:
     from inferring opponent type or AI personality, thereby enabling analysis of persuasiveness
     independent of source bias and preconception.
 
-    \item To measure bidirectional persuasion effects: analyzing both how human arguments influence AI
-    argument evolution and stance indicators, and how distinct AI personalities and rhetorical strategies
-    influence human belief change, across personality conditions that vary in warmth, competence, and
-    adaptability perceptions.
+    \item To measure persuasion effects in a controlled debate setting, with primary emphasis on
+    how distinct AI personalities and rhetorical strategies influence human belief and confidence outcomes,
+    under information-hiding conditions that reduce source bias.
 
     \item To collect comprehensive debate datasets encompassing argument content, discourse
-    dynamics, participant reactions, AI stance evolution across rounds, and post-debate survey responses
-    to support downstream empirical analysis of bidirectional persuasion effects: how humans persuade AI
-    and how AI persuades humans across personality conditions.
+    dynamics, participant reactions, AI stance indicators across rounds, and post-debate survey responses
+    to support empirical analysis of AI-to-human persuasion in this thesis and human-to-AI persuasion in future work.
 
     \item To provide administrative tools that enable experiment design, participant recruitment
     and assignment, debate configuration, and systematic data export for research analysis.
@@ -240,9 +238,8 @@ This thesis focuses on:
     management, and controlled debate orchestration
     \item Real-time communication infrastructure ensuring consistent debate flow and reliable recording
     of bidirectional persuasion indicators
-    \item Post-hoc data export and analysis capabilities to support downstream empirical research
-    on bidirectional persuasion effects: AI persuasion of humans and human persuasion of AI across
-    personality conditions
+    \item Post-hoc data export and analysis capabilities, with this thesis executing the
+    confirmatory AI-to-human persuasion analysis and robustness checks
 \end{itemize}
 
 \subsection{Limitations}
@@ -250,9 +247,8 @@ This thesis focuses on:
 The following aspects are explicitly out of scope or represent known limitations:
 
 \begin{itemize}
-    \item Execution of large-scale empirical studies and statistical analysis of persuasiveness
-    (delegated to future research work)
-    \item Advanced NLP-based argument quality metrics or automated debate evaluation
+    \item Large-scale replication beyond the current pilot sample ($n=89$)
+    \item Full argument-quality NLP scoring and comprehensive human-to-AI persuasion modeling
     \item Mobile-specific optimizations or native mobile applications
     \item Large-scale distributed deployment or cloud infrastructure considerations
     (single-server reference architecture)
@@ -270,9 +266,8 @@ The remainder of this thesis is organized as follows:
     collection infrastructure: design choices, implementation, and data capture mechanisms
     \item \textbf{Chapter 4:} Experimental Methodology --- Study design, participant protocol,
     conditions, and statistical analysis approach
-    \item \textbf{Chapter 5:} Results and Significance --- Experimental findings on bidirectional
-    persuasion: AI persuasiveness toward humans and human persuasiveness modulation of AI argument
-    evolution
+    \item \textbf{Chapter 5:} Results and Analysis --- Experimental findings on AI-to-human
+    persuasion (belief and confidence outcomes), robustness checks, and exploratory mechanism analysis
     \item \textbf{Chapter 6:} Conclusion and Future Work --- Synthesis of findings, implications,
     limitations, and directions for future research
 \end{itemize}
@@ -282,26 +277,23 @@ The remainder of this thesis is organized as follows:
 The primary contributions of this work are:
 
 \begin{enumerate}
-    \item Empirical findings on bidirectional persuasion: quantitative evidence of how AI systems
-    with distinct personalities persuade human participants, and how human argumentation influences
-    AI argument content and stance positioning across successive debate rounds, revealing the comparative
-    mechanisms of AI versus human persuasiveness.
+    \item Empirical findings on AI-to-human persuasion: quantitative evidence that AI opponents
+    with distinct personalities produce a robust confidence effect but a null belief-change effect,
+    with explicit multiplicity correction and sensitivity checks.
 
     \item A methodologically rigorous experimental design and information-controlled debate platform
     that enables isolation of AI persuasive effects from source bias, personalization, and structural
     factors, thereby supporting replicable and defensible empirical analysis.
 
-    \item Fine-grained analysis of persuasion dynamics: between-round belief measurement combined with
-    argument comprehension checking reveals which specific AI argument patterns and rhetorical strategies
-    drive human belief change, and how human arguments modulate AI argument evolution.
+    \item Fine-grained analysis of persuasion dynamics: participant-level belief and confidence trajectories,
+    combined with reflection and post-debate attribution data, identify a confidence-belief dissociation
+    and test exploratory mechanism hypotheses.
 
-    \item Evidence on the role of AI personality configuration in modulating bidirectional persuasion:
-    comparative analysis across firm, balanced, and open-minded personalities provides insight into
-    how warmth, competence, and adaptability dimensions shape both human susceptibility to AI persuasion
-    and AI flexibility in response to human arguments.
+    \item Evidence on the role of AI personality configuration in persuasion outcomes:
+    comparative analysis across firm, balanced, and open-minded personalities indicates no significant
+    differences in belief-change outcomes, justifying pooled AI treatment analysis.
 
-    \item A comprehensive, annotated dataset of debate records (arguments, within-debate belief changes,
-    AI stance evolution, attribution data, post-debate assessments) suitable for ongoing and future
-    empirical analysis of AI-human persuasion dynamics, argumentation patterns, and interaction mechanisms
-    moderated by personality conditions.
+    \item A comprehensive, annotated dataset of debate records (arguments, within-debate belief measures,
+    attribution data, post-debate assessments) suitable for ongoing and future empirical analysis,
+    including deferred human-to-AI persuasion modeling.
 \end{enumerate}
