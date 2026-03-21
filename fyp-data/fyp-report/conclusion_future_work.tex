@@ -2,26 +2,27 @@
 
 This thesis presents an analysis of AI persuasiveness in a debate platform, investigating whether
 AI opponents effectively shift human participant beliefs compared to human-human debate.
-The primary empirical finding is a striking dissociation: AI debate produces \textit{null belief change}
-but \textit{robust confidence gain}. This finding is theoretically novel and methodologically sound,
+The primary empirical finding is that AI debate produces \textit{null belief change}
+with only a \textit{directional (non-significant) confidence increase}. This pattern is
+methodologically informative,
 offering implications for AI's role in persuasion, argumentation training, and human-AI collaboration.
 
 \subsection{Primary Finding: The Confidence-Belief Dissociation}
 
-Across four pre-specified confirmatory models with robust standard errors and multiplicity correction,
+Across four pre-specified confirmatory models with robust standard errors,
 AI debate produced no significant effect on participant belief change relative to human-human debate
-(all $p > 0.29$, $d = 0.31$, observed power $= 23.5\%$).
-Simultaneously, AI debate produced a robust, statistically significant boost in post-debate confidence
-($\beta = 12$--$13$ points, $95\% \text{ CI:} [3, 24]$, Bonferroni $p = 0.02$--$0.024$).
+(all $p > 0.35$, $d = 0.286$, observed power $= 20.0\%$).
+Confidence models showed a consistent directional increase that did not reach statistical significance
+($\beta = 5.2$--$5.8$ points, 95\% CI crossing 0, $p = 0.17$--$0.21$).
 
 Because baseline confidence was recorded as 0 for all participants, this should be interpreted as
 between-condition differences in post-debate confidence levels rather than true baseline-to-post change.
 
-This dissociation challenges classical persuasion theory, which posits tight coupling between
-belief and confidence (Petty \& Cacioppo, 1986; Eagly \& Chaiken, 1993).
+This pattern is consistent with classical persuasion theory, which often models belief and
+confidence as closely coupled constructs \cite{petty1986_elm,eagly1993_psychology_of_attitudes}.
 In the AI debate context, participants apparently update their \textit{confidence in debate performance}
 without updating their \textit{core stance conviction}. They finish debates feeling more certain
-without having shifted underlying belief.
+in direction, without reliable evidence of shifted underlying belief.
 
 \subsection{Mechanism: Illusory Success, Not Defensive Conviction}
 
@@ -29,10 +30,10 @@ We hypothesized that the confidence gain reflected a ``defensive confidence'' me
 participants who argued critically should feel more convinced of their position after ``winning'' debate exchanges.
 However, correlation analysis of the qualitative subsample revealed the opposite:
 participants who engaged in high pushback (critical argumentation) showed \textit{lower} confidence gain
-($r = -0.73$, $p = 0.007$, 95\% CI $[-0.920,-0.274]$), not higher. This correlation was robust to jackknife resampling
-($r_{jackknife} \in [-0.798,-0.731]$).
+($r = -0.121$, $p = 0.707$, 95\% CI $[-0.650,0.487]$), not higher. Jackknife resampling
+showed a directional negative range ($r_{jackknife} \in [-0.372,-0.003]$), but with weak inferential certainty.
 
-The mechanism most consistent with data is \textit{illusory success}:
+One plausible interpretation is \textit{illusory success}:
 \begin{itemize}
     \item Passive participants perceived themselves as ``winning'' against a non-concessive opponent,
           inflating confidence without substance.
@@ -46,7 +47,7 @@ and participant framing (belief measurements follow immediately after debate, an
 
 \subsubsection{AI as a Credible but Non-Persuasive Interlocutor}
 
-Participants treat AI as a serious intellectual opponent (evidenced by robust confidence differences and continued engagement),
+Participants may treat AI as a serious intellectual opponent (evidenced by directional confidence differences and continued engagement),
 but they do not grant the AI epistemic authority
 to shift core beliefs. This suggests:
 
@@ -60,7 +61,7 @@ to shift core beliefs. This suggests:
 
 \subsubsection{Implications for AI Pedagogy and Argumentation Training}
 
-If AI debate robustly boosts confidence without shifting beliefs, its value lies in \textit{self-efficacy training}
+If AI debate directionally boosts confidence without shifting beliefs, its value may lie in \textit{self-efficacy training}
 rather than \textit{persuasion}. Participants may benefit from:
 \begin{itemize}
     \item Increased confidence in their own reasoning and argumentation skills,
@@ -77,20 +78,22 @@ This analysis demonstrates rigorous small-sample inference through:
 \begin{itemize}
     \item \textbf{Pre-specified model sequence}: Four confirmatory models locked before data analysis.
     \item \textbf{Robust standard errors}: HC3 covariance matrices account for heteroscedasticity.
-    \item \textbf{Multiplicity correction}: Bonferroni adjustment applied to co-primary outcome (confidence).
-    \item \textbf{Transparency about underpowering}: With $n = 89$, power for belief effect detection is $23.5\%$.
-              The null result is robust across sensitivity checks and cannot be attributed to sampling error alone.
+      \item \textbf{Inferential transparency}: confidence models are reported with explicit effect sizes,
+                    confidence intervals, and corresponding $p$-values.
+                                    \item \textbf{Transparency about underpowering}: With model sample $n = 89$, observed power for belief effect detection is $20.0\%$.
+                                          The null result is stable across reported sensitivity checks but remains compatible with limited power.
     \item \textbf{Mechanism validation attempted}: Correlation test falsified initial hypothesis,
               demonstrating intellectual honesty rather than confirmatory bias.
     \item \textbf{Data quality audits}: Floor-ceiling effect checks and baseline confidence missing-data detection.
 \end{itemize}
 
+\pagebreak
 \section{Limitations}
 
 \subsection{Sample Size and Power}
 
-With $n = 89$, this study is underpowered for \textit{belief} effects ($d = 0.31$, required $n \approx 175$ per group for $80\%$ power).
-The null belief finding is stable across robustness checks, suggesting true nullity rather than Type II error,
+With model sample $n = 89$, this study is underpowered for \textit{belief} effects ($d = 0.286$, required $n \approx 175$ per group for $80\%$ power).
+The null belief finding is stable across robustness checks,
 but replication with a larger sample is warranted.
 
 \subsection{Measurement and Scale Issues}
@@ -108,7 +111,9 @@ but replication with a larger sample is warranted.
 \subsection{Sample Representation Bias}
 
 Qualitative analysis was performed on a stratified sample ($n \approx 24$ reflections)
-that overrepresents human-human debates ($50\%$ vs. $21\%$ in population, $\chi^2 = 18.2, p < 0.001$).
+that overrepresents human-human debates ($50\%$ vs. $20.5\%$ in population).
+AI conditions are each underrepresented in the qualitative sample ($16.7\%$ each)
+relative to their population shares (firm $28.4\%$, balanced $27.4\%$, open-minded $23.7\%).
 This bias limits the representativeness of mechanism findings and should be considered exploratory.
 
 \subsection{Generalizability}
@@ -120,9 +125,10 @@ Additionally, topics were participant-selected rather than experimenter-controll
 \subsection{AI Realism and Authenticity}
 
 The AI opponent is a prompted language model, not a persistent agent with learning. The pattern of
-``never conceding,'' while methodologically clean, may not reflect authentic disagreement dynamics
+"never conceding", while methodologically clean, may not reflect authentic disagreement dynamics
 in real-world human-human or human-AI debate.
 
+\pagebreak
 \section{Future Work}
 
 Future research directions address the dissociation finding and explore boundary conditions:
@@ -164,15 +170,17 @@ Hypothesize that AI persuasiveness is moderated by topic type.
 
 \subsection{Practical Application: Argumentation Tutoring}
 
-Since AI debate robustly boosts confidence, deploy the platform as a confidence-building tool in
+Since AI debate shows directional confidence increases, deploy the platform as a confidence-building tool in
 argumentation curricula. Compare students' debate performance pre- and post-AI-debate practice.
 Test whether confidence gains transfer to performance against human opponents.
 
+\pagebreak
 \section{Final Remarks}
 
 This thesis contributes to our understanding of AI persuasiveness by demonstrating that
-AI in debate format is effective for participant confidence and engagement but not for belief change.
-The dissociation is novel and reproducible, and it motivates a nuanced model of AI's role:
+AI in debate format does not produce reliable pooled effects on either belief change or confidence change
+in this pilot, while still supporting useful engagement and process diagnostics.
+This pattern motivates a nuanced model of AI's role:
 not as a replacement for human-led persuasion or education, but as a complement for practice,
 confidence building, and intellectual sparring.
 
@@ -180,3 +188,5 @@ The methodological framework---locked designs, robust inference, and mechanism v
 provides a template for rigorous empirical work on AI-human interaction in persuasive contexts.
 As AI becomes increasingly integrated into learning and decision-support systems,
 understanding its limitations and comparative advantages remains critically important.
+Numeric claims in this chapter are synchronized to Appendix
+Table~\ref{tab:headline_numbers}.

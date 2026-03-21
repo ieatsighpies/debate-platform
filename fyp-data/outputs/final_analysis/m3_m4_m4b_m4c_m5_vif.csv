@@ -1,0 +1,30 @@
+feature,VIF
+Intercept,4.8246860762566905
+"C(group_2lvl, Treatment(""human""))[T.ai]",1.0666713783445676
+p1_reflection_quality_z,5.0445534103845135
+"C(group_2lvl, Treatment(""human""))[T.ai]:p1_reflection_quality_z",4.942826552209221
+Intercept,6.0104931274831
+"C(group_2lvl, Treatment(""human""))[T.ai]",1.0509384685585417
+C(topic_id)[T.2],1.1912820130710986
+C(topic_id)[T.3],1.283443289760204
+p1_reflection_quality_z,1.1451553458140662
+initial_stance_strength_z,1.0626072241458135
+Intercept,5.26768036701485
+"C(group_2lvl, Treatment(""human""))[T.ai]",1.2370088020332903
+p1_reflection_quality_z,1.0353372268031962
+persuader_arg_quality_z,1.2126275748819335
+Intercept,6.285888944750883
+"C(group_2lvl, Treatment(""human""))[T.ai]",1.2443358038451109
+C(topic_id)[T.2],1.3270367879520788
+C(topic_id)[T.3],1.2000858370086804
+persuader_arg_quality_z,1.3362673088030295
+initial_stance_strength_z,1.048518483674244
+Intercept,16.338923256029595
+"C(group_2lvl, Treatment(""human""))[T.ai]",1.4411630776217368
+C(topic_id)[T.2],1.3422449959015712
+C(topic_id)[T.3],1.3552744609892884
+p1_reflection_quality_z,1.1958704596069996
+persuader_arg_quality_z,1.3927363223180598
+initial_stance_strength_z,1.0928554804387198
+n_rounds,1.1154880400473233
+first_player_p1,1.1067451451325132

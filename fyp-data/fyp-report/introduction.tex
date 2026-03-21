@@ -12,12 +12,14 @@ arguments relative to human arguments? What rhetorical patterns and evidence str
 AI from human persuasiveness? Can humans persuade AI systems to shift their positions or adapt
 their argumentation strategies? How do AI personality configurations moderate both directions of
 persuasion? How do participants judge and respond to arguments when they lack information about source?
+In this thesis, confirmatory inference focuses on AI-to-human persuasion effects,
+while human-to-AI persuasion dynamics are treated as exploratory and deferred to future work.
 
-Structured debate provides an ideal experimental framework for investigating these questions.
+Structured debate provides a robust experimental framework for investigating these questions.
 In debate contexts, argumentation is structured and directly observable, allowing for
 systematic comparison of persuasiveness mechanisms across human and AI agents.
-Furthermore, debates produce rich discourse data---argument quality, rhetorical strategies,
-participant responses, and AI argument evolution---that can be analyzed to understand the
+Furthermore, debates produce rich discourse data (argument quality, rhetorical strategies,
+participant responses, and AI argument evolution) that can be analyzed to understand the
 comparative strengths and weaknesses of AI versus human argumentation, as well as bidirectional
 persuasion dynamics wherein human arguments influence AI stance shifts and AI rhetorical strategies
 influence human belief change.
@@ -32,23 +34,23 @@ opponents and reflect on their assumptions and how they shaped the debate.
 The true identity of the opponent is never revealed.
 
 The combination of structured debate, real-time interaction, information-controlled conditions,
-and comprehensive data capture creates an unprecedented opportunity to empirically analyse AI
-persuasiveness at scale and contribute evidence-based insights to the broader question of
-AI-human argumentation comparison.
+and comprehensive data capture creates a controlled opportunity to empirically analyse AI
+persuasiveness and contribute evidence-based insights to AI-human argumentation comparison.
 
 \section{Problem Statement}
 
-This thesis addresses an empirical investigation of bidirectional persuasion: how AI systems
-persuade human participants, and how human argumentation influences AI argument evolution and stance
-shifts. To conduct this investigation at scale and under controlled experimental conditions, we design,
+This thesis investigates AI-mediated persuasion in debate settings, with confirmatory emphasis on
+how AI systems influence human belief and confidence outcomes. The platform is also designed to capture
+signals relevant to human-to-AI dynamics as a deferred extension. To conduct this investigation at scale and under controlled experimental conditions, we design,
 implement, and deploy an intelligent debate platform as our primary data collection instrument.
 The platform enables collection of rich experimental data---argument content, within-debate belief
 changes, AI stance evolution, participant perceptions, and post-debate assessments---suitable for
-detailed empirical analysis of bidirectional persuasion mechanisms.
+detailed empirical analysis of AI-to-human persuasion mechanisms in this thesis,
+while preserving data for future human-to-AI analysis.
 The platform must satisfy the following core requirements:
 
 \begin{enumerate}
-    \item \textbf{Controlled Experimental Framework:} Facilitate structured, turn-based debates
+    \item \textbf{Controlled Experimental Framework:} Facilitate structured, turn-based live debates
     between human participants and human or AI opponents with consistent
     formatting, timing, and discourse structure to enable fair comparative analysis.
 
@@ -57,8 +59,8 @@ The platform must satisfy the following core requirements:
     specific model or personality generated arguments. This prevents source bias and enables
     analysis of persuasiveness independent of participant assumptions. Critically, the platform
     must record AI argument evolution and stance positions across successive debate rounds,
-    enabling analysis of how human arguments influence AI response modification and stance shifts
-    moderated by personality configuration.
+    enabling exploratory analysis of how human arguments may influence AI response modification and
+    stance shifts, moderated by personality configuration.
 
     \item \textbf{Diverse AI Opponent Modeling:} Deploy multiple AI personalities ranging from firm
     to balanced to open-minded with distinct rhetorical styles and evidence-generation strategies,
@@ -66,8 +68,8 @@ The platform must satisfy the following core requirements:
 
     \item \textbf{Comprehensive Data Capture:} Record all debate interactions (arguments, timing,
     meta-data), between-round human user's reflection and belief changes, AI argument positioning and stance
-    indicators, and post-debate survey responses to enable downstream empirical analysis of bidirectional
-    persuasion, argument patterns, stance evolution in both human and AI agents, and attribution dynamics.
+    indicators, and post-debate survey responses to enable downstream confirmatory analysis of AI-to-human
+    persuasion and exploratory analysis of argument patterns, stance evolution, and attribution dynamics.
 
     \item \textbf{Scalable and Reliable Infrastructure:} Design a system capable of orchestrating
     multiple concurrent debates, managing real-time communication, persisting complete debate
@@ -143,12 +145,12 @@ The platform is built using a client-server architecture with the following comp
     complete argument history and discourse context.
 
     \item \textbf{AI Personality System:} Multiple AI personalities with distinct debating styles
-    and instructions can be configured, grounded in the warmth--competence framework from social
+    and instructions can be configured, grounded in the warmth-competence framework from social
     psychology. Arguments are generated using context-aware prompts that include debate history,
     assigned stance, and personality-specific guidance. Distinct personalities (e.g.,
     firm, balanced, open-minded) are designed to systematically vary rhetorical strategies and
     manipulate perceived warmth and competence dimensions to enable analysis of how different
-    communicative styles influence persuasion in both directions. Personality configurations are
+    communicative styles influence AI-to-human persuasion in this thesis. Personality configurations are
     deliberately varied to examine whether emotional openness, rigidity, or adaptability modulate
     susceptibility to human-driven persuasion.
 
@@ -159,10 +161,9 @@ The platform is built using a client-server architecture with the following comp
         \item Which specific AI model, personality, or system prompt was deployed
         \item Debate game mode, opponent assignment strategy, or experimental condition
     \end{itemize}
-    This enables systematic analysis of bidirectional stance evolution: tracking how participants' initial
-    positions shift across successive debate rounds and culminate in final stances, as well as how AI
-    opponents' argumentation and inferred positions shift in response to human arguments, revealing
-    the persuasive dynamics and mechanisms of human versus AI argumentation in both directions.
+    This enables systematic analysis of participant stance evolution in this report: tracking how
+    participants' initial positions shift across successive debate rounds and culminate in final stances.
+    The same instrumentation also preserves AI-side traces for exploratory and future human-to-AI analysis.
 
     \item \textbf{Role-Based Access Control:} Separate user interfaces and capabilities for:
     \begin{itemize}
@@ -219,6 +220,7 @@ The platform is built using a client-server architecture with the following comp
     \item \textbf{Bcrypt:} Password hashing and verification
 \end{itemize}
 
+\pagebreak
 \section{Scope and Limitations}
 
 \subsection{Scope}

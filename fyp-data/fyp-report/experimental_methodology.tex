@@ -1,235 +1,350 @@
 \section{Overview}
 
-This chapter describes the experimental methodology for analyzing AI persuasiveness in debate.
-The debate platform serves as the data collection instrument. The primary analysis focuses on
-\textbf{AI-to-human persuasion}: whether AI opponents configured with distinct personalities
-(firm, balanced, open-minded) influence human participant belief change relative to a control
-condition of human-human debates.
+This chapter describes the experimental methodology for examining AI persuasiveness
+in a turn-based debate format. The primary analysis focuses on \textbf{AI-to-human
+persuasion}: whether debating against a GPT-4o mini opponent configured with one of
+three personalities (firm, balanced, open-minded) produces different belief or
+confidence outcomes relative to a human-human control condition. A secondary analysis
+investigates confidence change as a co-primary outcome. Exploratory analyses examine
+reflection quality as a mechanism and argument quality as an alternative predictor.
+This study is treated as a \textbf{pilot investigation}; the primary aim is to
+estimate effect sizes and establish infrastructure for future full-scale deployment
+rather than to draw confirmatory conclusions.
 
-A secondary analysis investigates \textbf{confidence change} as a co-primary outcome when belief change
-shows null effects. Exploratory mechanism analysis tests whether critical engagement (pushback) predicts
-confidence gains, with mechanism findings drawn from a stratified qualitative subsample.
-
-\textbf{Note on bidirectional persuasion:} While the platform records AI belief values across rounds,
-the analysis of human-to-AI persuasion (whether human arguments shift AI recorded positions) is deferred to future work.
-A key structural asymmetry is that human participants complete between-round reflections (paraphrases), whereas
-AI agents do not; reflection quality is analyzable only on the human side.
-
-There is a control group of human-human debates to benchmark the AI's persuasive impact.
+A key structural asymmetry exists in the design: human participants complete
+between-round reflections (paraphrase and acknowledgement), whereas AI agents do not.
+Reflection quality is therefore analyzable only on the human side. Analysis of
+human-to-AI persuasion is deferred to future work.
 
 
 \section{Study Design}
 
-The study uses a controlled, between-conditions design with repeated measures over debate rounds.
-Participants are assigned to debates with either AI opponents configured with distinct personalities
-(firm, balanced, open-minded) or human opponents, depending on the experimental condition.
-Each debate follows the same round structure, with arguments submitted in alternating turns and
-belief checks collected after each round.
+The study uses a controlled between-conditions design with repeated measures over
+debate rounds. Participants are assigned to one of four conditions: three AI opponent
+conditions (firm, balanced, open-minded) or a human-human control. Each debate
+follows an identical round structure with arguments submitted in alternating turns
+and belief and confidence checks collected after each round.
 
 
 \section{Participants and Recruitment}
 
-Participants are recruited according to institutional guidelines and provided with an informed
-consent statement describing the debate task and data usage.
-Inclusion criteria require completion of the full debate protocol, including per-round belief
-checks and the post-debate survey.
+Participants were recruited according to institutional guidelines and provided with
+an informed consent statement describing the debate task and data usage. Inclusion
+required completion of the full debate protocol, including per-round belief and
+confidence checks and the post-debate survey. The final analytic sample comprised
+$n = 90$ participants across four conditions: human-human ($n = 21$), firm AI
+($n = 28$), balanced AI ($n = 20$), and open-minded AI ($n = 21$).
 
 
 \section{Conditions and Randomization}
 
-Participants are assigned to AI personality conditions with an operational goal of
-maintaining an even spread across the three AI personalities and the human-only
-control mode. In practice, assignment is monitored and adjusted through the
-administrative matchmaking workflow to keep condition counts as balanced as
-feasible during data collection.
-To prevent source bias, opponent identity is hidden during the debate.
-Topic selection and initial stance are not strictly balanced across conditions;
-participants select topics and initial stances freely,
-so some imbalance may remain across conditions.
+Participants were assigned to conditions with an operational goal of maintaining
+approximate balance across the three AI personalities and the human-human control.
+Assignment was monitored through an administrative matchmaking workflow and adjusted
+during data collection to keep condition counts as balanced as feasible. Opponent
+identity was concealed during the debate to prevent source bias. Topic selection
+and initial stance were self-selected by participants; some imbalance across
+conditions on these dimensions may remain and is addressed by including topic
+fixed effects in the primary models.
 
 
 \section{Procedure}
 
 \begin{enumerate}
-    \item Participant selects a debate topic and indicates initial stance and confidence.
-    \item Participant completes pre-debate survey (\texttt{preDebateSurvey.player1}):
+    \item Participant selects a debate topic and indicates initial stance and
+          confidence (0--100).
+    \item Participant completes pre-debate survey recording openness to persuasion:
           \textit{firm on my stance}, \textit{convinced of my stance}, or
           \textit{open to changing my mind}.
-    \item Debate proceeds in alternating argument rounds. After each round, the
-          participant records updated belief value (0--100), confidence (0--100),
-          and perceived influence (0--100).
-    \item Between rounds, player1 completes a reflection task: a free-text paraphrase
-          of the opponent's argument and a free-text acknowledgement of whether they
-          concede the opponent's point (\texttt{reflections.acknowledgement}), which is
-          subsequently binarized as \texttt{conceded\_opponent\_point}.
-    \item After the final round, participant completes post-debate survey including
-          opponent attribution and confidence in that attribution.
+    \item Debate proceeds in alternating argument rounds (500-character limit per
+          turn). After each round, the participant records updated belief value
+          (0--100) and confidence (0--100).
+    \item Between rounds, the participant completes a reflection task comprising
+          a free-text paraphrase of the opponent's most recent argument and a
+          free-text acknowledgement of whether they concede the opponent's point.
+    \item After the final round, the participant completes a post-debate survey
+          including opponent attribution and confidence in that attribution.
 \end{enumerate}
 
+\pagebreak
 \section{Measures}
+
+\subsection{Primary Outcome: Belief Change}
+
+Participant belief is captured on a continuous 0--100 scale, recorded before the
+debate (Round 0) and after each subsequent round. Belief change is computed as
+$\Delta \text{belief} = \text{belief}_{\text{post}} - \text{belief}_{\text{pre}}$,
+where pre-debate belief is taken from Round 0 and post-debate belief from the
+participant's final round response.
+
+\subsection{Secondary Outcome: Confidence Change}
+
+Confidence is measured on a 0--100 scale at the first post-argument round
+(Round 1, because confidence was not collected at pre-debate (Round 0); \texttt{confidence\_pre})
+and at the participant's final round (\texttt{confidence\_post}).
+Confidence change is computed as
+$\Delta \text{confidence} = \text{confidence}_{\text{post}} - \text{confidence}_{\text{pre}}$.
+Baseline confidence at Round 1 shows substantial variation (M = 79.3, SD = 18.4),
+but with ceiling effects \(20\% at 100\), so confidence-change models are
+interpreted with this constrained variance in mind.
+
+\subsection{Reflection Quality}
+
+Between-round reflections were scored on an overall quality scale
+using GPT-4o mini as the primary rater, drawing on dimensions of
+faithfulness, specificity, engagement, clarity, and charity
+collapsed into a single composite score. To validate GPT scoring,
+two independent human raters scored a stratified random subsample
+of $n = 30$ reflections using the same rubric. Convergent validity
+was assessed using Spearman $\rho$ between the GPT score and the
+mean of the two human ratings; inter-rater reliability between
+human raters was assessed using two-way random effects ICC$(2,1)$
+(single-rater reliability) and ICC$(2,k)$ (average-rater
+reliability), implemented via mean-squares decomposition. A
+combined ICC was additionally computed by treating GPT as a third
+rater alongside the two humans. Rows with missing values on any
+rater were excluded prior to ICC computation. Reflection quality
+scores were standardized ($z$-scored) prior to inclusion as a
+model covariate.
+
+\subsection{Argument Quality}
+
+Persuader argument quality was scored as a single overall quality
+rating using GPT-4o mini, drawing on dimensions of evidence
+quality, logical coherence, responsiveness, nuance, and clarity.
+Validation followed an identical procedure to reflection quality:
+two independent human raters scored a stratified subsample of
+$n = 30$ arguments; Spearman $\rho$ was computed between GPT
+scores and the mean human rating; two-way random effects
+ICC$(2,1)$ and ICC$(2,k)$ were computed for human-only and
+GPT$+$human matrices respectively, with listwise deletion of
+incomplete rows. Argument quality scores were standardized
+($z$-scored) prior to inclusion as an exploratory covariate.
 
 \subsection{Pre-Debate Openness}
 
-Before the debate begins, each participant completes a single-item pre-debate survey
-(\texttt{preDebateSurvey.player1}) selecting one of three options:
-\textit{firm on my stance}, \textit{convinced of my stance}, or \textit{open to changing my
-mind}. This variable is treated as a baseline openness-to-persuasion covariate in all
-persuasion models and is expected to moderate the size of within-debate belief shifts.
+Participants completed a single-item pre-debate survey selecting one of three
+openness options. This variable is treated as a baseline covariate
+(\texttt{initial\_stance\_strength\_z}) capturing resistance to persuasion and
+is included in confirmatory models M4 and M5.
 
-\subsection{Human Belief Change}
+\subsection{Acknowledgement}
 
-Human belief is captured on a continuous scale (0--100) where 0 indicates "for" and 100 indicates
-"against". This value is recorded before the debate and after each round. Confidence is measured on
-a 0--100 scale. Per-round belief change is computed as $\Delta belief_{r} = belief_{r} - belief_{r-1}$.
+The free-text acknowledgement field records whether the participant explicitly
+conceded validity in the opponent's argument. This was binarized
+(\texttt{acknowledgement\_binary}) and included as an exploratory covariate in
+a secondary belief change model (\texttt{belief\_ack}).
 
-\subsection{AI Belief Change (Deferred to Future Work)}
+\subsection{Opponent Attribution}
 
-The platform records a \texttt{beliefValue} per round for all debate participants, including AI
-agents. This value is available for \texttt{player2} in all conditions---both the AI opponent in
-AI-condition debates and the human opponent in human--human debates. However, analysis of
-\textbf{human-to-AI persuasion} (whether and how human arguments shift recorded AI positions)
-is deferred to future work and is \textit{not part of this primary analysis}.
-
-AI \texttt{beliefValue} should be interpreted with care: because the AI is a prompted language model
-rather than an agent with genuine psychological attitudes, the recorded value reflects the model's
-conditioned response rather than an authentic belief state.
-
-\subsection{Reflection and Acknowledgement}
-
-Between-round reflections comprise two components captured in separate fields:
-
-\begin{itemize}
-    \item \textbf{Paraphrase} (\texttt{reflections.paraphrase}): a short free-text summary of the
-    opponent's most recent argument. \textbf{Reflection quality is operationalized as text length (word count)}
-    as a proxy for engagement depth. While a comprehensive rubric scoring approach using GPT-4o-mini
-    would ideally assess dimensions such as \textit{faithfulness}, \textit{specificity}, \textit{engagement},
-    \textit{clarity}, and \textit{charity}, the primary analysis uses reflection length as a computationally
-    efficient proxy. This assumes longer reflections indicate more substantive processing.
-    Reflection quality is used as a covariate in the confirmatory model sequence to test whether
-    comprehension mediates persuasion (Model M2 and onward include reflection quality as a regressor).
-    \item \textbf{Acknowledgement} (\texttt{reflections.acknowledgement}): a separate free-text
-    response indicating whether the participant explicitly conceded validity in the opponent's
-    argument. This field is normalized (lowercased, stripped) and binarized by matching values of \textit{yes},
-    \textit{true}, or \textit{1}. \textbf{In the primary analysis, acknowledgement is coded thematically
-    from a stratified qualitative subsample ($n \approx 24$) as part of mechanism validation,
-    not from the full dataset.} The binary indicator \texttt{has\_pushback} (presence of expressions such as
-    ``but,'' ``however,'' ``disagree'') is used as a marker of critical engagement in the mechanism
-    analysis to test whether participants who argue back gain more or less confidence.
-\end{itemize}
-
-
-\subsection{Argument Persuasiveness Analysis (Deferred to Future Work)}
-
-While the platform records full argument text, GPT-4o mini scoring of argument quality dimensions
-(evidence quality, logical coherence, responsiveness, nuance, clarity) was initially planned as exploratory analysis
-but is deferred to future work. Similarly, automated feature extraction (argument length, certainty markers, sentiment)
-is not part of the primary analysis.
-
-The primary analysis uses only reflection quality (operationalized as text length) as a model covariate and does not
-attempt to predict belief change from argument features.
-
-\subsection{Opponent Attribution and AI Awareness Effect}
-
-The post-debate survey records several related variables:
-
-\begin{itemize}
-    \item \textbf{Opponent perception} (\texttt{postDebateSurvey.*OpponentPerception}): whether the
-    participant believed their opponent was human, AI, or unsure.
-    \item \textbf{Perception confidence} (\texttt{postDebateSurvey.*PerceptionConfidence}): confidence
-    in that attribution on a 1--5 scale.
-    \item \textbf{Suspicion timing} (\texttt{postDebateSurvey.*SuspicionTiming}): which round range
-    the participant first suspected they were debating an AI.
-    \item \textbf{Detection cues} (\texttt{postDebateSurvey.*DetectionCues}): which features of the
-    opponent's behaviour triggered that suspicion (multi-select).
-    \item \textbf{AI awareness effect} (\texttt{postDebateSurvey.*AiAwarenessEffect}): whether knowing
-    or suspecting the opponent was an AI made the participant feel the arguments were more persuasive,
-    less persuasive, or made no difference. This is the primary source-credibility measure; a
-    \textit{less persuasive} response would indicate that AI disclosure reduces persuasive impact,
-    consistent with source-derogation theory, while \textit{more persuasive} would suggest participants
-    attribute superior knowledge or objectivity to AI.
-    \item \textbf{AI awareness justification} (\texttt{postDebateSurvey.*AiAwarenessJustification}):
-    free-text elaboration of the above response, used for qualitative coding.
-\end{itemize}
-
-Opponent attribution and AI awareness effect are both tested as moderators of persuasion in the
-statistical models.
+The post-debate survey records opponent perception (human, AI, or unsure),
+perception confidence (1--5), suspicion timing (round range), detection cues
+(multi-select), and AI awareness effect (more persuasive, less persuasive, no
+difference). These variables are available for exploratory analysis but are
+not part of the primary confirmatory model sequence.
 
 
 \section{Data Quality and Exclusion Criteria}
 
-Debates are excluded if they are incomplete, missing per-round belief checks, or contain inconsistent
-round sequencing.
-Additional exclusions may be applied for implausible response times or repeated non-responses.
-All exclusions are reported transparently.
+Debates were excluded if incomplete, missing per-round belief checks, or
+containing inconsistent round sequencing. The descriptive sample is $n = 90$,
+while complete-case model analyses use $n = 89$. No implausible
+response time exclusions were applied; all exclusions are reported
+transparently.
 
-
+\pagebreak
 \section{Statistical Analysis}
 
-\subsection{Primary Analysis: Confirmatory Model Sequence}
+\subsection{Pre-Model Checks}
 
-The primary analysis tests human belief change using ordinary least-squares (OLS) regression with
-robust standard errors (HC3 covariance estimator) to account for potential heteroscedasticity.
-All models use the same treatment structure and focal predictor: a binary group indicator (AI pooled vs. human-human control),
-with human-human as the reference category.
+Prior to confirmatory model fitting, four diagnostic checks were
+conducted.
+First, zero-mass on \texttt{belief\_change} was audited
+overall (14.4\%) and by condition (human-human: 23.8\%; firm: 10.7\%;
+balanced: 15.0\%; open-minded: 9.5\%).
+Second, a Shapiro-Wilk test
+confirmed approximate normality of \texttt{belief\_change}
+($W = 0.980$, $p = 0.190$), supporting OLS use.
+Third, a one-way ANOVA confirmed no significant between-condition
+difference in \texttt{belief\_change} prior to covariate adjustment ($F = 0.488$,
+$p = 0.691$); AI-subcondition ANOVA yielded $\eta^2 = 0.001$
+($H = 0.606$, $p = 0.739$, Kruskal-Wallis), confirming pooling is
+defensible.
+Fourth, topic fixed effects were justified by an adjusted
+$R^2$ increment of 0.070 over condition-only models, confirming topics
+are a meaningful confounder. An \texttt{nrounds} imbalance was noted:
+the balanced condition averaged 5.80 rounds vs.\ 4.19 for human-human
+($SD = 2.44$ vs.\ $0.51$), motivating its inclusion as a covariate in
+M5.
 
-Four confirmatory models ($M1$--$M4$) are pre-specified in increasing complexity:
-\begin{enumerate}
-    \item $M1$: Unadjusted treatment effect.
-    \item $M2$: Treatment effect adjusted for reflection quality (text length proxy).
-    \item $M3$: Treatment-by-reflection-quality interaction.
-    \item $M4$: Treatment effect adjusted for reflection quality and baseline openness-to-persuasion.
-\end{enumerate}
+\subsection{Rationale for Pooling AI Conditions}
 
-Effect sizes are reported with $95\%$ confidence intervals (CIs) rather than $p$-values alone.
-Multiplicity correction is applied if the primary analysis yields a null effect,
-promoting secondary outcomes (e.g., confidence change) to co-primary status.
+The three AI personality conditions (firm, balanced, open-minded) are pooled
+into a single binary indicator (\texttt{group\_2lvl}: AI vs.\ human-human)
+for the primary confirmatory analysis. This decision is motivated by three
+considerations. First, the pilot sample ($n = 89$) yields per-condition
+cell sizes of $n = 20$--$28$, which are insufficient to reliably estimate
+separate personality effects; pooling recovers adequate power for the
+higher-priority human-vs-AI contrast. Second, the primary research question
+concerns whether AI debate \textit{per se} produces different outcomes than
+human debate, independent of personality configuration; personality-level
+differences are a secondary question addressed in Section~\ref{sec:part10}.
+Third, pre-model ANOVA across AI subconditions confirmed negligible
+between-personality differences in belief change ($\eta^2 = 0.001$,
+Kruskal-Wallis $p = 0.739$), making pooling theoretically defensible.
+ Condition-level trajectories are examined in the
+four-level analysis (Section~\ref{sec:part10}), which retains the full
+condition structure.
 
-\subsection{Co-Primary Analysis: Confidence Change}
 
-If belief change shows null effects across $M1$--$M4$, confidence change is elevated to co-primary status
-and tested using the same OLS/HC3 framework for models \texttt{Conf-M1} and \texttt{Conf-M2}.
-Bonferroni correction is applied to control for multiple comparisons across the belief and confidence families.
+\subsection{Primary Confirmatory Model Sequence}
 
-\textbf{Baseline Confidence Note}: All participants recorded confidence = 0 at pre-debate (Round 0).
-Thus, ``confidence change'' is equivalent to post-debate confidence level.
-This does not invalidate the analysis but clarifies interpretation: the finding reflects
-between-condition differences in post-debate confidence, not strictly a ``change.''
+Belief change is modelled using OLS regression with HC3 heteroskedasticity-robust
+standard errors. The focal predictor is a binary group indicator (AI pooled
+vs.\ human-human), with human-human as the reference category. Seven models are
+estimated (four confirmatory, three exploratory/sensitivity):
 
-\subsection{Mechanism Analysis: Exploratory}
+\begin{itemize}
+    \item \textbf{M1}: Treatment effect only — unadjusted estimate of AI
+          vs.\ human-human belief change.
+    \item \textbf{M2}: Treatment $+$ reflection quality ($z$-scored) —
+          adjusting for participant engagement depth.
+     \item \textbf{M3} (exploratory): Treatment $\times$ reflection quality
+          interaction — testing whether reflection quality moderates the
+          effect of AI debate on belief change.
+    \item \textbf{M4}: Treatment $+$ reflection quality $+$ initial stance
+          strength ($z$-scored) $+$ topic fixed effects — the primary
+          fully-adjusted confirmatory model.
+    \item \textbf{M4b} (exploratory): Treatment $+$ reflection quality $+$
+          persuader argument quality ($z$-scored) — an omitted-variable
+          check testing whether argument quality accounts for variance
+          beyond reflection quality alone, without topic or stance controls.
+    \item \textbf{M4c} (exploratory): Treatment $+$ persuader argument
+          quality $+$ initial stance strength $+$ topic fixed effects —
+          substituting argument quality for reflection quality to isolate
+          the independent predictive contribution of persuader argument
+          quality.
+    \item \textbf{M5}: Full model — treatment $+$ reflection quality $+$
+          argument quality $+$ initial stance strength $+$ topic fixed
+          effects $+$ number of rounds $+$ first-player indicator, serving
+          as a kitchen-sink sensitivity check for coefficient stability.
+\end{itemize}
 
-If co-primary confidence effects are found, mechanism analysis tests whether critical engagement (pushback)
-predicts confidence gain. Pushback is coded from a stratified qualitative subsample ($n \approx 12$ per condition)
-as the presence of disagreement markers (``but,'' ``however,'' ``disagree'').
-Correlation between pushback and confidence change is estimated within the AI group.
-Jackknife resampling (leave-one-out) validates whether the correlation is robust to single-point removal.
+Given the pilot model sample ($n = 89$),
+observed power for the M1 treatment effect was 0.20 at the observed
+Cohen's $d = 0.286$; a total $n \approx 350$ (175 per group) would
+be required for 80\% power at this effect size.
+Effect sizes are reported as standardized mean differences (Cohen's $d$) with
+95\% confidence intervals. Given the pilot sample size ($n = 89$), observed
+power and required sample sizes for 80\% power are reported to contextualize
+null findings.
+
+\subsection{Secondary Analysis: Confidence Change}
+
+Confidence change models mirror the primary belief change sequence and are
+estimated using the same OLS/HC3 framework. Two confirmatory and two
+exploratory models are specified:
+
+\begin{itemize}
+    \item \textbf{conf-M1} (confirmatory): Unadjusted treatment effect on
+          confidence change — AI vs.\ human-human, no covariates.
+    \item \textbf{conf-M2} (confirmatory): Treatment $+$ reflection quality
+          ($z$-scored) — adjusting for engagement depth, mirroring the
+          primary M2 specification.
+    \item \textbf{conf-M3} (exploratory): Treatment $\times$ reflection
+            quality interaction on confidence change — included for
+            symmetry with the primary M3 specification; the interaction
+            term is not expected to be interpretable given the
+            variance-constrained nature of confidence change.
+    \item \textbf{belief-ack} (exploratory): Belief change regressed on
+        treatment $+$ reflection quality $+$ acknowledgement binary
+        (\texttt{acknowledgement\_binary}) — testing whether explicit
+        concession behaviour predicts belief change over and above
+        reflection quality ($n = 89$, no missingness on this variable).
+
+\end{itemize}
+
+\texttt{belief\_ack} is estimated on the available complete-case sample
+($n = 89$ in the current export); results are interpreted as exploratory
+and are not subject to multiplicity correction.
 
 \subsection{Robustness Checks}
 
-All primary models are subjected to sensitivity analysis:
+All confirmatory models are subjected to:
 \begin{itemize}
-    \item \textbf{Leave-one-condition-out (LOO)}: Re-estimate $M2$ eight times, each time excluding one treatment condition entirely.
-    \item \textbf{Outlier trim}: Re-estimate $M2$ after excluding the bottom and top 1\% of belief change values.
-    \item \textbf{Jackknife on mechanism}: For the correlation between pushback and confidence, re-compute
-    leaving each participant out one at a time to check for influential points.
+    \item \textbf{Outlier trimming}: Re-estimation after excluding the bottom
+          and top 1\% of belief or confidence change values.
+    \item \textbf{Leave-one-out (LOO)}: Re-estimation of M2 excluding each
+          condition in turn.
+    \item \textbf{VIF diagnostics}: Variance inflation factors computed for
+          all multi-predictor models to detect multicollinearity.
+    \item \textbf{Shapiro-Wilk}: Residual normality assessed for all models.
 \end{itemize}
 
-Stability of effect estimates and CI overlap across robustness checks serves as the decision criterion.
+\subsection{Exploratory Analyses}
+
+Exploratory analyses are not part of primary inference and are reported
+as hypothesis-generating. Three categories of exploratory analysis are
+conducted.
+
+\subsubsection{Reflection Quality as Mediator}
+
+A qualitative subsample analysis examines the thematic content of
+between-round reflections to contextualise the quantitative reflection
+quality scores. The subsample is stratified by reflection quality tercile
+(low, medium, high) and AI condition, capped at two observations per
+debate to avoid within-participant duplication, yielding approximately
+$n = 24$ reflections. Reflections are coded for themes including
+argument acknowledgement, counter-argumentation style, and evidence
+of perspective-taking. This analysis is intended to validate whether
+GPT-assigned reflection quality scores correspond to substantively
+meaningful differences in engagement, rather than surface-level
+textual features.
+
+\subsubsection{Mechanism Analysis: Pushback and Confidence}
+
+If co-primary confidence effects are observed, a mechanism analysis
+tests whether critical engagement --- operationalised as pushback
+frequency (\texttt{has\_pushback}) --- predicts confidence change.
+Pushback is coded from the qualitative subsample (the same
+$n \approx 24$ reflections used in the thematic analysis) as the
+binary presence of disagreement markers (\textit{but},
+\textit{however}, \textit{disagree}, and synonyms). These qualitative
+codes are merged with participant-level outcome measures
+(\texttt{confidence\_change}, \texttt{belief\_change}) to form the
+mechanism dataset.
+
+Pearson correlations between \texttt{has\_pushback} and
+\texttt{confidence\_change} are estimated separately within the AI
+group and the human-human group. Fisher-$z$ transformation is used
+to compute 95\% confidence intervals around each correlation. A
+negative correlation within the AI group would suggest that
+participants who engaged more critically gained \textit{less}
+confidence, contradicting a defensive confidence hypothesis; a
+positive correlation would suggest active pushback reinforces
+perceived debate success.
+
+Jackknife resampling (leave-one-out) is applied to the AI-group
+correlation to assess sensitivity to individual influential
+observations. At each iteration, one participant is removed and the
+correlation is re-estimated on the remaining subsample; if the
+sign remains consistent across all iterations, the correlation is
+classified as robust. Iterations where pushback or confidence
+change variance collapses to zero are excluded.
+
+Prior to mechanism analysis, qualitative-sample representativeness is
+audited by comparing condition proportions in the subsample against
+full-population condition proportions. In the current run, the
+subsample overrepresents human-human debates and underrepresents AI
+conditions; mechanism results are therefore interpreted as
+hypothesis-generating rather than population-representative.
 
 
 \section{Reporting}
 
-Results are reported with effect sizes and $95\%$ confidence intervals (CIs) rather than p-values alone.
-Statistical tests are marked with appropriate multiplicity-correction notation (e.g., $p_{\text{Bonf}}$ for Bonferroni).
-Point estimates, CIs, and sample sizes ($n$) are provided for all primary and co-primary model comparisons.
-Visualizations include belief change distributions by condition and robustness check plots (LOO, outlier trim).
-All statistical code and data tables are exported to facilitate reproducibility and transparency.
-
-\section{Note on Analysis Scope}
-
-The primary analysis focuses on the confirmatory model sequence for human belief change and (if null)
-elevated co-primary confidence analysis. Exploratory analyses (opponent attribution moderation, human-to-AI
-persuasion pathways, argument quality as predictor, and machine learning modeling) are deferred to future work
-and are not part of this preregistered core analysis.
-
-
-
+Results are reported with effect sizes and 95\% confidence intervals rather
+than $p$-values alone. All models report coefficient estimates, robust standard
+errors, and sample sizes. Exploratory analyses are clearly labelled and
+interpreted with appropriate caution. All statistical code, intermediate tables,
+and export files are retained to facilitate reproducibility. Cross-chapter
+headline numbers are synchronized to Appendix Table~\ref{tab:headline_numbers}.

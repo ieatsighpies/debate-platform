@@ -1,0 +1,25 @@
+group,condition,debate_id,round,argument_preview,argument_quality,arg_length_words,has_claim,has_evidence,has_counter_engagement,has_specificity
+ai,open-minded,69a7ca9a811ecc13226fcf9f,2,"i get that you're pointing out how sweetness can work with dairy, like honey and cheese. but honey is a different vibe—i",3.0,41,0,0,1,0
+ai,open-minded,69a7cdda811ecc1322704e85,2,"i'm curious about that. why do you think it's morally wrong? pizza toppings are usually just a matter of taste, right? l",2.0,47,0,0,0,0
+ai,open-minded,69a7ca9a811ecc13226fcf9f,1,"ok, so here's the thing: pizza has a classic flavor profile—savory, cheesy, maybe a bit spicy if you add pepperoni. pine",2.0,48,1,0,0,0
+ai,firm,69a83335bfa2317a36d263ad,2,"Sure, students might get quick answers, but speed doesn't equal understanding. If they lean too heavily on ChatGPT, they",3.0,52,1,0,1,0
+ai,firm,69ac2bb304a99236e4a014da,6,You’re right about relationships needing balance and grace. But if one partner is constantly preoccupied with financial ,3.0,46,0,0,1,0
+ai,open-minded,6995529462b52bc6f09a2ba7,8,"true, in-class instruction does have a significant impact. but if students get used to relying on AI during take-home as",3.0,45,0,0,1,0
+ai,firm,69a439b5844461e35198637b,5,"You’re focusing on the idea that higher pay means sacrificing social life, but it doesn’t have to be an either-or situat",3.0,56,0,0,1,0
+ai,open-minded,69a7cdda811ecc1322704e85,3,"i can see where you’re coming from with tradition and cultural practices. but food evolves, right? think about how sushi",3.0,38,0,0,1,0
+ai,open-minded,69996ab745ee5dbe08824bff,3,you’re right that both high pay and low pay come with their own stresses. it’s a balancing act. but if you're in a finan,2.0,49,0,0,1,0
+ai,balanced,69a59b724ee499b1d5626daf,3,"I see what you’re saying, and it's definitely true that many students do think critically. But with the easy access to a",3.0,38,0,0,1,0
+ai,balanced,69a00bf677f378e0cd15f448,1,"Using ChatGPT for homework can be super helpful! It can clarify tricky concepts and provide quick info, saving time for ",2.0,49,0,1,0,0
+ai,open-minded,69a6797b82bc1c66862ab2a2,3,"i can understand that perspective, but isn't there value in digging deeper into subjects? for instance, if you only skim",3.0,53,0,0,1,0
+human,human-human,69a6d534076d1847b5a0948d,1,"I believe that food 🥑 is not just for the Italians, but for everyone. It should not be the case that the Italians can in",2.0,79,1,0,1,0
+human,human-human,69a668ef82bc1c6686298e63,1,Being highly connected socially has proven to be an indicator of better standard of living. Material wealth is not a hol,3.0,28,0,0,0,0
+human,human-human,69aadc2847d9025cf07af805,3,Okay that’s also true… time can never be earned back… especially in our youth,1.0,14,0,0,0,0
+human,human-human,69aeeb923b45fc551e0f5f95,1,"Ok fair calculator is an aid for student, but one may argue that students may become too reliant on chatgpt and not use ",2.0,34,0,0,1,0
+human,human-human,69a678c782bc1c66862a9cec,2,"Again, I largely agree with what you said. However, where is the distinction between quick exploration for organic learn",3.0,58,0,0,1,0
+human,human-human,69b03fd157d1915d7288fc61,1,"although i agree warm pineapples are an accquired taste, i think having a sweet element in a savoury food can complement",3.0,27,0,0,1,0
+human,human-human,69a3f743c3f532453c5ce21a,2,"That being said, this means everyone has to agree  on what is the true institution. Which leads to a debate on who gives",1.0,32,0,0,0,0
+human,human-human,69ae0e16d0514b89ec60ad3a,3,"That’s a great heuristic, and the scenario you describe is one where (to me) it would be worth considering being more in",3.0,88,1,0,1,0
+human,human-human,69affeb8a57f60770a789f20,3,AI is capable of offering me ideas that I myself might not have thought of before,2.0,16,0,0,0,0
+human,human-human,69ae0cf2d0514b89ec60acee,3,I agree that human-machine collaboration is an essential for anyone entering the workforce today. I think that even then,3.0,82,1,0,0,0
+human,human-human,69b01cb372628e22871f4c5f,1,We should not use ChatGPT for homework because it has been proven that it has led to greater reliance on the AI at the e,4.0,79,1,0,0,0
+human,human-human,69a95edf6471229f4b7a5545,2,That’s a good point on fusion food. I would make the distinction that Hawaiian pizza wouldn’t be a fusion of Italian piz,2.0,32,0,0,1,0

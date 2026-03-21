@@ -42,13 +42,33 @@ is interpreted as the model's persuasive effect \cite{durmus2024_measuring_persu
 
 Beyond immediate attitude shifts, recent work examines the durability of attitude change
 following conversational interactions with language models.
-\textcite{sheen2025_durable_attitude_change} reports that attitude changes measured immediately
-after GPT\mbox{-}3.5-based conversations about controversial public policies often persisted at
-follow-up points ranging from one to several weeks, with narrative or story-like arguments associated
-with especially durable effects \cite{sheen2025_durable_attitude_change}. Notably, vivid memory of the
-AI interaction, rather than precise recall of specific arguments, emerged as an important predictor of
-lasting change, highlighting the role of experiential and relational factors in model-mediated
-persuasion \cite{sheen2025_durable_attitude_change}.
+	extcite{oceanchat2025} and related work report that conversational, narrative-rich
+interactive agents can produce measurable increases in behavioral intentions and, in
+some cases, durable attitude shifts on targeted outcomes. In OceanChat's large
+between-subjects experiment, conversational character narratives produced stronger
+behavioral intentions than static informational treatments, while effects on deeper
+policy attitudes were more limited \cite{pataranutaporn2025_oceanchat}. This pattern aligns with
+evidence that vivid, narrative interactions with LLM-powered agents can support
+short-to-medium term attitude or intention change even when long-term policy
+positions remain stable.
+\section{Statistical inference choices for persuasion models}
+
+Most persuasion studies in this domain estimate average treatment effects using
+regression-based comparisons of pre--post outcomes and covariates, then assess
+robustness under alternative specifications
+\cite{argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness}.
+For debate datasets with moderate sample size and potentially heterogeneous
+variance across conditions, linear models remain appropriate for interpretable
+effect estimation, while robust standard errors are commonly used to prevent
+overconfident inference under heteroskedasticity.
+
+Relatedly, robustness analysis is increasingly treated as a design requirement
+rather than a post-hoc add-on: model conclusions are expected to be checked for
+sensitivity to influential observations, alternative covariate sets, and
+distributional assumptions. This motivates combining a confirmatory model family
+with secondary and exploratory sensitivity analyses, so that inference is based
+on stability of effect direction and uncertainty intervals rather than on a
+single fitted specification.
 
 \section{Source identity, AI disclosure, and trust}
 
@@ -77,10 +97,10 @@ legitimacy, and openness to influence, even when message content is held constan
 \section{Conversational style and AI debater personality}
 
 Beyond source identity, a growing literature examines how the conversational style or personality
-of a chatbot shapes user perceptions and persuasive impact. Drawing on the warmth--competence
+of a chatbot shapes user perceptions and persuasive impact. Drawing on the warmth-competence
 framework from social psychology, \textcite{deng2022_ambivalent_stereotypes_persuasion} and
-related work argue that communicators can be located along two primary dimensions---perceived
-warmth (friendliness, care) and competence (ability, expertise)---which jointly influence persuasion
+related work argue that communicators can be located along two primary dimensions (perceived
+warmth (friendliness, care) and competence (ability, expertise)) which jointly influence persuasion
 by affecting both source evaluations and message processing
 \cite{deng2022_ambivalent_stereotypes_persuasion}. In the context of text-based chatbots,
 \textcite{schwede2023_can_chatbots_be_persuasive} show that warmth and competence perceptions can
@@ -143,6 +163,25 @@ strategies differentially prompt belief revision. These measurements do not them
 persuasion mechanisms; rather, they serve as methodological tools to isolate and quantify the
 persuasive impact of the opponent's argumentation.
 
+\section{Reliability and agreement for AI-assisted quality scoring}
+
+When automated scores are used as explanatory features, methodological quality
+depends on demonstrating alignment with human judgement. In practice, two
+families of metrics serve complementary purposes: rank-order association
+(e.g., Spearman correlation) and inter-rater agreement metrics
+(e.g., ICC variants). Rank association evaluates whether the model preserves
+relative ordering of higher- vs lower-quality texts, while ICC quantifies
+consistency under a shared rating scale and allows direct comparison of
+human-only reliability versus human-plus-model reliability.
+
+This distinction is important for debate analysis: a model can track ordering
+reasonably well but still exhibit scale disagreement, or conversely can show
+moderate absolute agreement with weak rank discrimination. Therefore, feature
+validation should not be treated as binary "valid/invalid"; instead it should
+be reported as metric-specific evidence with uncertainty-aware interpretation.
+This framing directly supports differential confidence across feature families
+such as reflection quality versus persuader argument quality.
+
 \section{Implications for debate-format studies of LLM persuasiveness}
 
 Synthesizing these streams of research highlights several design-relevant points for debate-format
@@ -152,7 +191,7 @@ human opponents, establishing debates as a realistic and informative testbed for
 \cite{salvi2025_chatgpt_debates}. Second, pre--post measurement of self-reported stance and
 confidence is an established method for quantifying persuasive impact in both AI-mediated political
 communication and model-centric evaluation studies, and can be extended to interactive debate
-scenarios \cite{argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,sheen2025_durable_attitude_change}.
+ scenarios \cite{argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,pataranutaporn2025_oceanchat}.
 Extending this approach to between-round belief measurement enables detection of persuasion
 dynamics at finer granularity: tracking which specific argument exchanges correlate with stance
 shifts, and validating that observed changes reflect genuine processing of AI arguments rather
@@ -172,3 +211,40 @@ LLM-mediated persuasion in debate formats that employ between-round belief measu
 isolate AI persuasive effects, track stance change relative to specific argument exchanges,
 and validate genuine argument processing, while manipulating perceived source identity and
 conversational style \cite{salvi2025_chatgpt_debates,argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,schilke2025_transparency_dilemma,schwede2023_can_chatbots_be_persuasive}.
+
+\subsection*{Scope boundary and inferential focus}
+
+The literature motivates both AI-to-human and human-to-AI persuasion dynamics,
+but inferential emphasis in this thesis is intentionally asymmetric: confirmatory
+testing focuses on AI-to-human outcomes, while human-to-AI dynamics are treated
+as a deferred extension. This boundary is important for internal coherence: it
+prevents overclaiming beyond the model families and validated features used in
+the present analysis.
+
+\subsection*{Construct-to-variable mapping used in analysis}
+
+\begin{table}[h]
+\centering
+\caption{From Literature Constructs to Model Variables}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}L{2.6cm}L{3.3cm}L{2.6cm}L{5.8cm}@{}}
+\toprule
+Construct & Operational variable & Used in models & Expected analytical role \\
+\midrule
+Persuasion outcome & belief\_change & M1--M5 (primary) & Core AI-to-human treatment effect \\
+Confidence shift & confidence\_change & conf-M1--conf-M3 (secondary) & Adjacent outcome under null belief effect \\
+Argument processing depth & p1\_reflection\_quality & M2, M3, M4, M4b, M5 & Engagement/comprehension covariate \\
+Argument quality signal & persuader\_arg\_quality & M4b, M4c, M5 & Exploratory explanatory feature \\
+Style/content context & topic indicators, stance strength & M4, M5 & Control for contextual heterogeneity \\
+Debate structure & n\_rounds, first\_player & M5 & Structural controls for interaction exposure \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Accordingly, current literature provides a solid conceptual basis for debate-format
+persuasion analysis, while methodological confidence should be interpreted by
+evidence tier: strongest for confirmatory AI-to-human treatment models,
+moderate for secondary outcomes, and cautious for exploratory mechanism/feature
+analyses.

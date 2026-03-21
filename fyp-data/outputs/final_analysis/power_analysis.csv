@@ -1,0 +1,11 @@
+metric,value
+m1_ai_beta,8.694927536231884
+m1_ai_ci_low,-9.765195658558874
+m1_ai_ci_high,27.15505073102264
+n_human_m1,20.0
+n_ai_m1,69.0
+cohen_d_abs_m1,0.28596119794419755
+observed_power_m1,0.1997408120768489
+n_required_per_group_observed_d,192.93022323685616
+n_required_per_group_d_0_3,175.38466947047488
+total_n_required_d_0_3,350.76933894094975

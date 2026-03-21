@@ -8,7 +8,7 @@
 % 23 Aug 2024 - Replace SCSE with CCDS
 
 \documentclass[pdflatex, 12pt, a4paper]{report}
-\usepackage[top=3cm, bottom=3cm, left=3.5cm, right=3cm]{geometry}
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage[hidelinks]{hyperref}
 \usepackage[pdftex]{graphicx}
 \usepackage{booktabs}
@@ -17,7 +17,10 @@
 \usepackage{tocloft}
 \usepackage{parskip}
 \usepackage{amsfonts}
+\usepackage{amsmath}
 \usepackage[sorting=none]{biblatex}
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \addbibresource{bib.bib}
 \setstretch{1.5}
@@ -25,19 +28,45 @@
 \setlength{\cfttabindent}{0pt}
 \renewcommand{\cftdotsep}{1}
 
+% Prevent section headers from being stranded at page bottoms.
+\makeatletter
+\newcommand{\needspace}[1]{%
+	\par
+	\begingroup
+	\dimen0=#1\relax
+	\dimen2=\pagegoal
+	\advance\dimen2 by -\pagetotal
+	\ifdim\dimen2<\dimen0
+		\newpage
+	\fi
+	\endgroup
+}
+\makeatother
+\pretocmd{\section}{\needspace{8\baselineskip}}{}{}
+\pretocmd{\subsection}{\needspace{6\baselineskip}}{}{}
+\pretocmd{\subsubsection}{\needspace{5\baselineskip}}{}{}
+
 % change the following
-\title{\uppercase{Exploring Persuasiveness of AI Chatbots in a Debate Format}}
+\title{\uppercase{AI Chatbots and Persuasion in Structured Debates:
+Effects on Belief Change and Confidence}}
 \newcommand\fypcode{CCDS}
 \author{Asher Lim Guojun}
 \date{2026}
 \newcommand\degree{Bachelor of Computing in Data Science and Artificial Intelligence}
 
 \begin{document}
+\hypersetup{pageanchor=false}
 \input{cover.tex}
 \input{title.tex}
 
-\setcounter{page}{1}
+\pagenumbering{gobble}
+\cleardoublepage
+\hypersetup{pageanchor=true}
 \pagenumbering{roman}
+\setcounter{page}{1}
+
+\input{abstract.tex}
+\input{acknowledgements.tex}
 
 
 \pagebreak
@@ -48,15 +77,10 @@
 \addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 
-\pagebreak
-\addcontentsline{toc}{chapter}{List of Figures}
-\listoffigures
-
 \cleardoublepage
 \pagenumbering{arabic}
+\setcounter{page}{1}
 
-\input{abstract.tex}
-\input{acknowledgements.tex}
 \input{introduction.tex}
 \input{litreview.tex}
 \chapter{System Design and Architecture}

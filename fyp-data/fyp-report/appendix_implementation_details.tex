@@ -288,3 +288,38 @@ Turn validation ensures correct debate flow and guards against inconsistent stat
     \item Database tests with test fixtures
     \item Load testing for performance validation
 \end{itemize}
+
+\pagebreak
+\section{Source-of-Truth Headline Numbers}
+\label{sec:source_of_truth_numbers}
+
+Table~\ref{tab:headline_numbers} lists the headline quantitative values used across
+the Abstract, Methodology, Results, and Conclusion chapters. Unless otherwise
+stated, cross-chapter numeric claims should match this table.
+
+\begin{table}[h]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\caption{Source-of-Truth Headline Numbers for Cross-Chapter Consistency}
+\label{tab:headline_numbers}
+\begin{tabular}{L{4.2cm}L{5.6cm}L{4.8cm}}
+\toprule
+Metric & Value & Source \\
+\midrule
+Descriptive sample size & $n=90$ (21, 28, 20, 21 by condition) & \texttt{condition\_overview.csv} \\
+Model complete-case size & $n=89$ & \texttt{primary\_models.csv}, \texttt{secondary\_models.csv} \\
+Belief model AI effect range (confirmatory M1/M2/M4/M5) & $\beta=5.233$ to $8.695$, all $p>0.35$ & \texttt{primary\_models.csv} \\
+Confidence model AI effect range (conf-M1/conf-M2) & $\beta=5.210$ to $5.845$, $p=0.2147$ to $0.1731$ & \texttt{secondary\_models.csv} \\
+Belief effect size and power & $d=0.286$, observed power $=0.200$ & \texttt{power\_analysis.csv} \\
+Required sample for 80\% power & $n\approx175$ per group ($\approx350$ total) & \texttt{power\_analysis.csv} \\
+Condition ANOVA (belief change) & $F=0.488$, $p=0.691$ & \texttt{premodel\_checks\_compiled.csv} \\
+Mechanism (AI pushback-confidence) & $r=-0.121$, $p=0.7074$, CI $[-0.650, 0.487]$ & \texttt{mechanism\_validation\_pushback\_confidence.csv} \\
+Jackknife sensitivity range (AI) & $[-0.372,-0.003]$ & \texttt{mechanism\_validation\_pushback\_confidence.csv} \\
+Qualitative representativeness & Human-human $0.500$ vs $0.205$; firm $0.167$ vs $0.284$; balanced $0.167$ vs $0.274$; open-minded $0.167$ vs $0.237$ & \texttt{qual\_sample\_representativeness.csv} \\
+Reflection validation & Spearman $\rho=-0.088$; human-only ICC$(2,k)=0.902$ & \texttt{reflection\_validation\_summary.csv} \\
+Argument validation & Spearman $\rho=0.797$; human-only ICC$(2,k)=0.834$ & \texttt{persuader\_argument\_validation\_summary.csv} \\
+\bottomrule
+\end{tabular}
+\end{table}

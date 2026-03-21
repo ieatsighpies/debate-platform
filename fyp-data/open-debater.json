@@ -7329,11 +7329,11 @@
           "$oid": "6996eedb967b343cf635973f"
         },
         "player": "player1",
-        "belief": null,
-        "beliefValue": null,
-        "influence": 0,
-        "confidence": null,
-        "skipped": true,
+        "belief": "unsure",
+        "beliefValue": 51,
+        "influence": 15,
+        "confidence": 75,
+        "skipped": false,
         "_id": {
           "$oid": "6996f1c9967b343cf635b2f3"
         },
@@ -7954,7 +7954,7 @@
       "player1": 0,
       "player2": 70
     },
-    "status": "abandoned",
+    "status": "completed",
     "currentRound": 9,
     "maxRounds": 20,
     "firstPlayer": "against",

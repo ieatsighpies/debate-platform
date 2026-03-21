@@ -1,43 +1,49 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Large language models (LLMs) have been shown to be persuasive in debate and conversational
-formats, but there is growing evidence that LLMs can also act as persuasive debaters or
-conversational partners capable of moving people's stances on complex, value-laden topics
-in relatively brief interactions. Moreover, an understudied question concerns whether humans
-can similarly cause AI systems to adapt their argumentation across
-the course of a debate. This paper proposes a debate-format study using GPT-4o mini,
-measuring within-subject attitude and confidence shifts in human participants and recorded belief
-changes in AI agents across debate rounds, and probing the impact of assumed human versus
-artificial intelligence (AI) identity modulating trust and openness to influence.
-The primary empirical analysis focuses on AI-to-human persuasion: how distinct AI personalities
-and rhetorical strategies influence human belief and confidence outcomes.
-A key asymmetry is that human participants complete between-round reflections paraphrasing their
-opponent's argument, whereas AI agents do not; reflection quality is therefore analyzed exclusively
-as a human mediator of persuasion.
+Large language models (LLMs) are increasingly deployed in conversational and debate contexts,
+yet their capacity to shift human beliefs and confidence in brief, turn-based interactions
+remains underexplored. This thesis presents a pilot study examining whether debating against
+a GPT-4o mini opponent — across three AI personality conditions (firm, balanced, open-minded)
+— produces different belief or confidence change outcomes compared to human-human debate.
+A custom debate platform was developed to collect within-subject attitude and confidence
+measurements across debate rounds, with between-round reflections used to assess participant
+engagement quality.
 
 \section*{Key Findings}
 
-Across $n = 89$ participants in four debate conditions (human-human control, firm AI, balanced AI, open-minded AI),
-we find a striking dissociation between belief and confidence outcomes:
+Across a descriptive sample of $n = 90$ participants (model complete-case $n = 89$) in four debate conditions
+(human-human control, firm AI, balanced AI, open-minded AI), primary and secondary analyses yielded consistent null results
+with directional trends:
 
 \begin{itemize}
-    \item \textbf{Null Belief Change}: AI debate produces no significant effect on participant belief relative to
-          human-human debate across four pre-specified confirmatory models (all $p > 0.29$, $d = 0.31$).
-    \item \textbf{Robust Post-Debate Confidence Difference}: Despite null belief change, AI debate significantly increases
-          post-debate participant confidence ($\beta = 12$--$13$ points, $95\%$ CI: $[3, 24]$, Bonferroni $p = 0.02$--$0.024$).
-          Baseline confidence was recorded as 0 for all participants, so this reflects post-debate level differences.
-    \item \textbf{Mechanism: Illusory Success}: Participants who engaged critically with the AI (high pushback)
-          showed \textit{lower} confidence gains ($r = -0.73$, $p = 0.007$), contradicting a ``defensive confidence'' hypothesis.
-          Confidence gains reflect perceived debate success rather than substantive persuasion.
+    \item \textbf{Null Belief Change}: AI debate produced no significant effect on participant
+          belief change relative to human-human debate across four pre-specified confirmatory
+          models (M1,M2,M4,M5: $\beta = 5.233$--$8.695$, all $p > 0.35$). The observed effect size
+          ($d = 0.286$) suggests a small-to-medium practical difference that the current
+          pilot sample ($n = 89$) was insufficiently powered to confirm (observed power $= 0.20$;
+          required $n \approx 350$; 175 per group).
+    \item \textbf{Directional Confidence Change}: AI debate showed a consistent directional
+          increase in participant confidence change ($\beta = 5.2$--$5.8$ points) that did
+          not reach statistical significance (conf-M1--M2: $p = 0.17$--$0.21$).
+    \item \textbf{Feature Validation Is Mixed}: GPT-based argument quality aligned strongly
+          with human ratings (Spearman $\rho = 0.797$; human-only ICC$(2,k)=0.834$), whereas
+          GPT-based reflection quality showed weak rank alignment with human ratings
+          (Spearman $\rho = -0.088$), indicating unequal measurement reliability across
+          exploratory feature families.
 \end{itemize}
 
 \section*{Contributions}
 
-This thesis contributes to understanding AI persuasiveness by demonstrating that:
-(1) the confidence-belief dissociation is reproducible and theoretically novel;
-(2) AI debate is more effective for participant self-efficacy and argumentation practice than for genuine belief change;
-(3) rigorous small-sample inference with locked designs and multiplicity correction is feasible in human-AI interaction research.
-
-This study is well aligned with and extends this emerging literature on AI-mediated persuasion and
-human-AI interaction dynamics, offering implications for AI's role in education, argumentation training, and collaborative decision-making.
+Treated as a pilot investigation, this thesis contributes to the emerging literature on
+AI-mediated persuasion by: (1) providing stable effect size estimates ($d = 0.286$)
+to inform sample size planning for future full-scale studies; (2) demonstrating that
+individual-level engagement measures remain important covariates when modeling belief outcomes;
+and (3) establishing
+a reusable debate platform with transparent GPT-assisted quality scoring,
+including explicit human-validation diagnostics (reflection human-only ICC$(2,k)=0.902$;
+argument human-only ICC$(2,k)=0.834$).
+These findings offer implications for AI's role in argumentation training, education,
+and human-AI interaction research.
+Headline values used in this abstract are consolidated in Appendix
+Table~\ref{tab:headline_numbers}.

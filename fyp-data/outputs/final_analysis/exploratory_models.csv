@@ -1,0 +1,5 @@
+analysis,term,beta,ci_low,ci_high,p
+attribution_moderation,"C(group_2lvl, Treatment(""human""))[T.ai]:correct_attribution",-0.19895811306221955,-18.650839616761914,18.252923390637477,0.9831392525829069
+survey_group_effect::postDebateSurvey.player1StanceStrength,"C(group_2lvl, Treatment(""human""))[T.ai]",0.31877142352989446,-0.20012049400188753,0.8376633410616765,0.22856377660402116
+survey_group_effect::postDebateSurvey.player1StanceConfidence,"C(group_2lvl, Treatment(""human""))[T.ai]",0.4844678692542416,-0.24006956386266237,1.2090053023711456,0.1900112211004924
+survey_group_effect::postDebateSurvey.player1PerceptionConfidence,"C(group_2lvl, Treatment(""human""))[T.ai]",-0.13816432220405794,-0.5708516390616225,0.29452299465350656,0.5314137295576663
