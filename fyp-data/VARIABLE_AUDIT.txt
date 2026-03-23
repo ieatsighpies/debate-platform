@@ -1,0 +1,363 @@
+FOUR CONDITION JSON VARIABLE AUDIT
+Project: debate-platform (fyp-data)
+Date: 2026-03-18
+Scope: human-human.json, firm-debater.json, balanced-debater.json, open-debater.json
+
+============================================================
+1) FILE COVERAGE CHECK (ALL FILES CHECKED)
+============================================================
+Files audited:
+- human-human.json      (21 records)
+- firm-debater.json     (28 records)
+- balanced-debater.json (20 records)
+- open-debater.json     (21 records)
+
+Schema path counts (normalized):
+- human-human.json: 117 unique paths
+- firm-debater.json: 116 unique paths
+- balanced-debater.json: 116 unique paths
+- open-debater.json: 116 unique paths
+- Union across all files: 119 unique paths
+
+Condition-specific path differences found:
+- Only in human-human.json:
+  - [].player2UserId.$oid
+  - [].postDebateSurvey.player2DetectionCues.[]
+  - [].beliefHistory.[].skipped:   (malformed key anomaly)
+- Present in AI files but not in human-human:
+  - [].aiLastResponseAt.$date
+  - [].matchedBy.$oid
+
+============================================================
+2) HOW TO READ JSON PATH WRAPPERS
+============================================================
+Because these are MongoDB export-style JSON files:
+- .$oid = ObjectId serialized as string
+- .$date = Date serialized as ISO timestamp
+- [] in path lists means "array element"
+
+Examples:
+- [].player1UserId.$oid = player1 user ID string
+- [].createdAt.$date = created timestamp string
+
+============================================================
+3) FULL VARIABLE DICTIONARY (SEMANTIC EXPLANATIONS)
+============================================================
+A) Top-level debate identity and topic
+- _id / _id.$oid
+  Meaning: unique debate document ID.
+- topicId
+  Meaning: numeric topic index used for grouping and controls.
+- topicQuestion
+  Meaning: full topic text shown to participants.
+
+B) Debate mode and participant assignment
+- gameMode
+  Meaning: debate type (human-human or human-ai).
+- player1UserId / player1UserId.$oid
+  Meaning: participant account ID for player1 (always human).
+- player1Stance
+  Meaning: assigned stance side for player1 (for/against).
+- player1StanceChoice
+  Meaning: player1 categorical belief side (for/against/unsure).
+
+- player2Type
+  Meaning: whether player2 is human or ai.
+- player2UserId / player2UserId.$oid
+  Meaning: participant account ID for player2 (human debates). Null for AI debates.
+- player2AIModel
+  Meaning: AI personality identifier (firm-debater, balanced-debater, open-debater).
+- player2AIPrompt
+  Meaning: optional custom prompt text for AI opponent.
+- player2Stance
+  Meaning: assigned stance side for player2.
+- player2StanceChoice
+  Meaning: player2 categorical belief side (for/against/unsure), often null in AI debates.
+
+C) Current belief state snapshots
+- currentBelief.player1
+- currentBelief.player2
+  Meaning: latest categorical belief state for each side.
+- currentBeliefValue.player1
+- currentBeliefValue.player2
+  Meaning: latest numeric belief value on 0-100 scale.
+
+D) Debate status and flow control
+- status
+  Meaning: lifecycle stage (waiting, active, survey_pending, completed, abandoned).
+- currentRound
+  Meaning: current round index when snapshot saved.
+- maxRounds
+  Meaning: configured maximum rounds (often 20 in these files).
+- firstPlayer
+  Meaning: starting stance side for turn order (for/against).
+- firstPlayerPreference
+  Meaning: configured starting-side preference (for/against/random).
+- nextTurn
+  Meaning: stance side expected to submit next.
+
+E) AI control fields
+- aiEnabled
+  Meaning: AI responses enabled/disabled flag.
+- aiResponseDelay
+  Meaning: configured delay before AI response.
+- aiLastResponseAt / aiLastResponseAt.$date
+  Meaning: timestamp of latest AI response (AI debates only).
+
+F) Pre-debate survey
+- preDebateSurvey.player1
+- preDebateSurvey.player2
+  Meaning: pre-debate conviction category:
+  - firm_on_stance
+  - convinced_of_stance
+  - open_to_change
+
+G) Post-debate survey (Q1 verdict + follow-ups)
+Core verdict (Q1):
+- postDebateSurvey.player1
+- postDebateSurvey.player2
+  Meaning: answer to "Overall, how did this debate affect your original stance?"
+  Values:
+  - strengthened
+  - slightly_strengthened
+  - no_effect
+  - slightly_weakened
+  - weakened
+
+Awareness effects:
+- postDebateSurvey.player1AiAwarenessEffect
+- postDebateSurvey.player2AiAwarenessEffect
+- postDebateSurvey.player1AiAwarenessJustification
+- postDebateSurvey.player2AiAwarenessJustification
+  Meaning: whether knowing opponent was AI changed persuasiveness, with free-text justification.
+
+Opponent perception:
+- postDebateSurvey.player1OpponentPerception
+- postDebateSurvey.player2OpponentPerception
+  Meaning: participant guess of opponent type (human/ai/unsure).
+
+Stance strength and confidence:
+- postDebateSurvey.player1StanceStrength
+- postDebateSurvey.player2StanceStrength
+  Meaning: intensity of final stance (1-7).
+- postDebateSurvey.player1StanceConfidence
+- postDebateSurvey.player2StanceConfidence
+  Meaning: confidence in final stance (1-7).
+
+Perception confidence:
+- postDebateSurvey.player1PerceptionConfidence
+- postDebateSurvey.player2PerceptionConfidence
+  Meaning: confidence in AI/human guess (1-5).
+
+Suspicion timing:
+- postDebateSurvey.player1SuspicionTiming
+- postDebateSurvey.player2SuspicionTiming
+  Meaning: round window when participant first suspected opponent type.
+
+Detection cues:
+- postDebateSurvey.player1DetectionCues
+- postDebateSurvey.player1DetectionCues.[]
+- postDebateSurvey.player2DetectionCues
+- postDebateSurvey.player2DetectionCues.[]
+  Meaning: selected cue labels (array of strings).
+- postDebateSurvey.player1DetectionOther
+- postDebateSurvey.player2DetectionOther
+  Meaning: optional free-text "other" cue.
+
+H) Early-end vote tracking
+- earlyEndVotes.player1Voted
+- earlyEndVotes.player2Voted
+- earlyEndVotes.humanVoted
+- earlyEndVotes.expired
+  Meaning: early-stop voting state flags.
+- earlyEndVotes.player1Timestamp / .$date
+- earlyEndVotes.player2Timestamp / .$date
+  Meaning: vote timestamps.
+
+I) Arguments array
+- arguments
+- arguments.[]
+- arguments.[]._id / .$oid
+  Meaning: argument event ID.
+- arguments.[].round
+  Meaning: round number of argument.
+- arguments.[].stance
+  Meaning: argument side (for/against).
+- arguments.[].submittedBy
+  Meaning: source (human/ai).
+- arguments.[].text
+  Meaning: argument content.
+- arguments.[].timestamp / .$date
+  Meaning: submission timestamp.
+
+J) Belief history array (core longitudinal outcome source)
+- beliefHistory
+- beliefHistory.[]
+- beliefHistory.[]._id / .$oid
+  Meaning: belief entry ID.
+- beliefHistory.[].round
+  Meaning: round index; 0 is pre-debate baseline.
+- beliefHistory.[].userId / .$oid
+  Meaning: user ID for belief entry (null possible for AI).
+- beliefHistory.[].player
+  Meaning: player role (player1/player2).
+- beliefHistory.[].belief
+  Meaning: categorical belief label (for/against/unsure), compatibility field.
+- beliefHistory.[].beliefValue
+  Meaning: numeric belief on 0-100 scale.
+- beliefHistory.[].influence
+  Meaning: self-reported opponent influence (0-100).
+- beliefHistory.[].confidence
+  Meaning: self-reported confidence (0-100).
+- beliefHistory.[].skipped
+  Meaning: optional boolean flag when update was skipped.
+- beliefHistory.[].createdAt / .$date
+  Meaning: belief entry timestamp.
+
+K) Reflections array (metacognitive process data)
+- reflections
+- reflections.[]
+- reflections.[]._id / .$oid
+  Meaning: reflection entry ID.
+- reflections.[].round
+  Meaning: round tied to reflection.
+- reflections.[].userId / .$oid
+  Meaning: reflecting user ID.
+- reflections.[].player
+  Meaning: player role.
+- reflections.[].paraphrase
+  Meaning: participant summary/paraphrase of opponent argument.
+- reflections.[].acknowledgement
+  Meaning: concession/acceptance text answer.
+- reflections.[].timestamp / .$date
+  Meaning: reflection timestamp.
+
+L) Administrative and timing metadata
+- createdAt / .$date
+  Meaning: debate document creation time.
+- startedAt / .$date
+  Meaning: debate start time.
+- completedAt / .$date
+  Meaning: debate completion time.
+- lastActivityAt / .$date
+  Meaning: latest mutation activity timestamp.
+- completionReason
+  Meaning: reason for completion (normal, early-end variants, admin end, etc.).
+- matchedBy / matchedBy.$oid
+  Meaning: admin user ID for manual matching (often null).
+- __v
+  Meaning: Mongoose document version key.
+
+============================================================
+4) DATA QUALITY / ANOMALIES FOUND
+============================================================
+1) Condition-asymmetric operational fields
+- aiLastResponseAt exists in AI files only (expected).
+- player2UserId.$oid mostly human-human only (AI player2 has null).
+- postDebateSurvey.player2 fields may contain AI-generated or null values in AI debates.
+
+============================================================
+5) ANALYSIS USAGE GUIDANCE (AUTHORITATIVE)
+============================================================
+Primary outcome guidance:
+- Use beliefHistory.beliefValue trajectory (round 0 to final) for numeric endpoint analyses.
+- Use postDebateSurvey.player1/player2 as categorical verdict endpoint for Q1 interpretation.
+
+Human-persuasion comparability rules:
+- Across all conditions: use player1 as human participant endpoint.
+- For "both players" analysis: only human-human debates should include both player1 and player2.
+- Do not pool AI player2 survey fields with human responses.
+
+Condition reporting caveat:
+- Human-human can contribute two humans per debate; AI conditions effectively contribute player1 human persuadees.
+- Always state denominator asymmetry when reporting condition-level proportions.
+
+Concession/process fields:
+- reflections.acknowledgement is free-text and should be normalized/scored before modeling.
+- reflections.paraphrase + acknowledgement can support concession spectrum features.
+
+============================================================
+6) VARIABLE GROUPING FOR PLANNING
+============================================================
+
+This grouping is the default planning lens to use before building analyses.
+
+A) DESCRIPTIVE / OPERATIONAL VARIABLES (DOCUMENTATION FIRST)
+Use mainly for audit trails, filtering, QA, and process monitoring; not primary predictors/outcomes.
+
+1. Record identity and storage metadata
+- _id / _id.$oid
+- __v
+
+2. Lifecycle/timestamps
+- createdAt.$date, startedAt.$date, completedAt.$date, lastActivityAt.$date
+- completionReason
+
+3. Orchestration and turn-state control
+- status, currentRound, maxRounds, firstPlayer, firstPlayerPreference, nextTurn
+- aiEnabled, aiResponseDelay, aiLastResponseAt.$date
+- earlyEndVotes.*
+
+4. Administrative provenance
+- matchedBy.$oid
+
+5. Raw text/process logs (descriptive unless explicitly engineered)
+- arguments[].text, arguments[].timestamp.$date
+- reflections[].paraphrase, reflections[].acknowledgement, reflections[].timestamp.$date
+
+
+B) ANALYSIS-VALUABLE VARIABLES (MODEL / INFERENCE RELEVANT)
+Use for outcomes, predictors, covariates, subgroup definitions, and mechanism tests.
+
+1. Core grouping and design variables
+- condition (derived from source file)
+- gameMode
+- topicId, topicQuestion (topic controls/context)
+- player role (player1/player2)
+- player2Type (human vs ai role interpretation)
+
+2. Primary outcome variables
+- beliefHistory[].beliefValue (numeric trajectory endpoint; round-level delta/final)
+- beliefHistory[].belief (categorical compatibility outcome)
+- Derived: midpoint flip label from baseline vs final beliefValue
+
+3. Secondary outcome variables
+- postDebateSurvey.player1 / player2 (Q1 categorical stance-effect verdict)
+- postDebateSurvey.*StanceStrength / *StanceConfidence
+
+4. High-value covariates
+- preDebateSurvey.player1 / player2 (baseline entrenchment)
+- beliefHistory[].influence
+- beliefHistory[].confidence
+- Derived: n_rounds, first-player indicators
+
+5. Mechanism/process predictors (if engineered)
+- arguments[].stance, arguments[].round, arguments[].submittedBy
+- reflections[].player, reflections[].round
+- reflections[].acknowledgement (after normalization/scoring)
+- reflections[].paraphrase (fidelity/compression/semantic features)
+
+6. Human-comparability constraints (must apply during planning)
+- Cross-condition human analyses: use player1 as common human endpoint.
+- Human-human only dual-human analyses: include both player1 and player2.
+- Do not pool AI player2 post-survey verdicts with human responses.
+
+
+C) QUICK PRIORITY TIERS FOR FEATURE SELECTION
+
+Tier 1 (always consider):
+- condition, topicId, round, preDebateSurvey.player1
+- beliefHistory.beliefValue-derived outcomes
+- influence, confidence
+
+Tier 2 (context/mechanism):
+- argument/reflection engineered quality features
+- concession features from reflections.acknowledgement
+- postDebateSurvey stance strength/confidence
+
+Tier 3 (usually descriptive-only unless justified):
+- admin + lifecycle metadata, earlyEndVotes, matchedBy, ai control timing fields
+
+============================================================
+END OF AUDIT
+============================================================
