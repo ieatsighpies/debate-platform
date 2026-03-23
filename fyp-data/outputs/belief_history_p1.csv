@@ -1,0 +1,1008 @@
+debate_id,condition,topic_id,topicQuestion,round,player,belief_value,influence,confidence,delta_belief
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,1,player1,94.0,2,86.0,44.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,2,player1,88.0,7,86.0,-6.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,3,player1,50.0,5,86.0,-38.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,4,player1,91.0,11,86.0,41.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,1,player2,50.0,0,50.0,0.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,2,player2,50.0,0,50.0,0.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,3,player2,62.0,10,45.0,12.0
+699701454bd396a55ecfa95f,human-human,1,Should we use ChatGPT for homework?,4,player2,12.0,3,74.0,-50.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,1,player1,0.0,10,67.0,-25.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,2,player1,0.0,0,90.0,0.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,3,player1,5.0,0,90.0,5.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,4,player1,10.0,0,85.0,5.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,1,player2,90.0,0,80.0,15.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,2,player2,90.0,0,90.0,0.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,3,player2,90.0,0,90.0,0.0
+699af60c9bfc0e83b484126c,human-human,2,Does pineapple belong on pizza?,4,player2,100.0,0,100.0,10.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,1,player1,5.0,0,95.0,-45.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,2,player1,10.0,10,90.0,5.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,3,player1,10.0,0,95.0,0.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,4,player1,5.0,0,95.0,-5.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,0,player2,75.0,0,0.0,0.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,1,player2,50.0,0,50.0,-25.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,2,player2,45.0,70,50.0,-5.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,3,player2,55.0,0,55.0,10.0
+699d4c2f41690257a47f6b14,human-human,1,Should we use ChatGPT for homework?,4,player2,60.0,0,60.0,5.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,100.0,0,0.0,0.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,5.0,0,89.0,-95.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,17.0,48,83.0,12.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,8.0,15,83.0,-9.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,22.0,61,64.0,14.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,25.0,0,0.0,0.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,0,100.0,75.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,0,100.0,0.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,0,100.0,0.0
+699ec589f53d44e8e544d0ab,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,0,100.0,0.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,1,player1,79.0,8,81.0,29.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,2,player1,66.0,33,50.0,-13.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,3,player1,73.0,0,50.0,7.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,4,player1,50.0,42,50.0,-23.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,1,player2,40.0,5,60.0,-10.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,2,player2,50.0,69,50.0,10.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,3,player2,40.0,10,60.0,-10.0
+69a3dca6a25dea5aded7a9ae,human-human,1,Should we use ChatGPT for homework?,4,player2,60.0,15,64.0,20.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,1,player1,5.0,2,78.0,-20.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,2,player1,4.0,0,89.0,-1.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,3,player1,38.0,89,52.0,34.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,4,player1,21.0,0,65.0,-17.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,5,player1,63.0,97,73.0,42.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,1,player2,85.0,4,88.0,35.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,2,player2,56.0,82,51.0,-29.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,3,player2,90.0,0,87.0,34.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,4,player2,65.0,0,87.0,-25.0
+69a3f743c3f532453c5ce21a,human-human,2,Does pineapple belong on pizza?,5,player2,81.0,0,99.0,16.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,0,player1,75.0,0,0.0,0.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,1,player1,100.0,0,100.0,25.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,2,player1,100.0,0,100.0,0.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,3,player1,97.0,3,97.0,-3.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,4,player1,95.0,2,95.0,-2.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,1,player2,30.0,61,50.0,-20.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,2,player2,30.0,40,75.0,0.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,3,player2,27.0,50,75.0,-3.0
+69a44b7edfa7c1fe243a0df8,human-human,2,Does pineapple belong on pizza?,4,player2,50.0,65,50.0,23.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,50.0,0,0.0,0.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,73.0,12,68.0,23.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,64.0,24,71.0,-9.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,74.0,13,82.0,10.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,82.0,10,88.0,8.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,90.0,61,90.0,8.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player1,94.0,9,93.0,4.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,25.0,0,0.0,0.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,6.0,15,86.0,-19.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,7.0,59,85.0,1.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,0.0,40,85.0,-7.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,10.0,50,85.0,10.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,16.0,65,85.0,6.0
+69a668ef82bc1c6686298e63,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player2,28.0,60,85.0,12.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,1,player1,70.0,56,62.0,-30.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,2,player1,85.0,29,74.0,15.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,3,player1,78.0,0,74.0,-7.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,4,player1,62.0,52,74.0,-16.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,5,player1,60.0,60,60.0,-2.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,1,player2,30.0,41,59.0,5.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,2,player2,40.0,28,59.0,10.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,3,player2,48.0,29,63.0,8.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,4,player2,40.0,14,63.0,-8.0
+69a678c782bc1c66862a9cec,human-human,1,Should we use ChatGPT for homework?,5,player2,50.0,13,63.0,10.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,1,player1,30.0,63,20.0,5.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,2,player1,38.0,15,29.0,8.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,3,player1,60.0,66,43.0,22.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,4,player1,35.0,67,54.0,-25.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,1,player2,55.0,3,93.0,-20.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,2,player2,73.0,17,82.0,18.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,3,player2,90.0,0,90.0,17.0
+69a6d534076d1847b5a0948d,human-human,2,Does pineapple belong on pizza?,4,player2,70.0,67,50.0,-20.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,0.0,5,100.0,0.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,0.0,0,100.0,0.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,5.0,0,100.0,5.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,0.0,0,100.0,-5.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,100.0,0,0.0,0.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,84.0,21,84.0,-16.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,77.0,18,84.0,-7.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,50.0,0,84.0,-27.0
+69a7cf1d811ecc1322709d38,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,50.0,0,84.0,0.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,1,player1,15.0,5,75.0,-35.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,2,player1,10.0,6,80.0,-5.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,3,player1,25.0,25,63.0,15.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,4,player1,16.0,2,70.0,-9.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,1,player2,85.0,10,80.0,10.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,2,player2,80.0,5,80.0,-5.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,3,player2,70.0,20,70.0,-10.0
+69a91da5b1c3b3255791b181,human-human,2,Does pineapple belong on pizza?,4,player2,70.0,0,70.0,0.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,1,player1,25.0,50,34.0,0.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,2,player1,30.0,40,40.0,5.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,3,player1,60.0,60,30.0,30.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,4,player1,75.0,60,25.0,15.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,1,player2,63.0,22,76.0,13.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,2,player2,75.0,80,76.0,12.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,3,player2,50.0,94,50.0,-25.0
+69a95edf6471229f4b7a5545,human-human,2,Does pineapple belong on pizza?,4,player2,76.0,51,75.0,26.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,2.0,0,75.0,2.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,60.0,0,84.0,58.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,0.0,0,84.0,-60.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,0.0,0,84.0,0.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,50.0,0,0.0,0.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,50.0,50,50.0,0.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,50.0,51,43.0,0.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,28.0,70,24.0,-22.0
+69aadc2847d9025cf07af805,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,10.0,88,11.0,-18.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,1,player1,75.0,35,55.0,25.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,2,player1,75.0,10,58.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,3,player1,75.0,10,58.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,4,player1,75.0,10,58.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,1,player2,50.0,50,40.0,0.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,2,player2,55.0,50,45.0,5.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,3,player2,50.0,60,45.0,-5.0
+69ada1fa3d2b5eba5a91e295,human-human,2,Does pineapple belong on pizza?,4,player2,40.0,50,55.0,-10.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,1,player1,70.0,22,54.0,20.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,2,player1,54.0,57,52.0,-16.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,3,player1,51.0,28,52.0,-3.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,4,player1,50.0,39,52.0,-1.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,1,player2,50.0,0,50.0,0.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,2,player2,50.0,0,50.0,0.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,3,player2,30.0,20,50.0,-20.0
+69ae0cf2d0514b89ec60acee,human-human,1,Should we use ChatGPT for homework?,4,player2,25.0,25,75.0,-5.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,75.0,0,0.0,0.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,65.0,19,72.0,-10.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,54.0,24,72.0,-11.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,56.0,23,70.0,2.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,58.0,3,71.0,2.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,50.0,0,0.0,0.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,50.0,0,50.0,0.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,60.0,20,40.0,10.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,45.0,40,30.0,-15.0
+69ae0e16d0514b89ec60ad3a,human-human,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,45.0,70,30.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,1,player1,100.0,15,91.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,2,player1,50.0,83,91.0,-50.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,3,player1,50.0,80,91.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,4,player1,50.0,75,50.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,1,player2,60.0,85,71.0,10.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,2,player2,63.0,94,64.0,3.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,3,player2,49.0,99,36.0,-14.0
+69aeeb923b45fc551e0f5f95,human-human,1,Should we use ChatGPT for homework?,4,player2,63.0,92,43.0,14.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,1,player1,19.0,0,75.0,-31.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,2,player1,40.0,20,75.0,21.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,3,player1,40.0,20,75.0,0.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,4,player1,50.0,10,60.0,10.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,1,player2,50.0,20,67.0,0.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,2,player2,70.0,20,70.0,20.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,3,player2,50.0,40,70.0,-20.0
+69affeb8a57f60770a789f20,human-human,1,Should we use ChatGPT for homework?,4,player2,60.0,10,74.0,10.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,1,player1,100.0,50,80.0,0.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,2,player1,70.0,56,85.0,-30.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,3,player1,50.0,50,65.0,-20.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,4,player1,35.0,76,60.0,-15.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,0,player2,0.0,0,0.0,0.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,1,player2,25.0,66,81.0,25.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,2,player2,60.0,37,75.0,35.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,3,player2,30.0,45,66.0,-30.0
+69b01cb372628e22871f4c5f,human-human,1,Should we use ChatGPT for homework?,4,player2,38.0,22,69.0,8.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,1,player1,0.0,0,70.0,-50.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,2,player1,0.0,2,70.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,3,player1,0.0,0,70.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,4,player1,0.0,0,70.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,0,player2,100.0,0,0.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,1,player2,50.0,0,50.0,-50.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,2,player2,50.0,0,50.0,0.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,3,player2,70.0,0,70.0,20.0
+69b03fd157d1915d7288fc61,human-human,2,Does pineapple belong on pizza?,4,player2,54.0,0,70.0,-16.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,1,player1,0.0,0,100.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,2,player1,0.0,0,100.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,3,player1,0.0,0,100.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,4,player1,,0,,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,1,player2,85.0,20,90.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,2,player2,85.0,30,75.0,0.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,3,player2,80.0,20,75.0,-5.0
+6996ca12b05cb9a37bb60e1b,firm,1,Should we use ChatGPT for homework?,4,player2,85.0,20,90.0,5.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,1,player1,89.0,0,84.0,14.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,2,player1,85.0,0,84.0,-4.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,3,player1,91.0,0,93.0,6.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,4,player1,88.0,0,87.0,-3.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,2,player2,80.0,20,85.0,10.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,3,player2,70.0,20,80.0,-10.0
+6996edde967b343cf63582e5,firm,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,0.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,1,player1,0.0,0,94.0,0.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,2,player1,9.0,31,89.0,9.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,3,player1,50.0,100,49.0,41.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,4,player1,55.0,98,51.0,5.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,5,player1,26.0,0,83.0,-29.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,1,player2,100.0,10,90.0,0.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,2,player2,85.0,20,90.0,-15.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,3,player2,100.0,20,85.0,15.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,4,player2,85.0,20,90.0,-15.0
+6996f18b967b343cf635a9d0,firm,1,Should we use ChatGPT for homework?,5,player2,80.0,20,85.0,-5.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,0,player1,100.0,0,0.0,0.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,1,player1,50.0,63,100.0,-50.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,2,player1,50.0,0,100.0,0.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,3,player1,50.0,0,100.0,0.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,4,player1,50.0,0,100.0,0.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,1,player2,70.0,20,80.0,0.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,2,player2,90.0,10,85.0,20.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,3,player2,30.0,20,70.0,-60.0
+6998263bd67f336ab65b9226,firm,2,Does pineapple belong on pizza?,4,player2,80.0,20,90.0,50.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,1,player1,85.0,10,85.0,85.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,2,player1,85.0,0,80.0,0.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,3,player1,90.0,0,83.0,5.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,4,player1,85.0,5,85.0,-5.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,1,player2,100.0,10,90.0,0.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,2,player2,80.0,30,85.0,-20.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,3,player2,80.0,30,85.0,0.0
+69996a9c45ee5dbe08823c32,firm,1,Should we use ChatGPT for homework?,4,player2,85.0,20,90.0,5.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,1,player1,25.0,0,70.0,-25.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,2,player1,30.0,20,60.0,5.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,3,player1,21.0,0,65.0,-9.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,4,player1,50.0,0,65.0,29.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,1,player2,80.0,30,85.0,0.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,2,player2,80.0,20,75.0,0.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,3,player2,80.0,20,85.0,0.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,4,player2,80.0,30,85.0,0.0
+699c85000c3554f34686feda,firm,1,Should we use ChatGPT for homework?,5,player2,85.0,30,80.0,5.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,1,player1,64.0,14,50.0,14.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,2,player1,68.0,0,56.0,4.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,3,player1,71.0,6,59.0,3.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,4,player1,68.0,4,62.0,-3.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,1,player2,80.0,20,85.0,0.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,2,player2,30.0,20,70.0,-50.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,3,player2,30.0,20,70.0,0.0
+699c883e0c3554f34686ff73,firm,2,Does pineapple belong on pizza?,4,player2,80.0,20,85.0,50.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,100.0,0,0.0,0.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,50.0,0,50.0,-50.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,100.0,0,100.0,50.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,100.0,0,100.0,0.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,50.0,0,100.0,-50.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,70.0,30,80.0,0.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,70.0,20,80.0,0.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,70.0,30,80.0,0.0
+699d91f69117de7aca4b9228,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,70.0,20,80.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,0,player1,75.0,0,0.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,1,player1,100.0,0,100.0,25.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,2,player1,100.0,0,100.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,3,player1,100.0,0,100.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,4,player1,100.0,0,100.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,1,player2,20.0,30,70.0,0.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,2,player2,70.0,20,80.0,50.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,3,player2,80.0,30,85.0,10.0
+699d921f9117de7aca4b961e,firm,2,Does pineapple belong on pizza?,4,player2,80.0,20,90.0,0.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,75.0,0,0.0,0.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,85.0,0,86.0,10.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,88.0,0,86.0,3.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,85.0,0,86.0,-3.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,86.0,0,86.0,1.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,70.0,20,80.0,0.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,70.0,20,80.0,0.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,70.0,20,80.0,0.0
+699d958f9117de7aca4bcdb6,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,80.0,20,85.0,10.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,1,player1,34.0,31,77.0,9.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,2,player1,50.0,33,77.0,16.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,3,player1,50.0,0,77.0,0.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,4,player1,50.0,0,77.0,0.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,1,player2,100.0,10,90.0,0.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,2,player2,85.0,20,90.0,-15.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,3,player2,100.0,20,85.0,15.0
+699d95d89117de7aca4bce25,firm,1,Should we use ChatGPT for homework?,4,player2,80.0,20,85.0,-20.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,0,player1,75.0,0,0.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,1,player1,100.0,0,100.0,25.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,2,player1,100.0,0,100.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,3,player1,100.0,0,100.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,4,player1,100.0,0,100.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,1,player2,30.0,40,70.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,2,player2,30.0,20,70.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,3,player2,30.0,20,70.0,0.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,4,player2,80.0,20,90.0,50.0
+699da8674b602e9f5e16ea5e,firm,2,Does pineapple belong on pizza?,5,player2,30.0,20,80.0,-50.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,1,player1,0.0,3,79.0,-25.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,2,player1,4.0,13,79.0,4.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,3,player1,1.0,3,79.0,-3.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,4,player1,1.0,0,79.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,5,player1,11.0,60,77.0,10.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,6,player1,0.0,0,88.0,-11.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,0,player2,100.0,0,0.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,1,player2,100.0,10,90.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,2,player2,100.0,20,85.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,3,player2,100.0,20,85.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,4,player2,85.0,20,90.0,-15.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,5,player2,85.0,30,90.0,0.0
+69a3fc81c3f532453c5d1105,firm,1,Should we use ChatGPT for homework?,6,player2,80.0,20,85.0,-5.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,1.0,2,100.0,1.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,4.0,12,100.0,3.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,9.0,26,99.0,5.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,23.0,87,99.0,14.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,42.0,93,71.0,19.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,100.0,0,0.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,90.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,20,90.0,0.0
+69a3ff46c3f532453c5d7c18,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,10,90.0,0.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,1,player1,98.0,0,95.0,-2.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,2,player1,98.0,0,95.0,0.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,3,player1,88.0,0,95.0,-10.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,4,player1,92.0,0,95.0,4.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,0,player2,0.0,0,0.0,0.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,1,player2,90.0,10,85.0,90.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,-20.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,3,player2,80.0,20,85.0,10.0
+69a4012ac3f532453c5ddc01,firm,1,Should we use ChatGPT for homework?,4,player2,80.0,20,85.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,1,player1,0.0,0,99.0,-50.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,2,player1,0.0,0,99.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,3,player1,10.0,55,96.0,10.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,4,player1,16.0,20,96.0,6.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,5,player1,35.0,65,96.0,19.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,6,player1,42.0,78,96.0,7.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,7,player1,64.0,78,91.0,22.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,0,player2,100.0,0,0.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,1,player2,85.0,10,90.0,-15.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,2,player2,100.0,20,85.0,15.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,3,player2,85.0,20,90.0,-15.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,4,player2,85.0,20,75.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,5,player2,85.0,20,90.0,0.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,6,player2,100.0,20,85.0,15.0
+69a402e8c3f532453c5e30c5,firm,1,Should we use ChatGPT for homework?,7,player2,100.0,20,90.0,0.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,50.0,0,0.0,0.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,79.0,0,90.0,29.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,86.0,0,100.0,7.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,82.0,34,92.0,-4.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,92.0,45,92.0,10.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,90.0,0.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,0.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,80.0,40,75.0,-20.0
+69a439b5844461e35198637b,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,80.0,30,85.0,0.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,0,player1,100.0,0,0.0,0.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,1,player1,93.0,16,50.0,-7.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,2,player1,92.0,0,50.0,-1.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,3,player1,86.0,0,50.0,-6.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,4,player1,47.0,59,50.0,-39.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,0,player2,0.0,0,0.0,0.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,1,player2,85.0,20,90.0,85.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,2,player2,70.0,30,80.0,-15.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,3,player2,80.0,20,85.0,10.0
+69a68df382bc1c66862d28c6,firm,2,Does pineapple belong on pizza?,4,player2,70.0,30,80.0,-10.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,0,player1,0.0,0,0.0,0.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,1,player1,2.0,10,96.0,2.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,2,player1,10.0,97,86.0,8.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,3,player1,10.0,62,86.0,0.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,4,player1,11.0,37,86.0,1.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,0,player2,100.0,0,0.0,0.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,1,player2,100.0,10,90.0,0.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,2,player2,100.0,10,90.0,0.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,3,player2,80.0,30,85.0,-20.0
+69a7c733811ecc13226f51c9,firm,2,Does pineapple belong on pizza?,4,player2,100.0,10,90.0,20.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,1,player1,100.0,0,90.0,25.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,2,player1,100.0,0,90.0,0.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,3,player1,100.0,0,90.0,0.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,4,player1,50.0,0,90.0,-50.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,2,player2,80.0,20,85.0,10.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,-10.0
+69a83335bfa2317a36d263ad,firm,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,10.0,14,92.0,10.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,5.0,18,92.0,-5.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,5.0,12,86.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,3.0,3,92.0,-2.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,85.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+69a837cebfa2317a36d26707,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,80.0,20,85.0,-20.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,39.0,50,60.0,14.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,30.0,50,65.0,-9.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,25.0,50,75.0,-5.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,20.0,0,75.0,-5.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,20.0,0,75.0,0.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,85.0,15,90.0,0.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,15.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,20,85.0,0.0
+69ac2bb304a99236e4a014da,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,20,90.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,1,player1,100.0,0,100.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,2,player1,100.0,0,100.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,3,player1,100.0,0,100.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,4,player1,100.0,0,100.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,2,player2,30.0,40,70.0,-40.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,3,player2,40.0,60,70.0,10.0
+69acf88f5fed646a87b96686,firm,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,30.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,50.0,0,0.0,0.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,4.0,14,86.0,-46.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,5.0,12,88.0,1.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,7.0,10,90.0,2.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,6.0,10,90.0,-1.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,3.0,9,95.0,-3.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,85.0,20,90.0,0.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,15.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,80.0,20,85.0,-20.0
+69ad8d59dc9510c9e01638e5,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,20,90.0,20.0
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,1,player1,13.0,14,80.0,-87.0
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,2,player1,19.0,41,70.0,6.0
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+69ae9343a21c1d20f5005555,firm,1,Should we use ChatGPT for homework?,2,player2,70.0,20,80.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,12.0,0,100.0,12.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,20.0,20,100.0,8.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,25.0,20,100.0,5.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,25.0,0,100.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,10,90.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,80.0,0.0
+69aecd3b7de1a044b0bd97e3,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,20,85.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,1,player1,75.0,0,75.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,2,player1,75.0,0,75.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,3,player1,75.0,0,75.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,4,player1,75.0,0,75.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,5,player1,85.0,0,75.0,10.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,1,player2,85.0,10,90.0,0.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,2,player2,80.0,20,85.0,-5.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,3,player2,85.0,20,90.0,5.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,-15.0
+69aed5567de1a044b0bd9b3d,firm,1,Should we use ChatGPT for homework?,5,player2,70.0,20,80.0,0.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,50.0,0,0.0,0.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,60.0,70,55.0,10.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,67.0,0,66.0,7.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,67.0,0,75.0,0.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,67.0,0,80.0,0.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,10,90.0,0.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,70.0,40,80.0,-30.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,80.0,30,85.0,10.0
+69afc1a1a45e1f4349aa731c,firm,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,70.0,20,80.0,-10.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,20.0,10,90.0,-5.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,10.0,5,95.0,-10.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,5.0,0,95.0,-5.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,5.0,0,95.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,5.0,0,95.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,90.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,10,90.0,0.0
+699569d410387a962f87b137,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,80.0,20,85.0,-20.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,0.0,0,100.0,0.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,1.0,2,96.0,1.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,2.0,6,95.0,1.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,0.0,0,99.0,-2.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,4.0,16,96.0,4.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player1,8.0,33,89.0,4.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,7,player1,0.0,0,98.0,-8.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,75.0,0,0.0,0.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,90.0,25.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,80.0,30,85.0,-20.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,85.0,20.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,85.0,30,90.0,-15.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,20,90.0,15.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player2,80.0,30,85.0,-20.0
+699ffffc53dec39b0b261d6a,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,7,player2,80.0,20,85.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,1,player1,10.0,0,80.0,-15.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,2,player1,10.0,5,80.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,3,player1,10.0,0,85.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,4,player1,10.0,0,85.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,5,player1,15.0,0,85.0,5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,6,player1,10.0,0,90.0,-5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,7,player1,8.0,0,90.0,-2.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,8,player1,7.0,0,90.0,-1.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,9,player1,6.0,0,92.0,-1.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,10,player1,6.0,0,93.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,11,player1,5.0,0,94.0,-1.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,12,player1,5.0,0,94.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,13,player1,5.0,0,94.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,1,player2,85.0,20,90.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,2,player2,85.0,20,75.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,30,85.0,-5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,4,player2,100.0,20,85.0,20.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,5,player2,75.0,30,80.0,-25.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,6,player2,80.0,30,75.0,5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,7,player2,85.0,20,90.0,5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,8,player2,70.0,30,80.0,-15.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,9,player2,80.0,30,70.0,10.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,10,player2,80.0,30,85.0,0.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,11,player2,85.0,20,90.0,5.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,12,player2,70.0,30,80.0,-15.0
+69a00bf677f378e0cd15f448,balanced,1,Should we use ChatGPT for homework?,13,player2,70.0,30,80.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,1,player1,0.0,0,100.0,-25.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,2,player1,0.0,0,100.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,3,player1,0.0,0,100.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,4,player1,0.0,0,100.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,0,player2,75.0,0,0.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,1,player2,80.0,30,85.0,5.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,2,player2,80.0,30,85.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,30,75.0,0.0
+69a0173877f378e0cd1612cb,balanced,1,Should we use ChatGPT for homework?,4,player2,80.0,30,85.0,0.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,1,player1,0.0,0,72.0,-25.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,2,player1,4.0,15,81.0,4.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,3,player1,0.0,0,100.0,-4.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,4,player1,0.0,0,100.0,0.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,1,player2,80.0,20,85.0,0.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,2,player2,100.0,20,85.0,20.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,3,player2,85.0,30,90.0,-15.0
+69a062ca152ebd49f168283e,balanced,1,Should we use ChatGPT for homework?,4,player2,80.0,30,85.0,-5.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,0,player1,0.0,0,0.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,1,player1,10.0,60,60.0,10.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,2,player1,10.0,60,65.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,3,player1,10.0,30,50.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,4,player1,10.0,0,55.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,5,player1,15.0,65,55.0,5.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,6,player1,25.0,67,45.0,10.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,7,player1,25.0,50,50.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,8,player1,25.0,0,70.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,9,player1,30.0,25,70.0,5.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,10,player1,32.0,0,70.0,2.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,11,player1,35.0,70,70.0,3.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,1,player2,85.0,10,90.0,10.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,2,player2,80.0,20,85.0,-5.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,3,player2,80.0,20,85.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,4,player2,100.0,10,90.0,20.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,5,player2,100.0,10,90.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,6,player2,85.0,15,90.0,-15.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,7,player2,100.0,20,90.0,15.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,8,player2,100.0,10,90.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,9,player2,100.0,10,90.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,10,player2,100.0,10,90.0,0.0
+69a4f42c0611bade23cda135,balanced,2,Does pineapple belong on pizza?,11,player2,80.0,20,85.0,-20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,0,player1,25.0,0,0.0,0.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,1,player1,25.0,0,80.0,0.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,2,player1,25.0,25,80.0,0.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,3,player1,20.0,15,80.0,-5.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,4,player1,10.0,5,90.0,-10.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,5,player1,9.0,5,90.0,-1.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,6,player1,40.0,98,85.0,31.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,7,player1,30.0,30,85.0,-10.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,8,player1,50.0,100,85.0,20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,0,player2,75.0,0,0.0,0.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,1,player2,100.0,20,90.0,25.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,2,player2,100.0,20,90.0,0.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,30,85.0,-20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,4,player2,100.0,20,85.0,20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,5,player2,80.0,30,85.0,-20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,6,player2,100.0,20,85.0,20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,7,player2,80.0,30,75.0,-20.0
+69a4ffc40611bade23ce7482,balanced,1,Should we use ChatGPT for homework?,8,player2,80.0,30,75.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,1,player1,75.0,5,75.0,25.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,2,player1,75.0,10,75.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,3,player1,78.0,12,75.0,3.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,4,player1,81.0,10,81.0,3.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,5,player1,84.0,15,81.0,3.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,6,player1,88.0,11,81.0,4.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,45.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,5,player2,70.0,40,80.0,0.0
+69a5064e0611bade23cf0d96,balanced,1,Should we use ChatGPT for homework?,6,player2,70.0,30,80.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,1,player1,100.0,0,100.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,2,player1,99.0,25,97.0,-1.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,3,player1,95.0,50,97.0,-4.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,4,player1,96.0,32,97.0,1.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,5,player1,96.0,0,97.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,6,player1,95.0,0,97.0,-1.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,7,player1,93.0,50,97.0,-2.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,45.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,30,85.0,10.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,4,player2,70.0,20,80.0,-10.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,5,player2,70.0,30,80.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,6,player2,70.0,30,80.0,0.0
+69a50aba0611bade23cf9356,balanced,1,Should we use ChatGPT for homework?,7,player2,70.0,20,80.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,0,player1,0.0,0,0.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,1,player1,0.0,0,100.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,2,player1,1.0,10,95.0,1.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,3,player1,2.0,50,95.0,1.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,4,player1,1.0,44,95.0,-1.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,5,player1,3.0,32,95.0,2.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,6,player1,25.0,0,95.0,22.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,1,player2,100.0,10,90.0,25.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,2,player2,100.0,20,90.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,3,player2,100.0,10,90.0,0.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,4,player2,80.0,20,85.0,-20.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,5,player2,100.0,20,90.0,20.0
+69a50fd90611bade23d0221c,balanced,2,Does pineapple belong on pizza?,6,player2,100.0,20,90.0,0.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,20.0,20,85.0,-5.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,18.0,76,85.0,-2.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,16.0,58,85.0,-2.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,20.0,67,85.0,4.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,16.0,0,85.0,-4.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,75.0,0,0.0,0.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,80.0,25.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,0.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,85.0,0.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,85.0,20,90.0,-15.0
+69a53b5f120849a003df1892,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,20,85.0,15.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,1,player1,20.0,10,90.0,-5.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,2,player1,25.0,20,80.0,5.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,3,player1,25.0,15,80.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,4,player1,25.0,0,80.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,0,player2,75.0,0,0.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,1,player2,100.0,10,90.0,25.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,2,player2,100.0,10,90.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,3,player2,100.0,10,90.0,0.0
+69a597ee4ee499b1d561905a,balanced,2,Does pineapple belong on pizza?,4,player2,100.0,0,90.0,0.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,0,player1,100.0,0,0.0,0.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,1,player1,90.0,0,95.0,-10.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,2,player1,95.0,0,95.0,5.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,3,player1,90.0,0,95.0,-5.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,4,player1,95.0,0,95.0,5.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,0,player2,25.0,0,0.0,0.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,1,player2,0.0,10,90.0,-25.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,2,player2,80.0,20,85.0,80.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,3,player2,80.0,20,85.0,0.0
+69a599d94ee499b1d561f49d,balanced,2,Does pineapple belong on pizza?,4,player2,30.0,20,70.0,-50.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,1,player1,95.0,0,95.0,-5.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,2,player1,95.0,0,95.0,0.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,3,player1,90.0,5,95.0,-5.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,4,player1,95.0,0,95.0,5.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,5,player1,95.0,0,95.0,0.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,1,player2,80.0,30,85.0,55.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,-10.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,3,player2,70.0,20,80.0,0.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,4,player2,80.0,20,85.0,10.0
+69a59b724ee499b1d5626daf,balanced,1,Should we use ChatGPT for homework?,5,player2,70.0,30,80.0,-10.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,1,player1,76.0,0,50.0,26.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,2,player1,50.0,90,30.0,-26.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,3,player1,30.0,40,25.0,-20.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,4,player1,22.0,14,25.0,-8.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,5,player1,9.0,0,16.0,-13.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,2,player2,80.0,30,85.0,10.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,30,85.0,0.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,-10.0
+69a5be50debc943bc448184a,balanced,1,Should we use ChatGPT for homework?,5,player2,80.0,30,85.0,10.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,1,player1,10.0,75,70.0,10.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,2,player1,13.0,70,70.0,3.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,3,player1,17.0,76,70.0,4.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,4,player1,33.0,0,70.0,16.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,0,player2,75.0,0,0.0,0.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,1,player2,100.0,20,85.0,25.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,2,player2,100.0,10,90.0,0.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,3,player2,85.0,20,90.0,-15.0
+69a6873b82bc1c66862c0807,balanced,1,Should we use ChatGPT for homework?,4,player2,80.0,20,85.0,-5.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,5.0,16,81.0,-20.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,25.0,76,81.0,20.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,25.0,55,81.0,0.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,22.0,0,81.0,-3.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,54.0,86,81.0,32.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player2,75.0,0,0.0,0.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,80.0,20,85.0,5.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,20.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,10,90.0,0.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,20,85.0,0.0
+69a68a1b82bc1c66862c88a0,balanced,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,85.0,20,90.0,-15.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,1,player1,67.0,21,50.0,-8.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,2,player1,66.0,55,50.0,-1.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,3,player1,50.0,78,50.0,-16.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,4,player1,48.0,88,50.0,-2.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,45.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,0.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,3,player2,80.0,20,85.0,10.0
+69a7d0fb811ecc132270f6b9,balanced,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,-10.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,1,player1,60.0,60,60.0,10.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,2,player1,50.0,50,60.0,-10.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,3,player1,50.0,57,60.0,0.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,4,player1,45.0,56,60.0,-5.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,0,player2,25.0,0,0.0,0.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,1,player2,70.0,20,80.0,45.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,2,player2,70.0,20,80.0,0.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,0.0
+69a7d372811ecc13227198c2,balanced,1,Should we use ChatGPT for homework?,4,player2,70.0,20,80.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,0,player1,75.0,0,0.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,1,player1,100.0,0,100.0,25.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,2,player1,100.0,0,100.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,3,player1,100.0,0,100.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,4,player1,50.0,93,100.0,-50.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,5,player1,75.0,0,100.0,25.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,0,player2,25.0,0,0.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,1,player2,70.0,20,80.0,45.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,2,player2,30.0,20,70.0,-40.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,3,player2,70.0,20,80.0,40.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,4,player2,70.0,30,80.0,0.0
+69a92d4a3e5a9a6ab07b716f,balanced,2,Does pineapple belong on pizza?,5,player2,70.0,20,80.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,1,player1,100.0,8,100.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,2,player1,95.0,25,100.0,-5.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,3,player1,85.0,47,88.0,-10.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,4,player1,76.0,23,88.0,-9.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,5,player1,86.0,15,94.0,10.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,6,player1,91.0,0,94.0,5.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,7,player1,92.0,0,94.0,1.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,1,player2,80.0,20,85.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,2,player2,70.0,30,80.0,-10.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,5,player2,70.0,30,80.0,0.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,6,player2,40.0,30,70.0,-30.0
+6994323324175dcb5216a88b,open-minded,1,Should we use ChatGPT for homework?,7,player2,70.0,20,80.0,30.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,0.0,0,100.0,0.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,1.0,11,96.0,1.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,2.0,8,96.0,1.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,0.0,0,96.0,-2.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,9.0,85,96.0,9.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player1,25.0,100,96.0,16.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,80.0,20,85.0,0.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,20.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,10,90.0,0.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,80.0,30,85.0,-20.0
+6994376524175dcb5216c149,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player2,80.0,30,85.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,0,player1,100.0,0,0.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,1,player1,99.0,0,100.0,-1.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,2,player1,90.0,0,90.0,-9.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,3,player1,91.0,20,86.0,1.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,4,player1,78.0,28,83.0,-13.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,5,player1,81.0,5,86.0,3.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,6,player1,87.0,0,95.0,6.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,7,player1,88.0,1,95.0,1.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,8,player1,99.0,0,97.0,11.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,1,player2,90.0,30,85.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,2,player2,30.0,40,70.0,-60.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,40.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,4,player2,70.0,20,80.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,5,player2,70.0,30,80.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,6,player2,70.0,20,80.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,7,player2,70.0,30,80.0,0.0
+6995529462b52bc6f09a2ba7,open-minded,1,Should we use ChatGPT for homework?,8,player2,70.0,20,80.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,9.0,0,100.0,-16.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,0.0,0,100.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,7,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,8,player1,,0,,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,85.0,20,90.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,90.0,15.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,85.0,20,75.0,-15.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,20,90.0,15.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,6,player2,100.0,20,85.0,0.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,7,player2,80.0,20,85.0,-20.0
+6995862594d80b03fe458590,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,8,player2,70.0,20,80.0,-10.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,1,player1,50.0,0,50.0,25.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,2,player1,25.0,15,81.0,-25.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,3,player1,76.0,10,81.0,51.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,4,player1,0.0,0,81.0,-76.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,1,player2,80.0,20,90.0,0.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,2,player2,85.0,20,90.0,5.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,3,player2,100.0,20,85.0,15.0
+6995892394d80b03fe4585c0,open-minded,2,Does pineapple belong on pizza?,4,player2,80.0,30,85.0,-20.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,50.0,0,0.0,0.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,51.0,15,75.0,1.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,51.0,22,62.0,0.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,50.0,0,62.0,-1.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,37.0,1,29.0,-13.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,70.0,30,80.0,0.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,70.0,30,80.0,0.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,70.0,30,80.0,0.0
+6996eef2967b343cf6359746,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,70.0,20,80.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,1,player1,50.0,0,50.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,2,player1,50.0,2,75.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,3,player1,50.0,0,75.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,4,player1,50.0,0,75.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,5,player1,50.0,0,50.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,6,player1,50.0,0,50.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,7,player1,50.0,0,50.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,1,player2,70.0,20,80.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,2,player2,70.0,30,80.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,3,player2,100.0,20,80.0,30.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,4,player2,100.0,10,90.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,5,player2,100.0,70,85.0,0.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,6,player2,70.0,30,80.0,-30.0
+6997093f4bd396a55ecfae8b,open-minded,2,Does pineapple belong on pizza?,7,player2,70.0,20,80.0,0.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,1,player1,16.0,0,77.0,-9.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,2,player1,17.0,11,88.0,1.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,3,player1,15.0,0,88.0,-2.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,4,player1,16.0,0,88.0,1.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,1,player2,100.0,10,90.0,0.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,2,player2,100.0,10,90.0,0.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,3,player2,100.0,10,90.0,0.0
+699835eab47e0b6a903d9129,open-minded,2,Does pineapple belong on pizza?,4,player2,100.0,10,90.0,0.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,1,player1,20.0,60,90.0,20.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,2,player1,25.0,35,90.0,5.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,3,player1,25.0,6,95.0,0.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,4,player1,40.0,60,100.0,15.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,2,player2,80.0,20,85.0,10.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,3,player2,80.0,30,70.0,0.0
+699847c7970f8b9cd4961cbb,open-minded,1,Should we use ChatGPT for homework?,4,player2,85.0,30,90.0,5.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,1,player1,67.0,67,67.0,-8.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,2,player1,67.0,67,67.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,3,player1,67.0,67,67.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,4,player1,67.0,67,67.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,1,player2,40.0,30,70.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,2,player2,70.0,40,75.0,30.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,0.0
+69985691fb590380b12b9713,open-minded,1,Should we use ChatGPT for homework?,4,player2,40.0,60,70.0,-30.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,0,player1,50.0,0,0.0,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,1,player1,50.0,25,50.0,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,2,player1,50.0,25,50.0,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,3,player1,,0,,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,4,player1,50.0,0,50.0,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,1,player2,85.0,20,90.0,0.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,2,player2,80.0,20,85.0,-5.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,3,player2,70.0,30,80.0,-10.0
+69993de11330de2ca19f0687,open-minded,1,Should we use ChatGPT for homework?,4,player2,70.0,30,80.0,0.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,25.0,0,0.0,0.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,0.0,0,80.0,-25.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,24.0,0,80.0,24.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,4.0,0,80.0,-20.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,13.0,0,80.0,9.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,0,90.0,0.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,100.0,20,85.0,0.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,100.0,20,90.0,0.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,85.0,20,90.0,-15.0
+69996ab745ee5dbe08824bff,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,5,player2,100.0,10,90.0,15.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,0,player1,0.0,0,0.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,1,player1,10.0,0,95.0,10.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,2,player1,10.0,0,95.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,3,player1,10.0,0,95.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,4,player1,10.0,0,95.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,5,player1,15.0,30,95.0,5.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,1,player2,70.0,30,80.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,2,player2,75.0,30,80.0,5.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,3,player2,80.0,30,70.0,5.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,4,player2,80.0,20,75.0,0.0
+699b2e4efa84ea281ebd721c,open-minded,1,Should we use ChatGPT for homework?,5,player2,80.0,20,85.0,0.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,0,player1,0.0,0,0.0,0.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player1,6.0,0,95.0,6.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player1,6.0,0,95.0,0.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player1,4.0,0,95.0,-2.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player1,9.0,0,95.0,5.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,1,player2,100.0,20,85.0,0.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,2,player2,80.0,20,85.0,-20.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,3,player2,80.0,30,85.0,0.0
+699d93619117de7aca4bb96a,open-minded,3,Go for higher pay at expense of social life (For) or take lower pay to enjoy life (Against)?,4,player2,100.0,20,90.0,20.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,1,player1,100.0,0,95.0,50.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,2,player1,100.0,0,95.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,3,player1,97.0,40,95.0,-3.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,4,player1,75.0,67,95.0,-22.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,5,player1,88.0,0,95.0,13.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,6,player1,98.0,0,95.0,10.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,7,player1,90.0,0,95.0,-8.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,1,player2,70.0,30,80.0,20.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,2,player2,70.0,30,80.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,3,player2,70.0,30,80.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,4,player2,30.0,40,70.0,-40.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,5,player2,30.0,40,70.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,6,player2,30.0,60,70.0,0.0
+69a536bb120849a003de7eb0,open-minded,2,Does pineapple belong on pizza?,7,player2,70.0,20,80.0,40.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,0,player1,75.0,0,0.0,0.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,1,player1,95.0,10,85.0,20.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,2,player1,80.0,70,85.0,-15.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,3,player1,56.0,71,85.0,-24.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,4,player1,56.0,55,75.0,0.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,5,player1,50.0,95,75.0,-6.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,1,player2,80.0,10,90.0,30.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,2,player2,30.0,10,70.0,-50.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,3,player2,30.0,40,70.0,0.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,4,player2,80.0,10,90.0,50.0
+69a66fd582bc1c668629c35a,open-minded,2,Does pineapple belong on pizza?,5,player2,30.0,40,70.0,-50.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,0,player1,75.0,0,0.0,0.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,1,player1,37.0,75,66.0,-38.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,2,player1,80.0,51,66.0,43.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,3,player1,79.0,40,66.0,-1.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,4,player1,50.0,99,66.0,-29.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,0,player2,50.0,0,0.0,0.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,1,player2,70.0,20,80.0,20.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,2,player2,40.0,30,70.0,-30.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,3,player2,70.0,20,80.0,30.0
+69a6797b82bc1c66862ab2a2,open-minded,1,Should we use ChatGPT for homework?,4,player2,70.0,20,80.0,0.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,0,player1,25.0,0,0.0,0.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,1,player1,26.0,53,67.0,1.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,2,player1,36.0,18,67.0,10.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,3,player1,50.0,94,67.0,14.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,4,player1,28.0,0,67.0,-22.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,1,player2,100.0,10,90.0,50.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,2,player2,80.0,20,85.0,-20.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,3,player2,85.0,10,90.0,5.0
+69a6aa02e1df9660e5758e6b,open-minded,2,Does pineapple belong on pizza?,4,player2,85.0,20,90.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,1,player1,79.0,7,88.0,29.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,2,player1,76.0,0,88.0,-3.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,3,player1,76.0,0,88.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,4,player1,77.0,0,88.0,1.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,5,player1,72.0,0,88.0,-5.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,6,player1,85.0,0,88.0,13.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,7,player1,86.0,0,88.0,1.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,1,player2,30.0,20,70.0,-20.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,2,player2,70.0,20,80.0,40.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,3,player2,80.0,30,85.0,10.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,4,player2,70.0,20,80.0,-10.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,5,player2,70.0,30,80.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,6,player2,70.0,20,80.0,0.0
+69a6ac7ae1df9660e576452d,open-minded,2,Does pineapple belong on pizza?,7,player2,70.0,40,80.0,0.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,0,player1,50.0,0,0.0,0.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,1,player1,52.0,14,50.0,2.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,2,player1,50.0,0,50.0,-2.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,3,player1,48.0,0,50.0,-2.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,4,player1,47.0,0,50.0,-1.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,1,player2,70.0,30,80.0,20.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,2,player2,80.0,20,85.0,10.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,3,player2,70.0,40,75.0,-10.0
+69a7ca9a811ecc13226fcf9f,open-minded,2,Does pineapple belong on pizza?,4,player2,30.0,40,70.0,-40.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,0,player1,0.0,0,0.0,0.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,1,player1,3.0,10,50.0,3.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,2,player1,48.0,13,50.0,45.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,3,player1,50.0,98,50.0,2.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,4,player1,21.0,39,50.0,-29.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,0,player2,50.0,0,0.0,0.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,1,player2,100.0,5,90.0,50.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,2,player2,100.0,20,90.0,0.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,3,player2,100.0,20,85.0,0.0
+69a7cdda811ecc1322704e85,open-minded,2,Does pineapple belong on pizza?,4,player2,80.0,30,85.0,-20.0

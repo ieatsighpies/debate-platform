@@ -20,8 +20,6 @@ Topic-quality model: condition_only,adj_R²=-0.0030 (n=89)
 Topic-quality model: delta_adj_r2_topic_increment,adj_R²=0.0699 (n=89)
 belief_pre (at 0),"n=18, 20.0%"
 belief_pre (at 100),"n=15, 16.7%"
-confidence_pre (at 0),"n=0, 0.0%"
-confidence_pre (at 100),"n=18, 20.0%"
 belief_post (at 0),"n=10, 11.1%"
 belief_post (at 100),"n=3, 3.3%"
 confidence_post (at 0),"n=0, 0.0%"

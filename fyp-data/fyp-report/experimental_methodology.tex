@@ -3,27 +3,28 @@
 This chapter describes the experimental methodology for examining AI persuasiveness
 in a turn-based debate format. The primary analysis focuses on \textbf{AI-to-human
 persuasion}: whether debating against a GPT-4o mini opponent configured with one of
-three personalities (firm, balanced, open-minded) produces different belief or
-confidence outcomes relative to a human-human control condition. A secondary analysis
-investigates confidence change as a co-primary outcome. Exploratory analyses examine
+three personalities (firm, balanced, open-minded) produces different belief outcomes
+relative to a human-human control condition. A secondary analysis
+investigates confidence change as a secondary outcome. Exploratory analyses examine
 reflection quality as a mechanism and argument quality as an alternative predictor.
-This study is treated as a \textbf{pilot investigation}; the primary aim is to
-estimate effect sizes and establish infrastructure for future full-scale deployment
-rather than to draw confirmatory conclusions.
+This study is a \textbf{pilot investigation}; effect sizes are estimated and
+infrastructure for future full-scale deployment is established. Confirmatory claims
+are not made at this sample size.
 
 A key structural asymmetry exists in the design: human participants complete
 between-round reflections (paraphrase and acknowledgement), whereas AI agents do not.
 Reflection quality is therefore analyzable only on the human side. Analysis of
-human-to-AI persuasion is deferred to future work.
+human-to-AI persuasion is reserved for future work.
 
 
 \section{Study Design}
 
-The study uses a controlled between-conditions design with repeated measures over
+The study uses a controlled between-subjects design with repeated measures over
 debate rounds. Participants are assigned to one of four conditions: three AI opponent
 conditions (firm, balanced, open-minded) or a human-human control. Each debate
 follows an identical round structure with arguments submitted in alternating turns
-and belief and confidence checks collected after each round.
+and belief and confidence checks collected after each round, with confidence first collected at
+the first post-argument round (Round 1).
 
 
 \section{Participants and Recruitment}
@@ -31,12 +32,12 @@ and belief and confidence checks collected after each round.
 Participants were recruited according to institutional guidelines and provided with
 an informed consent statement describing the debate task and data usage. Inclusion
 required completion of the full debate protocol, including per-round belief and
-confidence checks and the post-debate survey. The final analytic sample comprised
+confidence checks from Round 1 onward and the post-debate survey. The final analytic sample comprised
 $n = 90$ participants across four conditions: human-human ($n = 21$), firm AI
 ($n = 28$), balanced AI ($n = 20$), and open-minded AI ($n = 21$).
 
 
-\section{Conditions and Randomization}
+\section{Conditions and Assignment}
 
 Participants were assigned to conditions with an operational goal of maintaining
 approximate balance across the three AI personalities and the human-human control.
@@ -46,19 +47,21 @@ identity was concealed during the debate to prevent source bias. Topic selection
 and initial stance were self-selected by participants; some imbalance across
 conditions on these dimensions may remain and is addressed by including topic
 fixed effects in the primary models.
+Condition assignment was not formally randomized; participants were allocated to
+maintain approximate balance via administrative monitoring.
 
 
 \section{Procedure}
 
 \begin{enumerate}
-    \item Participant selects a debate topic and indicates initial stance and
-          confidence (0--100).
+      \item Participant selects a debate topic and indicates initial stance.
     \item Participant completes pre-debate survey recording openness to persuasion:
           \textit{firm on my stance}, \textit{convinced of my stance}, or
           \textit{open to changing my mind}.
     \item Debate proceeds in alternating argument rounds (500-character limit per
           turn). After each round, the participant records updated belief value
-          (0--100) and confidence (0--100).
+          (0--100); confidence (0--100) is recorded from the first post-argument
+          round onward.
     \item Between rounds, the participant completes a reflection task comprising
           a free-text paraphrase of the opponent's most recent argument and a
           free-text acknowledgement of whether they concede the opponent's point.
@@ -68,6 +71,25 @@ fixed effects in the primary models.
 
 \pagebreak
 \section{Measures}
+
+\subsection{Measurement Strategy Rationale}
+
+The measurement design intentionally combines round-level process tracking with
+debate-level endpoint self-reports. Persuasion in live debate is expected to be
+path-dependent: participants may temporarily shift, rebound, or stabilize as new
+arguments are introduced. Collecting belief, confidence, and perceived opponent
+influence after each round captures these within-debate trajectories rather than
+only net change. The reflection and acknowledgement prompts add a complementary
+mechanism layer by recording whether participants can paraphrase opponent content
+and explicitly concede valid points, which helps distinguish superficial numeric
+movement from substantive engagement.
+
+Pre-debate and post-debate self-reports serve a different function. The pre-debate
+item anchors baseline openness to persuasion, while post-debate items capture the
+participant's global interpretation of debate impact and attribution judgments.
+Together, this process-plus-endpoint strategy provides convergent evidence across
+temporal, cognitive, and self-evaluative dimensions, improving interpretability
+relative to single-timepoint designs.
 
 \subsection{Primary Outcome: Belief Change}
 
@@ -80,13 +102,28 @@ participant's final round response.
 \subsection{Secondary Outcome: Confidence Change}
 
 Confidence is measured on a 0--100 scale at the first post-argument round
-(Round 1, because confidence was not collected at pre-debate (Round 0); \texttt{confidence\_pre})
+(Round 1; confidence was not collected at pre-debate Round 0, so Round 1 is used as \texttt{confidence\_pre},
+noting that this is a post-exposure baseline --- the participant has already seen the opponent's first argument ---)
 and at the participant's final round (\texttt{confidence\_post}).
 Confidence change is computed as
 $\Delta \text{confidence} = \text{confidence}_{\text{post}} - \text{confidence}_{\text{pre}}$.
 Baseline confidence at Round 1 shows substantial variation (M = 79.3, SD = 18.4),
-but with ceiling effects \(20\% at 100\), so confidence-change models are
+but with ceiling effects \(20\%\) at \(100\), so confidence-change models are
 interpreted with this constrained variance in mind.
+Specifically, a 20\% ceiling at 100 at the Round 1 baseline may compress upward variance and
+bias confidence-change estimates toward the null.
+
+\subsection{Floor/Ceiling Audit}
+
+Floor/ceiling checks were examined during measurement setup to interpret scale
+constraints before model fitting. In the current sample, belief pre-debate values
+show floor/ceiling mass (20.0\% at 0; 16.7\% at 100), while confidence at the Round 1 baseline
+shows 0.0\% at floor and 20.0\% at ceiling. These distributions support using change-score
+models while requiring caution for confidence-change inference under upper-end compression.
+For endpoint context, post-debate values show lower boundary concentration
+(belief post: 11.1\% at 0, 3.3\% at 100; confidence post: 0.0\% at 0, 14.4\% at 100).
+The observed confidence-to-belief variance ratio is 0.297, consistent with lower
+confidence-change variance and reduced power to detect confidence effects.
 
 \subsection{Reflection Quality}
 
@@ -134,6 +171,11 @@ The free-text acknowledgement field records whether the participant explicitly
 conceded validity in the opponent's argument. This was binarized
 (\texttt{acknowledgement\_binary}) and included as an exploratory covariate in
 a secondary belief change model (\texttt{belief\_ack}).
+The binary coding rule marked acknowledgement as 1 when responses included explicit
+concession terms such as "agree", "valid point", "fair point", "you are right",
+"I concede", or close paraphrases; otherwise it was coded 0. Coding was applied by
+the primary researcher using this fixed keyword-and-phrase rule and then checked
+against random examples during data cleaning.
 
 \subsection{Opponent Attribution}
 
@@ -143,17 +185,88 @@ perception confidence (1--5), suspicion timing (round range), detection cues
 difference). These variables are available for exploratory analysis but are
 not part of the primary confirmatory model sequence.
 
+\subsection{Survey Instrument Wording (Pre and Post)}
+
+To make the measurement instrument explicit, this subsection reproduces the
+participant-facing pre-debate and post-debate survey items used in the platform.
+
+\paragraph{Pre-debate survey item}
+
+Prompt shown before matching:
+\begin{quote}
+\textit{Tell us how you currently feel about your stance on this topic.}
+\end{quote}
+
+Response options:
+\begin{itemize}
+      \item \textit{I am firm on my stance.}
+      \item \textit{I am convinced of my stance.}
+      \item \textit{I am open to changing my mind about this.}
+\end{itemize}
+
+\paragraph{Post-debate survey items}
+
+After debate completion, participants answer the following items:
+\begin{enumerate}
+      \item \textit{Overall, how did this debate affect your original stance on this topic?}
+      \\
+      Options: \textit{Strengthened my original view}; \textit{Slightly strengthened};
+      \textit{No real effect}; \textit{Slightly weakened}; \textit{Weakened my original view}.
+
+      \item \textit{How strong is your stance on this topic now?}
+      \\
+      7-point scale from \textit{Very weak (1)} to \textit{Very strong (7)}.
+
+      \item \textit{How confident are you in your stance now?}
+      \\
+      7-point scale from \textit{Not confident at all (1)} to
+      \textit{Extremely confident (7)}.
+
+      \item \textit{Do you think your opponent was AI or human?}
+      \\
+      Options: \textit{Human}; \textit{AI}; \textit{Unsure}.
+
+      \item \textit{How confident are you in your answer above?}
+      \\
+      5-point scale from \textit{Not confident at all (1)} to
+      \textit{Extremely confident (5)}.
+
+      \item \textit{When did you first suspect your opponent was [AI/human/unclear]?}
+      \\
+      Options: \textit{Round 1--2}; \textit{Round 3--4}; \textit{Round 5--7};
+      \textit{Round 8--12}; \textit{Round 13--17}; \textit{Round 18--20};
+      \textit{I never suspected / realized only now}.
+
+      \item \textit{What made you think your opponent was [AI/human/unclear]?}
+      \\
+      Multi-select cue checklist with an \textit{Other (please specify)} field.
+
+      \item Conditional awareness item (shown based on response to Item 4):
+      \begin{itemize}
+            \item If \textit{AI}: \textit{Did knowing your opponent was AI affect your stance change?}
+            \item If \textit{Human}: \textit{Did knowing your opponent was human affect your stance change?}
+            \item If \textit{Unsure}: \textit{Did your uncertainty about your opponent's nature affect your stance change?}
+      \end{itemize}
+      Options: \textit{No difference}; \textit{Less persuasive};
+      \textit{More persuasive}; \textit{Not sure / can't say}, plus a required
+      short free-text justification.
+\end{enumerate}
+
 
 \section{Data Quality and Exclusion Criteria}
 
 Debates were excluded if incomplete, missing per-round belief checks, or
 containing inconsistent round sequencing. The descriptive sample is $n = 90$,
-while complete-case model analyses use $n = 89$. No implausible
+while complete-case model analyses use $n = 89$ due to one case with
+variable-level missingness in model inputs. No implausible
 response time exclusions were applied; all exclusions are reported
 transparently.
 
 \pagebreak
 \section{Statistical Analysis}
+
+This study was not pre-registered; as a substitute discipline, the model sequence,
+confirmatory/exploratory split, and interpretation hierarchy were specified before final model execution.
 
 \subsection{Pre-Model Checks}
 
@@ -165,11 +278,11 @@ balanced: 15.0\%; open-minded: 9.5\%).
 Second, a Shapiro-Wilk test
 confirmed approximate normality of \texttt{belief\_change}
 ($W = 0.980$, $p = 0.190$), supporting OLS use.
-Third, a one-way ANOVA confirmed no significant between-condition
+Third, a one-way ANOVA indicated no significant between-condition
 difference in \texttt{belief\_change} prior to covariate adjustment ($F = 0.488$,
-$p = 0.691$); AI-subcondition ANOVA yielded $\eta^2 = 0.001$
-($H = 0.606$, $p = 0.739$, Kruskal-Wallis), confirming pooling is
-defensible.
+$p = 0.691$); an AI-subcondition Kruskal-Wallis check yielded $\eta^2 = 0.001$
+($H = 0.606$, $p = 0.739$), supporting pooling as a pilot-stage precision choice
+rather than proving personality equivalence.
 Fourth, topic fixed effects were justified by an adjusted
 $R^2$ increment of 0.070 over condition-only models, confirming topics
 are a meaningful confounder. An \texttt{nrounds} imbalance was noted:
@@ -181,28 +294,45 @@ M5.
 
 The three AI personality conditions (firm, balanced, open-minded) are pooled
 into a single binary indicator (\texttt{group\_2lvl}: AI vs.\ human-human)
-for the primary confirmatory analysis. This decision is motivated by three
-considerations. First, the pilot sample ($n = 89$) yields per-condition
+for the primary confirmatory analysis. This decision is motivated by two
+defensible considerations. First, the pilot sample ($n = 89$) yields per-condition
 cell sizes of $n = 20$--$28$, which are insufficient to reliably estimate
-separate personality effects; pooling recovers adequate power for the
-higher-priority human-vs-AI contrast. Second, the primary research question
+separate personality effects; pooling improves precision for the
+higher-priority human-vs-AI contrast, while remaining underpowered for
+small effects in this pilot. Second, the primary research question
 concerns whether AI debate \textit{per se} produces different outcomes than
 human debate, independent of personality configuration; personality-level
 differences are a secondary question addressed in Section~\ref{sec:part10}.
-Third, pre-model ANOVA across AI subconditions confirmed negligible
-between-personality differences in belief change ($\eta^2 = 0.001$,
-Kruskal-Wallis $p = 0.739$), making pooling theoretically defensible.
- Condition-level trajectories are examined in the
+A null ANOVA result under low power does not confirm personality equivalence.
+Condition-level trajectories are examined in the
 four-level analysis (Section~\ref{sec:part10}), which retains the full
 condition structure.
 
 
-\subsection{Primary Confirmatory Model Sequence}
+\subsection{Primary Model Sequence: Confirmatory and Embedded Exploratory Models}
 
-Belief change is modelled using OLS regression with HC3 heteroskedasticity-robust
-standard errors. The focal predictor is a binary group indicator (AI pooled
-vs.\ human-human), with human-human as the reference category. Seven models are
-estimated (four confirmatory, three exploratory/sensitivity):
+Before model estimation, the confirmatory hypotheses were:
+\begin{itemize}
+    \item \textbf{H1 (belief outcome):} Participants in pooled AI conditions differ from
+          participants in the human-human condition on belief change.
+    \item \textbf{H2 (confidence outcome):} Participants in pooled AI conditions differ from
+          participants in the human-human condition on confidence change.
+\end{itemize}
+
+Belief change is modelled using OLS regression with explicit covariance settings.
+For models without topic fixed effects (M1--M3), OLS-HC3
+standard errors are used. For models with topic fixed effects (M4, M4c, M5),
+topic-cluster standard errors are used to align inference with the
+topic-level grouping structure. The focal predictor is a binary group indicator
+(AI pooled vs.\ human-human), with human-human as the reference category.
+Seven models are estimated (four confirmatory, three exploratory/sensitivity):
+
+OLS-HC3 is used as the primary estimator because the confirmatory estimands
+are mean-difference contrasts under likely heteroskedasticity in a pilot sample.
+As a methods-justification sensitivity
+check (not a primary finding), separate OLS-HC3/RLM-Huber/two-stage WLS
+refits are compared for the same primary model family in Appendix
+Table~\ref{tab:estimator_comparison_primary}.
 
 \begin{itemize}
     \item \textbf{M1}: Treatment effect only — unadjusted estimate of AI
@@ -232,12 +362,17 @@ estimated (four confirmatory, three exploratory/sensitivity):
 
 Given the pilot model sample ($n = 89$),
 observed power for the M1 treatment effect was 0.20 at the observed
-Cohen's $d = 0.286$; a total $n \approx 350$ (175 per group) would
-be required for 80\% power at this effect size.
+Cohen's $d = 0.286$. With the actual complete-case allocation ratio of approximately 1:3.45
+(human-human $n = 20$, pooled AI $n = 69$),
+power is constrained by the smaller cell; to achieve 80\% power at this effect size and allocation ratio
+would require approximately $n \approx 124$ for human-human and $n \approx 429$ for pooled AI (total $n \approx 553$).
+The observed power estimate of 20\% is computed at the full model $n = 89$,
+treating the two-group contrast as the unit of analysis; the unequal group sizes
+(AI n = 69, human-human n = 20) mean effective power is substantially lower than
+standard equal-allocation power calculations suggest.
 Effect sizes are reported as standardized mean differences (Cohen's $d$) with
 95\% confidence intervals. Given the pilot sample size ($n = 89$), observed
-power and required sample sizes for 80\% power are reported to contextualize
-null findings.
+power and required sample sizes for 80\% power are reported alongside null findings.
 
 \subsection{Secondary Analysis: Confidence Change}
 
@@ -266,16 +401,17 @@ exploratory models are specified:
 
 \texttt{belief\_ack} is estimated on the available complete-case sample
 ($n = 89$ in the current export); results are interpreted as exploratory
-and are not subject to multiplicity correction.
+and are not included in multiplicity-controlled confirmatory inference.
 
 \subsection{Robustness Checks}
 
-All confirmatory models are subjected to:
+Planned robustness diagnostics for confirmatory models are:
 \begin{itemize}
     \item \textbf{Outlier trimming}: Re-estimation after excluding the bottom
           and top 1\% of belief or confidence change values.
     \item \textbf{Leave-one-out (LOO)}: Re-estimation of M2 excluding each
-          condition in turn.
+          condition in turn. In runs where the LOO export is empty, no LOO
+          numeric claims are carried into inference.
     \item \textbf{VIF diagnostics}: Variance inflation factors computed for
           all multi-predictor models to detect multicollinearity.
     \item \textbf{Shapiro-Wilk}: Residual normality assessed for all models.
@@ -303,7 +439,7 @@ textual features.
 
 \subsubsection{Mechanism Analysis: Pushback and Confidence}
 
-If co-primary confidence effects are observed, a mechanism analysis
+As an exploratory module, a mechanism analysis
 tests whether critical engagement --- operationalised as pushback
 frequency (\texttt{has\_pushback}) --- predicts confidence change.
 Pushback is coded from the qualitative subsample (the same
@@ -326,25 +462,41 @@ perceived debate success.
 
 Jackknife resampling (leave-one-out) is applied to the AI-group
 correlation to assess sensitivity to individual influential
-observations. At each iteration, one participant is removed and the
-correlation is re-estimated on the remaining subsample; if the
-sign remains consistent across all iterations, the correlation is
-classified as robust. Iterations where pushback or confidence
+observations. At each iteration, one data point is removed and the
+correlation is re-estimated on the remaining subsample, and the
+resulting range is reported as a small-sample sensitivity diagnostic
+rather than as confirmatory evidence of a stable mechanism effect.
+Iterations where pushback or confidence
 change variance collapses to zero are excluded.
+
+\subsubsection{Exploring All P1 Variables (Associational)}
+
+An additive exploratory module examines collected player1 (P1) variables that
+are outside the pre-specified confirmatory model set. The purpose is
+methodological coverage and hypothesis generation, not confirmatory testing.
+Where data availability and variance permit, associational checks include
+OLS-HC3 models, non-parametric group comparisons, and simple descriptives.
+Outputs are reported as exploratory associational diagnostics and are interpreted
+jointly with the pushback/jackknife instability checks, without upgrading any
+mechanism claim to identified evidence.
 
 Prior to mechanism analysis, qualitative-sample representativeness is
 audited by comparing condition proportions in the subsample against
 full-population condition proportions. In the current run, the
-subsample overrepresents human-human debates and underrepresents AI
-conditions; mechanism results are therefore interpreted as
-hypothesis-generating rather than population-representative.
+subsample approximates population condition shares (maximum
+$\Delta=0.045$), though modest imbalance remains; mechanism results are
+reported as hypothesis-generating and preliminary.
 
 
 \section{Reporting}
 
 Results are reported with effect sizes and 95\% confidence intervals rather
-than $p$-values alone. All models report coefficient estimates, robust standard
-errors, and sample sizes. Exploratory analyses are clearly labelled and
+than $p$-values alone. All models report coefficient estimates,
+model-specified standard errors (OLS-HC3 or topic-cluster), and sample sizes.
+Exploratory analyses are clearly labelled and
 interpreted with appropriate caution. All statistical code, intermediate tables,
 and export files are retained to facilitate reproducibility. Cross-chapter
 headline numbers are synchronized to Appendix Table~\ref{tab:headline_numbers}.
+Chapter 5 follows this reporting hierarchy explicitly: confirmatory outcomes are
+reported first, followed by robustness diagnostics, and then exploratory modules
+that are interpreted as hypothesis-generating rather than effect-identifying.

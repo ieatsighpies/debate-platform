@@ -1,0 +1,50 @@
+FINAL ANALYSIS SUMMARY (PRIMARY & SECONDARY)
+============================================
+
+PRIMARY OUTCOME: Belief Change (M1-M5)
+-------------------------------------
+M1: ai_beta=8.695, 95%CI=[-9.765, 27.155], p=0.3559
+M2: ai_beta=6.701, 95%CI=[-12.581, 25.984], p=0.4958
+M3: ai_beta=8.989, 95%CI=[-11.393, 29.371], p=0.3874
+M4: ai_beta=8.334, 95%CI=[-10.978, 27.646], p=0.3977
+M4b: ai_beta=6.793, 95%CI=[-12.827, 26.413], p=0.4974
+M4c: ai_beta=9.907, 95%CI=[-6.698, 26.512], p=0.2422
+M5: ai_beta=5.233, 95%CI=[-22.374, 32.840], p=0.7102
+
+SECONDARY OUTCOME: Confidence Change (M1-M3, belief_ack)
+--------------------------------------------------------------
+conf_M1: ai_beta=5.210, 95%CI=[-3.021, 13.441], p=0.2147
+conf_M2: ai_beta=5.845, 95%CI=[-2.565, 14.256], p=0.1731
+conf_M3: ai_beta=6.070, 95%CI=[-2.625, 14.764], p=0.1712
+belief_ack: ai_beta=11.269, 95%CI=[-8.980, 31.519], p=0.2754
+
+ROBUSTNESS CHECKS
+-----------------
+Cohen d (AI vs Human, belief_change): 0.286
+Observed power: 0.200 (required n per group: 175)
+Power caveat: observed power is critically low in this run; effect sizes and 95% CIs are high-uncertainty point estimates, not evidence of no effect.
+CI caveat: confirmatory belief models (M1-M2, M4-M5) and confirmatory confidence models (conf_M1-conf_M2) all include zero, so direction and magnitude are not strongly identified in this sample.
+Condition ANOVA: F=0.488, p=0.691
+Belief Floor/Ceiling: 20.0% participants at 0 pre-debate.
+Confidence Baseline: 0.0% participants start at 0 confidence.
+→ Baseline confidence varies sufficiently.
+
+MECHANISM VALIDATION (EXPLORATORY)
+----------------------------------
+Pushback-Confidence correlation (AI group, n=18): r=-0.298, p=0.2295
+Jackknife Range (Sensitivity): [-0.412, -0.169]
+→ Participants with high pushback show LOWER confidence gain.
+→ Robust to single-point removal.
+
+QUALITATIVE SAMPLE REPRESENTATIVENESS
+--------------------------------------
+Chi-square test: χ²=0.395, p=0.9413
+
+P1 VARIABLE EXPLORATION ADDITIONS (ASSOCIATIONAL)
+--------------------------------------
+P1 gap tests rows: 2
+See player1_gap_closure_tests.csv for variable-level inferential coverage.
+
+Interpretation rule: due to low power and wide CIs, prioritize pre-specified confirmatory paths (M1-M2, M4-M5 belief; conf_M1-conf_M2 confidence).
+Use effect-size and CI-first interpretation; significance tests are secondary.
+All other outputs are secondary/exploratory and hypothesis-generating.

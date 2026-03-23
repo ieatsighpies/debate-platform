@@ -1,5 +1,4 @@
 variable,at_0,at_100,pct_at_0,pct_at_100
-belief_pre,18,15,0.2,0.16666666666666666
-confidence_pre,0,18,0.0,0.2
-belief_post,10,3,0.1111111111111111,0.03333333333333333
-confidence_post,0,13,0.0,0.14444444444444443
+belief_pre,18,15,0.2,0.167
+belief_post,10,3,0.111,0.033
+confidence_post,0,13,0.0,0.144

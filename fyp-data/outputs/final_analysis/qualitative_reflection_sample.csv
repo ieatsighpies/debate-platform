@@ -1,25 +1,25 @@
-group,debate_id,round,acknowledgement_text,engagement_depth,has_direct_ack,has_pushback,has_specificity
-ai,69a7ca9a811ecc13226fcf9f,3,depends on the palate,low,0,0,0
-ai,6996edde967b343cf63582e5,3,no,low,0,1,0
-ai,69a6797b82bc1c66862ab2a2,2,not really,low,0,0,0
-ai,69aecd3b7de1a044b0bd97e3,1,no,low,0,1,0
-ai,699c883e0c3554f34686ff73,4,not really because it still tastes like pizza,medium,0,0,1
-ai,69a00bf677f378e0cd15f448,13,not really as it outsources creativity to chatgpt,medium,0,0,0
-ai,699835eab47e0b6a903d9129,4,no,low,0,1,0
-ai,69a4f42c0611bade23cda135,11,im open to it,low,0,0,0
-ai,69a0173877f378e0cd1612cb,1,no.,low,0,1,0
-ai,69996a9c45ee5dbe08823c32,4,no,low,0,1,0
-ai,69a4ffc40611bade23ce7482,2,makes sense,low,0,0,0
-ai,69a66fd582bc1c668629c35a,5,agree,low,1,0,0
-human,699ec589f53d44e8e544d0ab,2,slightly changed,low,0,0,0
-human,69b03fd157d1915d7288fc61,1,no,low,0,1,0
-human,69a668ef82bc1c6686298e63,6,not really,low,0,0,0
-human,69ae0cf2d0514b89ec60acee,3,kinda,low,0,0,0
-human,69aeeb923b45fc551e0f5f95,1,not really,low,0,0,0
-human,69a3dca6a25dea5aded7a9ae,3,no,low,0,1,0
-human,69affeb8a57f60770a789f20,3,yes,low,1,0,0
-human,69ae0e16d0514b89ec60ad3a,3,maybe,low,0,0,0
-human,69b01cb372628e22871f4c5f,1,no,low,0,1,0
-human,69a3f743c3f532453c5ce21a,3,maybe,low,0,0,0
-human,69a7cf1d811ecc1322709d38,1,no,low,0,1,0
-human,69a6d534076d1847b5a0948d,4,yes,low,1,0,0
+group,condition,debate_id,round,acknowledgement_text,engagement_depth,has_direct_ack,has_pushback,has_specificity
+human,human-human,699ec589f53d44e8e544d0ab,2,slightly changed,low,0,0,0
+human,human-human,69b03fd157d1915d7288fc61,1,no,low,0,1,0
+human,human-human,69a668ef82bc1c6686298e63,6,not really,low,0,0,0
+human,human-human,69ae0cf2d0514b89ec60acee,3,kinda,low,0,0,0
+human,human-human,69aeeb923b45fc551e0f5f95,1,not really,low,0,0,0
+human,human-human,69a3dca6a25dea5aded7a9ae,3,no,low,0,1,0
+ai,firm,699d921f9117de7aca4b961e,1,nan,low,0,0,0
+ai,firm,69aed5567de1a044b0bd9b3d,1,no,low,0,1,0
+ai,firm,69a68df382bc1c66862d28c6,2,no,low,0,1,0
+ai,firm,69a7c733811ecc13226f51c9,4,"maybe, but doesn't explain how it relates to the definition of pizza",medium,0,1,0
+ai,firm,69aecd3b7de1a044b0bd97e3,2,no,low,0,1,0
+ai,firm,69a439b5844461e35198637b,3,no but he makes a decent point,low,0,1,0
+ai,balanced,69a53b5f120849a003df1892,1,not really,low,0,0,0
+ai,balanced,69a4ffc40611bade23ce7482,2,makes sense,low,0,0,0
+ai,balanced,69a92d4a3e5a9a6ab07b716f,5,no,low,0,1,0
+ai,balanced,69a50fd90611bade23d0221c,3,no,low,0,1,0
+ai,balanced,69a53b5f120849a003df1892,3,not really,low,0,0,0
+ai,balanced,69a4ffc40611bade23ce7482,6,agree with this,low,1,0,0
+ai,open-minded,6997093f4bd396a55ecfae8b,3,"not really, my personal preference triumphs the logic.",medium,0,0,0
+ai,open-minded,699b2e4efa84ea281ebd721c,2,not really,low,0,0,0
+ai,open-minded,6994323324175dcb5216a88b,4,agreed,low,0,0,0
+ai,open-minded,69a6aa02e1df9660e5758e6b,4,not to me,low,0,0,0
+ai,open-minded,6995529462b52bc6f09a2ba7,6,no,low,0,1,0
+ai,open-minded,6995529462b52bc6f09a2ba7,8,"not necessarily, fallacy detected",low,0,0,0

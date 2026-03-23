@@ -4,16 +4,26 @@
 
 This chapter reports final results from a descriptive sample of $n=90$ participants across four conditions
 (human-human $n=21$, firm $n=28$, balanced $n=20$, open-minded $n=21$), with complete-case model analyses at $n=89$.
+The one-case difference reflects variable-level missingness under complete-case regression rules,
+so descriptive summaries retain $n=90$ while model estimates use $n=89$.
 The inferential flow is intentionally tiered:
 \begin{enumerate}
     \item confirmatory belief-change models,
-    \item secondary confidence models,
+    \item secondary confidence-change models,
     \item robustness checks,
     \item exploratory mechanism and qualitative representativeness diagnostics.
 \end{enumerate}
 
 All participant-level regression models use robust standard errors, and interpretation
 is based on effect size direction and confidence intervals, not on single $p$-values alone.
+Consistent with Chapter 4, confirmatory models carry primary inferential weight,
+while exploratory outputs are retained for hypothesis generation and design guidance.
+
+Results are interpreted against the study's combined measurement strategy: round-level
+process indicators (belief trajectory, confidence trajectory, perceived influence,
+reflection, acknowledgement) are used to understand how persuasion unfolds during
+debate, while debate-level pre/post self-reports provide baseline and endpoint
+context for judging whether observed movement reflects meaningful stance change.
 
 \pagebreak
 \section{At-a-Glance Findings}
@@ -27,11 +37,11 @@ is based on effect size direction and confidence intervals, not on single $p$-va
 \toprule
 Question & Evidence & Decision \\
 \midrule
-Does AI change belief? & Confirmatory M1, M2, M4, M5 all include 0 in 95\% CI; e.g. M5 $\beta_{AI}=5.233$, CI $[-22.374, 32.840]$, $p=0.710$ & No reliable effect \\
-Does AI change confidence? & Secondary confidence models are also non-significant; conf-M2 $\beta_{AI}=5.845$, CI $[-2.565, 14.256]$, $p=0.173$ & No reliable effect \\
-Are pooled inferences stable? & Outlier-trim and leave-one-condition-out exports preserve null AI belief effect & Stable null \\
-Is pushback mechanism supported? & AI-group pushback-confidence $r=-0.121$, $p=0.707$; jackknife range $[-0.372,-0.003]$ & Weak/uncertain \\
-Is qual sample representative? & Qual sample shares deviate from population shares (human-human: $0.500$ vs $0.205$; AI conditions each $0.167$ vs $0.237$--$0.284$) & Not representative \\
+Does AI change belief? & Confirmatory M1, M2, M4, M5 all include 0 in 95\% CI; e.g. M5 $\beta_{AI}=5.233$, CI $[-22.374, 32.840]$, $p=0.710$ & Effect not identified (Underpowered) \\
+Does AI change confidence? & Secondary confidence models also include 0 in their 95\% CIs; conf-M2 $\beta_{AI}=5.845$, CI $[-2.565, 14.256]$, $p=0.173$ & Effect not identified \\
+Are pooled inferences stable? & Outlier-trim exports preserve the CI-over-zero pattern for the confirmatory AI belief coefficient; no directionally identified effect appears after trimming & Stable uncertainty pattern; CI-over-zero persists across robustness checks \\
+Is pushback mechanism supported? & AI-group pushback-confidence $r=-0.298$, $p=0.229$ (95\% CI $[-0.672, 0.196]$, $n=18$); jackknife range from summary export is $[-0.412,-0.169]$ & Directional signal only; exploratory and not identified \\
+Is qual sample representative? & Qual sample shares are close to population shares (human-human: $0.250$ vs $0.205$; firm: $0.250$ vs $0.284$; balanced: $0.250$ vs $0.274$; open-minded: $0.250$ vs $0.237$) & Roughly balanced; residual imbalance remains \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -42,7 +52,7 @@ Is qual sample representative? & Qual sample shares deviate from population shar
 \subsection{Condition Composition and Outcome Means}
 \label{sec:part10}
 
-Condition-level means for belief change (from \texttt{condition\_overview.csv}) are:
+Condition-level means for belief change are:
 \begin{itemize}
     \item Human-human: $-7.905$
     \item Firm: $1.714$
@@ -50,22 +60,56 @@ Condition-level means for belief change (from \texttt{condition\_overview.csv}) 
     \item Open-minded: $1.667$
 \end{itemize}
 
-\subsection{Floor/Ceiling Audit}
+\footnotesize
+Note: Human-human participants trended toward belief decrease ($M = -7.905$) while pooled AI conditions trended near zero.
+This descriptive pattern is not identified at the confirmatory level (see Section~\ref{sec:model_family_results}).
+\normalsize
 
-From \texttt{data\_quality\_floor\_ceiling.csv}:
-\begin{itemize}
-    \item Belief pre-debate at 0: $20.0\%$
-    \item Belief pre-debate at 100: $16.7\%$
-    \item Confidence pre-debate at 0: $0.0\%$
-\end{itemize}
+Figure~\ref{fig:pooled_ai_vs_human} presents pooled AI versus human-human distributions for both belief and confidence change.
 
-This supports treating confidence analyses as valid change outcomes in this run
-(rather than a degenerate post-only proxy).
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.88\linewidth]{./pooled_ai_vs_human_belief_confidence.png}
+\caption{Belief and Confidence Change: AI (Pooled) vs Human-Human}
+\label{fig:pooled_ai_vs_human}
+\end{figure}
+
+To visualize the directional confidence-belief dissociation pattern directly, Figure~\ref{fig:belief_change_by_condition}
+and Figure~\ref{fig:confidence_change_by_condition} present companion condition-level distributions.
+The belief panel remains centered near zero with substantial overlap, while confidence shows a
+directional upward shift in AI conditions, with confirmatory model confidence intervals
+that continue to include zero.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{./belief_change_by_condition.png}
+\caption{Belief Change by Condition (Post - Pre)}
+\label{fig:belief_change_by_condition}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{./confidence_change_by_condition.png}
+\caption{Confidence Change by Condition (Post - Pre)}
+\label{fig:confidence_change_by_condition}
+\end{figure}
+
+The round-level measurement design is visualized in Figure~\ref{fig:belief_trajectory_rounds},
+which plots mean belief by round and condition. This trajectory view shows when movement occurs
+during debate rather than collapsing all within-debate dynamics into a single pre-post endpoint.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{./belief_trajectory_by_round_condition.png}
+    \caption{Belief Trajectory Across Debate Rounds by Condition (mean with 95\% CI bands). Note: condition counts are thin beyond round 5.}
+    \label{fig:belief_trajectory_rounds}
+\end{figure}
 
 \pagebreak
 \section{Primary Outcome: Belief Change}
 
 \subsection{Model Family Results}
+\label{sec:model_family_results}
 
 Table~\ref{tab:primary_models} reports the AI coefficient from the exported primary model table.
 
@@ -91,44 +135,69 @@ M5 & 89 & 5.233 & $[-22.374, 32.840]$ & 0.7102 \\
 \subsection{$R^2$ Comparison Across Primary Models}
 
 Table~\ref{tab:primary_r2_compare} compares variance explained across the primary
-model sequence. Reported $\Delta R^2$ values are relative to M1, consistent with
-the exported \texttt{primary\_models.csv}.
+model sequence. Incremental comparisons ($\Delta R^2$) use model-specific baselines
+reflecting the confirmatory and exploratory structure: M2 and M4 build on M1 and M2
+respectively; exploratory modules (M3, M4b, M4c) are compared against their immediate
+structural predecessors.
+This comparison documents the incremental predictive contribution of each model domain:
+treatment assignment (M1 baseline), engagement quality via reflection (M2), treatment-by-engagement interaction (M3),
+participant-level and contextual controls (M4), argument quality as an alternative mechanism
+(M4b, M4c), and the full specification with structural covariates like debate length (M5).
 
-Model labels used in this subsection:
+Model labels and baselines used in this subsection:
 \begin{itemize}
-    \item M1: Treatment only
-    \item M2: M1 + Reflection quality
-    \item M3: M2 + Interaction (exploratory)
-    \item M4: M2 + Stance strength + Topics
-    \item M4b: M2 + Arg quality (exploratory)
-    \item M4c: M1 + Arg quality without reflection (exploratory)
-    \item M5: Full model (M4 + arg quality + rounds + first\_player)
+    \item M1: Treatment only (baseline)
+    \item M2: M1 + Reflection quality (vs M1, $\Delta R^2 = 0.034$)
+    \item M3: M2 + Interaction (exploratory; vs M2, $\Delta R^2 = 0.022$)
+    \item M4: M2 + Stance strength + Topics (vs M2, $\Delta R^2 = 0.033$)
+    \item M4b: M2 + Arg quality (exploratory; vs M2, $\Delta R^2 \approx 0.000$)
+    \item M4c: M1 + Arg quality without reflection (exploratory; vs M1, $\Delta R^2 = 0.027$)
+    \item M5: Full model (M4 + arg quality + rounds + first\_player; vs M4, $\Delta R^2 = 0.015$)
 \end{itemize}
+
+Interpretation is anchored to pre-specified confirmatory paths (M1--M2, M4--M5)
+using an effect-size-and-CI-first standard; exploratory paths (M3, M4b, M4c)
+provide secondary context.
 
 \begin{table}[h]
 \centering
 \caption{$R^2$ Comparison for Primary Model Family}
 \label{tab:primary_r2_compare}
-\begin{tabular}{lrrr}
+\begin{tabular}{lrrl}
 \toprule
-Model & Type & $R^2$ & $\Delta R^2$ (vs M1) \\
+Model & Type & $R^2$ & $\Delta R^2$ \\
 \midrule
-M1 & Confirmatory & 0.014 & 0.000 \\
-M2 & Confirmatory & 0.049 & 0.034 \\
-M3 & Exploratory & 0.071 & 0.057 \\
-M4 & Confirmatory & 0.082 & 0.068 \\
-M4b & Exploratory & 0.049 & 0.034 \\
-M4c & Exploratory & 0.041 & 0.027 \\
-M5 & Confirmatory & 0.097 & 0.082 \\
+M1 & Confirmatory & 0.014 & -- \\
+M2 & Confirmatory & 0.049 & 0.034 (vs M1) \\
+M3 & Exploratory & 0.071 & 0.022 (vs M2) \\
+M4 & Confirmatory & 0.082 & 0.033 (vs M2) \\
+M4b & Exploratory & 0.049 & $\approx 0.000$ (vs M2) \\
+M4c & Exploratory & 0.041 & 0.027 (vs M1) \\
+M5 & Confirmatory & 0.097 & 0.015 (vs M4) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The progression indicates only modest incremental explanatory power across
-specifications, with M5 achieving the largest fit increase ($\Delta R^2=0.082$),
-while inferential conclusions about the pooled AI coefficient remain unchanged.
+specifications, with M2 and M4 implementing confirmatory steps (M1→M2→M4→M5 chain);
+exploratory branches show reflection and argument quality as similarly weak incremental predictors.
+Peak $R^2=0.097$ (M5); covariates explain less than 10\% of variance in belief change,
+consistent with high heterogeneity at pilot sample size. Inferential conclusions about
+the pooled AI coefficient remain unchanged across all specifications.
 
-\textbf{Primary inference:} no confirmatory model supports a non-zero pooled AI effect on belief change.
+Figure~\ref{fig:ai_beta_ci_models} visualizes pooled AI coefficients and 95\% CIs
+across the primary model family (M1--M5), with per-model $R^2$ labels. This makes
+the stability of the CI-over-zero pattern across specifications directly visible.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{./ai_beta_ci_across_primary_models.png}
+\caption{Pooled AI Coefficient Across Primary Models (M1--M5), with 95\% CIs and $R^2$ labels}
+\label{fig:ai_beta_ci_models}
+\end{figure}
+
+\textbf{Primary inference:} all confirmatory belief-model CIs include zero (M1, M2, M4, M5);
+the pooled AI belief effect was not identified at this sample size.
 
 \pagebreak
 \section{Secondary Outcome: Confidence Change}
@@ -149,15 +218,26 @@ belief\_ack (exploratory) & 89 & 11.269 & $[-8.980, 31.519]$ & 0.2754 \\
 \end{tabular}
 \end{table}
 
-\textbf{Secondary inference:} no statistically reliable pooled AI effect is detected for confidence in this updated run.
+\textbf{Secondary inference:} confirmatory confidence-model CIs (conf-M1, conf-M2) include zero;
+the pooled AI confidence effect was not identified at this sample size.
+This lower sensitivity is consistent with the Chapter 4 confidence-to-belief variance ratio (0.297),
+which indicates reduced available variance for detecting confidence-change effects.
+In addition, residual normality diagnostics failed for the secondary confidence-model
+family (conf-M1--conf-M3), so these confidence-model estimates are interpreted with
+additional caution as approximate OLS summaries under HC3-robust inference rather
+than as fully distribution-conforming linear-model results.
 
 \pagebreak
 \section{Robustness Checks}
 
 The robustness exports preserve coherence with the main model narrative:
 \begin{itemize}
-    \item \texttt{robustness\_leave\_one\_condition\_out.csv}: no leave-one-condition variant reverses the primary null AI belief conclusion.
-    \item \texttt{robustness\_outlier\_trim.csv}: outlier trimming does not produce a stable non-zero AI belief effect.
+    \item Outlier trimming does not produce a directionally identified AI belief effect.
+    \item VIF diagnostics show low collinearity among substantive predictors
+    (all non-intercept VIFs in the final M5 block are near 1 and below 1.5), while the
+    high M5 intercept VIF (16.34) is treated as a known coding/scaling artifact of the intercept
+    term under factor contrasts and standardized covariates, not as evidence of structural predictor
+    multicollinearity.
     \item Cohort-level descriptors from the summary export remain modest (Cohen's $d=0.286$, condition ANOVA $F=0.488$, $p=0.691$).
 \end{itemize}
 
@@ -168,24 +248,24 @@ not to substitute for the confirmatory model family.
 \section{Validation of GPT Quality Scoring Features}
 
 To validate automated quality features used in downstream modeling,
-we compare GPT-derived scores against double-rated human judgments
+I compare GPT-derived scores against double-rated human judgments
 from exported validation samples.
 
 \subsection{Reflection Quality Validation}
 
-Using \texttt{reflection\_validation\_summary.csv} ($n=30$):
+Using the reflection validation sample ($n=30$):
 \begin{itemize}
-    \item Spearman correlation (GPT vs mean human): $\rho=-0.088$, $p=0.643$
-    \item Human-only agreement: ICC$(2,1)=0.821$, ICC$(2,k)=0.902$
-    \item GPT+human agreement: ICC$(2,1)=0.203$, ICC$(2,k)=0.433$
+    \item Spearman correlation (GPT vs mean human): $\rho=0.587$, $p<0.001$
+    \item Human-only agreement: ICC$(2,1)=0.863$, ICC$(2,k)=0.926$
+    \item GPT+human agreement: ICC$(2,1)=0.667$, ICC$(2,k)=0.857$
 \end{itemize}
 
 Interpretation: human raters show high internal consistency for reflection quality,
-while GPT reflection scores are weakly aligned with the human-ranked ordering in this run.
+and GPT reflection scores show positive, practically meaningful alignment with human-ranked ordering.
 
 \subsection{Persuader Argument Quality Validation}
 
-Using \texttt{persuader\_argument\_validation\_summary.csv} ($n=30$):
+Using the persuader-argument validation sample ($n=30$):
 \begin{itemize}
     \item Spearman correlation (GPT vs mean human): $\rho=0.797$, $p<0.001$
     \item Human-only agreement: ICC$(2,1)=0.715$, ICC$(2,k)=0.834$
@@ -195,51 +275,75 @@ Using \texttt{persuader\_argument\_validation\_summary.csv} ($n=30$):
 Interpretation: GPT-derived argument-quality features show strong monotonic alignment
 with human ratings and comparable reliability contribution in this sample.
 
-Taken together, the validation evidence is asymmetric by feature family:
-argument-quality scoring appears well supported, whereas reflection-quality scoring
-should be treated more cautiously for inferential interpretation.
+Taken together, both validation families support the current GPT quality features,
+with stronger alignment for argument quality and moderate-to-strong alignment for reflection quality.
 
 \pagebreak
-\section{Exploratory Mechanism and Qualitative Diagnostics}
+\section{Exploratory Associational Diagnostics}
 
-Using \texttt{mechanism\_validation\_pushback\_confidence.csv}, AI-group mechanism association is:
+AI-group pushback-confidence association is:
 \begin{align}
-r=-0.121, \quad p=0.7074, \quad n=12
+r=-0.298, \quad p=0.2295, \quad n=18
 \end{align}
+This $n=18$ mechanism analysis is the AI-condition subset of the qualitative mechanism sample
+($n \approx 24$ reflections) specified in Chapter 4.
+Given the small AI subsample ($n=18$), I checked whether this association was driven by a single influential observation.
+The leave-one-out jackknife range remained negative ($r_{jackknife} \in [-0.412,-0.169]$), but the spread indicates
+small-sample instability in magnitude; this is treated as a directional signal only, not a confirmed mechanism effect.
 
-The final jackknife range now propagated to the same output file is:
-\begin{align}
-r_{jackknife} \in [-0.372, -0.003]
-\end{align}
+\subsection{Exploring All P1 Variables (Associational)}
 
-This indicates directional negativity but weak inferential certainty at current sample size.
+To keep exploratory interpretation conservative, I also ran additive
+associational checks across collected player1 (P1) variables that were not part
+of the confirmatory estimator set. These tests are hypothesis-generating and do
+not alter confirmatory inference.
+
+The currently eligible P1-variable checks are:
+\begin{itemize}
+    \item Influence mean association with belief change:
+        $\beta_{\text{influence\_mean\_p1}}=-0.0007$, 95\% CI $[-0.3936,0.3921]$,
+        $p=0.9971$, $n=90$.
+    \item AI vs human group difference in influence mean (Mann--Whitney):
+        mean difference $=-3.2635$, $U=612.5$, $p=0.2861$, $n=90$.
+\end{itemize}
+
+Descriptively, the P1 influence mean was $16.0787$ (SD $16.4041$, non-missing
+$n=90$). Consistent with the pushback/jackknife caveat above, these all-P1
+checks are interpreted as associational diagnostics for follow-up study design,
+not as evidence of identified mechanism effects.
 
 \subsection{Representativeness Caveat}
 
-From \texttt{qual\_sample\_representativeness.csv}, qualitative sample proportions
-deviate from full-population condition shares:
+Qualitative sample proportions in the exploratory representativeness export
+approximate the corresponding full-population proportions (maximum deviation $\Delta=0.045$):
 \begin{itemize}
-    \item Human-human: $0.500$ in qualitative sample vs $0.205$ in population ($\Delta=+0.295$)
-    \item Firm: $0.167$ vs $0.284$ ($\Delta=-0.117$)
-    \item Balanced: $0.167$ vs $0.274$ ($\Delta=-0.107$)
-    \item Open-minded: $0.167$ vs $0.237$ ($\Delta=-0.070$)
+    \item Human-human: $0.250$ in qualitative sample vs $0.205$ in population ($\Delta=+0.045$)
+    \item Firm: $0.250$ vs $0.284$ ($\Delta=-0.034$)
+    \item Balanced: $0.250$ vs $0.274$ ($\Delta=-0.024$)
+    \item Open-minded: $0.250$ vs $0.237$ ($\Delta=+0.013$)
 \end{itemize}
 
-Hence exploratory qualitative/mechanism findings remain hypothesis-generating.
+These exploratory associational findings (pushback/jackknife, all-P1 checks,
+and qualitative diagnostics) are reported as hypothesis-generating and preliminary,
+with modest residual subsample imbalance.
 
 \pagebreak
 \section{Synthesis}
 
 The updated evidence chain is internally coherent:
 \begin{enumerate}
-    \item Confirmatory belief models: null pooled AI effect.
-    \item Secondary confidence models: null pooled AI effect in this run.
-    \item Robustness checks: no sensitivity configuration overturns the confirmatory null.
-    \item Exploratory mechanism/qualitative outputs: informative but non-adjudicative due to uncertainty and representativeness limits.
+    \item Confirmatory belief models: pooled AI effects are not identified (all confirmatory CIs include 0).
+    \item Secondary confidence models: pooled AI effects are not identified in confirmatory specifications (CIs include 0).
+    \item Robustness checks: no sensitivity configuration yields a directionally identified confirmatory AI belief effect.
+    \item Exploratory associational outputs (pushback/jackknife, all-P1 variables,
+          qualitative diagnostics): findings are hypothesis-generating.
 \end{enumerate}
 
-Overall, the current dataset supports a conservative conclusion: under these model specifications
-and this sample, pooled AI opponent type does not produce a reliable shift in either belief change
-or confidence change, while exploratory diagnostics remain useful for next-step hypothesis design.
+Overall, under these model specifications and this sample, pooled AI opponent effects on belief
+and confidence were not directionally identified. Exploratory diagnostics inform
+next-step hypothesis design.
+Chapter 6 therefore interprets these findings as pilot-stage directional patterning
+under non-identified confirmatory effects, with exploratory modules treated as
+hypothesis-generating rather than mechanism-confirming evidence.
 For cross-chapter consistency, headline numbers in this chapter are anchored to
 Appendix Table~\ref{tab:headline_numbers}.

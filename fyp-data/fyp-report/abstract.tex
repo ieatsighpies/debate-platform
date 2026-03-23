@@ -1,49 +1,21 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-Large language models (LLMs) are increasingly deployed in conversational and debate contexts,
-yet their capacity to shift human beliefs and confidence in brief, turn-based interactions
-remains underexplored. This thesis presents a pilot study examining whether debating against
-a GPT-4o mini opponent — across three AI personality conditions (firm, balanced, open-minded)
-— produces different belief or confidence change outcomes compared to human-human debate.
-A custom debate platform was developed to collect within-subject attitude and confidence
-measurements across debate rounds, with between-round reflections used to assess participant
-engagement quality.
-
-\section*{Key Findings}
-
-Across a descriptive sample of $n = 90$ participants (model complete-case $n = 89$) in four debate conditions
-(human-human control, firm AI, balanced AI, open-minded AI), primary and secondary analyses yielded consistent null results
-with directional trends:
-
-\begin{itemize}
-    \item \textbf{Null Belief Change}: AI debate produced no significant effect on participant
-          belief change relative to human-human debate across four pre-specified confirmatory
-          models (M1,M2,M4,M5: $\beta = 5.233$--$8.695$, all $p > 0.35$). The observed effect size
-          ($d = 0.286$) suggests a small-to-medium practical difference that the current
-          pilot sample ($n = 89$) was insufficiently powered to confirm (observed power $= 0.20$;
-          required $n \approx 350$; 175 per group).
-    \item \textbf{Directional Confidence Change}: AI debate showed a consistent directional
-          increase in participant confidence change ($\beta = 5.2$--$5.8$ points) that did
-          not reach statistical significance (conf-M1--M2: $p = 0.17$--$0.21$).
-    \item \textbf{Feature Validation Is Mixed}: GPT-based argument quality aligned strongly
-          with human ratings (Spearman $\rho = 0.797$; human-only ICC$(2,k)=0.834$), whereas
-          GPT-based reflection quality showed weak rank alignment with human ratings
-          (Spearman $\rho = -0.088$), indicating unequal measurement reliability across
-          exploratory feature families.
-\end{itemize}
-
-\section*{Contributions}
-
-Treated as a pilot investigation, this thesis contributes to the emerging literature on
-AI-mediated persuasion by: (1) providing stable effect size estimates ($d = 0.286$)
-to inform sample size planning for future full-scale studies; (2) demonstrating that
-individual-level engagement measures remain important covariates when modeling belief outcomes;
-and (3) establishing
-a reusable debate platform with transparent GPT-assisted quality scoring,
-including explicit human-validation diagnostics (reflection human-only ICC$(2,k)=0.902$;
-argument human-only ICC$(2,k)=0.834$).
-These findings offer implications for AI's role in argumentation training, education,
-and human-AI interaction research.
-Headline values used in this abstract are consolidated in Appendix
-Table~\ref{tab:headline_numbers}.
+Large language models are increasingly used in argumentative settings, but their
+persuasive impact in sustained, turn-based debate remains unclear. This thesis reports
+a pilot study comparing human-human debates with three AI-opponent personalities
+(firm, balanced, open-minded) on a custom platform that captured belief and confidence
+updates across rounds, alongside between-round reflections and post-debate attribution
+responses. The main finding is a directional confidence-belief dissociation pattern:
+belief change showed no directional trend in AI conditions (contrasting with human-human
+participants who showed belief decrease, M = -7.905), while participants showed a descriptive
+trend toward confidence increases after AI debates; however, neither confidence-change nor
+belief-change estimates were identified at pilot sample size because confirmatory confidence
+intervals included zero for both outcomes.
+Observed power for the primary belief contrast was 20\% (Cohen's d = 0.286, model n = 89 complete cases),
+with the pooled AI group comprising n = 69 and the human-human group n = 21.
+Methodologically,
+the study contributes a reusable information-hiding debate pipeline, transparent
+model-sequence reporting, and AI-assisted quality features with convergent validation checks to support future
+research on AI-mediated persuasion in education and argumentation contexts. As a pilot,
+the study provides effect-size estimates and design guidance for subsequent confirmatory work.

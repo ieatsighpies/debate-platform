@@ -42,7 +42,7 @@ is interpreted as the model's persuasive effect \cite{durmus2024_measuring_persu
 
 Beyond immediate attitude shifts, recent work examines the durability of attitude change
 following conversational interactions with language models.
-	extcite{oceanchat2025} and related work report that conversational, narrative-rich
+\textcite{pataranutaporn2025_oceanchat} and related work report that conversational, narrative-rich
 interactive agents can produce measurable increases in behavioral intentions and, in
 some cases, durable attitude shifts on targeted outcomes. In OceanChat's large
 between-subjects experiment, conversational character narratives produced stronger
@@ -68,7 +68,11 @@ sensitivity to influential observations, alternative covariate sets, and
 distributional assumptions. This motivates combining a confirmatory model family
 with secondary and exploratory sensitivity analyses, so that inference is based
 on stability of effect direction and uncertainty intervals rather than on a
-single fitted specification.
+single fitted specification. In the present dataset, outcomes are participant-level
+continuous change scores, condition cells are modest and mildly imbalanced, and
+heteroskedasticity is plausible across debate conditions and topics; OLS therefore
+provides interpretable mean-difference estimates while HC3 robust standard errors
+reduce small-sample overconfidence in uncertainty intervals.
 
 \section{Source identity, AI disclosure, and trust}
 
@@ -108,20 +112,18 @@ be systematically manipulated through communication style, such as humanizing la
 cues \cite{schwede2023_can_chatbots_be_persuasive}.
 
 Experimental evidence supports the idea that distinct chatbot styles have differential persuasive
-effects. In a 2 (one- vs.\ two-sided message) $\times$ 3 (warm vs.\ competent vs.\ neutral
-communication style) experiment on purchase recommendations, a two-sided message increased purchase
-intention only when delivered by a warm or competent chatbot, not by a neutral one; warm style
-primarily enhanced source persuasiveness, whereas competent style primarily enhanced message
-persuasiveness \cite{schwede2023_can_chatbots_be_persuasive}. Further work on conveying chatbot
-personality through conversational cues finds that simple lexical and structural choices (e.g.,
-social-oriented versus responsive cues) induce distinct personality impressions and shifts in
-perceived warmth, competence, and trust, indicating that traits akin to "firm" versus "balanced
-and open-minded" debaters can be realized through style alone \cite{heppner2024_chatbot_personality_cues}.
+effects. Prior work shows that warm and competent communication styles can outperform neutral
+styles in persuasion tasks and can systematically shift perceived source qualities such as
+warmth, competence, and trust; lexical and conversational cues are sufficient to produce these
+personality impressions in text-based interaction \cite{schwede2023_can_chatbots_be_persuasive,heppner2024_chatbot_personality_cues}.
+The present study manipulates personality as a between-subjects factor but does not collect
+warmth/competence perception measures; personality effects are assessed through belief and
+confidence outcomes rather than perceptual mediators.
 
 \section{Source attribution and within-debate stance dynamics}
 
 While the literature establishes that pre--post stance measurement is standard, an emerging and
-underexplored dimension is how participants' beliefs about opponent identity evolve *during* a
+underexplored dimension is how participants' beliefs about opponent identity evolve \textit{during} a
 debate, and whether real-time stance tracking across debate rounds reveals persuasion dynamics
 masked in summary measures. Research on source attribution indicates that people actively infer
 source characteristics from message content, and that misattribution—for instance, believing an
@@ -143,7 +145,7 @@ position reveals depth of engagement and argument processing
 \cite{sternberg2013_cognitive_psychology_book}. When combined with contemporaneous belief measurement,
 comprehension-checking prevents conflating genuine persuasion (actual change in conviction) with
 superficial agreement or inattention. In educational contexts, elaborative retrieval tasks—where
-learners restate material in their own words—correlate strongly with durability of attitude change
+learners restate material in their own words—are associated with durability of attitude change
 and reduced susceptibility to backsliding \cite{craik_lockhart_1972_levels_of_processing}.
 
 Similarly, research on metacognitive monitoring shows that explicit, prompted reflection on one's
@@ -221,6 +223,13 @@ as a deferred extension. This boundary is important for internal coherence: it
 prevents overclaiming beyond the model families and validated features used in
 the present analysis.
 
+Observed pilot effect magnitude for pooled belief change ($d=0.286$) is directionally
+larger than many political-persuasion benchmarks (often around $d\approx0.1$--$0.2$),
+but remains substantially less decisive than win-rate style comparisons such as the
+64\% GPT-4 debate advantage reported by \textcite{salvi2025_chatgpt_debates}.
+At pilot $n$, confidence intervals remain wide and comparative effects are not
+identified with precision.
+
 \subsection*{Construct-to-variable mapping used in analysis}
 
 \begin{table}[h]
@@ -244,7 +253,7 @@ Debate structure & n\_rounds, first\_player & M5 & Structural controls for inter
 \end{table}
 
 Accordingly, current literature provides a solid conceptual basis for debate-format
-persuasion analysis, while methodological confidence should be interpreted by
-evidence tier: strongest for confirmatory AI-to-human treatment models,
-moderate for secondary outcomes, and cautious for exploratory mechanism/feature
-analyses.
+persuasion analysis. Methodological confidence differs by evidence tier:
+confirmatory AI-to-human treatment models provide primary inference,
+secondary outcomes provide qualified evidence, and exploratory mechanism/feature
+analyses are hypothesis-generating.

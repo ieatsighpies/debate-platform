@@ -4,8 +4,12 @@ m1_ai_ci_low,-9.765195658558874
 m1_ai_ci_high,27.15505073102264
 n_human_m1,20.0
 n_ai_m1,69.0
+allocation_ratio_ai_to_human_m1,3.45
 cohen_d_abs_m1,0.28596119794419755
 observed_power_m1,0.1997408120768489
-n_required_per_group_observed_d,192.93022323685616
-n_required_per_group_d_0_3,175.38466947047488
-total_n_required_d_0_3,350.76933894094975
+n_required_human_observed_d,124.23671070268391
+n_required_ai_observed_d,428.6166519242595
+total_n_required_observed_d,552.8533626269434
+n_required_human_d_0_3,112.92094290602064
+n_required_ai_d_0_3,389.57725302577126
+total_n_required_d_0_3,502.4981959317919

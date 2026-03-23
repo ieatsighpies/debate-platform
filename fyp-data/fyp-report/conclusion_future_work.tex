@@ -1,60 +1,60 @@
 \section{Conclusion}
 
-This thesis presents an analysis of AI persuasiveness in a debate platform, investigating whether
-AI opponents effectively shift human participant beliefs compared to human-human debate.
-The primary empirical finding is that AI debate produces \textit{null belief change}
-with only a \textit{directional (non-significant) confidence increase}. This pattern is
+Building on Chapter 5's synthesis, this thesis evaluates AI persuasiveness in a debate platform,
+with confirmatory comparison of pooled AI opponents against human-human debate.
+The primary empirical finding is that confirmatory belief and confidence effects were not identified
+at this sample size because confidence intervals include zero. This pattern is
 methodologically informative,
 offering implications for AI's role in persuasion, argumentation training, and human-AI collaboration.
 
-\subsection{Primary Finding: The Confidence-Belief Dissociation}
+\subsection{Primary Finding: Directional Confidence-Belief Dissociation Pattern}
 
 Across four pre-specified confirmatory models with robust standard errors,
-AI debate produced no significant effect on participant belief change relative to human-human debate
-(all $p > 0.35$, $d = 0.286$, observed power $= 20.0\%$).
-Confidence models showed a consistent directional increase that did not reach statistical significance
-($\beta = 5.2$--$5.8$ points, 95\% CI crossing 0, $p = 0.17$--$0.21$).
+AI debate yielded belief estimates with confirmatory 95\% CIs that include 0
+($p > 0.35$, $d = 0.286$, observed power $= 20.0\%$).
+Confidence models showed a consistent directional increase with 95\% CIs that also include 0
+($\beta = 5.2$--$5.8$ points, $p = 0.17$--$0.21$).
 
-Because baseline confidence was recorded as 0 for all participants, this should be interpreted as
-between-condition differences in post-debate confidence levels rather than true baseline-to-post change.
+Baseline confidence was not degenerate in this run (0.0\% at floor and 20.0\% at ceiling at the Round 1 baseline),
+so confidence analyses remain interpretable as change outcomes though the 20\% ceiling at the Round 1 baseline may compress
+upward variance and bias estimates toward the null — the directional increase observed ($\beta = 5.2$--$5.8$) should therefore be
+treated as a lower-bound signal rather than a precise effect estimate.
 
-This pattern is consistent with classical persuasion theory, which often models belief and
+This directional pattern is consistent with classical persuasion theory, which often models belief and
 confidence as closely coupled constructs \cite{petty1986_elm,eagly1993_psychology_of_attitudes}.
-In the AI debate context, participants apparently update their \textit{confidence in debate performance}
+In the AI debate context, participants may update their \textit{confidence in debate performance}
 without updating their \textit{core stance conviction}. They finish debates feeling more certain
-in direction, without reliable evidence of shifted underlying belief.
+in direction, without reliable evidence of shifted underlying belief. Because both confirmatory
+outcomes have CIs that include zero, this is interpreted as a directional dissociation \textit{pattern}
+rather than a confirmed dissociation effect.
 
-\subsection{Mechanism: Illusory Success, Not Defensive Conviction}
+\subsection{Exploratory Mechanism Hypothesis: Pushback and Confidence}
 
-We hypothesized that the confidence gain reflected a ``defensive confidence'' mechanism:
-participants who argued critically should feel more convinced of their position after ``winning'' debate exchanges.
-However, correlation analysis of the qualitative subsample revealed the opposite:
-participants who engaged in high pushback (critical argumentation) showed \textit{lower} confidence gain
-($r = -0.121$, $p = 0.707$, 95\% CI $[-0.650,0.487]$), not higher. Jackknife resampling
-showed a directional negative range ($r_{jackknife} \in [-0.372,-0.003]$), but with weak inferential certainty.
-
-One plausible interpretation is \textit{illusory success}:
-\begin{itemize}
-    \item Passive participants perceived themselves as ``winning'' against a non-concessive opponent,
-          inflating confidence without substance.
-    \item Active arguers recognized the AI's rhetorical resilience and updated confidence downward.
-\end{itemize}
-
-This interpretation is consistent with AI design (the AI is prompted to defer politely but never concede major points)
-and participant framing (belief measurements follow immediately after debate, anchoring confidence to the stated position).
+I examined whether the directional confidence pattern reflected a "defensive confidence" mechanism:
+participants who argued critically should feel more convinced of their position after "winning" debate exchanges.
+Correlation analysis of the qualitative subsample suggested a possible negative association:
+participants who engaged in high pushback (critical argumentation) showed a numeric trend toward lower confidence gain
+($r = -0.298$, $p = 0.229$, 95\% CI $[-0.672,0.196]$). Jackknife resampling
+was used to check sensitivity to influential observations and yielded a directional negative range
+($r_{jackknife} \in [-0.412,-0.169]$), with substantial small-sample spread.
+One speculative interpretation is \textit{illusory success}: some participants may have interpreted
+surface-level debate fluency as personal success, increasing confidence without corresponding belief revision.
+Given $n=18$ in the mechanism subset, this mechanism result is hypothesis-generating,
+small-sample, and not effect-identifying.
 
 \subsection{Theoretical Implications}
 
-\subsubsection{AI as a Credible but Non-Persuasive Interlocutor}
+\subsubsection{Possible Interpretation: AI as Intellectual Interlocutor Without Epistemic Authority}
 
-Participants may treat AI as a serious intellectual opponent (evidenced by directional confidence differences and continued engagement),
-but they do not grant the AI epistemic authority
-to shift core beliefs. This suggests:
+Participants may treat AI as a serious intellectual opponent (as suggested by continued engagement and post-debate attribution responses),
+yet remain reluctant to grant AI epistemic authority sufficient to shift core beliefs. This tentative interpretation suggests:
 
 \begin{enumerate}
-    \item Participants recognize AI as non-human and apply a discount to its authority on value-laden or identity-central topics.
+      \item Opponent-attribution responses indicate that many AI-condition participants reported suspecting AI identity,
+              which is consistent with at least partial source-based discounting on
+          value-laden or identity-central topics.
     \item Confidence gains are divorced from belief shifts, perhaps because confidence is self-referential
-          (``How sure am I of my position?'') while belief resistance reflects source skepticism (``How credible is the AI?'').
+          ("How sure am I of my position?") while belief resistance reflects source skepticism ("How credible is the AI?").
     \item For topics where AI might have genuine epistemic authority (factual matters, logical consistency),
           the debate platform may not capture belief shifts because participant stance choices are often taken on priors.
 \end{enumerate}
@@ -70,21 +70,21 @@ rather than \textit{persuasion}. Participants may benefit from:
 \end{itemize}
 
 However, if the intent is to expose participants to genuinely compelling opposing views and shift deeply held beliefs,
-AI debate alone is insufficient.
+the current pilot evidence does not support a reliable belief-shift effect from AI debate alone.
 
 \subsection{Methodological Strengths}
 
-This analysis demonstrates rigorous small-sample inference through:
+This analysis documents an explicit small-sample inference workflow through:
 \begin{itemize}
-    \item \textbf{Pre-specified model sequence}: Four confirmatory models locked before data analysis.
+      \item \textbf{Pre-specified model sequence}: Four confirmatory models specified before final model execution.
     \item \textbf{Robust standard errors}: HC3 covariance matrices account for heteroscedasticity.
       \item \textbf{Inferential transparency}: confidence models are reported with explicit effect sizes,
                     confidence intervals, and corresponding $p$-values.
                                     \item \textbf{Transparency about underpowering}: With model sample $n = 89$, observed power for belief effect detection is $20.0\%$.
-                                          The null result is stable across reported sensitivity checks but remains compatible with limited power.
-    \item \textbf{Mechanism validation attempted}: Correlation test falsified initial hypothesis,
-              demonstrating intellectual honesty rather than confirmatory bias.
-    \item \textbf{Data quality audits}: Floor-ceiling effect checks and baseline confidence missing-data detection.
+                                                                              The CI-over-zero pattern is stable across reported sensitivity checks.
+      \item \textbf{Mechanism sensitivity audit attempted}: exploratory correlation and leave-one-out checks
+                    are reported transparently as small-sample diagnostics rather than confirmatory mechanism evidence.
+      \item \textbf{Data quality audits}: Floor-ceiling effect checks and baseline confidence distribution diagnostics.
 \end{itemize}
 
 \pagebreak
@@ -92,46 +92,77 @@ This analysis demonstrates rigorous small-sample inference through:
 
 \subsection{Sample Size and Power}
 
-With model sample $n = 89$, this study is underpowered for \textit{belief} effects ($d = 0.286$, required $n \approx 175$ per group for $80\%$ power).
-The null belief finding is stable across robustness checks,
-but replication with a larger sample is warranted.
+With model sample $n = 89$, this study is underpowered for \textit{belief} effects ($d = 0.286$).
+With the actual complete-case allocation ratio of approximately 1:3.45 (human-human $n = 20$, pooled AI $n = 69$), achieving 80\% power at this effect size
+would require approximately $n \approx 124$ for human-human and $n \approx 429$ for pooled AI (total $n \approx 553$).
+The unequal group allocation — a consequence of non-randomised assignment — means the human-human cell ($n = 20$)
+is the binding constraint on power, not the pooled AI cell ($n = 69$).
+The CI-over-zero pattern is stable across robustness checks, and replication with a larger sample is required.
+The descriptive cohort is $n = 90$; one case is omitted from regression models under complete-case
+rules due to variable-level missingness, yielding analytic $n = 89$.
+
+\subsection{Non-Randomized Assignment and Residual Confounding}
+
+Condition assignment was administratively balanced rather than fully randomized. This improves
+practical cell balance in a pilot, but weakens strict causal identification because assignment may
+correlate with unobserved factors (for example, participation timing, topic-selection patterns,
+or latent debate motivation). Topic fixed effects and baseline covariates reduce but do not eliminate
+this vulnerability. Therefore, condition contrasts in this pilot should be read as associational with
+controlled adjustment, not as definitive randomized-treatment effects.
 
 \subsection{Measurement and Scale Issues}
 
 \begin{itemize}
     \item \textbf{Belief scale coarseness}: 0--100 continuous scale may not capture nuanced within-debate shifts,
           particularly for topics with high pre-engagement ceiling effects.
-    \item \textbf{Baseline confidence missing}: All participants recorded 0 confidence pre-debate.
-          While this does not invalidate inference, it renders ``confidence change'' equivalent to ``post-debate confidence,''
-          complicating interpretation.
-    \item \textbf{Reflection quality proxy}: Text length is a crude proxy for engagement quality.
-          Ideally, qualitative codes would be applied exhaustively rather than to a stratified sample.
+    \item \textbf{Confidence endpoint uncertainty}: Confidence baselines are usable in this run,
+          and confirmatory confidence intervals still include 0.
+    \item \textbf{Secondary-model residual non-normality}: Residual normality checks failed for
+          the confidence-model family (conf-M1--conf-M3), so confidence-family estimates
+          are treated as cautious, distribution-sensitive summaries in this pilot.
+    \item \textbf{Reflection quality measurement limits}: The main reflection predictor is a rubric-based GPT composite.
+          Text length was retained only as a fallback diagnostic and was not used in the final confirmatory models;
+          ideally, qualitative codes would be applied exhaustively rather than to a stratified sample.
+\end{itemize}
+
+\subsection{Robustness and Model Sensitivity}
+
+Planned robustness checks include outlier trimming, leave-one-out conditional re-estimation, VIF diagnostics, and residual normality assessment.
+\begin{itemize}
+    \item One pre-specified robustness check (leave-one-condition) produced no output in the current analysis run and is therefore omitted from inference.
 \end{itemize}
 
 \subsection{Sample Representation Bias}
 
 Qualitative analysis was performed on a stratified sample ($n \approx 24$ reflections)
-that overrepresents human-human debates ($50\%$ vs. $20.5\%$ in population).
-AI conditions are each underrepresented in the qualitative sample ($16.7\%$ each)
-relative to their population shares (firm $28.4\%$, balanced $27.4\%$, open-minded $23.7\%).
-This bias limits the representativeness of mechanism findings and should be considered exploratory.
+that in the current export is closer to population condition shares
+(human-human $25.0\%$ vs. $20.5\%$; firm $25.0\%$ vs. $28.4\%$; balanced $25.0\%$ vs. $27.4\%$;
+open-minded $25.0\%$ vs. $23.7\%$).
+Representativeness risk is reduced relative to earlier skewed splits, but mechanism findings remain exploratory,
+hypothesis-generating, small-sample, and not effect-identifying.
 
 \subsection{Generalizability}
 
-Participants were recruited online and self-selected into debate participation, possibly skewing toward
+Participants were recruited based on availability and volunteered into debate participation, possibly skewing toward
 debate-curious, relatively confident individuals. Results may not generalize to the broader population.
 Additionally, topics were participant-selected rather than experimenter-controlled, introducing unmeasured heterogeneity.
 
 \subsection{AI Realism and Authenticity}
 
 The AI opponent is a prompted language model, not a persistent agent with learning. The pattern of
-"never conceding", while methodologically clean, may not reflect authentic disagreement dynamics
+prompt-constrained response behavior, while methodologically clean, may not reflect authentic disagreement dynamics
 in real-world human-human or human-AI debate.
 
 \pagebreak
 \section{Future Work}
 
 Future research directions address the dissociation finding and explore boundary conditions:
+
+\subsection{Belief Attribution Separately Randomized}
+
+Implement a $2 \times 2$ design crossing actual opponent type (AI vs. human) with \textit{belief about} opponent type.
+This directly addresses the central source-attribution confound and isolates whether confidence effects arise
+from real AI properties or from participants' \textit{belief} that they debated an AI.
 
 \subsection{Longitudinal Belief Tracking}
 
@@ -141,15 +172,11 @@ could reveal whether initial illusory confidence resolves into genuine persuasio
 
 \subsection{Factual vs. Value-Based Topics}
 
-The current sample spans diverse topics (political, moral, empirical). Stratified analysis by topic type
+The current sample spans diverse topics. Stratified analysis by topic type
 could test whether AI is more persuasive on factual matters (where it has genuine epistemic advantage)
-than value-laden stances (where source credibility matters more).
-
-\subsection{Belief Attribution Separately Randomized}
-
-Implement a $2 \times 2$ design crossing actual opponent type (AI vs. human) with \textit{belief about} opponent type.
-This would isolate whether confidence effects arise from real AI properties or from participants' \textit{belief}
-that they debated an AI.
+than value-laden stances (where source credibility matters more). The current
+platform topic set used in this thesis is listed in Appendix A,
+Section~\ref{sec:appendix_topic_questions}.
 
 \subsection{Qualitative Deepening and Full Coding}
 
@@ -159,8 +186,12 @@ Integrate quantitative outcome measures with qualitative content analysis to tri
 \subsection{AI Personality Fine-Tuning}
 
 Current AI personalities (firm, balanced, open-minded) show no effect on belief outcomes.
+However, given the pilot sample size and the study's broader underpowered status,
+I cannot distinguish between genuine absence of personality effects and insufficient power to detect them.
 Experiment with AI personalities that explicitly concede strategic points, express uncertainty, or
 adopt Socratic questioning. Would such modifications increase persuasiveness?
+Current baseline prompt templates are documented in Appendix A,
+Section~\ref{sec:appendix_ai_personality_prompts}.
 
 \subsection{AI as Knowledge Authority vs. Opinion Debater}
 
