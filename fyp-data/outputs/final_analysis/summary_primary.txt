@@ -21,7 +21,7 @@ belief_ack: ai_beta=11.269, 95%CI=[-8.980, 31.519], p=0.2754
 ROBUSTNESS CHECKS
 -----------------
 Cohen d (AI vs Human, belief_change): 0.286
-Observed power: 0.200 (required n per group: 175)
+Observed power: See power_analysis.csv (required n per group: N/A)
 Power caveat: observed power is critically low in this run; effect sizes and 95% CIs are high-uncertainty point estimates, not evidence of no effect.
 CI caveat: confirmatory belief models (M1-M2, M4-M5) and confirmatory confidence models (conf_M1-conf_M2) all include zero, so direction and magnitude are not strongly identified in this sample.
 Condition ANOVA: F=0.488, p=0.691

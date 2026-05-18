@@ -1,0 +1,15 @@
+backend/node_modules
+backend/.env.development
+backend/.env.production
+backend/dist
+backend/.git
+
+frontend/node_modules
+frontend/.env.development
+frontend/.env.production
+frontend/dist
+frontend/.git
+
+.DS_Store
+.git
+.gitignore

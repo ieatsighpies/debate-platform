@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const { cleanupStaleGuests } = require('./utils/guestCleanup');
-cleanupStaleGuests();
 
 // Load environment variables based on NODE_ENV
 const envFile = process.env.NODE_ENV === 'production'
@@ -175,7 +173,7 @@ process.on('SIGTERM', () => {
   console.log('[Server] SIGTERM received, shutting down gracefully...');
   server.close(() => {
   console.log('[Server] Server closed');
-  const { cleanupAllAITimeouts } = require('./routes/debates');
+  const { cleanupAllAITimeouts } = require('./services/aiDebateService');
   cleanupAllAITimeouts();
   mongoose.connection.close(false, () => {
     console.log('[MongoDB] Connection closed');

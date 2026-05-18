@@ -428,6 +428,34 @@ const ChatHistoryModal = () => {
     };
   };
 
+  // Confidence progression chart data
+  const getConfidenceChartData = () => {
+    if (!selectedDebate.beliefHistory || selectedDebate.beliefHistory.length === 0) {
+      return { player1Data: null, player2Data: null };
+    }
+
+    const player1Confidence = selectedDebate.beliefHistory
+      .filter(b => b.player === 'player1')
+      .sort((a, b) => a.round - b.round)
+      .map(b => ({
+        round: b.round,
+        confidence: b.confidence !== undefined ? b.confidence : null
+      }));
+
+    const player2Confidence = selectedDebate.beliefHistory
+      .filter(b => b.player === 'player2')
+      .sort((a, b) => a.round - b.round)
+      .map(b => ({
+        round: b.round,
+        confidence: b.confidence !== undefined ? b.confidence : null
+      }));
+
+    return {
+      player1Data: player1Confidence.length > 0 ? player1Confidence : null,
+      player2Data: player2Confidence.length > 0 ? player2Confidence : null
+    };
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] flex flex-col">
@@ -769,34 +797,39 @@ const ChatHistoryModal = () => {
           </div>
         )}
 
-        {/* Belief Chart Section */}
+        {/* Belief & Confidence Chart Section */}
         {(() => {
           const { player1Data, player2Data } = getBeliefChartData();
           const hasBeliefData = player1Data || player2Data;
+          const { player1Data: conf1, player2Data: conf2 } = getConfidenceChartData();
+          const hasConfidenceData = conf1 || conf2;
 
-          if (!hasBeliefData) return null;
+          if (!hasBeliefData && !hasConfidenceData) return null;
 
           return (
             <div className="px-6 py-3 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200">
-              <button
-                onClick={() => setShowBeliefChart(!showBeliefChart)}
-                className="flex items-center justify-between w-full"
-              >
-                <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide flex items-center">
-                  📊 Belief Progression
-                  <ChevronDown
-                    size={16}
-                    className={`ml-2 transition-transform ${showBeliefChart ? 'rotate-180' : ''}`}
-                  />
-                </h3>
-                <span className="text-xs text-gray-500">
-                  {showBeliefChart ? 'Hide' : 'Show'} charts
-                </span>
-              </button>
+              {/* Belief Progression Toggle */}
+              {hasBeliefData && (
+                <button
+                  onClick={() => setShowBeliefChart(!showBeliefChart)}
+                  className="flex items-center justify-between w-full"
+                >
+                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide flex items-center">
+                    📊 Belief Progression
+                    <ChevronDown
+                      size={16}
+                      className={`ml-2 transition-transform ${showBeliefChart ? 'rotate-180' : ''}`}
+                    />
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    {showBeliefChart ? 'Hide' : 'Show'} charts
+                  </span>
+                </button>
+              )}
 
-              {showBeliefChart && (
+              {/* Belief Progression Charts */}
+              {showBeliefChart && hasBeliefData && (
                 <div className="mt-4 max-h-[500px] overflow-y-auto pr-2">
-                  {/* Charts side by side */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     {/* Player 1 Belief Chart */}
                     {player1Data && (
@@ -856,9 +889,79 @@ const ChatHistoryModal = () => {
                       </div>
                     )}
                   </div>
-
                   <div className="text-xs text-gray-500 bg-white rounded p-2">
                     Scale: 0 = strongly against | 50 = unsure | 100 = strongly for
+                  </div>
+                </div>
+              )}
+
+              {/* Confidence Progression Section */}
+              {hasConfidenceData && (
+                <div className="mt-6">
+                  <h3 className="text-xs font-bold text-gray-600 uppercase tracking-wide flex items-center mb-2">
+                    🟦 Confidence Progression
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    {/* Player 1 Confidence Chart */}
+                    {conf1 && (
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-blue-100 overflow-x-auto">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                          {player1UserId?.username || 'Player 1'} Confidence Trajectory
+                        </h4>
+                        <div style={{ minWidth: '300px' }}>
+                          <ResponsiveContainer width="100%" height={200}>
+                            <LineChart data={conf1} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                              <XAxis dataKey="round" stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <YAxis domain={[1, 7]} stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <Tooltip
+                                formatter={(value) => [value !== null ? `${value.toFixed(1)}` : 'N/A', 'Confidence']}
+                                contentStyle={{ backgroundColor: '#fff', border: '1px solid #d1d5db' }}
+                              />
+                              <Line
+                                type="monotone"
+                                dataKey="confidence"
+                                stroke="#0ea5e9"
+                                dot={{ fill: '#0ea5e9', r: 3 }}
+                                strokeWidth={2}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Player 2 Confidence Chart */}
+                    {conf2 && (
+                      <div className="bg-white rounded-lg p-4 shadow-sm border border-indigo-100 overflow-x-auto">
+                        <h4 className="text-sm font-semibold text-gray-700 mb-3">
+                          {isHumanAI ? aiPersonalityName : (player2UserId?.username || 'Player 2')} Confidence Trajectory
+                        </h4>
+                        <div style={{ minWidth: '300px' }}>
+                          <ResponsiveContainer width="100%" height={200}>
+                            <LineChart data={conf2} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+                              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
+                              <XAxis dataKey="round" stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <YAxis domain={[1, 7]} stroke="#6b7280" tick={{ fontSize: 12 }} />
+                              <Tooltip
+                                formatter={(value) => [value !== null ? `${value.toFixed(1)}` : 'N/A', 'Confidence']}
+                                contentStyle={{ backgroundColor: '#fff', border: '1px solid #d1d5db' }}
+                              />
+                              <Line
+                                type="monotone"
+                                dataKey="confidence"
+                                stroke="#6366f1"
+                                dot={{ fill: '#6366f1', r: 3 }}
+                                strokeWidth={2}
+                              />
+                            </LineChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-500 bg-white rounded p-2">
+                    Scale: 1 = not confident | 7 = extremely confident
                   </div>
                 </div>
               )}

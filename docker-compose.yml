@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:8.0
+    container_name: debate-platform-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: debate-db
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
+    networks:
+      - debate-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API Server
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: debate-platform-backend
+    ports:
+      - "5555:5555"
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb+srv://ur_username:ur_password@cluster0.bfkiolg.mongodb.net/debate-platform-v2?appName=Cluster0
+      # mongodb://admin:password@mongodb:27017/debate-db?authSource=admin
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      JWT_SECRET: dev-secret-change-in-production
+      CLIENT_URL: http://localhost:3000
+      PORT: 5555
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - debate-network
+    command: npm run dev
+    restart: unless-stopped
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: debate-platform-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_BACKEND_URL: http://localhost:5555
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - debate-network
+    command: npm run dev -- --host 0.0.0.0
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+
+networks:
+  debate-network:
+    driver: bridge

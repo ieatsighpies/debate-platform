@@ -46,6 +46,25 @@ The combination of structured debate, real-time interaction, information-control
 and comprehensive data capture creates a controlled opportunity to empirically analyse AI
 persuasiveness and contribute evidence-based insights to AI-human argumentation comparison.
 
+\subsection{Positioning Against Prior Work and Research Gap}
+
+Recent evidence shows that LLMs can be persuasive in debate and conversational settings,
+especially when personalization is available \cite{salvi2025_chatgpt_debates,shi2020_effects_persuasive_dialogues_bots};
+that pre--post attitude-change designs are standard for estimating AI persuasive effects
+\cite{argyle2025_testing_political_persuasion,durmus2024_measuring_persuasiveness,pataranutaporn2025_oceanchat};
+and that disclosure, source identity beliefs, and conversational style can shift trust and receptivity
+\cite{schilke2025_transparency_dilemma,montag2023_trust_humans_vs_ai,schwede2023_can_chatbots_be_persuasive,heppner2024_chatbot_personality_cues}.
+However, prior studies less often combine these elements in a single, controlled, multi-round,
+source-blind live-debate setting with process-level instrumentation.
+
+This thesis is positioned to close that gap by integrating: (i) hidden opponent identity during
+live interaction, (ii) per-round stance and confidence tracking rather than only aggregate pre--post
+change, (iii) explicit AI personality conditions within one platform, and (iv) synchronized logging of
+argument content, participant reflections, attribution cues, and AI stance evolution across rounds.
+Accordingly, the confirmatory contribution is an AI-to-human persuasion estimate (based on changes to belief
+and confidence) under controlled information conditions, while mechanistic analyses remain exploratory
+and hypothesis-generating.
+
 \section{Problem Statement}
 
 This thesis investigates AI-mediated persuasion in debate settings, with confirmatory emphasis on
@@ -164,7 +183,7 @@ The platform is built using a client-server architecture with the following comp
         \item Which specific AI model, personality, or system prompt was deployed
         \item Debate game mode, opponent assignment strategy, or experimental condition
     \end{itemize}
-    This enables systematic analysis of participant stance evolution in this report by tracking
+    This enables systematic analysis of participant stance evolution in this thesis by tracking
     how initial positions shift across rounds and culminate in final stances, while preserving
     AI-side traces for future extension studies.
 
